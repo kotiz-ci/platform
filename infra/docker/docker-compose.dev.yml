@@ -1,0 +1,28 @@
+# KOTIZ — docker-compose dev (Story 1.3a phase 1 : dev local uniquement)
+# Sera enrichi par Story 1.3a (services réels) : nginx, postgres 15.8-alpine, redis 7.4-alpine, minio, backend.
+# Story 1.3b (Sprint 2/3) ajoutera la phase staging/prod sur Orange Business Abidjan.
+#
+# Pour tester maintenant : `docker compose -f infra/docker/docker-compose.dev.yml config` (lint).
+
+name: kotiz
+
+services:
+  # ----- Placeholder réseau pour valider le compose file -----
+  # Story 1.3a remplacera par : nginx + postgres + redis + minio + backend
+  noop:
+    image: alpine:3.20
+    command: ["sh", "-c", "echo 'KOTIZ dev compose placeholder — Story 1.3a remplit ce fichier'; sleep infinity"]
+    restart: "no"
+    profiles:
+      - placeholder
+
+networks:
+  default:
+    name: kotiz_default
+    driver: bridge
+
+# Volumes (Story 1.3a) :
+# volumes:
+#   pgdata:
+#   redisdata:
+#   miniodata:

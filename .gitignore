@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+.turbo/
+out/
+coverage/
+*.tsbuildinfo
+
+# Mobile (Expo / RN)
+.expo/
+.expo-shared/
+*.jks
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+ios/Pods/
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+
+# Backend (Java/Maven)
+target/
+*.class
+*.jar
+!**/lib/*.jar
+hs_err_pid*
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.iml
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+infra/docker/secrets-dev/
+*.pem
+*.crt
+*.key
+
+# OS
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Test artifacts
+playwright-report/
+test-results/
+.eas-build/
+
+# Storybook
+storybook-static/

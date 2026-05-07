@@ -1,0 +1,34 @@
+{
+  "name": "@kotiz/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "KOTIZ design tokens — source de vérité (palette v2 + 4 ajouts WCAG AA), consommé par mobile (RN/Expo via NativeWind) + admin-web (Next.js Tailwind).",
+  "main": "./dist/tokens.js",
+  "module": "./dist/tokens.mjs",
+  "types": "./dist/tokens.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.mjs",
+      "require": "./dist/tokens.js"
+    },
+    "./css": "./dist/tokens.css",
+    "./json": "./dist/tokens.json",
+    "./tailwind": "./dist/tailwind-preset.js"
+  },
+  "files": [
+    "dist",
+    "tokens.json"
+  ],
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "type-check": "tsc --noEmit",
+    "lint": "echo \"(lint sur source minimal — sera complétée Sprint 2)\"",
+    "test": "node scripts/build-tokens.mjs && node scripts/verify-tokens.mjs",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.3"
+  }
+}

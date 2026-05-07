@@ -1,0 +1,4 @@
+# Placeholder — Story 1.2 remplira ce dossier avec :
+# - ci.yml (PR : lint, type-check, test, gitleaks, trivy, cosign)
+# - nightly.yml (full migrations, backup restore, property-based, onboarding-check)
+# - weekly.yml (audits pgaudit, branch protection)

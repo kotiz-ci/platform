@@ -1,0 +1,41 @@
+{
+  "name": "kotiz",
+  "version": "0.1.0",
+  "private": true,
+  "description": "KOTIZ — Plateforme micro-épargne CI (monorepo Turborepo, cf. ADR-008 + ADR-009)",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "node": "20.18.0",
+    "pnpm": "9.12.3"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "dev": "turbo run dev",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" --ignore-path .gitignore",
+    "prepare": "husky || true",
+    "dev:up": "docker compose -f infra/docker/docker-compose.dev.yml up -d",
+    "dev:down": "docker compose -f infra/docker/docker-compose.dev.yml down",
+    "dev:logs": "docker compose -f infra/docker/docker-compose.dev.yml logs -f",
+    "dev:reset": "docker compose -f infra/docker/docker-compose.dev.yml down -v"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "prettier": "^3.3.3",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "typescript": "~5.6.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

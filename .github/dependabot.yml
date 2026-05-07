@@ -1,0 +1,90 @@
+# Dependabot — KOTIZ
+# Cross-référence : Story 1.1 AC5 + DoD per_sprint dependabot_alerts_zero_critical
+# Slack : alertes critiques routées vers #kotiz-security (config Story 1.2)
+
+version: 2
+updates:
+  # ----- npm / pnpm (mobile RN/Expo, admin-web Next, packages, root) -----
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "06:00"
+      timezone: "Africa/Abidjan"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      expo-related:
+        patterns:
+          - "expo"
+          - "expo-*"
+          - "@expo/*"
+          - "@expo-google-fonts/*"
+      react-native-ecosystem:
+        patterns:
+          - "react-native"
+          - "react-native-*"
+          - "@react-native/*"
+      next-tooling:
+        patterns:
+          - "next"
+          - "@next/*"
+          - "eslint-config-next"
+      typescript-tooling:
+        patterns:
+          - "typescript"
+          - "@typescript-eslint/*"
+          - "ts-*"
+          - "tslib"
+
+  # ----- Maven (backend Spring Boot) -----
+  - package-ecosystem: "maven"
+    directory: "/apps/backend"
+    schedule:
+      interval: "daily"
+      time: "06:00"
+      timezone: "Africa/Abidjan"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "java"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # ----- GitHub Actions -----
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Africa/Abidjan"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "ci(deps)"
+      include: "scope"
+
+  # ----- Docker (infra) -----
+  - package-ecosystem: "docker"
+    directory: "/infra/docker"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Africa/Abidjan"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

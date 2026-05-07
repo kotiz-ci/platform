@@ -1,0 +1,25 @@
+{
+  "name": "@kotiz/shared-utils",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Utilitaires TypeScript partagés mobile + admin-web : format FCFA, validation E.164 (CI), constants RBAC, etc.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": ["src"],
+  "scripts": {
+    "build": "echo \"(no build step — TS source consommée directement par bundlers Metro/Next)\"",
+    "type-check": "tsc --noEmit",
+    "lint": "echo \"(lint sera complétée Sprint 2)\"",
+    "test": "echo \"(unit tests Jest — ajout Sprint 2)\"",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.3"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@kotiz/api-types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Types TypeScript générés depuis OpenAPI 3.x backend (Story 1.2). Consommé par mobile + admin-web. Source de vérité = backend OpenAPI spec.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": ["src"],
+  "scripts": {
+    "build": "echo \"(Story 1.2 — generation OpenAPI → TS via openapi-typescript)\"",
+    "type-check": "tsc --noEmit",
+    "lint": "echo \"(lint sur source minimal — sera complétée Sprint 2)\"",
+    "test": "echo \"(test sur generation Story 1.2)\"",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.3"
+  }
+}

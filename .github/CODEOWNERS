@@ -1,0 +1,29 @@
+# KOTIZ — CODEOWNERS
+# Cross-référence : ADR-008 §3.4, Story 1.1 AC6
+# TODO 12 mai 2026 : remplacer placeholders @backend-dev2 / @mobile-dev3 / @fullstack-dev4
+# par les vrais @username GitHub après onboarding.
+
+# Backend (Spring Boot)
+/apps/backend/                 @desire-kouadio @backend-dev2
+/packages/api-types/           @desire-kouadio @backend-dev2
+
+# Mobile (React Native / Expo — cf. ADR-009)
+/apps/mobile/                  @mobile-dev3
+/packages/design-tokens/       @mobile-dev3 @fullstack-dev4
+
+# Admin web (Next.js)
+/apps/admin-web/               @fullstack-dev4
+
+# Shared TS utilities
+/packages/shared-utils/        @desire-kouadio @fullstack-dev4
+
+# Infra & DevOps
+/infra/                        @desire-kouadio
+/.github/                      @desire-kouadio
+/turbo.json                    @desire-kouadio
+/pnpm-workspace.yaml           @desire-kouadio
+/package.json                  @desire-kouadio
+
+# Architecture & Compliance
+/05_Architecture/              @desire-kouadio @henoch-lonzo
+*.md                           @henoch-lonzo
