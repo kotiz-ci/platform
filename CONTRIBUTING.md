@@ -71,6 +71,17 @@ git config --global tag.gpgsign true
 7. Pour promouvoir un lot, ouvrir une PR dédiée de `develop` vers `main`, obtenir
    une approbation humaine et conserver un merge commit : `gh pr merge --merge`.
 
+Pour fermer automatiquement le ticket après fusion dans `develop`, ajouter un mot
+clé de fermeture dans le corps de la PR :
+
+```markdown
+Closes #30
+```
+
+Le workflow `close-linked-issues-on-develop.yml` accepte également `Fixes #30` et
+`Resolves #30`, y compris plusieurs tickets dans une même PR. Utiliser `Refs #30`
+quand la PR ne doit pas fermer le ticket.
+
 Les branches permanentes `release/*` et `hotfix/*` ne font pas partie du flux MVP.
 Un correctif urgent reste une branche courte issue de `develop`, puis suit la même
 promotion contrôlée vers `main`.
