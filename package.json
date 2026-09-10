@@ -18,6 +18,8 @@
     "clean": "turbo run clean && rm -rf node_modules .turbo",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" --ignore-path .gitignore",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" --ignore-path .gitignore",
+    "verify:github-flow": "node scripts/verify-github-flow.mjs",
+    "test:github-flow": "node --test scripts/verify-github-flow.test.mjs",
     "prepare": "husky || true",
     "dev:up": "docker compose -f infra/docker/docker-compose.dev.yml up -d",
     "dev:down": "docker compose -f infra/docker/docker-compose.dev.yml down",
