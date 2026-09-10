@@ -64,8 +64,9 @@ git config --global tag.gpgsign true
 3. Pousser la branche et ouvrir une draft PR vers `develop` :
    `gh pr create --draft --base develop`.
 4. Attendre la CI verte (≤ 5 min — cf. Story 1.2 DoD).
-5. Obtenir au moins une approbation humaine, puis marquer la PR prête :
-   `gh pr ready`.
+5. Effectuer l'auto-revue avec la checklist de PR, puis marquer la PR prête :
+   `gh pr ready`. Dès qu'un second mainteneur est actif, obtenir également son
+   approbation.
 6. Squasher la branche de ticket dans `develop` : `gh pr merge --squash`.
 7. Pour promouvoir un lot, ouvrir une PR dédiée de `develop` vers `main`, obtenir
    une approbation humaine et conserver un merge commit : `gh pr merge --merge`.
@@ -78,7 +79,9 @@ promotion contrôlée vers `main`.
 
 - Force-push et suppression : interdits.
 - Push direct : interdit, y compris pour les administrateurs (PR uniquement).
-- Reviews : ≥ 1 approbation humaine.
+- Reviews : aucune approbation externe en mode solo, car GitHub interdit à l'auteur
+  d'approuver sa propre PR. Le seuil repasse à ≥ 1 dès qu'un second mainteneur est
+  actif.
 - CI verte et branche à jour : obligatoires dès que les contrôles de la Story 1.2
   sont disponibles.
 - Commits signés : obligatoires.
@@ -90,6 +93,15 @@ pnpm verify:github-flow
 ```
 
 Le contrôle doit être vert avant de considérer le flux de livraison opérationnel.
+
+### Mode solo temporaire
+
+Henoch est actuellement l'unique mainteneur. Les rulesets conservent la PR
+obligatoire et tous les autres contrôles, mais fixent temporairement le nombre
+d'approbations à zéro. L'auteur doit relire le diff, compléter la checklist et
+vérifier les tests avant de fusionner. Ajouter un second mainteneur impose de
+remettre `required_approving_review_count` à `1` dans les deux rulesets et sur
+GitHub.
 
 ## Style de code
 

@@ -2,8 +2,13 @@ import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const PROTECTED_BRANCHES = [
-  { name: "develop", ruleset: "Protect develop", mergeMethod: "squash" },
-  { name: "main", ruleset: "Protect main", mergeMethod: "merge" },
+  {
+    name: "develop",
+    ruleset: "Protect develop",
+    mergeMethod: "squash",
+    approvalCount: 0,
+  },
+  { name: "main", ruleset: "Protect main", mergeMethod: "merge", approvalCount: 0 },
 ];
 
 export function validateRepositorySettings(settings) {
@@ -25,7 +30,7 @@ export function validateRepositorySettings(settings) {
   return errors;
 }
 
-export function validateBranchRuleset(branch, expectedMergeMethod, ruleset) {
+export function validateBranchRuleset(branch, expectedMergeMethod, expectedApprovalCount, ruleset) {
   const errors = [];
   const ruleTypes = new Set(ruleset.rules?.map((rule) => rule.type) ?? []);
   const pullRequestRule = ruleset.rules?.find((rule) => rule.type === "pull_request");
@@ -51,8 +56,10 @@ export function validateBranchRuleset(branch, expectedMergeMethod, ruleset) {
     errors.push(`${branch}: signed commits must be required`);
   }
 
-  if (approvals < 1) {
-    errors.push(`${branch}: at least one approving review is required`);
+  if (approvals !== expectedApprovalCount) {
+    errors.push(
+      `${branch}: approval count must be ${expectedApprovalCount}, received ${approvals}`
+    );
   }
   if (mergeMethods.length !== 1 || mergeMethods[0] !== expectedMergeMethod) {
     errors.push(`${branch}: only ${expectedMergeMethod} merge must be allowed`);
@@ -94,7 +101,9 @@ export function verifyGithubFlow(repository = resolveRepository()) {
     }
 
     const ruleset = githubJson(`repos/${repository}/rulesets/${summary.id}`);
-    errors.push(...validateBranchRuleset(branch.name, branch.mergeMethod, ruleset));
+    errors.push(
+      ...validateBranchRuleset(branch.name, branch.mergeMethod, branch.approvalCount, ruleset)
+    );
   }
 
   if (errors.length > 0) {
