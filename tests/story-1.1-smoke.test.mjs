@@ -59,6 +59,10 @@ function copyTokenPackage() {
   mkdirSync(resolve(directory, "scripts"));
   cpSync(resolve(ROOT, "packages/design-tokens/tokens.json"), resolve(directory, "tokens.json"));
   cpSync(
+    resolve(ROOT, "packages/design-tokens/scripts/token-validation.mjs"),
+    resolve(directory, "scripts/token-validation.mjs")
+  );
+  cpSync(
     resolve(ROOT, "packages/design-tokens/scripts/build-tokens.mjs"),
     resolve(directory, "scripts/build-tokens.mjs")
   );
@@ -85,6 +89,10 @@ test("runtime pins use the supported Node 24 and Java 21 versions consistently",
   assert.match(toolVersions, /^nodejs 24\.21\.0$/m);
   assert.match(toolVersions, /^java temurin-21\.0\.12\+8$/m);
   assert.equal(eas.build._base.node, "24.21.0");
+  assert.doesNotMatch(
+    readFileSync(resolve(ROOT, "scripts/onboarding-check.sh"), "utf8"),
+    /Node 20/
+  );
 });
 
 test("onboarding accepts the exact pinned toolchain", () => {
@@ -137,6 +145,18 @@ test("design token build and verification reject invalid or missing values", () 
     JSON.stringify(invalidDimensions)
   );
   assert.notEqual(runTokenScript(invalidDimensionPackage, "verify-tokens.mjs").status, 0);
+
+  const missingBuiltTokenPackage = copyTokenPackage();
+  assert.equal(runTokenScript(missingBuiltTokenPackage, "build-tokens.mjs").status, 0);
+  const incompleteBuild = JSON.parse(
+    readFileSync(resolve(missingBuiltTokenPackage, "dist/tokens.json"), "utf8")
+  );
+  delete incompleteBuild.spacing.md;
+  writeFileSync(
+    resolve(missingBuiltTokenPackage, "dist/tokens.json"),
+    JSON.stringify(incompleteBuild)
+  );
+  assert.notEqual(runTokenScript(missingBuiltTokenPackage, "verify-tokens.mjs").status, 0);
 });
 
 test("generated design tokens are consumable through every declared export", async () => {
@@ -159,6 +179,25 @@ test("mobile exposes independent build and type-check commands for both variants
   for (const variant of ["client", "agent"]) {
     assert.match(mobilePackage.scripts[`build:web:${variant}`], new RegExp(`${variant}`));
     assert.match(mobilePackage.scripts[`type-check:${variant}`], new RegExp(`${variant}`));
+  }
+});
+
+test("mobile variants expose distinct identities without deferred WhatsApp audio", () => {
+  const expo = resolve(ROOT, "apps/mobile/node_modules/.bin/expo");
+  const mobileDirectory = resolve(ROOT, "apps/mobile");
+
+  for (const variant of ["client", "agent"]) {
+    const output = execFileSync(expo, ["config", "--type", "public", "--json"], {
+      cwd: mobileDirectory,
+      env: { ...process.env, EXPO_PUBLIC_APP_VARIANT: variant },
+      encoding: "utf8",
+    });
+    const config = JSON.parse(output);
+    assert.equal(config.extra.variant, variant);
+    assert.equal(config.ios.bundleIdentifier, `ci.kotiz.${variant}`);
+    assert.equal(config.android.package, `ci.kotiz.${variant}`);
+    assert.ok(!config.android.permissions.includes("android.permission.RECORD_AUDIO"));
+    assert.ok(!("NSMicrophoneUsageDescription" in config.ios.infoPlist));
   }
 });
 

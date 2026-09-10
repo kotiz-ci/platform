@@ -26,6 +26,7 @@ export default function HealthScreen() {
   const titleClass = isAgent ? "text-surface" : "text-ink-900";
   const helperClass = isAgent ? "text-cream/60" : "text-ink-500";
   const accentClass = isAgent ? "text-gold" : "text-teal-deep";
+  const isLoading = !status && !error;
 
   return (
     <SafeAreaView className={`flex-1 ${bgClass}`}>
@@ -34,7 +35,7 @@ export default function HealthScreen() {
 
         {status && <Text className="text-base text-success mb-2">Backend : {status.status}</Text>}
         {error && <Text className="text-base text-danger text-center mb-2">Erreur : {error}</Text>}
-        {!status && !error && <Text className={`text-base ${helperClass} mb-2`}>Chargement…</Text>}
+        {isLoading && <Text className={`text-base ${helperClass} mb-2`}>Chargement…</Text>}
 
         <Text className={`text-xs ${helperClass} mt-6 text-center`}>
           Variant : {variant} · format : {formatFcfa(125000)}

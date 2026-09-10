@@ -6,15 +6,49 @@ type AppVariant = "client" | "agent";
 const rawVariant = process.env.EXPO_PUBLIC_APP_VARIANT;
 const variant: AppVariant = rawVariant === "agent" ? "agent" : "client";
 
-const isAgent = variant === "agent";
-
 const VERSION = "0.1.0";
 const BUILD_NUMBER = 1;
 
+const variantConfig = {
+  client: {
+    name: "KOTIZ",
+    slug: "kotiz-mobile",
+    scheme: "kotiz",
+    backgroundColor: "#FAF7F2",
+    bundleIdentifier: "ci.kotiz.client",
+    cameraDescription: [
+      "KOTIZ utilise la caméra pour scanner ta CNI",
+      "lors de la vérification d'identité (KYC).",
+    ].join(" "),
+    locationDescription: undefined,
+    permissions: ["android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE"],
+  },
+  agent: {
+    name: "KOTIZ Agent",
+    slug: "kotiz-mobile-agent",
+    scheme: "kotiz-agent",
+    backgroundColor: "#0A2540",
+    bundleIdentifier: "ci.kotiz.agent",
+    cameraDescription:
+      "KOTIZ Agent utilise la caméra pour scanner la CNI des clientes " +
+      "lors de l'enrôlement KYC Tier 1.",
+    locationDescription:
+      "KOTIZ Agent enregistre la zone d'intervention pour la conformité " +
+      "et la détection de fraude.",
+    permissions: [
+      "android.permission.CAMERA",
+      "android.permission.READ_EXTERNAL_STORAGE",
+      "android.permission.ACCESS_FINE_LOCATION",
+    ],
+  },
+} as const;
+
+const selectedVariant = variantConfig[variant];
+
 const config: ExpoConfig = {
-  name: isAgent ? "KOTIZ Agent" : "KOTIZ",
-  slug: isAgent ? "kotiz-mobile-agent" : "kotiz-mobile",
-  scheme: isAgent ? "kotiz-agent" : "kotiz",
+  name: selectedVariant.name,
+  slug: selectedVariant.slug,
+  scheme: selectedVariant.scheme,
   version: VERSION,
   orientation: "portrait",
   userInterfaceStyle: "light",
@@ -22,41 +56,30 @@ const config: ExpoConfig = {
 
   splash: {
     resizeMode: "contain",
-    backgroundColor: isAgent ? "#0A2540" : "#FAF7F2",
+    backgroundColor: selectedVariant.backgroundColor,
   },
 
   assetBundlePatterns: ["**/*"],
 
   ios: {
     supportsTablet: false,
-    bundleIdentifier: isAgent ? "ci.kotiz.agent" : "ci.kotiz.client",
+    bundleIdentifier: selectedVariant.bundleIdentifier,
     buildNumber: String(BUILD_NUMBER),
     infoPlist: {
-      NSCameraUsageDescription: isAgent
-        ? "KOTIZ Agent utilise la caméra pour scanner la CNI des clientes lors de l'enrôlement KYC Tier 1."
-        : "KOTIZ utilise la caméra pour scanner ta CNI lors de la vérification d'identité (KYC).",
+      NSCameraUsageDescription: selectedVariant.cameraDescription,
       NSPhotoLibraryUsageDescription:
         "KOTIZ peut accéder aux photos pour téléverser des justificatifs.",
-      NSMicrophoneUsageDescription: isAgent
-        ? "KOTIZ Agent peut enregistrer des messages vocaux pour communiquer avec les clientes peu lettrées."
-        : "KOTIZ peut utiliser le micro pour les messages vocaux WhatsApp (optionnel).",
-      ...(isAgent && {
-        NSLocationWhenInUseUsageDescription:
-          "KOTIZ Agent enregistre la zone d'intervention pour la conformité et la détection de fraude.",
+      ...(selectedVariant.locationDescription && {
+        NSLocationWhenInUseUsageDescription: selectedVariant.locationDescription,
       }),
     },
   },
 
   android: {
-    package: isAgent ? "ci.kotiz.agent" : "ci.kotiz.client",
+    package: selectedVariant.bundleIdentifier,
     versionCode: BUILD_NUMBER,
     edgeToEdgeEnabled: true,
-    permissions: [
-      "android.permission.CAMERA",
-      "android.permission.READ_EXTERNAL_STORAGE",
-      "android.permission.RECORD_AUDIO",
-      ...(isAgent ? ["android.permission.ACCESS_FINE_LOCATION"] : []),
-    ],
+    permissions: [...selectedVariant.permissions],
   },
 
   web: {
@@ -69,7 +92,7 @@ const config: ExpoConfig = {
     [
       "expo-splash-screen",
       {
-        backgroundColor: isAgent ? "#0A2540" : "#FAF7F2",
+        backgroundColor: selectedVariant.backgroundColor,
         resizeMode: "contain",
       },
     ],

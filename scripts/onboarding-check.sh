@@ -30,7 +30,7 @@ fi
 
 step "2/4  Corepack + pnpm"
 if ! command -v corepack >/dev/null 2>&1; then
-  ko "Corepack absent — installer Node 20+ via nvm"
+  ko "Corepack absent — installer Node 24.21.0 via nvm"
   exit 1
 fi
 PNPM_VERSION=$(pnpm --version 2>/dev/null || true)

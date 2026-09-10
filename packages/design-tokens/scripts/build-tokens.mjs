@@ -14,45 +14,15 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertSourceTokens } from "./token-validation.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const SRC = resolve(ROOT, "tokens.json");
 const DIST = resolve(ROOT, "dist");
 
-const validators = {
-  color: (value) => typeof value === "string" && /^#[0-9A-Fa-f]{6}$/.test(value),
-  "font-family": (value) =>
-    Array.isArray(value) &&
-    value.length > 0 &&
-    value.every((item) => typeof item === "string" && item.length > 0),
-  radius: (value) => typeof value === "string" && /^(?:0|[1-9]\d*)(?:\.\d+)?px$/.test(value),
-  spacing: (value) => typeof value === "string" && /^(?:0|[1-9]\d*)(?:\.\d+)?px$/.test(value),
-};
-
-function validateTokens(tokens) {
-  for (const [groupName, validateValue] of Object.entries(validators)) {
-    const group = tokens[groupName];
-    if (!group || typeof group !== "object" || Array.isArray(group)) {
-      throw new Error(`[tokens] Groupe requis manquant ou invalide : ${groupName}`);
-    }
-
-    for (const [tokenName, token] of Object.entries(group)) {
-      if (tokenName.startsWith("$")) continue;
-      if (!token || typeof token !== "object" || Array.isArray(token) || !("$value" in token)) {
-        throw new Error(`[tokens] Valeur requise manquante : ${groupName}.${tokenName}.$value`);
-      }
-      if (!validateValue(token.$value)) {
-        throw new Error(
-          `[tokens] Valeur invalide pour ${groupName}.${tokenName} : ${JSON.stringify(token.$value)}`
-        );
-      }
-    }
-  }
-}
-
 const tokens = JSON.parse(readFileSync(SRC, "utf8"));
-validateTokens(tokens);
+assertSourceTokens(tokens);
 
 if (existsSync(DIST)) {
   rmSync(DIST, { recursive: true, force: true });
@@ -201,7 +171,7 @@ writeFileSync(resolve(DIST, "tokens.css"), cssContent);
 
 // ---------- 8. Emit dist/tailwind-preset.js (partagé mobile + admin-web) ----------
 
-const tailwindPreset = `// AUTO-GENERATED — KOTIZ Tailwind preset (partagé NativeWind + admin-web)
+const tailwindPreset = `// AUTO-GENERATED — KOTIZ Tailwind preset
 const { colors, fontFamily, radius, spacing } = require("./tokens.js");
 
 module.exports = {
@@ -358,15 +328,27 @@ const radiiKeys = Object.keys(radii)
   .map((k) => `  readonly ${k}: number;`)
   .join("\n");
 const typoKeys = Object.keys(typography)
-  .map(
-    (k) =>
-      `  readonly ${k}: { readonly fontSize: number; readonly lineHeight: number; readonly fontFamily: string; };`
+  .map((k) =>
+    [
+      `  readonly ${k}: {`,
+      "    readonly fontSize: number;",
+      "    readonly lineHeight: number;",
+      "    readonly fontFamily: string;",
+      "  };",
+    ].join("\n")
   )
   .join("\n");
 const shadowKeys = Object.keys(shadows)
-  .map(
-    (k) =>
-      `  readonly ${k}: { readonly shadowColor: string; readonly shadowOffset: { readonly width: number; readonly height: number; }; readonly shadowOpacity: number; readonly shadowRadius: number; readonly elevation: number; };`
+  .map((k) =>
+    [
+      `  readonly ${k}: {`,
+      "    readonly shadowColor: string;",
+      "    readonly shadowOffset: { readonly width: number; readonly height: number; };",
+      "    readonly shadowOpacity: number;",
+      "    readonly shadowRadius: number;",
+      "    readonly elevation: number;",
+      "  };",
+    ].join("\n")
   )
   .join("\n");
 
@@ -404,8 +386,21 @@ export type ShadowKey = keyof typeof shadows;
 writeFileSync(resolve(DIST, "theme.d.ts"), themeDts);
 
 console.log(
-  `[@kotiz/design-tokens] ✅ Build OK — ${Object.keys(colors).length} couleurs, ${Object.keys(fontFamily).length} familles, ${Object.keys(radius).length} radii, ${Object.keys(spacing).length} spacings`
+  [
+    "[@kotiz/design-tokens] ✅ Build OK",
+    `${Object.keys(colors).length} couleurs`,
+    `${Object.keys(fontFamily).length} familles`,
+    `${Object.keys(radius).length} radii`,
+    `${Object.keys(spacing).length} spacings`,
+  ].join(" — ")
 );
 console.log(
-  `[@kotiz/design-tokens] ✅ theme.ts — ${Object.keys(radii).length} radii, ${Object.keys(space).length} spacings, ${Object.keys(typography).length} typescales, ${Object.keys(shadows).length} shadows, ${Object.keys(palette).length} palette`
+  [
+    "[@kotiz/design-tokens] ✅ theme.ts",
+    `${Object.keys(radii).length} radii`,
+    `${Object.keys(space).length} spacings`,
+    `${Object.keys(typography).length} typescales`,
+    `${Object.keys(shadows).length} shadows`,
+    `${Object.keys(palette).length} palette`,
+  ].join(" — ")
 );
