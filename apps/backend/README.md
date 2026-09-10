@@ -1,6 +1,18 @@
 # `apps/backend` — KOTIZ Backend (Spring Boot)
 
-Service backend KOTIZ : 9 modules métier (`core`, `savings`, `agents`, `health`, `scoring`, `payments`, `wa`, `notifications`, `admin`) sur monolithe modulaire Spring Boot 3.3 (cf. ADR-001 + ADR-002).
+Service backend KOTIZ : monolithe modulaire Spring Boot 4.1 découpé en **11 bounded contexts** :
+`savings`, `scoring` (core), `agents`, `health`, `payments`, `growth`, `admin` (supporting), `iam` (ex-`core`), `notifications`, `wa`, `ussd` (generic/canal).
+
+La portée active, différée ou retirée de chaque contexte est définie dans le
+[Context Map](../../CONTEXT-MAP.md). Chaque contexte actif suivra une structure
+hexagonale `domain / application / infrastructure`. Module de référence : `savings`.
+
+```
+com.kotiz.<context>
+├── domain/          (agrégats, VO, événements — zéro dépendance framework)
+├── application/     (port/in = cas d'usage, port/out = ports sortants, service = impl.)
+└── infrastructure/  (adapter/in rest+event, adapter/out persistence(JPA)+acl, config)
+```
 
 ## Status Sprint 1
 
@@ -8,15 +20,14 @@ Service backend KOTIZ : 9 modules métier (`core`, `savings`, `agents`, `health`
 
 ## Stack cible (Story 1.1 toolchain)
 
-| Composant | Version | Rôle |
-|---|---|---|
-| Java | 17.0.13 Temurin | Langage |
-| Spring Boot | 3.3.x | Framework |
-| Maven | 3.9+ (wrapper `./mvnw`) | Build |
-| PostgreSQL | 15.8 | Persistance (Story 1.4) |
-| Flyway | latest | Migrations (Story 1.4) |
-| Redis | 7.4 | Cache + sessions (Story 1.3a) |
-| Testcontainers | latest | Tests d'intégration |
+| Composant      | Version                 | Rôle                    |
+| -------------- | ----------------------- | ----------------------- |
+| Java           | 21.0.12 Temurin         | Langage                 |
+| Spring Boot    | 4.1.x                   | Framework               |
+| Maven          | 3.9+ (wrapper `./mvnw`) | Build                   |
+| PostgreSQL     | 15 (dernier correctif)  | Persistance (Story 1.4) |
+| Flyway         | latest                  | Migrations (Story 1.4)  |
+| Testcontainers | latest                  | Tests d'intégration     |
 
 ## Dépendances Spring Initializr (à demander Story 1.1)
 
@@ -33,8 +44,8 @@ Service backend KOTIZ : 9 modules métier (`core`, `savings`, `agents`, `health`
 
 ## Référence
 
-- ADR-001 — choix Spring Boot
-- ADR-002 — monolithe modulaire (9 modules)
+- [ADR-0001 — contextes actifs du MVP](../../docs/adr/0001-limit-mvp-database-to-active-contexts.md)
+- [ADR-0003 — runtimes supportés](../../docs/adr/0003-use-supported-s1-runtime-lines.md)
 - Story 1.1 AC1 — init Spring Initializr
 - Story 1.4 — DB + migrations + ledger double-entrée
 - Story 1.5 — observability (logging Loki + masquage PII)

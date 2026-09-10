@@ -12,6 +12,11 @@
       "import": "./dist/tokens.mjs",
       "require": "./dist/tokens.js"
     },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.mjs",
+      "require": "./dist/theme.js"
+    },
     "./css": "./dist/tokens.css",
     "./json": "./dist/tokens.json",
     "./tailwind": "./dist/tailwind-preset.js"
@@ -21,6 +26,7 @@
     "tokens.json"
   ],
   "scripts": {
+    "prepare": "node scripts/build-tokens.mjs",
     "build": "node scripts/build-tokens.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
     "type-check": "tsc --noEmit",
