@@ -31,7 +31,7 @@ test("rejects repository settings that allow rebase or retain ticket branches", 
 
 test("accepts an active branch ruleset with the required controls", () => {
   assert.deepEqual(
-    validateBranchRuleset("develop", "squash", {
+    validateBranchRuleset("develop", "squash", 0, {
       enforcement: "active",
       bypass_actors: [],
       conditions: { ref_name: { include: ["refs/heads/develop"], exclude: [] } },
@@ -42,7 +42,7 @@ test("accepts an active branch ruleset with the required controls", () => {
         {
           type: "pull_request",
           parameters: {
-            required_approving_review_count: 1,
+            required_approving_review_count: 0,
             allowed_merge_methods: ["squash"],
           },
         },
@@ -53,7 +53,7 @@ test("accepts an active branch ruleset with the required controls", () => {
 });
 
 test("rejects a ruleset that permits the wrong merge path and misses controls", () => {
-  const errors = validateBranchRuleset("main", "merge", {
+  const errors = validateBranchRuleset("main", "merge", 0, {
     enforcement: "disabled",
     bypass_actors: [{ actor_type: "OrganizationAdmin" }],
     conditions: { ref_name: { include: ["refs/heads/other"], exclude: [] } },
@@ -61,7 +61,7 @@ test("rejects a ruleset that permits the wrong merge path and misses controls", 
       {
         type: "pull_request",
         parameters: {
-          required_approving_review_count: 0,
+          required_approving_review_count: 1,
           allowed_merge_methods: ["squash"],
         },
       },
@@ -75,7 +75,7 @@ test("rejects a ruleset that permits the wrong merge path and misses controls", 
     "main: branch deletion must be blocked",
     "main: force pushes must be blocked",
     "main: signed commits must be required",
-    "main: at least one approving review is required",
+    "main: approval count must be 0, received 1",
     "main: only merge merge must be allowed",
   ]);
 });
