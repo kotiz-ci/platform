@@ -16,18 +16,18 @@ Tous les commits suivent ce format **en français** :
 
 ### Types acceptés
 
-| Type | Quand |
-|---|---|
-| `feat` | Nouvelle fonctionnalité utilisateur ou métier |
-| `fix` | Correction de bug |
-| `docs` | Documentation (README, ADR, glossaire, runbooks) |
-| `chore` | Tâche maintenance (deps, config) sans impact métier |
-| `refactor` | Refonte sans changement comportemental |
-| `test` | Ajout / modification de tests |
-| `perf` | Amélioration performance |
-| `ci` | Pipeline CI/CD |
-| `build` | Build system, packaging |
-| `revert` | Revert d'un commit antérieur |
+| Type       | Quand                                               |
+| ---------- | --------------------------------------------------- |
+| `feat`     | Nouvelle fonctionnalité utilisateur ou métier       |
+| `fix`      | Correction de bug                                   |
+| `docs`     | Documentation (README, ADR, glossaire, runbooks)    |
+| `chore`    | Tâche maintenance (deps, config) sans impact métier |
+| `refactor` | Refonte sans changement comportemental              |
+| `test`     | Ajout / modification de tests                       |
+| `perf`     | Amélioration performance                            |
+| `ci`       | Pipeline CI/CD                                      |
+| `build`    | Build system, packaging                             |
+| `revert`   | Revert d'un commit antérieur                        |
 
 ### Scopes courants
 
@@ -58,23 +58,38 @@ git config --global tag.gpgsign true
 
 ## Pull Request flow
 
-1. Branche feature : `feat/<scope>-<résumé-kebab>` ou `fix/...` ou `chore/...`
-2. Commits signés GPG, Conventional Commits FR
-3. Push, ouvrir PR draft : `gh pr create --draft`
-4. Attendre CI verte (≤ 5 min — cf. Story 1.2 DoD)
-5. CODEOWNERS auto-assigné review (cf. `.github/CODEOWNERS`)
-6. ≥ 1 approve obligatoire (Sprint 1) — ≥ 2 quand l'équipe sera complète (Sprint 2+)
-7. Marquer ready : `gh pr ready`
-8. Merge squash : `gh pr merge --squash`
+1. Partir de `develop` et créer une branche courte : `feat/<scope>-<résumé-kebab>`,
+   `fix/...` ou `chore/...`.
+2. Produire des commits signés GPG qui respectent Conventional Commits FR.
+3. Pousser la branche et ouvrir une draft PR vers `develop` :
+   `gh pr create --draft --base develop`.
+4. Attendre la CI verte (≤ 5 min — cf. Story 1.2 DoD).
+5. Obtenir au moins une approbation humaine, puis marquer la PR prête :
+   `gh pr ready`.
+6. Squasher la branche de ticket dans `develop` : `gh pr merge --squash`.
+7. Pour promouvoir un lot, ouvrir une PR dédiée de `develop` vers `main`, obtenir
+   une approbation humaine et conserver un merge commit : `gh pr merge --merge`.
 
-## Branche `main` protégée
+Les branches permanentes `release/*` et `hotfix/*` ne font pas partie du flux MVP.
+Un correctif urgent reste une branche courte issue de `develop`, puis suit la même
+promotion contrôlée vers `main`.
 
-- Force-push : interdit
-- Direct push : interdit (PR uniquement)
-- Reviews : ≥ 1 approve
-- CI verte : obligatoire
-- Commits signés : obligatoire
-- Branch up-to-date : obligatoire avant merge
+## Branches `develop` et `main` protégées
+
+- Force-push et suppression : interdits.
+- Push direct : interdit, y compris pour les administrateurs (PR uniquement).
+- Reviews : ≥ 1 approbation humaine.
+- CI verte et branche à jour : obligatoires dès que les contrôles de la Story 1.2
+  sont disponibles.
+- Commits signés : obligatoires.
+
+Vérifier la configuration réellement appliquée sur GitHub :
+
+```bash
+pnpm verify:github-flow
+```
+
+Le contrôle doit être vert avant de considérer le flux de livraison opérationnel.
 
 ## Style de code
 
