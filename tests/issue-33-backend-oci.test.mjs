@@ -88,6 +88,17 @@ test("CI verifies the candidate health after scanning and requires the OCI job",
   assert.match(requiredJob, /test "\$IMAGE_RESULT" = success/);
 });
 
+test("the image health check starts the backend with separate migration and application roles", () => {
+  const verificationScript = read("scripts/verify-backend-image.sh");
+
+  assert.match(verificationScript, /CREATE ROLE kotiz_migrator LOGIN PASSWORD/);
+  assert.match(verificationScript, /CREATE ROLE kotiz_app LOGIN PASSWORD/);
+  assert.match(verificationScript, /SPRING_DATASOURCE_USERNAME=kotiz_app/);
+  assert.match(verificationScript, /SPRING_DATASOURCE_PASSWORD="\$application_password"/);
+  assert.match(verificationScript, /SPRING_FLYWAY_USER=kotiz_migrator/);
+  assert.match(verificationScript, /SPRING_FLYWAY_PASSWORD="\$migration_password"/);
+});
+
 test("ordinary pull requests never publish latest or release image tags", () => {
   const { imageJob, workflow } = readBackendImageJob();
 

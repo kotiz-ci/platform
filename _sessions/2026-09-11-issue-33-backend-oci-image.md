@@ -25,6 +25,7 @@
    `CVE-2026-65182`, `CVE-2026-65905`, `CVE-2026-68525`.
 3. La review a montré que `--iidfile` exposait un ID de configuration et non le digest du manifest OCI.
 4. Les deux premiers builds propres avaient des digests différents à cause des mtimes des fichiers et répertoires créés dans les couches.
+5. Après rebase sur l’issue #35, le health check a refusé de démarrer Flyway sans le mot de passe du rôle de migration séparé.
 
 ## GREEN vérifiés
 
@@ -32,7 +33,8 @@
   `sha256:29a91d6e0dcfae979c735c1f76a1005f628a610de47c1dd48b9efafb79f00069`.
 - Trivy 0.70.0 : 0 vulnérabilité critique dans Alpine et dans `app.jar`.
 - Image réelle : Java 21, utilisateur `kotiz`, aucun outil de build, endpoint `/actuator/health` à `UP`.
-- Tests dépôt : 55 tests, 54 passés, 1 test live ignoré, couverture scripts 83,98 % lignes.
+- Image rebasée : migration avec `kotiz_migrator`, connexion applicative avec `kotiz_app` et secrets distincts, health à `UP`.
+- Tests dépôt après rebase : 59 tests, 58 passés, 1 test live ignoré, couverture scripts 83,98 % lignes.
 - Maven : 2 tests passés et seuil JaCoCo respecté après passage à Tomcat 11.0.25.
 
 ## Notes d’environnement
