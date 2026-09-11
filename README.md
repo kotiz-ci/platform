@@ -1,24 +1,30 @@
 # KOTIZ — Plateforme micro-épargne CI
 
-> **KOTIZ** permet à Fatou (commerçante non-bancarisée d'Adjamé) d'épargner dès 100 FCFA via mobile, USSD, WhatsApp ou agent — avec assurance santé bundlée, score fidélité 5 étoiles, et conformité BCEAO complète. MVP livré 27 juillet 2026, pilote 1 000 clientes.
+> **KOTIZ** permet à Fatou (commerçante non-bancarisée d'Adjamé) d'épargner
+> dès 100 FCFA depuis l'application cliente ou avec l'assistance de Moussa,
+> agent KOTIZ. Le socle MVP réduit active IAM, Savings, Agents, Payments,
+> Notifications et Admin & Conformité.
 
 ## Stack
 
-Spring Boot 3.3 + React Native (Expo SDK 54) + Next.js 15 + PostgreSQL 15.8 + Redis 7.4 + Loki + Grafana — monorepo Turborepo 2.3.
+Spring Boot 4.1 + React Native (Expo SDK 54) + Next.js 15 + PostgreSQL 15 —
+monorepo Turborepo 2.3.
 
-> Mobile en RN/Expo plutôt que Flutter — décision 6 mai 2026 (cf. [ADR-009](../05_Architecture/KOTIZ_ADR_009_Mobile_RN_Expo.md)).
+> Les lignes de runtime sont fixées par
+> [ADR-0003](docs/adr/0003-use-supported-s1-runtime-lines.md), et les deux
+> variantes mobiles par [ADR-0004](docs/adr/0004-use-expo-mobile-variants.md).
 
 ## Démarrage rapide (≤ 30 min)
 
 ### Prérequis machine
 
-| Outil | Version exacte | Installation |
-|---|---|---|
-| Node.js | 20.18.0 LTS | `nvm install 20.18.0 && nvm use 20.18.0` |
-| pnpm | 9.12.3 | `corepack enable` (PAS `npm install -g`) |
-| Java | 17.0.13 Temurin | `sdk install java 17.0.13-tem` |
-| Expo Go (device) | dernière | App Store iOS / Play Store Android |
-| Docker | ≥ 24.x | Docker Desktop ou OrbStack (Mac M1/M2) |
+| Outil            | Version exacte  | Installation                             |
+| ---------------- | --------------- | ---------------------------------------- |
+| Node.js          | 24.21.0 LTS     | `nvm install 24.21.0 && nvm use 24.21.0` |
+| pnpm             | 9.12.3          | `corepack enable` (PAS `npm install -g`) |
+| Java             | 21.0.12 Temurin | `sdk install java 21.0.12-tem`           |
+| Expo Go (device) | dernière        | App Store iOS / Play Store Android       |
+| Docker           | ≥ 24.x          | Docker Desktop ou OrbStack (Mac M1/M2)   |
 
 > Vérifier : `bash scripts/onboarding-check.sh`
 
@@ -55,37 +61,29 @@ pnpm turbo run test --filter=...[origin/main]  # tests des apps modifiées seule
 ## Pour aller plus loin
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — Conventional Commits FR + GPG signing obligatoire
-- **[Onboarding détaillé](docs/onboarding.md)** — par persona dev (≤ 60 min) — _livré Story 1.6_
-- **[Troubleshooting](docs/troubleshooting.md)** — 16 problèmes courants — _livré Story 1.6_
-- **[Glossaire métier](docs/glossary.md)** — BCEAO, CIMA, KYC Tier, Score 5⭐ — _livré Story 1.6_
-- **[Index runbooks](docs/runbooks-index.md)** — restore, rotation clé — _livré Story 1.6_
+- Onboarding détaillé par persona dev (≤ 60 min) — _prévu Story 1.6_
+- Troubleshooting — _prévu Story 1.6_
+- Glossaire métier — _prévu Story 1.6_
+- Index des runbooks — _prévu Story 1.6_
 - **Vidéo Loom (10-15 min) bienvenue Henoch + Desiré** — _livré Story 1.6_
 
 ## Architecture
 
-| Doc | Contenu |
-|---|---|
-| [HLD v2](../05_Architecture/KOTIZ_HLD_v2.md) | Vue d'ensemble (9 modules backend, palette v2, auth, etc.) |
-| [ERD v2](../05_Architecture/KOTIZ_ERD_v2.md) | Modèle de données (38 tables) |
-| [ADR-001 Backend](../05_Architecture/KOTIZ_ADR_001_Choix_Backend.docx) | Choix Spring Boot |
-| [ADR-002 Architecture modulaire](../05_Architecture/KOTIZ_ADR_002_Architecture_Modulaire.docx) | Monolithe modulaire |
-| [ADR-003 Score 5⭐](../05_Architecture/KOTIZ_ADR_003_Score_5_Etoiles.md) | Algorithme score |
-| [ADR-004 USSD MVP](../05_Architecture/KOTIZ_ADR_004_USSD_MVP.md) | USSD via Orange Business |
-| [ADR-005 Data Residency UEMOA](../05_Architecture/KOTIZ_ADR_005_Data_Residency_UEMOA.md) | Hébergement Abidjan + runners CI |
-| [ADR-006 Prime Santé](../05_Architecture/KOTIZ_ADR_006_Prime_Sante_Unite.md) | Assurance bundle J+1 |
-| [ADR-007 RBAC 8 rôles](../05_Architecture/KOTIZ_ADR_007_RBAC_8_Roles.md) | Sécurité + SoD |
-| [ADR-008 Monorepo Turborepo](../05_Architecture/KOTIZ_ADR_008_Monorepo_Turborepo.md) | Choix monorepo |
-| [ADR-009 Mobile RN/Expo](../05_Architecture/KOTIZ_ADR_009_Mobile_RN_Expo.md) | Mobile en React Native |
-| [Plan DevOps v2](../05_Architecture/KOTIZ_Plan_DevOps_v2.md) | CI/CD + secrets + observability |
-| [Plan Sécurité v2](../05_Architecture/KOTIZ_Plan_Securite_v2.md) | OWASP top 10 + supply chain |
+| Doc                                                                | Contenu                                             |
+| ------------------------------------------------------------------ | --------------------------------------------------- |
+| [Context Map](CONTEXT-MAP.md)                                      | Contextes actifs, différés et retirés du MVP réduit |
+| [ADR-0001](docs/adr/0001-limit-mvp-database-to-active-contexts.md) | Limite des contextes actifs en base                 |
+| [ADR-0002](docs/adr/0002-promote-develop-to-main.md)               | Promotion protégée `develop` vers `main`            |
+| [ADR-0003](docs/adr/0003-use-supported-s1-runtime-lines.md)        | Lignes de runtime supportées                        |
+| [ADR-0004](docs/adr/0004-use-expo-mobile-variants.md)              | Un codebase Expo, deux variantes mobiles            |
 
-## Structure du monorepo (cf. [ADR-008](../05_Architecture/KOTIZ_ADR_008_Monorepo_Turborepo.md))
+## Structure du monorepo
 
 ```
 kotiz/
 ├── apps/
 │   ├── mobile/          # RN/Expo SDK 54 — Cliente + Agent (un seul codebase)
-│   ├── backend/         # Spring Boot 3.3 — 9 modules métier
+│   ├── backend/         # Spring Boot 4.1 — contextes définis dans CONTEXT-MAP.md
 │   └── admin-web/       # Next.js 15 — Console OPS / RISK / FINANCE / PO / ADMIN / AUDITOR
 ├── packages/
 │   ├── design-tokens/   # @kotiz/design-tokens — 17 couleurs v2 + Inter + radii + spacing
@@ -119,25 +117,25 @@ kotiz/
 
 ## Qui contacter
 
-| Domaine | Personne | Slack |
-|---|---|---|
-| Backend / Architecture | Desiré (CTO) | @desire |
-| Mobile RN/Expo | Dev #3 | @dev3 _(à recruter — cible 12 mai)_ |
-| Admin web / USSD | Dev #4 | @dev4 _(à recruter — cible 12 mai)_ |
-| Compliance / PRD / Design | Henoch (Fondateur) | @henoch |
-| UX/UI | Sally | @sally |
+| Domaine                   | Personne           | Slack                               |
+| ------------------------- | ------------------ | ----------------------------------- |
+| Backend / Architecture    | Desiré (CTO)       | @desire                             |
+| Mobile RN/Expo            | Dev #3             | @dev3 _(à recruter — cible 12 mai)_ |
+| Admin web / USSD          | Dev #4             | @dev4 _(à recruter — cible 12 mai)_ |
+| Compliance / PRD / Design | Henoch (Fondateur) | @henoch                             |
+| UX/UI                     | Sally              | @sally                              |
 
-## Sprints MVP (cf. [sprint-status.yaml](../_bmad-output/implementation-artifacts/sprint-status.yaml))
+## Sprints MVP
 
-| Sprint | Dates | Focus |
-|---|---|---|
-| Pré-S0 | 28 avril → 4 mai | Recrutement dev #2 + setup |
-| **Sprint 1** | **5 → 18 mai 2026** | **Socle technique (Epic 1) + DS début + Auth début** |
-| Sprint 2 | 19 mai → 1 juin | Fin DS + fin Auth + Wallet & MM début |
-| Sprint 3 | 2 → 15 juin | Fin Wallet + Épargne + Agents début |
-| Sprint 4 | 16 → 29 juin | Fin Agents + Santé bundle + USSD/WA + Admin |
-| Sprint 5 | 30 juin → 13 juillet | Fin Santé + Score 5⭐ + DPIA |
-| Sprint 6 | 14 → 27 juillet | Tests terrain + Audit pentest + BCEAO + Go-live pilote 1 000 clientes |
+| Sprint       | Dates                | Focus                                                                 |
+| ------------ | -------------------- | --------------------------------------------------------------------- |
+| Pré-S0       | 28 avril → 4 mai     | Recrutement dev #2 + setup                                            |
+| **Sprint 1** | **5 → 18 mai 2026**  | **Socle technique (Epic 1) + DS début + Auth début**                  |
+| Sprint 2     | 19 mai → 1 juin      | Fin DS + fin Auth + Wallet & MM début                                 |
+| Sprint 3     | 2 → 15 juin          | Fin Wallet + Épargne + Agents début                                   |
+| Sprint 4     | 16 → 29 juin         | Fin Agents + Santé bundle + USSD/WA + Admin                           |
+| Sprint 5     | 30 juin → 13 juillet | Fin Santé + Score 5⭐ + DPIA                                          |
+| Sprint 6     | 14 → 27 juillet      | Tests terrain + Audit pentest + BCEAO + Go-live pilote 1 000 clientes |
 
 ## Décisions techniques validées (28 avril 2026)
 
@@ -147,8 +145,9 @@ kotiz/
 - AES-256-GCM pour PII
 - Loom video obligatoire pour démos
 - USSD MVP via Orange Business Abidjan
-- RBAC 8 rôles (cf. ADR-007)
-- **Mobile en RN/Expo** (cf. ADR-009 — décision 6 mai 2026)
+- RBAC 8 rôles (à préciser dans une ADR dédiée avant implémentation)
+- **Mobile en RN/Expo**, deux variantes depuis un codebase
+  ([ADR-0004](docs/adr/0004-use-expo-mobile-variants.md))
 
 ## Licence
 

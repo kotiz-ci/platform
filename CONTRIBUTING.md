@@ -1,6 +1,7 @@
 # Contribuer à KOTIZ
 
-> Guide concis. Pour le contexte métier et l'onboarding détaillé : voir [README.md](README.md) + [docs/onboarding.md](docs/onboarding.md) (Story 1.6).
+> Guide concis. Pour le contexte métier et l'onboarding actuel : voir
+> [README.md](README.md). Le guide détaillé par persona sera livré en Story 1.6.
 
 ## Conventions de commits — Conventional Commits FR
 
@@ -47,7 +48,8 @@ ci(workflows): ajout job gitleaks bloquant
 
 **Tous les commits doivent être signés GPG.** Branche `main` rejette les commits non signés.
 
-Procédure : voir [docs/onboarding.md §GPG](docs/onboarding.md) (Story 1.6 AC5).
+Procédure de génération et d'ajout sur GitHub :
+[Generating a new GPG key](https://docs.github.com/authentication/managing-commit-signature-verification/generating-a-new-gpg-key).
 
 ```bash
 git config --global commit.gpgsign true
