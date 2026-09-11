@@ -92,10 +92,67 @@ jobs:
           ignore-unfixed: false
           trivyignores: .trivyignore.yaml
 
+  backend-image:
+    name: Backend OCI verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      IMAGE_REF: kotiz-backend:verification-${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Checkout pull request head
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Derive the reproducible build timestamp
+        run: |
+          SOURCE_DATE_EPOCH="$(git show -s --format=%ct "${{ github.event.pull_request.head.sha }}")"
+          echo "SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH" >> "$GITHUB_ENV"
+
+      - name: Build the backend image without publishing it
+        run: |
+          docker buildx build --load --provenance=false \
+            --metadata-file /tmp/kotiz-backend.metadata.json \
+            --build-arg SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH" \
+            --tag "$IMAGE_REF" \
+            apps/backend
+          IMAGE_DIGEST="$(jq -er '."containerimage.digest" | select(test("^sha256:[0-9a-f]{64}$"))' /tmp/kotiz-backend.metadata.json)"
+          echo "IMAGE_DIGEST=$IMAGE_DIGEST" >> "$GITHUB_ENV"
+
+      - name: Prove the backend image is reproducible
+        run: |
+          docker buildx build --load --provenance=false --no-cache \
+            --metadata-file /tmp/kotiz-backend.repeat.metadata.json \
+            --build-arg SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH" \
+            --tag "${IMAGE_REF}-repeat" \
+            apps/backend
+          REBUILT_DIGEST="$(jq -er '."containerimage.digest" | select(test("^sha256:[0-9a-f]{64}$"))' /tmp/kotiz-backend.repeat.metadata.json)"
+          test "$IMAGE_DIGEST" = "$REBUILT_DIGEST"
+
+      - name: Block non-waived critical image vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: image
+          image-ref: ${{ env.IMAGE_REF }}
+          scanners: vuln
+          severity: "CRITICAL"
+          exit-code: "1"
+          ignore-unfixed: false
+          trivyignores: .trivyignore.yaml
+
+      - name: Verify the candidate image health
+        run: bash scripts/verify-backend-image.sh "$IMAGE_REF"
+
+      - name: Declare the immutable backend image candidate
+        run: |
+          echo "### Backend OCI candidate" >> "$GITHUB_STEP_SUMMARY"
+          echo "\`$IMAGE_REF@$IMAGE_DIGEST\`" >> "$GITHUB_STEP_SUMMARY"
+
   ci-required:
     name: CI required
     if: always()
-    needs: [quality, security]
+    needs: [quality, security, backend-image]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
@@ -103,6 +160,8 @@ jobs:
         env:
           QUALITY_RESULT: ${{ needs.quality.result }}
           SECURITY_RESULT: ${{ needs.security.result }}
+          IMAGE_RESULT: ${{ needs.backend-image.result }}
         run: |
           test "$QUALITY_RESULT" = success
           test "$SECURITY_RESULT" = success
+          test "$IMAGE_RESULT" = success
