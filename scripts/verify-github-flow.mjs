@@ -10,6 +10,7 @@ const PROTECTED_BRANCHES = [
   },
   { name: "main", ruleset: "Protect main", mergeMethod: "merge", approvalCount: 0 },
 ];
+const REQUIRED_STATUS_CHECKS = ["CI required"];
 
 export function validateRepositorySettings(settings) {
   const errors = [];
@@ -34,6 +35,7 @@ export function validateBranchRuleset(branch, expectedMergeMethod, expectedAppro
   const errors = [];
   const ruleTypes = new Set(ruleset.rules?.map((rule) => rule.type) ?? []);
   const pullRequestRule = ruleset.rules?.find((rule) => rule.type === "pull_request");
+  const statusChecksRule = ruleset.rules?.find((rule) => rule.type === "required_status_checks");
   const approvals = pullRequestRule?.parameters?.required_approving_review_count ?? 0;
   const mergeMethods = pullRequestRule?.parameters?.allowed_merge_methods ?? [];
 
@@ -54,6 +56,20 @@ export function validateBranchRuleset(branch, expectedMergeMethod, expectedAppro
   }
   if (!ruleTypes.has("required_signatures")) {
     errors.push(`${branch}: signed commits must be required`);
+  }
+  if (!statusChecksRule) {
+    errors.push(`${branch}: required status checks must be configured`);
+  } else {
+    const requiredContexts =
+      statusChecksRule.parameters?.required_status_checks?.map((check) => check.context) ?? [];
+    if (statusChecksRule.parameters?.strict_required_status_checks_policy !== true) {
+      errors.push(`${branch}: required status checks must require an up-to-date branch`);
+    }
+    for (const context of REQUIRED_STATUS_CHECKS) {
+      if (!requiredContexts.includes(context)) {
+        errors.push(`${branch}: required status check ${context} is missing`);
+      }
+    }
   }
 
   if (approvals !== expectedApprovalCount) {
@@ -87,12 +103,12 @@ function resolveRepository() {
   }).trim();
 }
 
-export function verifyGithubFlow(repository = resolveRepository()) {
-  const errors = validateRepositorySettings(githubJson(`repos/${repository}`));
-  const availableRulesets = githubJson(`repos/${repository}/rulesets`);
+export function verifyGithubFlow(repository = resolveRepository(), { read = githubJson } = {}) {
+  const errors = validateRepositorySettings(read(`repos/${repository}`));
+  const availableRulesets = read(`repos/${repository}/rulesets`);
 
   for (const branch of PROTECTED_BRANCHES) {
-    githubJson(`repos/${repository}/branches/${branch.name}`);
+    read(`repos/${repository}/branches/${branch.name}`);
     const summary = availableRulesets.find((ruleset) => ruleset.name === branch.ruleset);
 
     if (!summary) {
@@ -100,7 +116,7 @@ export function verifyGithubFlow(repository = resolveRepository()) {
       continue;
     }
 
-    const ruleset = githubJson(`repos/${repository}/rulesets/${summary.id}`);
+    const ruleset = read(`repos/${repository}/rulesets/${summary.id}`);
     errors.push(
       ...validateBranchRuleset(branch.name, branch.mergeMethod, branch.approvalCount, ruleset)
     );

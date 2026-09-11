@@ -54,3 +54,17 @@ test("closes only open linked issues with an auditable comment", () => {
     "Fermée automatiquement après la fusion de la PR #42 dans develop (1234567).",
   ]);
 });
+
+test("rejects an unsupported GitHub issue state", () => {
+  assert.throws(
+    () =>
+      closeLinkedIssues({
+        body: "Closes #30",
+        repository: "kotiz-ci/platform",
+        pullRequestNumber: "42",
+        mergeSha: "1234567890abcdef",
+        runGh: () => "UNKNOWN",
+      }),
+    /unsupported state/
+  );
+});

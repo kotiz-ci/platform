@@ -122,6 +122,23 @@ GitHub.
 - **Java** (backend) : Google Java Style + Lombok + records, 100 cols max
 - **Markdown** : `markdownlint-cli2` (cf. CI Story 1.2)
 
+La couverture et ses seules exceptions déclaratives sont détaillées dans
+[`docs/ci/coverage-policy.md`](docs/ci/coverage-policy.md). Chaque workspace qui
+porte de la logique exécutable bloque sa commande `test` sous 80 %.
+
+## Contrôles CI des pull requests
+
+Les PR vers `develop` et `main` exécutent le même workflow `.github/workflows/ci.yml` :
+
+- formatage des fichiers affectés et tests de contrat du dépôt ;
+- lint, type-check, tests avec couverture et build des workspaces affectés ;
+- Gitleaks sur l'historique de la PR ;
+- Trivy sur les dépendances, avec blocage des vulnérabilités critiques.
+
+Le check agrégé `CI required` est exigé par les deux rulesets. Une dérogation
+Trivy doit être ajoutée à `.trivyignore.yaml` avec le CVE, le motif, le
+responsable et une date d'expiration.
+
 Format on save activé via `.editorconfig` + extensions IDE (cf. Story 1.6 AC12).
 
 ## Runners CI = USA (Phase 1)

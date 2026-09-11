@@ -7,7 +7,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -20,12 +19,17 @@ class KotizBackendApplicationTest {
   @Test
   void contextStartsAndHealthEndpointIsUp() throws Exception {
     HttpRequest request =
-        HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/actuator/health"))
-            .build();
+        HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/actuator/health")).build();
     HttpResponse<String> response =
         HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
     assertEquals(200, response.statusCode());
     assertTrue(response.body().contains("\"status\":\"UP\""));
+  }
+
+  @Test
+  void mainStartsWithTheNonWebProfile() {
+    KotizBackendApplication.main(
+        new String[] {"--spring.main.web-application-type=none", "--spring.jmx.enabled=false"});
   }
 }
