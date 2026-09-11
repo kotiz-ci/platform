@@ -1,8 +1,8 @@
 # `apps/backend` — KOTIZ Backend (Spring Boot)
 
-Premier chemin exécutable du backend KOTIZ : application Spring Boot, endpoint
-Actuator de santé et test d'intégration. Ce socle n'embarque ni accès base de
-données, ni comportement métier.
+Premier chemin exécutable du backend KOTIZ : application Spring Boot, connexion
+PostgreSQL locale, endpoint Actuator de santé et test d'intégration. Ce socle
+n'embarque encore aucun comportement métier.
 
 Service backend KOTIZ : monolithe modulaire Spring Boot 4.1 découpé en **11 bounded contexts** :
 `savings`, `scoring` (core), `agents`, `health`, `payments`, `growth`, `admin` (supporting), `iam` (ex-`core`), `notifications`, `wa`, `ussd` (generic/canal).
@@ -30,8 +30,8 @@ curl http://127.0.0.1:8080/actuator/health # → {"status":"UP"}
 pnpm --filter backend test
 ```
 
-Le profil `local` ne contient aucun secret. Les futurs secrets d'infrastructure
-seront introduits avec les stories qui en ont besoin.
+Le profil `local` contient uniquement les paramètres de connexion non sensibles.
+Compose monte le mot de passe PostgreSQL généré hors Git via un config tree Spring.
 
 ## Stack cible (Story 1.1 toolchain)
 
@@ -48,6 +48,7 @@ seront introduits avec les stories qui en ont besoin.
 
 - `actuator` (health, metrics)
 - `webmvc` (serveur HTTP embarqué)
+- `jdbc` et pilote PostgreSQL (connexion et health indicator)
 - `test` (test d'intégration du contexte et du health check)
 
 Les dépendances de sécurité, persistance, migration, OpenAPI et modules métier

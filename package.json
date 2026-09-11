@@ -24,10 +24,11 @@
     "lint:markdown:affected": "node scripts/check-affected-markdown.mjs",
     "coverage:scope:affected": "node scripts/check-coverage-scope.mjs",
     "verify:github-flow": "node scripts/verify-github-flow.mjs",
+    "verify:local-dev": "bash scripts/verify-local-dev.sh",
     "test:github-flow": "node --test scripts/verify-github-flow.test.mjs",
     "test:issue-autoclose": "node --test scripts/close-linked-issues.test.mjs",
     "prepare": "husky || true",
-    "dev:up": "docker compose -f infra/docker/docker-compose.dev.yml up -d",
+    "dev:up": "bash infra/docker/dev-up.sh",
     "dev:down": "docker compose -f infra/docker/docker-compose.dev.yml down",
     "dev:logs": "docker compose -f infra/docker/docker-compose.dev.yml logs -f",
     "dev:reset": "docker compose -f infra/docker/docker-compose.dev.yml down -v"
