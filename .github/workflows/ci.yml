@@ -106,6 +106,9 @@ jobs:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Set up the Buildx container driver
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
       - name: Derive the reproducible build timestamp
         run: |
           SOURCE_DATE_EPOCH="$(git show -s --format=%ct "${{ github.event.pull_request.head.sha }}")"

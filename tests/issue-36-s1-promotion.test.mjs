@@ -30,6 +30,7 @@ test("promotion CI preserves the exact verified backend image as an immutable ar
 
   assert.match(workflow, /--output type=docker,dest=\/tmp\/kotiz-backend-image\.tar/);
   assert.match(workflow, /docker load --input \/tmp\/kotiz-backend-image\.tar/);
+  assert.match(workflow, /docker\/setup-buildx-action@[0-9a-f]{40}/);
   assert.match(workflow, /actions\/upload-artifact@[0-9a-f]{40}/);
   assert.match(workflow, /name: backend-image-\$\{\{ github\.event\.pull_request\.head\.sha \}\}/);
   assert.match(
