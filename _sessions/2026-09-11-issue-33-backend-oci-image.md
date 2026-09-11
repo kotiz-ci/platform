@@ -3,7 +3,8 @@
 ## Contexte
 
 - Branche : `feat/backend-oci-image`
-- Base inspectée : `origin/develop` à `d5413868d2fc15e45f9965df775c12423f0969bc`
+- Base initialement inspectée : `d5413868d2fc15e45f9965df775c12423f0969bc`.
+- Branche rebasée avant livraison sur `origin/develop` à `e8699d8e7e99460ed670e94a1e2d04759fca6025`.
 - Dépendance : issue #32 fermée après fusion de la PR #53.
 
 ## Livré
@@ -36,4 +37,4 @@
 
 ## Notes d’environnement
 
-Les doublons iCloud non suivis suffixés ` 2` présents dans `apps/backend` ont été préservés. Les preuves Docker ont utilisé un contexte temporaire propre qui les exclut, car ils rendent le contexte Maven invalide sans appartenir à cette issue.
+Les doublons iCloud non suivis suffixés par un espace puis le chiffre 2 présents dans `apps/backend` ont été préservés. Les preuves Docker ont utilisé un contexte temporaire propre qui les exclut, car ils rendent le contexte Maven invalide sans appartenir à cette issue.
