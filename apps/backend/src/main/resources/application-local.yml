@@ -4,4 +4,7 @@ server:
 spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/kotiz_dev}
-    username: ${SPRING_DATASOURCE_USERNAME:kotiz}
+    username: ${SPRING_DATASOURCE_USERNAME:kotiz_app}
+  flyway:
+    url: ${SPRING_FLYWAY_URL:${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/kotiz_dev}}
+    user: ${SPRING_FLYWAY_USER:kotiz_migrator}

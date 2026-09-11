@@ -17,7 +17,9 @@ test("the local environment exposes only a healthy backend and PostgreSQL 15.19"
   const config = JSON.parse(
     run("docker", ["compose", "-f", composeFile, "config", "--format", "json"])
   );
-  const secret = readFileSync("infra/docker/secrets-dev/postgres_password.txt", "utf8").trim();
+  const secrets = ["admin", "migration", "app"].map((role) =>
+    readFileSync(`infra/docker/secrets-dev/postgres_${role}_password.txt`, "utf8").trim()
+  );
 
   assert.deepEqual(Object.keys(config.services).sort(), ["backend", "postgres"]);
   assert.equal(config.services.postgres.image, "postgres:15.19-alpine3.24");
@@ -42,27 +44,35 @@ test("the local environment exposes only a healthy backend and PostgreSQL 15.19"
   for (const service of Object.values(config.services)) {
     const environment = JSON.stringify(service.environment ?? {});
     assert.doesNotMatch(environment, /"POSTGRES_PASSWORD"\s*:/);
-    assert.ok(!environment.includes(secret));
+    for (const secret of secrets) {
+      assert.ok(!environment.includes(secret));
+    }
   }
 });
 
 test("development secrets are generated once outside Git", () => {
   const secretDir = mkdtempSync(join(tmpdir(), "kotiz-secrets-"));
-  const secretPath = join(secretDir, "postgres_password.txt");
   const options = {
     env: { ...process.env, KOTIZ_DEV_SECRET_DIR: secretDir },
   };
 
   try {
     run("bash", ["infra/docker/init-dev-secrets.sh"], options);
-    const firstValue = readFileSync(secretPath, "utf8");
+    const firstValues = new Map(
+      ["admin", "migration", "app"].map((role) => {
+        const path = join(secretDir, `postgres_${role}_password.txt`);
+        return [path, readFileSync(path, "utf8")];
+      })
+    );
 
     run("bash", ["infra/docker/init-dev-secrets.sh"], options);
 
-    assert.equal(readFileSync(secretPath, "utf8"), firstValue);
-    assert.match(firstValue, /^[a-f0-9]{64}\n$/);
-    assert.equal(statSync(secretPath).mode & 0o777, 0o600);
-    run("git", ["check-ignore", "--quiet", "infra/docker/secrets-dev/postgres_password.txt"]);
+    for (const [path, firstValue] of firstValues) {
+      assert.equal(readFileSync(path, "utf8"), firstValue);
+      assert.match(firstValue, /^[a-f0-9]{64}\n$/);
+      assert.equal(statSync(path).mode & 0o777, 0o600);
+    }
+    run("git", ["check-ignore", "--quiet", "infra/docker/secrets-dev/postgres_app_password.txt"]);
   } finally {
     rmSync(secretDir, { recursive: true });
   }
