@@ -5,12 +5,15 @@ services:
     image: postgres:15.19-alpine3.24
     environment:
       POSTGRES_DB: kotiz_dev
-      POSTGRES_USER: kotiz
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER: kotiz_admin
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_admin_password
     secrets:
-      - postgres_password
+      - postgres_admin_password
+      - postgres_migration_password
+      - postgres_app_password
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 2s
@@ -27,11 +30,14 @@ services:
       SERVER_ADDRESS: 0.0.0.0
       SPRING_PROFILES_ACTIVE: local
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kotiz_dev
-      SPRING_DATASOURCE_USERNAME: kotiz
+      SPRING_DATASOURCE_USERNAME: kotiz_app
+      SPRING_FLYWAY_USER: kotiz_migrator
       SPRING_CONFIG_IMPORT: configtree:/run/secrets/
     secrets:
-      - source: postgres_password
+      - source: postgres_app_password
         target: spring.datasource.password
+      - source: postgres_migration_password
+        target: spring.flyway.password
     depends_on:
       postgres:
         condition: service_healthy
@@ -46,8 +52,12 @@ services:
     restart: unless-stopped
 
 secrets:
-  postgres_password:
-    file: ./secrets-dev/postgres_password.txt
+  postgres_admin_password:
+    file: ./secrets-dev/postgres_admin_password.txt
+  postgres_migration_password:
+    file: ./secrets-dev/postgres_migration_password.txt
+  postgres_app_password:
+    file: ./secrets-dev/postgres_app_password.txt
 
 volumes:
   pgdata:

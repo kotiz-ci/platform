@@ -31,7 +31,9 @@ pnpm --filter backend test
 ```
 
 Le profil `local` contient uniquement les paramètres de connexion non sensibles.
-Compose monte le mot de passe PostgreSQL généré hors Git via un config tree Spring.
+Compose monte les mots de passe PostgreSQL générés hors Git via un config tree
+Spring. JDBC se connecte avec `kotiz_app`, sans droit de structure, et Flyway avec
+`kotiz_migrator`, propriétaire du schéma.
 
 ## Stack cible (Story 1.1 toolchain)
 
@@ -41,17 +43,19 @@ Compose monte le mot de passe PostgreSQL généré hors Git via un config tree S
 | Spring Boot    | 4.1.1                  | Framework               |
 | Maven          | 3.9.14 (`./mvnw`)      | Build                   |
 | PostgreSQL     | 15 (dernier correctif) | Persistance (Story 1.4) |
-| Flyway         | latest                 | Migrations (Story 1.4)  |
-| Testcontainers | latest                 | Tests d'intégration     |
+| Flyway         | 12.4.0                 | Migrations techniques   |
+| Testcontainers | 2.0.5                  | Tests d'intégration     |
 
 ## Dépendances du socle exécutable
 
 - `actuator` (health, metrics)
 - `webmvc` (serveur HTTP embarqué)
 - `jdbc` et pilote PostgreSQL (connexion et health indicator)
+- `flyway` (migrations au démarrage avec identifiants séparés)
+- `testcontainers-postgresql` (preuve d'intégration sur une base propre)
 - `test` (test d'intégration du contexte et du health check)
 
-Les dépendances de sécurité, persistance, migration, OpenAPI et modules métier
+Les dépendances de sécurité, persistance applicative, OpenAPI et modules métier
 seront ajoutées uniquement par les vertical slices qui les utilisent.
 
 ## Référence

@@ -17,7 +17,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
       "spring.datasource.url=jdbc:h2:mem:kotiz-test",
       "spring.datasource.driver-class-name=org.h2.Driver",
       "spring.datasource.username=sa",
-      "spring.datasource.password="
+      "spring.datasource.password=",
+      "spring.flyway.enabled=false"
     })
 class KotizBackendApplicationTest {
 
