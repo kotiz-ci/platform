@@ -83,7 +83,7 @@ test("CI verifies the candidate health after scanning and requires the OCI job",
   const candidateIndex = imageJob.indexOf("Declare the immutable backend image candidate");
   assert.ok(scanIndex >= 0 && healthIndex > scanIndex);
   assert.ok(candidateIndex > healthIndex);
-  assert.match(requiredJob, /needs: \[quality, security, backend-image\]/);
+  assert.match(requiredJob, /needs: \[quality, security, backend-image(?:, [^\]]+)?\]/);
   assert.match(requiredJob, /IMAGE_RESULT: \$\{\{ needs\.backend-image\.result \}\}/);
   assert.match(requiredJob, /test "\$IMAGE_RESULT" = success/);
 });

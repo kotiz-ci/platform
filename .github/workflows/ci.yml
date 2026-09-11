@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  issues: read
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.head_ref }}
@@ -105,6 +106,9 @@ jobs:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Set up the Buildx container driver
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
       - name: Derive the reproducible build timestamp
         run: |
           SOURCE_DATE_EPOCH="$(git show -s --format=%ct "${{ github.event.pull_request.head.sha }}")"
@@ -112,12 +116,15 @@ jobs:
 
       - name: Build the backend image without publishing it
         run: |
-          docker buildx build --load --provenance=false \
+          docker buildx build --provenance=false \
+            --output type=docker,dest=/tmp/kotiz-backend-image.tar \
             --metadata-file /tmp/kotiz-backend.metadata.json \
             --build-arg SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH" \
             --tag "$IMAGE_REF" \
             apps/backend
+          docker load --input /tmp/kotiz-backend-image.tar
           IMAGE_DIGEST="$(jq -er '."containerimage.digest" | select(test("^sha256:[0-9a-f]{64}$"))' /tmp/kotiz-backend.metadata.json)"
+          printf '%s\n' "$IMAGE_DIGEST" > /tmp/kotiz-backend.digest
           echo "IMAGE_DIGEST=$IMAGE_DIGEST" >> "$GITHUB_ENV"
 
       - name: Prove the backend image is reproducible
@@ -149,10 +156,75 @@ jobs:
           echo "### Backend OCI candidate" >> "$GITHUB_STEP_SUMMARY"
           echo "\`$IMAGE_REF@$IMAGE_DIGEST\`" >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Preserve the verified promotion candidate
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: backend-image-${{ github.event.pull_request.head.sha }}
+          path: |
+            /tmp/kotiz-backend-image.tar
+            /tmp/kotiz-backend.digest
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+          overwrite: true
+
+  promotion-acceptance:
+    name: S1 promotion acceptance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Reject a main pull request outside the promotion path
+        if: github.base_ref == 'main' && github.head_ref != 'develop'
+        run: |
+          echo "Only develop can be promoted to main." >&2
+          exit 1
+
+      - name: Require the documented human approval
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APPROVAL_COUNT="$(gh api \
+            "repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments?per_page=100" \
+            --jq '[.[] | select(.body == "S1 PROMOTION APPROVED") | select(.author_association == "OWNER" or .author_association == "MEMBER" or .author_association == "COLLABORATOR")] | length')"
+          test "$APPROVAL_COUNT" -gt 0
+
+      - name: Checkout the promotion candidate from a fresh workspace
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Node.js
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Activate the pinned pnpm version
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.12.3 --activate
+
+      - name: Install dependencies from the lockfile
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify backend, PostgreSQL, roles, and migrations
+        if: github.base_ref == 'main' && github.head_ref == 'develop'
+        run: pnpm verify:local-dev
+
+      - name: Record that ordinary pull requests need no promotion acceptance
+        if: github.base_ref != 'main'
+        run: echo "Not a develop to main promotion."
+
   ci-required:
     name: CI required
     if: always()
-    needs: [quality, security, backend-image]
+    needs: [quality, security, backend-image, promotion-acceptance]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
@@ -161,7 +233,9 @@ jobs:
           QUALITY_RESULT: ${{ needs.quality.result }}
           SECURITY_RESULT: ${{ needs.security.result }}
           IMAGE_RESULT: ${{ needs.backend-image.result }}
+          PROMOTION_RESULT: ${{ needs.promotion-acceptance.result }}
         run: |
           test "$QUALITY_RESULT" = success
           test "$SECURITY_RESULT" = success
           test "$IMAGE_RESULT" = success
+          test "$PROMOTION_RESULT" = success
