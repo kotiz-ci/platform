@@ -1,5 +1,9 @@
 # `apps/backend` — KOTIZ Backend (Spring Boot)
 
+Premier chemin exécutable du backend KOTIZ : application Spring Boot, endpoint
+Actuator de santé et test d'intégration. Ce socle n'embarque ni accès base de
+données, ni comportement métier.
+
 Service backend KOTIZ : monolithe modulaire Spring Boot 4.1 découpé en **11 bounded contexts** :
 `savings`, `scoring` (core), `agents`, `health`, `payments`, `growth`, `admin` (supporting), `iam` (ex-`core`), `notifications`, `wa`, `ussd` (generic/canal).
 
@@ -8,39 +12,46 @@ La portée active, différée ou retirée de chaque contexte est définie dans l
 hexagonale `domain / application / infrastructure`. Module de référence : `savings`.
 
 ```
-com.kotiz.<context>
+ci.kotiz.backend.<context>
 ├── domain/          (agrégats, VO, événements — zéro dépendance framework)
 ├── application/     (port/in = cas d'usage, port/out = ports sortants, service = impl.)
 └── infrastructure/  (adapter/in rest+event, adapter/out persistence(JPA)+acl, config)
 ```
 
-## Status Sprint 1
+## Exécution locale
 
-⚠️ **Placeholder** — sera initialisé via Spring Initializr lors de l'exécution Story 1.1 par Desiré.
+Le wrapper Maven verrouille Maven 3.9.14 ; aucune installation Maven globale
+n'est requise. La version Java attendue est Eclipse Temurin 21.0.12+8, déclarée
+à la racine dans `.tool-versions`.
+
+```bash
+pnpm --filter backend dev
+curl http://127.0.0.1:8080/actuator/health # → {"status":"UP"}
+pnpm --filter backend test
+```
+
+Le profil `local` ne contient aucun secret. Les futurs secrets d'infrastructure
+seront introduits avec les stories qui en ont besoin.
 
 ## Stack cible (Story 1.1 toolchain)
 
-| Composant      | Version                 | Rôle                    |
-| -------------- | ----------------------- | ----------------------- |
-| Java           | 21.0.12 Temurin         | Langage                 |
-| Spring Boot    | 4.1.x                   | Framework               |
-| Maven          | 3.9+ (wrapper `./mvnw`) | Build                   |
-| PostgreSQL     | 15 (dernier correctif)  | Persistance (Story 1.4) |
-| Flyway         | latest                  | Migrations (Story 1.4)  |
-| Testcontainers | latest                  | Tests d'intégration     |
+| Composant      | Version                | Rôle                    |
+| -------------- | ---------------------- | ----------------------- |
+| Java           | 21.0.12 Temurin        | Langage                 |
+| Spring Boot    | 4.1.1                  | Framework               |
+| Maven          | 3.9.14 (`./mvnw`)      | Build                   |
+| PostgreSQL     | 15 (dernier correctif) | Persistance (Story 1.4) |
+| Flyway         | latest                 | Migrations (Story 1.4)  |
+| Testcontainers | latest                 | Tests d'intégration     |
 
-## Dépendances Spring Initializr (à demander Story 1.1)
+## Dépendances du socle exécutable
 
-- `web` (Spring MVC)
-- `security` (Spring Security)
-- `data-jpa` + `validation`
 - `actuator` (health, metrics)
-- `springdoc-openapi-starter-webmvc-ui` 2.x (génère `/v3/api-docs` consommé par `packages/api-types`)
-- `lombok`
-- `flyway-core` + `flyway-database-postgresql`
-- `postgresql` (runtime)
-- `testcontainers` (test scope)
-- `pgaudit` (configuration applicative — Story 1.4 AC4)
+- `webmvc` (serveur HTTP embarqué)
+- `test` (test d'intégration du contexte et du health check)
+
+Les dépendances de sécurité, persistance, migration, OpenAPI et modules métier
+seront ajoutées uniquement par les vertical slices qui les utilisent.
 
 ## Référence
 

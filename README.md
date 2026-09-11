@@ -46,7 +46,7 @@ curl http://localhost:8080/actuator/health                       # → {"status"
 ```bash
 pnpm dev --filter=mobile        # Metro bundler — scanner QR avec Expo Go
 pnpm dev --filter=admin-web     # Next.js dev — http://localhost:3000
-pnpm dev --filter=backend       # Spring Boot (Story 1.1 finalise)
+pnpm dev --filter=backend       # Spring Boot — http://127.0.0.1:8080
 ```
 
 ### Tester / build (Turborepo)
