@@ -1,30 +1,44 @@
-# `infra/docker`
+# Environnement Docker local
 
-Configuration Docker / Compose pour l'environnement de développement local KOTIZ (Story 1.3a) et plus tard staging/prod (Story 1.3b sur Orange Business Abidjan, après contrat signé).
+L'environnement de développement contient volontairement deux services : le
+backend KOTIZ et PostgreSQL 15.19. Redis, MinIO et Nginx seront introduits seulement
+par les vertical slices qui en auront besoin.
 
-## Status Sprint 1
+## Démarrage depuis un clone frais
 
-⚠️ **Placeholders** — Story 1.3a enrichira `docker-compose.dev.yml` avec les vrais services :
-- `nginx` (reverse proxy TLS 1.2+, HSTS)
-- `postgres` `15.8-alpine` (avec `pgaudit`)
-- `redis` `7.4-alpine`
-- `minio` (KYC files + audio WhatsApp)
-- `backend` (Spring Boot, build local)
-
-## Secrets dev factices
-
-`secrets-dev/` est git-ignoré. Le script `init-dev-secrets.sh` (Story 1.3a) générera des secrets factices locaux :
-- `secrets-dev/postgres_password.txt`
-- `secrets-dev/jwt_signing_key.txt`
-- `secrets-dev/aes_master_key.txt` (clé AES-256-GCM pour PII — cf. Story 1.4 AC5)
-
-⚠️ **Jamais de secrets en clair dans `docker-compose.dev.yml`.** Toujours `secrets:` + `file:` (Docker Secrets).
-
-## Commandes (depuis racine monorepo)
+Prérequis : Docker avec Compose v2, Node.js et pnpm aux versions indiquées dans le
+README racine.
 
 ```bash
-pnpm dev:up      # docker compose up -d
-pnpm dev:logs    # docker compose logs -f
-pnpm dev:down    # docker compose down
-pnpm dev:reset   # docker compose down -v (efface volumes)
+git clone git@github.com:kotiz-ci/platform.git
+cd platform
+corepack enable
+pnpm install
+pnpm dev:up
+curl http://localhost:8080/actuator/health # → {"status":"UP"}
+```
+
+`pnpm dev:up` génère une première fois un mot de passe aléatoire dans
+`secrets-dev/postgres_password.txt`, un dossier ignoré par Git. Le secret est monté
+par Compose dans les conteneurs et n'est pas écrit en clair dans la définition des
+services. La commande construit et démarre les deux services, puis attend leurs
+health checks.
+
+## Cycle de vie
+
+```bash
+pnpm dev:up    # démarre ou redémarre et attend l'état sain
+pnpm dev:logs  # suit les logs
+pnpm dev:down  # arrête les services et conserve les données PostgreSQL
+pnpm dev:reset # arrête les services et supprime les volumes de développement
+```
+
+Après un arrêt normal, un nouveau `pnpm dev:up` réutilise le volume `pgdata`. La
+commande `pnpm dev:reset` est la seule commande standard qui supprime ce volume.
+
+La vérification d'acceptation isolée construit les services, contrôle le health
+check, prouve la persistance après arrêt et confirme la suppression au reset :
+
+```bash
+pnpm verify:local-dev
 ```

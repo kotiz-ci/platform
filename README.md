@@ -28,18 +28,19 @@ monorepo Turborepo 2.3.
 
 > Vérifier : `bash scripts/onboarding-check.sh`
 
-### Lancer l'environnement local (8 commandes — Story 1.6 AC2)
+### Lancer l'environnement local
 
 ```bash
-git clone git@github.com:kotiz-ci/kotiz.git && cd kotiz
+git clone git@github.com:kotiz-ci/platform.git && cd platform
 corepack enable
 pnpm install
-cp .env.example .env && bash infra/docker/init-dev-secrets.sh   # Story 1.3a remplit init-dev-secrets.sh
-pnpm dev:up                                                      # Story 1.3a fournit les services
-pnpm db:migrate                                                  # Story 1.4
-pnpm db:seed                                                     # Story 1.4
-curl http://localhost:8080/actuator/health                       # → {"status":"UP"}
+pnpm dev:up
+curl http://localhost:8080/actuator/health # → {"status":"UP"}
 ```
+
+`pnpm dev:up` génère automatiquement le secret PostgreSQL local hors Git, construit
+le backend, démarre PostgreSQL 15.19 et attend que les deux services soient sains.
+Voir [`infra/docker/README.md`](infra/docker/README.md) pour l'arrêt et la remise à zéro.
 
 ### Démarrer une app spécifique
 
