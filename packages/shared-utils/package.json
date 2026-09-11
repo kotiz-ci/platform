@@ -11,12 +11,14 @@
       "default": "./src/index.ts"
     }
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "build": "echo \"(no build step — TS source consommée directement par bundlers Metro/Next)\"",
     "type-check": "tsc --noEmit",
-    "lint": "echo \"(lint sera complétée Sprint 2)\"",
-    "test": "echo \"(unit tests Jest — ajout Sprint 2)\"",
+    "lint": "eslint src --max-warnings 0",
+    "test": "node --experimental-test-coverage --test-coverage-include='src/*.ts' --test-coverage-exclude='src/index.ts' --test-coverage-lines=80 --test-coverage-functions=80 --test-coverage-branches=80 --test test/*.test.ts",
     "clean": "rm -rf dist"
   },
   "devDependencies": {

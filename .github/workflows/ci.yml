@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Affected quality gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
+      TURBO_SCM_HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Checkout pull request head
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Set up Eclipse Temurin
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: "21.0.12+8.0.LTS"
+          cache: maven
+          cache-dependency-path: apps/backend/pom.xml
+
+      - name: Activate the pinned pnpm version
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.12.3 --activate
+
+      - name: Install dependencies from the lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Check repository formatting
+        run: pnpm format:check:affected
+
+      - name: Lint affected Markdown
+        run: pnpm lint:markdown:affected
+
+      - name: Reject executable changes outside a coverage gate
+        run: pnpm coverage:scope:affected
+
+      - name: Run repository contract tests
+        run: pnpm test:repo
+
+      - name: Check affected workspaces
+        run: pnpm exec turbo run lint type-check test build --affected
+
+  security:
+    name: Secrets and critical vulnerabilities
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout full pull request history
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Detect secrets
+        run: >-
+          docker run --rm --volume "$PWD:/repo:ro"
+          ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+          git --config /repo/.gitleaks.toml --redact --verbose /repo
+
+      - name: Block non-waived critical dependency vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln
+          severity: "CRITICAL"
+          exit-code: "1"
+          ignore-unfixed: false
+          trivyignores: .trivyignore.yaml
+
+  ci-required:
+    name: CI required
+    if: always()
+    needs: [quality, security]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Require every CI gate to pass
+        env:
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          SECURITY_RESULT: ${{ needs.security.result }}
+        run: |
+          test "$QUALITY_RESULT" = success
+          test "$SECURITY_RESULT" = success
