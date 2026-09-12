@@ -56,7 +56,18 @@ jobs:
         run: pnpm lint:markdown:affected
 
       - name: Reject executable changes outside a coverage gate
+        if: >-
+          github.base_ref != 'main' ||
+          github.head_ref != 'develop' ||
+          github.event.pull_request.head.repo.full_name != github.repository
         run: pnpm coverage:scope:affected
+
+      - name: Verify the legacy coverage baseline for promotion
+        if: >-
+          github.base_ref == 'main' &&
+          github.head_ref == 'develop' &&
+          github.event.pull_request.head.repo.full_name == github.repository
+        run: pnpm coverage:scope:promotion
 
       - name: Run repository contract tests
         run: pnpm test:repo
