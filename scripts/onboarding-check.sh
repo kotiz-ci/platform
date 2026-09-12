@@ -19,33 +19,37 @@ ko()   { printf "${RED}❌ %s${NC}\n" "$1"; }
 START=$(date +%s)
 
 step "1/4  Node.js"
-if node --version | grep -q "v20.18"; then
-  ok "Node $(node --version)"
+NODE_VERSION=$(node --version 2>/dev/null || true)
+if [[ "$NODE_VERSION" == "v24.21.0" ]]; then
+  ok "Node $NODE_VERSION"
 else
-  ko "Node attendu v20.18.x, trouvé $(node --version 2>/dev/null || echo 'absent')"
-  echo "   → installer via : nvm install 20.18.0 && nvm use 20.18.0"
+  ko "Node attendu v24.21.0, trouvé ${NODE_VERSION:-absent}"
+  echo "   → installer via : nvm install 24.21.0 && nvm use 24.21.0"
   exit 1
 fi
 
 step "2/4  Corepack + pnpm"
 if ! command -v corepack >/dev/null 2>&1; then
-  ko "Corepack absent — installer Node 20+ via nvm"
+  ko "Corepack absent — installer Node 24.21.0 via nvm"
   exit 1
 fi
-if pnpm --version | grep -q "^9\.12\.3$"; then
-  ok "pnpm $(pnpm --version) (via Corepack)"
+PNPM_VERSION=$(pnpm --version 2>/dev/null || true)
+if [[ "$PNPM_VERSION" == "9.12.3" ]]; then
+  ok "pnpm $PNPM_VERSION (via Corepack)"
 else
-  ko "pnpm attendu 9.12.3, trouvé $(pnpm --version 2>/dev/null || echo 'absent')"
+  ko "pnpm attendu 9.12.3, trouvé ${PNPM_VERSION:-absent}"
   echo "   → corepack enable && corepack prepare pnpm@9.12.3 --activate"
   exit 1
 fi
 
-step "3/4  Java 17 (backend Spring Boot)"
-if java --version 2>&1 | grep -q "17\."; then
-  ok "Java $(java --version | head -1)"
+step "3/4  Java 21.0.12 (backend Spring Boot)"
+JAVA_VERSION=$(java --version 2>&1 | head -1 || true)
+if [[ "$JAVA_VERSION" =~ (^|[[:space:]])21\.0\.12([+[:space:]]|$) ]]; then
+  ok "Java $JAVA_VERSION"
 else
-  ko "Java 17 attendu — installer via : sdk install java 17.0.13-tem"
-  echo "   (skip non-bloquant si tu touches uniquement mobile/admin-web pour le moment)"
+  ko "Java 21.0.12 attendu, trouvé ${JAVA_VERSION:-absent}"
+  echo "   → installer via : sdk install java 21.0.12-tem"
+  exit 1
 fi
 
 step "4/4  Docker"
@@ -68,6 +72,6 @@ echo "  cp .env.example .env                        # Story 1.3a"
 echo "  bash infra/docker/init-dev-secrets.sh       # Story 1.3a"
 echo "  pnpm dev:up                                 # Story 1.3a"
 echo "  pnpm db:migrate && pnpm db:seed             # Story 1.4"
-echo "  curl http://localhost/actuator/health       # Smoke API"
+echo "  curl http://localhost:8080/actuator/health  # Smoke API"
 echo
 echo "Cible globale : ≤ 1 h chronométrée."

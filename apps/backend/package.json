@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "./mvnw --batch-mode --no-transfer-progress -DskipTests package",
+    "test": "./mvnw --batch-mode --no-transfer-progress verify",
+    "lint": "./mvnw --batch-mode --no-transfer-progress -DskipTests spotless:check",
+    "type-check": "./mvnw --batch-mode --no-transfer-progress -DskipTests compile",
+    "dev": "./mvnw spring-boot:run -Dspring-boot.run.profiles=local",
+    "clean": "./mvnw --batch-mode --no-transfer-progress clean"
+  }
+}

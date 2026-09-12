@@ -1,15 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["NODE_ENV", "CI"],
-  "globalDependencies": [".nvmrc", ".tool-versions", "tsconfig.base.json"],
+  "globalDependencies": [
+    ".markdownlint-cli2.jsonc",
+    ".nvmrc",
+    ".tool-versions",
+    "eslint.config.mjs",
+    "tsconfig.base.json"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**", ".next/**"]
+      "outputs": ["dist/**", "build/**", ".next/**", "target/*.jar", "target/classes/**"]
     },
     "test": {
       "dependsOn": ["build"],
-      "outputs": ["coverage/**"]
+      "outputs": ["coverage/**", "target/surefire-reports/**"]
     },
     "lint": {
       "outputs": []
