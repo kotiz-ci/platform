@@ -29,7 +29,7 @@ docker run --detach \
   --env POSTGRES_DB=kotiz_ci \
   --env POSTGRES_USER=kotiz_admin \
   --env POSTGRES_PASSWORD="$admin_password" \
-  --health-cmd 'pg_isready -U kotiz_admin -d kotiz_ci' \
+  --health-cmd 'pg_isready -h 127.0.0.1 -U kotiz_admin -d kotiz_ci' \
   --health-interval 1s \
   --health-timeout 3s \
   --health-retries 30 \
