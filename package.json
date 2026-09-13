@@ -23,6 +23,7 @@
     "format:check:affected": "node scripts/check-affected-format.mjs",
     "lint:markdown:affected": "node scripts/check-affected-markdown.mjs",
     "coverage:scope:affected": "node scripts/check-coverage-scope.mjs",
+    "coverage:scope:promotion": "node scripts/check-coverage-scope.mjs --promotion",
     "verify:github-flow": "node scripts/verify-github-flow.mjs",
     "verify:local-dev": "bash scripts/verify-local-dev.sh",
     "test:github-flow": "node --test scripts/verify-github-flow.test.mjs",
