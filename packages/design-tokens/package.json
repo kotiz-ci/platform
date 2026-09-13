@@ -12,6 +12,11 @@
       "import": "./dist/tokens.mjs",
       "require": "./dist/tokens.js"
     },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.mjs",
+      "require": "./dist/theme.js"
+    },
     "./css": "./dist/tokens.css",
     "./json": "./dist/tokens.json",
     "./tailwind": "./dist/tailwind-preset.js"
@@ -21,11 +26,12 @@
     "tokens.json"
   ],
   "scripts": {
+    "prepare": "node scripts/build-tokens.mjs",
     "build": "node scripts/build-tokens.mjs",
     "build:tokens": "node scripts/build-tokens.mjs",
     "type-check": "tsc --noEmit",
-    "lint": "echo \"(lint sur source minimal — sera complétée Sprint 2)\"",
-    "test": "node scripts/build-tokens.mjs && node scripts/verify-tokens.mjs",
+    "lint": "eslint scripts --max-warnings 0",
+    "test": "node --experimental-test-coverage --test-coverage-include='scripts/*.mjs' --test-coverage-exclude='scripts/*.test.mjs' --test-coverage-lines=80 --test-coverage-functions=80 --test-coverage-branches=80 --test scripts/token-validation.test.mjs",
     "clean": "rm -rf dist"
   },
   "devDependencies": {

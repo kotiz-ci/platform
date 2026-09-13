@@ -11,11 +11,13 @@
       "default": "./src/index.ts"
     }
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "build": "echo \"(Story 1.2 — generation OpenAPI → TS via openapi-typescript)\"",
     "type-check": "tsc --noEmit",
-    "lint": "echo \"(lint sur source minimal — sera complétée Sprint 2)\"",
+    "lint": "eslint src --max-warnings 0",
     "test": "echo \"(test sur generation Story 1.2)\"",
     "clean": "rm -rf dist"
   },

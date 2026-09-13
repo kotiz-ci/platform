@@ -1,0 +1,32 @@
+name: Close linked issues on develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  close-linked-issues:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout trusted develop revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: develop
+          persist-credentials: false
+
+      - name: Close issues referenced by the merged pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node scripts/close-linked-issues.mjs

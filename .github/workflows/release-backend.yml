@@ -1,0 +1,131 @@
+name: Release verified backend image
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  issues: write
+  packages: write
+
+concurrency:
+  group: release-backend-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+env:
+  EXPECTED_CERTIFICATE_IDENTITY: https://github.com/${{ github.repository }}/.github/workflows/release-backend.yml@refs/heads/main
+  IMAGE_REPOSITORY: ghcr.io/${{ github.repository }}/backend
+
+jobs:
+  publish:
+    name: Publish and sign verified backend image
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref == 'develop'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Locate the successful candidate CI run
+        id: candidate-run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUN_ID="$(gh api \
+            "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?event=pull_request&head_sha=$CANDIDATE_SHA&status=success&per_page=100" \
+            --jq '.workflow_runs | first | .id')"
+          test -n "$RUN_ID"
+          echo "run-id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Download the exact verified image artifact
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: backend-image-${{ github.event.pull_request.head.sha }}
+          path: /tmp/candidate
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.candidate-run.outputs.run-id }}
+
+      - name: Validate and load the verified image artifact
+        run: |
+          EXPECTED_DIGEST="$(cat /tmp/candidate/kotiz-backend.digest)"
+          echo "$EXPECTED_DIGEST" | grep -Eq '^sha256:[0-9a-f]{64}$'
+          docker load --input /tmp/candidate/kotiz-backend-image.tar
+          echo "EXPECTED_DIGEST=$EXPECTED_DIGEST" >> "$GITHUB_ENV"
+
+      - name: Authenticate to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Publish the verified image without rebuilding it
+        run: |
+          LOCAL_IMAGE="kotiz-backend:verification-$CANDIDATE_SHA"
+          IMAGE_TAG="$IMAGE_REPOSITORY:$CANDIDATE_SHA"
+          docker tag "$LOCAL_IMAGE" "$IMAGE_TAG"
+          docker push "$IMAGE_TAG" | tee /tmp/docker-push.log
+          PUBLISHED_DIGEST="$(awk '/digest: sha256:/ { print $3 }' /tmp/docker-push.log | tail -1)"
+          test "$PUBLISHED_DIGEST" = "$EXPECTED_DIGEST"
+          IMAGE_BY_DIGEST="$IMAGE_REPOSITORY@$PUBLISHED_DIGEST"
+          echo "PUBLISHED_DIGEST=$PUBLISHED_DIGEST" >> "$GITHUB_ENV"
+          echo "IMAGE_BY_DIGEST=$IMAGE_BY_DIGEST" >> "$GITHUB_ENV"
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
+
+      - name: Sign the immutable image with the workflow OIDC identity
+        run: cosign sign --yes "$IMAGE_BY_DIGEST"
+
+      - name: Verify the signature immediately
+        run: |
+          cosign verify \
+            --certificate-identity "$EXPECTED_CERTIFICATE_IDENTITY" \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            --output json \
+            "$IMAGE_BY_DIGEST" | tee /tmp/cosign-verification.json
+
+      - name: Write the durable S1 acceptance report
+        env:
+          CANDIDATE_RUN_ID: ${{ steps.candidate-run.outputs.run-id }}
+          PROMOTION_PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          mkdir -p /tmp/release
+          cp /tmp/cosign-verification.json /tmp/release/cosign-verification.json
+          {
+            echo "## Acceptation S1 — issue #36"
+            echo
+            echo "- PR de promotion : $PROMOTION_PR_URL"
+            echo "- Run de contrôle : https://github.com/$GITHUB_REPOSITORY/actions/runs/$CANDIDATE_RUN_ID"
+            echo "- Run de publication : https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "- Digest OCI : \`$PUBLISHED_DIGEST\`"
+            echo "- Image : \`$IMAGE_BY_DIGEST\`"
+            echo "- Signature Cosign vérifiée : oui"
+            echo "- Identité : \`$EXPECTED_CERTIFICATE_IDENTITY\`"
+            echo
+            echo "<details><summary>Preuve Cosign complète</summary>"
+            echo
+            echo '```json'
+            cat /tmp/cosign-verification.json
+            echo '```'
+            echo "</details>"
+          } > /tmp/release/acceptance-report.md
+          cat /tmp/release/acceptance-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Preserve the acceptance report as a workflow artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: s1-acceptance-${{ github.event.pull_request.merge_commit_sha }}
+          path: /tmp/release
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Record the acceptance report on issue 36
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment 36 --body-file /tmp/release/acceptance-report.md
