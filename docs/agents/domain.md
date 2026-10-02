@@ -12,17 +12,26 @@ KOTIZ utilise une documentation multi-context.
 Si un fichier n’existe pas encore, poursuivre silencieusement. Les documents de
 contexte sont créés progressivement lorsque les termes et décisions sont stabilisés.
 
-## Contextes prévus
+## Structure
 
-- `apps/backend/CONTEXT.md` — métier, API et persistance.
-- `apps/mobile/CONTEXT.md` — applications cliente et agent.
-- `apps/admin-web/CONTEXT.md` — console d’administration.
-- `packages/api-types/CONTEXT.md` — contrats partagés.
-- `packages/design-tokens/CONTEXT.md` — tokens et règles visuelles.
-- `packages/shared-utils/CONTEXT.md` — utilitaires partagés.
+`CONTEXT-MAP.md` est la source de vérité : il liste les onze bounded contexts
+backend, leur statut (actif, différé, retiré) et le chemin de leur `CONTEXT.md`.
 
-Les décisions transversales appartiennent à `docs/adr/`. Les décisions propres à
-un contexte appartiennent à `<contexte>/docs/adr/`.
+```
+/
+├── CONTEXT-MAP.md
+├── docs/adr/                          ← décisions transversales
+└── apps/backend/
+    ├── iam/
+    │   ├── CONTEXT.md
+    │   └── docs/adr/                  ← décisions propres au contexte
+    ├── savings/
+    └── …
+```
+
+Ne lire que les contextes concernés par le sujet. Un contexte différé ou retiré
+ne reçoit ni implémentation ni ticket actif (voir la règle d’activation de
+`CONTEXT-MAP.md`).
 
 ## Vocabulaire
 
