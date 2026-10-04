@@ -20,6 +20,17 @@ disposent pas encore d'un runner JSX instrumenté : leur modification est donc
 bloquée jusqu'à l'ajout de ce runner, ou jusqu'à l'extraction de leur logique dans
 un module `lib/*.ts` couvert.
 
+Ce contrôle de périmètre s'applique aux pull requests de tickets vers `develop`.
+La première promotion dédiée `develop` vers `main` contient aussi cinq fichiers
+mobiles intégrés avant l'activation de ce gate : `app.config.ts`,
+`app/_layout.tsx`, `app/health/index.tsx`, `app/index.tsx` et
+`eslint.config.js`. Le mode promotion les tolère uniquement lorsque leur blob
+Git correspond exactement aux empreintes legacy enregistrées dans
+`check-coverage-scope.mjs`. Toute modification de ces fichiers et tout nouvel
+exécutable non couvert restent bloqués. La promotion réexécute également les
+tests, le lint, le type-check et le build des workspaces affectés sur la
+différence complète avec `main`.
+
 ## Exceptions déclaratives
 
 - `packages/api-types/src/index.ts` ne contient actuellement que des types et un
