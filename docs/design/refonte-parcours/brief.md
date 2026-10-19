@@ -1,7 +1,7 @@
 # Brief design — KOTIZ, refonte UX des parcours clients MVP
 
 Date : 19 octobre 2026. Statut : brief validé par le PO en interview (grill-design). Aucun écran produit par ce brief.
-Sources : [PRD Design MVP v1.0](prd-design-mvp.md), [registre métier](../product/regles-metier-parcours-mvp.md), [matrice de couverture](matrice-couverture-socle.md), [spec UX](ux-design-specification.md), passation `_sessions/2026-10-18-handoff-claude-code-design.md`.
+Sources : [PRD Design MVP v1.0](../prd-design-mvp.md), [registre métier](../../product/regles-metier-parcours-mvp.md), [matrice de couverture](../matrice-couverture-socle.md), [spec UX](../ux-design-specification.md), passation `_sessions/2026-10-18-handoff-claude-code-design.md`.
 
 ## Problème
 
