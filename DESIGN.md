@@ -357,6 +357,73 @@ components:
     textColor: "{colors.text-primary}"
     typography: "{typography.body}"
     height: "48px"
+  root-header:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.title}"
+    height: "48px"
+  mask-toggle:
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.full}"
+    size: "48px"
+  goal-type-option:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    height: "96px"
+  goal-type-option-selected:
+    backgroundColor: "{colors.surface-brand-subtle}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.md}"
+    height: "96px"
+  goal-progress-amount:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.amount}"
+  goal-progress-bar:
+    backgroundColor: "{colors.border-default}"
+    rounded: "{rounded.full}"
+    height: "8px"
+  amount-field:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.amount}"
+    height: "48px"
+  date-choice:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.section}"
+    rounded: "{rounded.md}"
+    height: "48px"
+  date-choice-selected:
+    backgroundColor: "{colors.surface-brand-subtle}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.md}"
+    height: "48px"
+  confirm-dialog:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.title}"
+    rounded: "{rounded.xl}"
+    padding: "24px 20px 20px"
+  summary-preview:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.lg}"
+    padding: "20px"
+  summary-flow:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.lg}"
+    padding: "20px"
+  summary-row:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.label}"
+    height: "56px"
+  weekly-chip:
+    backgroundColor: "{colors.surface-canvas}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.label}"
+    rounded: "{rounded.full}"
+    height: "32px"
 ---
 
 # Design System: KOTIZ
@@ -471,7 +538,7 @@ Langage **plat**. La profondeur est réservée à ce qui passe au-dessus du cont
 | `xxl` | 32 | Surfaces larges |
 | `full` | 999 | Barre de progression, formes entièrement arrondies |
 
-Icônes fonctionnelles : trait, 24 dans une zone de 48 (20 pour les indicateurs). Illustrations : contours doux, aplats, mêmes proportions dans les raccourcis (48 / 56 / 96) et les choix d'objectif.
+Icônes fonctionnelles : trait, 24 dans une zone de 48 (20 pour les indicateurs). Illustrations : contours doux, aplats, mêmes proportions dans les raccourcis (48 / 56 / 96) et les choix d'objectif. Aucune illustration de type d'épargne n'évoque l'assurance ou les secours : ni croix, ni bouclier, ni parapluie, ni coche. Santé = cœur corail, Imprévus = coffret de réserve avec une pièce (**Décision PO du 19 octobre 2026**, critique du lot B) ; dessinées dans le canvas « KOTIZ — App cliente », à reporter dans le Design System avec le drapeau « objectif atteint ».
 
 ## Components
 
@@ -492,7 +559,7 @@ Le montant saisi est en `amount` (34 Bold), la devise à côté en 16, le libell
 - **Solde à gauche, QR toujours à droite.** Colonne solde : « Solde disponible » + œil, montant `amount`, « FCFA ». Colonne QR : QR sur fond blanc (rayon 12), logo K au centre (≤ 20 % de la surface, correction d'erreur H), puis « Mon QR » + Agrandir (vue 332, `17:951`).
 - Le QR rétrécit sans changer de place : 112, puis 92 et 64 sur carte étroite, pour qu'un montant à 7 chiffres garde ses 34 px.
 - Marge blanche du QR réduite à environ 2 modules (norme : 4), à tester sur de vrais téléphones. **Proposition non validée** : rétablir les 4 modules standard pour fiabiliser le scan au soleil.
-- **Ligne « Dernier dépôt »** sous un filet blanc à 16 % (`border-inverse-subtle`) : libellé, montant en `+`, statut en pastille 14 avec pictogramme (`Fait` + coche, `En attente` + horloge, `Échoué` + croix). Zone tactile de 48 qui ouvre l'opération. Elle remplace tout pourcentage de croissance : KOTIZ ne verse pas d'intérêts.
+- **Ligne « Dernier dépôt »** sous un filet blanc à 16 % (`border-inverse-subtle`) : libellé, montant en `+`, statut en pastille 14 avec pictogramme (`Fait` + coche, `En attente` + horloge, `Échoué` + croix). Zone tactile de 48 qui ouvre l'opération. Elle remplace tout pourcentage de croissance : KOTIZ ne verse pas d'intérêts. Libellé fixe « Dernier dépôt », pour les **dépôts seulement** : un retour d'une épargne vers le solde n'y apparaît jamais, il se lit dans les Dernières opérations (**Décision PO du 19 octobre 2026**, critique du lot B : un « + 8 000 F En attente » collé au solde se lit comme un solde plus haut).
 - Plus de ligne « Épargné ce mois-ci », plus de pousse au trait.
 
 **Correction F02 — vocabulaire et masquage :**
@@ -515,7 +582,7 @@ Fond `surface-canvas`, rayon 20, padding 16. Le titre doit passer à la ligne (l
   - `largeurBarre = min(pourcentage, 100) %` de la piste ;
   - `reste = cible − montantÉpargné`, affiché seulement s'il est positif.
 - Montant, objectif, pourcentage, barre et phrase de reste changent **ensemble** ; un écran qui en modifie un les met tous à jour.
-- **Cible atteinte ou dépassée** (**Décision PO du 19 octobre 2026**) : « Objectif atteint ✓ », barre pleine, montant réel affiché (par exemple « 52 000 F sur 50 000 F ») ; jamais un pourcentage supérieur à 100. Aucune fermeture automatique de l'épargne (`PRODUCT.md`).
+- **Cible atteinte ou dépassée** (**Décision PO du 19 octobre 2026**) : « Objectif atteint » en texte neutre (`text-primary` Semi Bold), **sans coche verte** : c'est un état de l'épargne, pas un « Fait » (critique du lot B, 19 octobre 2026) ; petite illustration drapeau sur le détail ; barre pleine, montant réel affiché (par exemple « 52 000 F sur 50 000 F ») ; jamais un pourcentage supérieur à 100. Aucune fermeture automatique de l'épargne (`PRODUCT.md`).
 - Le prototype Figma applique déjà ce principe pour l'affectation (variables `prototype/affectation/progress`, `progressText`, `barWidth`, `remainingText`). Le master `13:639` ne l'applique pas : à corriger à la migration.
 - Le composant affiche des montants calculés par l'application ; il ne calcule rien.
 
@@ -546,18 +613,35 @@ Option `65:559` (repos / sélectionnée / désactivée : la sélection se voit p
 Créés pendant les maquettes du lot A (canvas « KOTIZ — Lot A accès et accueil »), ajoutés au bundle `Kotiz.*` pour les lots B à F. Aucune couleur nouvelle ; les tailles hors échelle sont devenues des tokens : `rounded.xs` (6), `size-pin-slot` (56), `size-pastille` (64), `size-pastille-lg` (80), `size-step-dot` (32).
 - **`PageHeader`** — pages poussées : retour 48, titre (16 Semi Bold) ou « Étape n sur N » (14 Semi Bold `text-secondary`, à droite), lien discret à droite pour la sortie secondaire. Jamais trois boutons empilés en bas.
 - **`TextField`** (évolution) — vraie saisie, préfixe fixe en option (`+225` séparé par un filet), états vide / rempli / actif / erreur / désactivé, aide en 14.
+- **`DateChoice`** (nouveau, **Décision PO du 19 octobre 2026**, création d'épargne en 5 étapes) — réponse à « Pour quand ? » : options d'une ligne en liste, pleine largeur, 48 de haut, `label` 16 Semi Bold sur `surface`, bordure `border-default`, rayon 16 : « Dans 3 mois », « Dans 6 mois », « Dans 1 an », « Choisir une date » (ouvre `TextField` date, date à venir seulement). Sélection : `surface-brand-subtle` + bordure 2 `border-focus` + `aria-pressed` (même signature que le choix de type). Sous la sélection : « Pour le 19 avril 2027 » et « Ça fait environ 3 847 F par semaine. » (objectif ÷ semaines entières restantes, au moins 1, arrondi au franc supérieur : aide d'affichage, jamais un engagement ni un prélèvement). Le refus d'une date reste possible par un lien texte (« Pas de date pour l'instant ») : la question est posée, la réponse est facultative. Construit dans le canvas « KOTIZ — App cliente » (`.lb-dates`), à reporter dans le Design System.
 - **`Message`** — information, succès, erreur, chargement, **en attente** (ambre + horloge) ; pictogramme à la couleur du message.
 - **`PinSlots` + `PinPad`** — 4 à 6 cases (56, rayon 16, rétrécissent jusqu'à 40 seulement quand la place manque ; case vide en `surface-canvas` bordée `text-secondary`, visible au soleil), bordure verte sur la case suivante, rouge en erreur, jamais de chiffre affiché ; pavé 3 × 4, touches 52 en `title` sur `surface-canvas`. Longueurs non validées (G02).
 - **`CheckOption`** — carte d'accord de 72 : case dessinée 24 (`rounded.xs`), phrase, lien « Lire » de 48 ; vert doux et bordure verte une fois cochée.
 - **`IconPastille`** — pastille ronde 64 ou 80 avec une illustration du DS (40), teintes vert doux, bleu, violet, blanc ; une par écran.
 - **`NumberChip`** — numéro à vérifier en `title` dans une puce `surface-canvas`, jamais coupé.
-- **`StepTracker`** — étapes Fait / En attente / Pas encore (pastilles 32 vert doux + coche, ambre + horloge, vide) ; remplace toute illustration pendant une attente (compte, dépôt, retrait).
+- **`StepTracker`** — étapes Fait / En attente / Pas encore (pastilles 32 vert doux + coche, ambre + horloge, vide) ; remplace toute illustration pendant une attente (compte, dépôt, retrait). Sur un écran d'attente, l'étape terminée garde sa coche mais son mot est le participe de l'étape (« Envoyée »), **jamais « Fait »** : « Fait » reste le seul mot du succès confirmé (prop `word` de l'étape ; **Décision PO du 19 octobre 2026**, critique du lot B). Le lot A (E07) suivra au prochain passage du Design System.
 - **`StatusPill`** — mot + pictogramme : Fait (vert), En attente (ambre), Échoué (rouge), neutre.
 - **`GoalRow`** — ligne d'épargne compacte (illustration 32, nom, « 45 000 F sur 100 000 F », barre, chevron ; masqué : « ••• F sur ••• F », barre non annoncée au lecteur d'écran) empilée dans un bloc `goal-list` ; même règle de progression que la carte projet.
 - **`InfoLine`** — ligne discrète entre deux filets (information + phrase + chevron), une par écran ; sans suite, ni chevron ni bouton.
 - **`Shortcuts`** (évolution) — état désactivé (pastille `surface-canvas`, illustration à 40 %, libellé `text-secondary`) toujours accompagné d'une phrase qui dit pourquoi (« Rien à retirer pour l'instant. »).
 - **`TransactionRow`, `OperationStatus`** (évolution) — le statut « En attente » porte l'horloge KOTIZ (`Icones/horloge.svg`), dessinée dans le style des icônes.
 - Non promu : le hero vert de E01, tant que le PO n'a pas retenu le même traitement pour E08.
+
+### Composants promus depuis le lot B (décision PO du 19 octobre 2026)
+Nés des maquettes du lot B (section « Lot B — Épargne et retour au solde » du canvas « KOTIZ — App cliente »), ajoutés au bundle `Kotiz.*` pour les lots C à F. Aucune couleur nouvelle, aucun token nouveau : la barre de 8 et la puce de 32 réutilisent `space-8` et `size-step-dot`.
+- **`SummaryPreview`** (aussi `Kotiz.Summary.Preview`) — récapitulatif de création montré comme l'objet à créer (B06) : une carte `surface` + `border-default`, rayon 20 ; illustration 64, type en `text-secondary` (masqué s'il égale le nom), nom 24 Bold, objectif 34 Bold dominant, barre vide et « 0 F pour l'instant », date « d'ici le … » + puce « ≈ X F / semaine » ou « Pas de date · Ajouter » (toujours présente), « Modifier » 48 par ligne ; bloc « Détails » discret dessous. TalkBack lit la carte en une phrase. Pas de vert plein dans la carte.
+- **`SummaryFlow`** (aussi `Kotiz.Summary.Flow`) — récapitulatif d'un mouvement (B10) : montant dominant + « Modifier », « Depuis » ↓ « Vers » (illustrations 40, flèche `text-secondary`), lignes de conséquence (« Il restera », « Ton solde après »). **La ligne Frais est facultative** : absente pour un mouvement interne (retour au solde sans frais, décision PO), présente pour un dépôt ou un retrait seulement avec un frais confirmé.
+- **`RootHeader` + `MaskToggle`** — titre de racine 24 et œil 48 (barré quand c'est masqué, `aria-pressed`) ; l'œil se place aussi à côté d'un `PageHeader`.
+- **`GoalTypeOption`** dans **`GoalTypeGrid`** — grille 2 colonnes, illustration 48 + libellé 14, cible ≥ 96 ; sélection vert doux + bordure 2.
+- **`GoalProgress`** — détail d'une épargne : montant `amount`, devise `section` secondaire, « sur X F », barre 8 + %, phrase de reste ; cible atteinte : drapeau + « Objectif atteint » en `text-primary` (jamais la coche verte d'un « Fait ») ; masqué sans chiffre.
+- **`AmountField`** — `AmountInput` avec vraie saisie numérique (espaces à la frappe), raison ou erreur sous le trait, puce large « Tout remettre » sélectionnable. Le rayon 8 des puces de montant reste à rattacher à un token.
+- **`DateChoice`** — « Pour quand ? » : une option par ligne, 48, sélection vert doux + bordure 2 ; « Choisir une date » ouvre un `TextField type="date"`.
+- **`ConfirmDialog`** — voile `surface-scrim`, carte rayon 24 + `shadow-overlay`, titre 24, primaire + secondaire empilés ; seulement quand une perte réelle est possible.
+- **`GoalRow`** (évolution) — `state` `reached` (« Objectif atteint » neutre + drapeau, barre pleine, sans coche verte) et `closed` (« Fermée le … », sans montant ni barre) ; un filet entre les lignes quel que soit l'enveloppe.
+- **`StepTracker`** (évolution) — étape `sent` « Envoyée », distincte de « Fait » : aucun succès pendant une attente.
+- **`TextField`** (évolution) — `multiline` pour une note sur 3 lignes.
+- **Illustrations** : Santé devient un cœur (sans croix), Imprévus un coffret de réserve (sans bouclier), drapeau « objectif atteint » ajouté (groupe Objectifs). L'ancienne Santé (trousse à croix) et l'ancienne Précaution (bouclier) sont archivées (groupe Archives), sans suppression.
+- **Laissés de côté** : `DateField` (le sélecteur natif Android reste à confirmer côté dev ; `TextField type="date"` suffit en attendant) et la variante « mouvement interne » de `TransactionRow` (« Vers mon solde », « Depuis mon solde »), à décider avec le lot C.
 
 ### Logos opérateurs — `225:959` Wave, `225:961` Orange Money, `225:963` MTN MoMo, `225:965` Moov Money
 Logos officiels, non recolorés, cadre 64 × 48. **Wave : symbole seul, sans inscription.**

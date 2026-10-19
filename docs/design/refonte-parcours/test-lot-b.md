@@ -23,13 +23,13 @@ Feuille de relevé conseillée : une ligne par tâche, colonnes Réussie · Hés
 | Tabaski | Fête | 52 000 F | 50 000 F | objectif atteint (scénario « 3 actives ») |
 | Moto | Véhicule | 0 F | — | fermée le 12 oct. |
 
-Solde disponible : 12 400 FCFA. Scénarios du menu : « 0 épargne » (accueil vide), « 2 actives » (École Awa, Boutique), « 3 actives » (+ Tabaski), « retour échoué », « retour en attente ». Frais du retour : affichés « à confirmer » (G01).
+Solde disponible : 12 400 FCFA. Scénarios du menu : « 0 épargne » (accueil vide), « 2 actives » (École Awa, Boutique), « 3 actives » (+ Tabaski), « retour échoué », « retour en attente ». Retour au solde : sans frais (Décision PO du 19 octobre 2026).
 
 ## Nombre d'écrans par chemin principal
 
 | Parcours | Écrans | Séquence |
 |---|---|---|
-| P1 Créer une épargne | 5 (6 avec B05) | B02 B03 B04 B06 B07 |
+| P1 Créer une épargne | 7 (5 étapes + résultat + détail) | B02 B03 B04 B05 B06 B17 B07 |
 | P2 Voir mes épargnes | 1 | B01 |
 | P3 Suivre une épargne | 2 | B01 B07 |
 | P4 Modifier | 2 | B07 B08 |
@@ -39,15 +39,16 @@ Solde disponible : 12 400 FCFA. Scénarios du menu : « 0 épargne » (accueil v
 | P7 Limite atteinte | 1 | B01 (état) ou B15 |
 | P8 Masquage | 2 | B01 B07 |
 
-## P1 — Créer une épargne (5 écrans)
+## P1 — Créer une épargne (5 étapes, 7 écrans)
 
-Départ : scénario « 0 épargne », accueil vide (H01).
+Départ : scénario « 0 épargne », accueil vide (H01). Version du 19 octobre 2026 (Décision PO : création en 5 étapes, date et nom toujours présentés, remplace Q2) : à rejouer avec la conjointe, les autres parcours du lot B sont validés.
 
 | # | Tâche lue à la testeuse | Réussite attendue | À observer |
 |---|---|---|---|
-| 1 | « Tu veux mettre de côté 100 000 FCFA pour l'école de ta fille. Crée cette épargne. Arrête-toi quand c'est fini. » | Arrive sur « Ton épargne est créée », dit « c'est fait » ; sans nom saisi, l'épargne s'appelle « École » | Trouve l'entrée depuis l'accueil ? Hésite sur la grille de types ? Pense-t-elle devoir mettre de l'argent tout de suite ? |
-| 2 | « Recommence, mais appelle-la "École Awa" et mets la date du 30 juin 2027. » | Trouve « Ajoute un nom, une note ou une date › » sur le récapitulatif, saisit, revient au récapitulatif, crée | **Chronométrer** : plus de 10 s pour trouver où mettre le nom → à signaler : la personnalisation depuis le récapitulatif (Décision PO du 19 octobre 2026, Q2) serait à revoir. Le récapitulatif montre-t-il une ligne vide pour la note ? |
-| 3 | Sur « Ton épargne est créée » : « Combien d'argent y a-t-il dans cette épargne ? » | « Rien, 0 F » ; l'objectif est 100 000 F | Confond-elle objectif et argent déposé ? Croit-elle que 100 000 F ont été pris sur son solde ? |
+| 1 | « Tu veux mettre de côté 100 000 FCFA pour l'école de ta fille. Tu ne sais pas encore pour quand. Crée cette épargne. Arrête-toi quand c'est fini. » | Quel projet → École ; Combien → 100 000 ; Pour quand → « Pas de date pour l'instant » ; garde le nom « École » ; le récapitulatif montre « Date : Pas de date » ; arrive sur « Ton épargne est créée », dit « c'est fait » | Trouve-t-elle « Pas de date pour l'instant », ou se croit-elle obligée de choisir une date ? Les 5 étapes la fatiguent-elles (compter les hésitations) ? Pense-t-elle devoir mettre de l'argent tout de suite ? |
+| 2 | « Maintenant, tu veux 50 000 FCFA pour ta boutique dans 6 mois. Appelle-la "Boutique Adjamé". Crée-la. » Puis, sur le récapitulatif, avant de créer : « Combien dois-tu mettre chaque semaine ? Et elle s'appelle comment ? » | Commerce → 50 000 → « Dans 6 mois » → remplace « Commerce » par « Boutique Adjamé » ; répond « environ 1 924 F par semaine » et « Boutique Adjamé » ; le récapitulatif montre Projet, Nom, Objectif, Date (19 avril 2027), sans ligne Note | Efface-t-elle le nom prérempli ou écrit-elle à la suite ? Lit-elle le montant par semaine sur B04 ou au récapitulatif ? Le prend-elle pour une obligation ou un prélèvement automatique ? |
+| 3 | Toujours sur le récapitulatif : « Finalement, ce sera pour le 30 juin 2027. Change la date, puis crée. » | « Modifier » sur la ligne Date → « Choisir une date » → 30 juin 2027 → Continuer ramène au récapitulatif (environ 1 389 F par semaine) → Créer | Trouve-t-elle « Modifier » sur la bonne ligne ? Est-elle surprise de revenir directement au récapitulatif ? |
+| 4 | Sur « Ton épargne est créée » : « Combien d'argent y a-t-il dans cette épargne ? » | « Rien, 0 F » ; l'objectif est 50 000 F | Confond-elle objectif et argent déposé ? Croit-elle que de l'argent a été pris sur son solde ? |
 
 ## P2 — Voir mes épargnes (1 écran)
 
@@ -66,7 +67,7 @@ Départ : scénario « 3 actives », onglet Épargnes.
 | # | Tâche | Réussite attendue | À observer |
 |---|---|---|---|
 | 1 | « Ouvre École Awa. Combien te manque-t-il pour ton objectif ? » | « 55 000 F » (phrase de reste) | Lit-elle la phrase ou calcule-t-elle ? Le % l'aide-t-il ou la gêne-t-il ? |
-| 2 | « Ouvre Tabaski. Que s'est-il passé ? Ton argent a-t-il bougé tout seul ? » | « Objectif atteint ; l'argent est toujours dedans, rien n'a bougé » | Confond-elle « Objectif atteint ✓ » avec un dépôt « Fait » ou un transfert ? Voit-elle 52 000 F (pas de % > 100) ? |
+| 2 | « Ouvre Tabaski. Que s'est-il passé ? Ton argent a-t-il bougé tout seul ? » | « Objectif atteint ; l'argent est toujours dedans, rien n'a bougé » | Confond-elle « Objectif atteint » avec un dépôt « Fait » ou un transfert ? Voit-elle 52 000 F (pas de % > 100) ? |
 | 3 | « Ouvre Boutique. Le retour de 2 000 F vers ton solde est-il arrivé ? » | « Non, il est en attente » | Distingue « En attente » de « Fait » sans aide ? Remarque-t-elle que « Remettre sur mon solde » est désactivé, avec la raison ? |
 
 ## P4 — Modifier une épargne (2 écrans)
@@ -76,7 +77,7 @@ Départ : B07 École Awa.
 | # | Tâche | Réussite attendue | À observer |
 |---|---|---|---|
 | 1 | « Finalement, tu veux atteindre 120 000 FCFA. Change ton objectif. » | Modifier → objectif 120 000 → Enregistrer ; B07 affiche « sur 120 000 F » et « Encore 75 000 F » | Trouve « Modifier » en haut à droite ? Pense-t-elle que de l'argent a bougé ? |
-| 2 | « Change aussi le type : ce n'est plus l'école, c'est la boutique. » | Voit « Type : École — ne change pas » et dit que ce n'est pas possible | Frustration ? Cherche-t-elle un contournement ? (type fixe au MVP, Décision PO du 19 octobre 2026 ; noter la frustration éventuelle sans changer la règle) |
+| 2 | « Change aussi le type : ce n'est plus l'école, c'est la boutique. » | Voit « Projet : École — ne change pas » et dit que ce n'est pas possible | Frustration ? Cherche-t-elle un contournement ? (type fixe au MVP, Décision PO du 19 octobre 2026 ; noter la frustration éventuelle sans changer la règle) |
 | 3 | « Efface le nom et la date, puis reviens sans enregistrer. » | Dialogue « Quitter sans enregistrer ? » → Quitter ; l'épargne garde ses valeurs | Comprend-elle que rien n'a changé ? |
 
 ## P5 — Remettre de l'argent sur mon solde (5 écrans)
@@ -86,7 +87,7 @@ Départ : B07 École Awa (45 000 F).
 | # | Tâche | Réussite attendue | À observer |
 |---|---|---|---|
 | 1 | « Tu as besoin de 20 000 FCFA de l'école pour le marché. Remets-les sur ton solde. Arrête-toi quand c'est fini. » | Montant 20 000 → récapitulatif → PIN → « Fait » ; dit « c'est fait » | Avant le PIN, demander : « D'où part l'argent, où va-t-il ? » (attendu : de École Awa vers le solde). Pense-t-elle que l'argent part sur son Mobile Money ? |
-| 2 | Après la tâche 1 : « Combien reste-t-il dans École Awa ? L'épargne existe-t-elle encore ? » | « 25 000 F ; oui, elle est toujours là » | Craint-elle d'avoir cassé son épargne ? |
+| 2 | Après la tâche 1 : « Combien reste-t-il dans École Awa ? L'épargne existe-t-elle encore ? » | « 25 000 F ; oui, elle est toujours là » | Craint-elle d'avoir cassé son épargne ? Après « Voir mon solde » : explique-t-elle seule pourquoi le solde est à 32 400 F (la carte garde « Dernier dépôt », le retour est dans les Dernières opérations) ? |
 | 3 | Scénario « retour en attente » (Boutique sans retour en cours) : « Remets tout ce qu'il y a dans Boutique sur ton solde. » | Utilise « Tout remettre » (8 000 F) ; sur le résultat, répond « en attente » et ne recommence pas | Trouve « Tout remettre » ? Voit « Boutique sera à 0 F. Elle reste ouverte. » ? Tente-t-elle de refaire l'opération ? |
 
 ## P6 — Fermer une épargne (3 écrans à zéro)
@@ -121,4 +122,4 @@ Départ : scénario « 2 actives », accueil, montants visibles.
 
 ## Synthèse attendue après la séance
 
-Pour chaque parcours : tâches réussies sur 3, écrans d'hésitation, réponses « c'est fait ? » erronées. Une tâche échouée deux fois (PO et conjointe) devient une correction prioritaire avant la critique (`critique-design`). Décisions PO du 19 octobre 2026 à confirmer par le test (sans les rouvrir d'office) : Q2 personnalisation depuis le récapitulatif (P1-2), Q3 résultat visible en masqué (P8-3), Q4 boutons sur épargne atteinte (P3-2), lien « Fermer cette épargne ? » après un retour total (P6-2), type fixe (P4-2).
+Pour chaque parcours : tâches réussies sur 3, écrans d'hésitation, réponses « c'est fait ? » erronées. Une tâche échouée deux fois (PO et conjointe) devient une correction prioritaire avant la critique (`critique-design`). Décisions PO du 19 octobre 2026 à confirmer par le test (sans les rouvrir d'office) : Q2 remplacée par la création en 5 étapes (P1-1 à P1-3, à rejouer), Q3 résultat visible en masqué (P8-3), Q4 boutons sur épargne atteinte (P3-2), lien « Fermer cette épargne ? » après un retour total (P6-2), type fixe (P4-2).
