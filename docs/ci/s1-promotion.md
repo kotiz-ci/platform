@@ -1,6 +1,6 @@
 # Promotion du lot S1
 
-Cette procédure applique l'ADR-0002 en gouvernance solo. Elle ne concerne que
+Cette procédure applique l'ADR-0017 en gouvernance solo. Elle ne concerne que
 la promotion du lot intégré de `develop` vers `main`.
 
 ## Avant la fusion
@@ -17,7 +17,7 @@ la promotion du lot intégré de `develop` vers `main`.
 
    GitHub ne permet pas à l'auteur d'approuver sa propre pull request. Ce
    commentaire d'un propriétaire, membre ou collaborateur constitue donc
-   l'auto-revue humaine documentée prévue par l'ADR-0002.
+   l'auto-revue humaine documentée prévue par l'ADR-0017.
 
 5. Relancer le run CI après le commentaire. Le contrôle
    `S1 promotion acceptance` repart d'un checkout frais et exécute

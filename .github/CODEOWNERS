@@ -7,7 +7,7 @@
 /apps/backend/                 @desire-kouadio @backend-dev2
 /packages/api-types/           @desire-kouadio @backend-dev2
 
-# Mobile (React Native / Expo — cf. docs/adr/0004-use-expo-mobile-variants.md)
+# Mobile (React Native / Expo — cf. docs/adr/0019-use-expo-mobile-variants.md)
 /apps/mobile/                  @mobile-dev3
 /packages/design-tokens/       @mobile-dev3 @fullstack-dev4
 
