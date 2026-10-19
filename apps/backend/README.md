@@ -60,8 +60,8 @@ seront ajoutées uniquement par les vertical slices qui les utilisent.
 
 ## Référence
 
-- [ADR-0001 — contextes actifs du MVP](../../docs/adr/0001-limit-mvp-database-to-active-contexts.md)
-- [ADR-0003 — runtimes supportés](../../docs/adr/0003-use-supported-s1-runtime-lines.md)
+- [ADR-0016 — contextes actifs du MVP](../../docs/adr/0016-limit-mvp-database-to-active-contexts.md)
+- [ADR-0018 — runtimes supportés](../../docs/adr/0018-use-supported-s1-runtime-lines.md)
 - Story 1.1 AC1 — init Spring Initializr
 - Story 1.4 — DB + migrations + ledger double-entrée
 - Story 1.5 — observability (logging Loki + masquage PII)
