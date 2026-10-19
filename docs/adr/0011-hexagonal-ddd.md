@@ -21,7 +21,7 @@ classification: Confidentiel — Usage interne
 ## 1. Contexte
 
 L'ADR-002 a fixé un **monolithe modulaire Spring Boot** (9 modules). Le document DDD stratégique
-du 26 juin 2026 (`KOTIZ_DDD_Context_Map_Glossaire_v1.md`) a affiné cela en **11 bounded contexts**
+du 26 juin 2026 (`docs/architecture/ddd-context-map-glossaire.md`) a affiné cela en **11 bounded contexts**
 et fixé le langage ubiquitaire.
 
 Il manquait la décision d'**architecture interne** : _comment_ structure-t-on le code à
@@ -179,4 +179,4 @@ donc testables par un test unitaire pur (sans Spring ni base) — base de l'ATDD
 
 ---
 
-_ADR produit en atelier guidé — 26 juin 2026. Découle de `KOTIZ_DDD_Context_Map_Glossaire_v1.md`._
+_ADR produit en atelier guidé — 26 juin 2026. Découle de `docs/architecture/ddd-context-map-glossaire.md`._

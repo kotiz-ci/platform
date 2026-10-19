@@ -8,7 +8,7 @@ project_name: KOTIZ
 wds_phase: 1
 brief_level: simplified
 sources:
-  - 01_Business/KOTIZ_Identite_Produit.md
+  - KOTIZ/Société/Business/KOTIZ_Identite_Produit.md
   - docs/product/prd-mvp.md
   - docs/design/ux-design-specification.md
   - docs/adr/0009-mobile-rn-expo.md
@@ -197,4 +197,4 @@ KOTIZ **digitalise le signé signé** sans le dénaturer : l'agent KOTIZ remplac
 ---
 
 _Produit par Freya (WDS Designer) · Phase 1 Product Brief · 3 juin 2026_
-_Sources : KOTIZ_Identite_Produit.md · KOTIZ_PRD_MVP_v1.1.md · KOTIZ_UX_Design_Specification.md_
+_Sources : KOTIZ/Société/Business/KOTIZ_Identite_Produit.md · docs/product/prd-mvp.md · docs/design/ux-design-specification.md_

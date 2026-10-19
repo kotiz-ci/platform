@@ -217,10 +217,10 @@ Le workflow technique applique les règles suivantes via des permissions granula
 
 ## Métadonnées
 
-| Version           | 2.1                                                  |
-| ----------------- | ---------------------------------------------------- |
-| Date              | 3 juin 2026                                          |
-| Auteurs           | Desiré Kouadio (CTO), Henoch Lonzo Koffi (Fondateur) |
-| Remplace          | KOTIZ_Plan_Securite.docx v1.0 (21 avril 2026)        |
-| Référence interne | KOTIZ/ARCH/SEC-002                                   |
-| Prochaine revue   | Avant lancement MVP / Sprint 6                       |
+| Version           | 2.1                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------- |
+| Date              | 3 juin 2026                                                                                               |
+| Auteurs           | Desiré Kouadio (CTO), Henoch Lonzo Koffi (Fondateur)                                                      |
+| Remplace          | KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/KOTIZ_Plan_Securite.docx v1.0 (21 avril 2026) |
+| Référence interne | KOTIZ/ARCH/SEC-002                                                                                        |
+| Prochaine revue   | Avant lancement MVP / Sprint 6                                                                            |

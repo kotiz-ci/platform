@@ -3,7 +3,7 @@ title: KOTIZ — Plan DevOps et Infrastructure
 subtitle: Infrastructure, CI/CD, déploiement et monitoring
 version: 2.0
 date: 2026-04-24
-status: ACTIVE (remplace KOTIZ_Plan_DevOps.docx v1.0 du 21 avril 2026)
+status: ACTIVE (remplace KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/KOTIZ_Plan_DevOps.docx v1.0 du 21 avril 2026)
 authors:
   - Desiré Kouadio (CTO)
   - Henoch Lonzo Koffi (Fondateur)
@@ -167,10 +167,10 @@ Cf. v1.0 §6. Déploiement standard et rollback d'urgence conservés.
 
 ## Métadonnées
 
-| Version           | 2.0                                                  |
-| ----------------- | ---------------------------------------------------- |
-| Date              | 24 avril 2026                                        |
-| Auteurs           | Desiré Kouadio (CTO), Henoch Lonzo Koffi (Fondateur) |
-| Remplace          | KOTIZ_Plan_DevOps.docx v1.0 (21 avril 2026)          |
-| Référence interne | KOTIZ/ARCH/DEVOPS-002                                |
-| Prochaine revue   | Sprint 3 — avant premier déploiement staging         |
+| Version           | 2.0                                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------------- |
+| Date              | 24 avril 2026                                                                                           |
+| Auteurs           | Desiré Kouadio (CTO), Henoch Lonzo Koffi (Fondateur)                                                    |
+| Remplace          | KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/KOTIZ_Plan_DevOps.docx v1.0 (21 avril 2026) |
+| Référence interne | KOTIZ/ARCH/DEVOPS-002                                                                                   |
+| Prochaine revue   | Sprint 3 — avant premier déploiement staging                                                            |

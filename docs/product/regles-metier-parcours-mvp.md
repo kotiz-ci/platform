@@ -2,7 +2,7 @@
 
 ## Statut et usage
 
-Registre des decisions explicitement validees par le PO pendant le cadrage design. Source detaillee : [PRD design](KOTIZ_PRD_Design_MVP_Figma.md), sections 3, 7, 12.1 et 12.2. Ce document distingue regles metier, representation UX et parametres non tranches. Il ne remplace pas les exigences du partenaire ni les criteres des tickets de developpement.
+Registre des decisions explicitement validees par le PO pendant le cadrage design. Source detaillee : [PRD design](../design/prd-design-mvp.md), sections 3, 7, 12.1 et 12.2. Ce document distingue regles metier, representation UX et parametres non tranches. Il ne remplace pas les exigences du partenaire ni les criteres des tickets de developpement.
 
 Les decisions anterieures restent dans le PRD : ce premier registre n'est pas une migration exhaustive du projet. Aucun statut implemente n'est revendique ; aucun ticket distant n'est modifie. Chaque changement approuve doit etre reporte dans les deux documents concernes avant production finale.
 
@@ -63,7 +63,7 @@ Les decisions anterieures restent dans le PRD : ce premier registre n'est pas un
 
 ## Perimetre de la baseline du socle
 
-FIN-01 a FIN-05 valides ensemble par PO : Sante, etoiles, biometrie, rappels volontaires et promotions dans lots ulterieurs ; carnet signe-signe inclus. Score financier distinct des etoiles. Source detaillee PRD section 15 ; [matrice de couverture](KOTIZ_Matrice_Couverture_Socle.md). Aucun ticket distant modifie ni implementation deduite de cette validation.
+FIN-01 a FIN-05 valides ensemble par PO : Sante, etoiles, biometrie, rappels volontaires et promotions dans lots ulterieurs ; carnet signe-signe inclus. Score financier distinct des etoiles. Source detaillee PRD section 15 ; [matrice de couverture](../design/matrice-couverture-socle.md). Aucun ticket distant modifie ni implementation deduite de cette validation.
 
 ## Points non tranches et dependances
 

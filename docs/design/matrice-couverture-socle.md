@@ -2,7 +2,7 @@
 
 ## Verdict et limites
 
-Baseline produit du socle validee par le PO, y compris FIN-01 a FIN-05. [PRD v1.0](KOTIZ_PRD_Design_MVP_Figma.md), [registre metier](KOTIZ_Regles_Metier_Parcours_MVP.md), [catalogue des 22 parcours](2026-10-08-finalisation/catalogue-parcours-clients-validation.md).
+Baseline produit du socle validee par le PO, y compris FIN-01 a FIN-05. [PRD v1.0](prd-design-mvp.md), [registre metier](../product/regles-metier-parcours-mvp.md), catalogue des 22 parcours (`KOTIZ/_archive/2026-10-docs-avant-migration/06_Design/2026-10-08-finalisation/catalogue-parcours-clients-validation.md`).
 
 Les 18 premieres familles du catalogue ont une correspondance dans le socle, avec parties explicitement reportees pour 14 (etoiles), 15 (biometrie) et 17 (rappels/promotions). Les quatre parcours assurance 19-22 sont reportes. Une famille couverte n'est pas une garantie que toutes ses exceptions techniques ou partenaire sont fermees.
 

@@ -1,12 +1,12 @@
 ---
 validationTarget: "docs/product/prd-mvp.md"
 validationDate: "2026-04-23"
-validationPreviousReport: "KOTIZ_PRD_MVP_validation.md (v1.0, note 3/5 Adequate)"
+validationPreviousReport: "KOTIZ/_archive/2026-10-docs-avant-migration/04_Produit/KOTIZ_PRD_MVP_validation.md (v1.0, note 3/5 Adequate)"
 inputDocuments:
-  - "KOTIZ_PRD_MVP_v1.1.md (PRD v1.1, 24 avril 2026)"
-  - "KOTIZ_Catalogue_Modules.docx (19 modules V1/V2/V3)"
+  - "docs/product/prd-mvp.md (PRD v1.1, 24 avril 2026)"
+  - "KOTIZ/_archive/2026-10-docs-avant-migration/04_Produit/KOTIZ_Catalogue_Modules.docx (19 modules V1/V2/V3)"
   - "brainstorming-session-2026-04-23-1800.md (79 idées, 7 décisions produit)"
-  - "KOTIZ_PRD_MVP_validation.md (rapport validation v1.0)"
+  - "KOTIZ/_archive/2026-10-docs-avant-migration/04_Produit/KOTIZ_PRD_MVP_validation.md (rapport validation v1.0)"
 validationStepsCompleted:
   - "step-v-01-discovery"
   - "step-v-02-format-detection"

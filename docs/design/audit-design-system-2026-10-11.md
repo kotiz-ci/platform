@@ -12,7 +12,7 @@ Captures examinées : planches boutons 75:770, champs 75:777, messages 75:1105, 
 
 Catalogue composants : 62 propriétaires natifs (composants hors sets + sets), dont 12 sets ; 44 descriptions non vides, complétées par des guides visibles. Sept styles typographiques Inter. Variables, styles et propriétés réellement inspectés ; leur présence n'est pas assimilée à une validation d'usage.
 
-[Mesures détaillées](2026-10-11-audit-composants-mesures.json) : contrastes calculés depuis couleurs solides et fond opaque ancêtre le plus proche. Valeurs arrondies pour lecture ; ni transparences, ni arrière-plans non résolus, ni conformité globale évalués par cette méthode.
+Mesures détaillées (`KOTIZ/_archive/2026-10-docs-avant-migration/06_Design/2026-10-11-audit-composants-mesures.json`) : contrastes calculés depuis couleurs solides et fond opaque ancêtre le plus proche. Valeurs arrondies pour lecture ; ni transparences, ni arrière-plans non résolus, ni conformité globale évalués par cette méthode.
 
 ## Ce qui est effectivement solide
 

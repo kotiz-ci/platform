@@ -8,7 +8,7 @@ decision_makers:
 related_adrs:
   - ADR-001 (Spring Boot)
   - ADR-002 (Monolithe modulaire)
-supersedes: Modèle Score 0-1000 4 paliers de KOTIZ_PRD_MVP.docx v1.0 (19 avril 2026)
+supersedes: Modèle Score 0-1000 4 paliers de KOTIZ/_archive/2026-10-docs-avant-migration/04_Produit/KOTIZ_PRD_MVP.docx v1.0 (19 avril 2026)
 references:
   - Code/platform/docs/product/prd-mvp.md §5.4
   - _archive/2026-bmad/_bmad-output/brainstorming/brainstorming-session-2026-04-23-1800.md idée #24

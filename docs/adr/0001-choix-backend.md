@@ -1,6 +1,6 @@
 # ADR-001 — Choix du framework backend
 
-> Converti depuis `KOTIZ_ADR_001_Choix_Backend.docx` le 2026-10-19 (KOTIZ SAS, avril 2026, version 1.0). Original archivé dans `KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/`.
+> Converti depuis `docs/adr/0001-choix-backend.md` le 2026-10-19 (KOTIZ SAS, avril 2026, version 1.0). Original archivé dans `KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/`.
 
 ## 1. Contexte et problématique
 

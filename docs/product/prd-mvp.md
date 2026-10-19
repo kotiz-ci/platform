@@ -1053,7 +1053,7 @@ La viralité est une brique économique du MVP, pas un « nice-to-have ». Sans 
 
 ## 13. Out of Scope (MVP)
 
-Les éléments ci-dessous sont volontairement repoussés hors du périmètre MVP. Chacun fait l'objet d'une fiche individuelle dans `KOTIZ_Catalogue_Modules.docx` et devra avoir son propre PRD dédié avant activation. **AUCUN module optionnel ne sera traité en parallèle du MVP** — Henoch arbitre lequel attaquer après stabilisation.
+Les éléments ci-dessous sont volontairement repoussés hors du périmètre MVP. Chacun fait l'objet d'une fiche individuelle dans `KOTIZ/_archive/2026-10-docs-avant-migration/04_Produit/KOTIZ_Catalogue_Modules.docx` et devra avoir son propre PRD dédié avant activation. **AUCUN module optionnel ne sera traité en parallèle du MVP** — Henoch arbitre lequel attaquer après stabilisation.
 
 ### Repoussé en V2 (après installation marque)
 

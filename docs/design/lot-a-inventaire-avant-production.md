@@ -2,7 +2,7 @@
 
 Date : 11 octobre 2026. Statut : inspection Figma et préparation, **aucune production du lot A**. Trois agents ont croisé règles métier, couverture et cohérence UI ; inspection Figma centralisée par l'orchestrateur.
 
-Complément : l'[audit professionnel des composants](KOTIZ_Audit_Design_System_2026-10-11.md) précise désormais les conditions de réemploi. Le tableau ci-dessous est un inventaire de sources, pas une validation générale de leur qualité ni de tous leurs usages.
+Complément : l'[audit professionnel des composants](audit-design-system-2026-10-11.md) précise désormais les conditions de réemploi. Le tableau ci-dessous est un inventaire de sources, pas une validation générale de leur qualité ni de tous leurs usages.
 
 ## Autorité et périmètre
 
@@ -90,7 +90,7 @@ Conserver la Direction 04 : Inter, logo, illustrations, neutres et vert existant
 
 Le benchmark du 8 octobre documente les observations Djamo et Wave ; l'inspection visuelle Revolut y était non aboutie. Les pages officielles Djamo, Wave et Revolut et les liens d'assets Djamo/Revolut ont été reconsultés le 11 octobre. Leur téléchargement local a échoué (résolution réseau), donc aucune comparaison visuelle actualisée ou inspection des parcours complets concurrents n'est revendiquée. La référence Wave choisie antérieurement par le PO reste celle du benchmark, sans transfert de données personnelles.
 
-Références : [benchmark consigné](2026-10-08-finalisation/benchmark-visuel-2026-10-08.md), [Djamo](https://www.djamo.com/fr-ci), [Wave](https://www.wave.com/fr/), [Revolut](https://www.revolut.com/en-DK/ways-to-bank/mobile-banking/). Aucun tarif, service, couleur de marque ou protocole de ces produits transféré à KOTIZ.
+Références : benchmark consigné (`KOTIZ/_archive/2026-10-docs-avant-migration/06_Design/2026-10-08-finalisation/benchmark-visuel-2026-10-08.md`), [Djamo](https://www.djamo.com/fr-ci), [Wave](https://www.wave.com/fr/), [Revolut](https://www.revolut.com/en-DK/ways-to-bank/mobile-banking/). Aucun tarif, service, couleur de marque ou protocole de ces produits transféré à KOTIZ.
 
 ## Liens hérités : preuves et action nécessaire
 

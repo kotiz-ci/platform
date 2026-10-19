@@ -3,7 +3,7 @@ title: KOTIZ — ERD (Modèle de données commenté)
 subtitle: Schéma relationnel et dictionnaire de données
 version: 2.0
 date: 2026-04-24
-status: ACTIVE (remplace KOTIZ_ERD.docx v1.0 du 21 avril 2026)
+status: ACTIVE (remplace KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/KOTIZ_ERD.docx v1.0 du 21 avril 2026)
 authors:
   - Desiré Kouadio (CTO)
   - Henoch Lonzo Koffi (Fondateur, PO)
@@ -466,12 +466,12 @@ La modification de `scoring_scores` (ajout `star_rating`, `tier_label`, `numeric
 
 ## Métadonnées
 
-| Version           | 2.0                                                  |
-| ----------------- | ---------------------------------------------------- |
-| Date              | 24 avril 2026                                        |
-| Auteurs           | Desiré Kouadio (CTO), Henoch Lonzo Koffi (Fondateur) |
-| Remplace          | KOTIZ_ERD.docx v1.0 (21 avril 2026)                  |
-| Référence interne | KOTIZ/ARCH/ERD-002                                   |
-| Nombre de tables  | 38 (vs 21 en v1.0)                                   |
-| Nouvelles tables  | 11                                                   |
-| Tables modifiées  | 3 (core_roles, health_subscriptions, scoring_scores) |
+| Version           | 2.0                                                                                             |
+| ----------------- | ----------------------------------------------------------------------------------------------- |
+| Date              | 24 avril 2026                                                                                   |
+| Auteurs           | Desiré Kouadio (CTO), Henoch Lonzo Koffi (Fondateur)                                            |
+| Remplace          | KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/KOTIZ_ERD.docx v1.0 (21 avril 2026) |
+| Référence interne | KOTIZ/ARCH/ERD-002                                                                              |
+| Nombre de tables  | 38 (vs 21 en v1.0)                                                                              |
+| Nouvelles tables  | 11                                                                                              |
+| Tables modifiées  | 3 (core_roles, health_subscriptions, scoring_scores)                                            |

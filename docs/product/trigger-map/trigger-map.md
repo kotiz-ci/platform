@@ -8,7 +8,7 @@ project_name: KOTIZ
 wds_phase: 2
 sources:
   - docs/product/product-brief.md
-  - 01_Business/KOTIZ_Identite_Produit.md
+  - KOTIZ/Société/Business/KOTIZ_Identite_Produit.md
   - docs/product/prd-mvp.md
   - docs/design/ux-design-specification.md
   - docs/product/trigger-map/decisions/agent-float-system.md

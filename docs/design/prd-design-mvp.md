@@ -24,7 +24,7 @@ En cas de contradiction : la signaler avant de produire. Aucune archive ne vaut 
 
 ## 3. Decisions explicitement validees
 
-Registre metier associe : [KOTIZ_Regles_Metier_Parcours_MVP.md](KOTIZ_Regles_Metier_Parcours_MVP.md). Les regles sont des decisions PO, distinctes de leur representation Figma ; elles ne prouvent pas une implementation ni une validation partenaire. Les decisions anterieures restent detaillees dans ce PRD.
+Registre metier associe : [docs/product/regles-metier-parcours-mvp.md](../product/regles-metier-parcours-mvp.md). Les regles sont des decisions PO, distinctes de leur representation Figma ; elles ne prouvent pas une implementation ni une validation partenaire. Les decisions anterieures restent detaillees dans ce PRD.
 
 | Decision                                                                                             | Consequence design                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -370,7 +370,7 @@ Ces regles sont reprises dans le registre metier RM-PERM-01 a RM-PERM-09. Preuve
 
 Pilote existant : section 234:437, depart 165:5559, 11 vues conservees. Archive du rangement : section 233:788. Les deux branches sont confirmees ; tous les etats de fin ne le sont pas. Aucune recette navigateur complete n'est revendiquee pour le seul rangement.
 
-Ce PRD v1.0 fixe la baseline du socle, sans autoriser la generation en bloc de toutes les frames. Les lots concernes conservent leur recette et validation Figma. Voir [matrice de couverture](KOTIZ_Matrice_Couverture_Socle.md) pour les surfaces, regles, tickets et dependances.
+Ce PRD v1.0 fixe la baseline du socle, sans autoriser la generation en bloc de toutes les frames. Les lots concernes conservent leur recette et validation Figma. Voir [matrice de couverture](matrice-couverture-socle.md) pour les surfaces, regles, tickets et dependances.
 
 ## 14. Alignement design et fonctionnalites a developper
 

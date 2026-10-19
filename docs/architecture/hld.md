@@ -98,9 +98,9 @@ La plateforme KOTIZ est organisée en 4 couches distinctes : Présentation, API 
 
 ### 2.3 Couche Application (monolithe modulaire — bounded contexts DDD)
 
-Le cœur de la plateforme est un monolithe modulaire Spring Boot 3.x (voir ADR-002). L'application est décomposée en **11 bounded contexts** (DDD stratégique — cf. `KOTIZ_DDD_Context_Map_Glossaire_v1.md`). Chaque contexte est structuré en **architecture hexagonale (Ports & Adapters) + DDD tactique** (cf. **ADR-011**) : packages `domain / application / infrastructure`, entités JPA cantonnées à la couche infrastructure, communication inter-contextes via ports + ACL + événements de domaine.
+Le cœur de la plateforme est un monolithe modulaire Spring Boot 3.x (voir ADR-002). L'application est décomposée en **11 bounded contexts** (DDD stratégique — cf. `docs/architecture/ddd-context-map-glossaire.md`). Chaque contexte est structuré en **architecture hexagonale (Ports & Adapters) + DDD tactique** (cf. **ADR-011**) : packages `domain / application / infrastructure`, entités JPA cantonnées à la couche infrastructure, communication inter-contextes via ports + ACL + événements de domaine.
 
-> **Évolution v2.1 (26 juin 2026)** : l'ancien module `core` est renommé **`iam`** (le core domain est `savings`+`scoring`, pas l'identité) ; ajout des contextes **`growth`** (viralité + anti-churn, extrait de `core`) et **`ussd`** (canal). Le langage ubiquitaire et les invariants de chaque contexte sont fixés dans `KOTIZ_DDD_Context_Map_Glossaire_v1.md`.
+> **Évolution v2.1 (26 juin 2026)** : l'ancien module `core` est renommé **`iam`** (le core domain est `savings`+`scoring`, pas l'identité) ; ajout des contextes **`growth`** (viralité + anti-churn, extrait de `core`) et **`ussd`** (canal). Le langage ubiquitaire et les invariants de chaque contexte sont fixés dans `docs/architecture/ddd-context-map-glossaire.md`.
 
 | Bounded context     | Sous-domaine   | Principaux agrégats / entités (domaine)                                                                      | Services (application)                                          |
 | ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
@@ -321,10 +321,10 @@ Cf. HLD v1.0 §3.1 — flux validé, aucun changement.
 
 ## Métadonnées
 
-| Version            | 2.0                                                  |
-| ------------------ | ---------------------------------------------------- |
-| Date               | 24 avril 2026                                        |
-| Auteurs            | Henoch Lonzo Koffi (Fondateur), Desiré Kouadio (CTO) |
-| Remplace           | KOTIZ_HLD.docx v1.0 (21 avril 2026)                  |
-| Référence interne  | KOTIZ/ARCH/HLD-002                                   |
-| Prochaine révision | Sprint 3 (pré-déploiement staging)                   |
+| Version            | 2.0                                                                                             |
+| ------------------ | ----------------------------------------------------------------------------------------------- |
+| Date               | 24 avril 2026                                                                                   |
+| Auteurs            | Henoch Lonzo Koffi (Fondateur), Desiré Kouadio (CTO)                                            |
+| Remplace           | KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/KOTIZ_HLD.docx v1.0 (21 avril 2026) |
+| Référence interne  | KOTIZ/ARCH/HLD-002                                                                              |
+| Prochaine révision | Sprint 3 (pré-déploiement staging)                                                              |

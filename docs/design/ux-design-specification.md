@@ -918,7 +918,7 @@ Ce skeleton UX sera enrichi par le prestataire UX pendant S1-S2 avec :
 - **Design tokens en code** (`design-tokens.json` pour React Native / Expo + Web)
 - **Illustrations afro-modernes** (15-20 empty states + onboardings)
 - **Tests d'accessibilité réels** avec utilisatrices analphabètes partielles + TalkBack
-- **3 UI Briefs finaux** : `KOTIZ_UI_Brief_Client.docx`, `_Agent.docx`, `_Admin.docx` (livrables docs/design/ du KOTIZ/_archive/2026-10-docs-avant-migration/INDEX.md)
+- **3 UI Briefs finaux** : `KOTIZ_UI_Brief_Client.docx`, `_Agent.docx`, `_Admin.docx` (livrables prévus par l'ancien `INDEX.md`, archivé dans `KOTIZ/_archive/2026-10-docs-avant-migration/`)
 
 ---
 

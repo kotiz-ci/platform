@@ -1,6 +1,6 @@
 # ADR-002 — Architecture monolithe modulaire
 
-> Converti depuis `KOTIZ_ADR_002_Architecture_Modulaire.docx` le 2026-10-19 (KOTIZ SAS, avril 2026, version 1.0). Original archivé dans `KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/`.
+> Converti depuis `docs/adr/0002-architecture-modulaire.md` le 2026-10-19 (KOTIZ SAS, avril 2026, version 1.0). Original archivé dans `KOTIZ/_archive/2026-10-docs-avant-migration/05_Architecture/`.
 
 ## 1. Contexte et problématique
 
