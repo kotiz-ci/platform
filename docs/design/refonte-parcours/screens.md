@@ -2,17 +2,32 @@
 
 Date : 19 octobre 2026. Statut : maquettes à valider par le PO (aucun écran validé).
 
-Outil : Claude Design (type Design) — [KOTIZ — Lot A accès et accueil](https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK) (privé : à partager depuis le menu Partager pour la conjointe)
-Design system : [DESIGN.md](../../../DESIGN.md) (racine) et [KOTIZ Design System](https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134) publié dans Claude Design, installé dans le canvas (tokens, composants `Kotiz.*`, assets copiés).
+Outil : Claude Design (type Design) — canvas unique de l'app cliente [KOTIZ — App cliente](https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF), page « Lot A — Accès et accueil » (privé : à partager depuis le menu Partager pour la conjointe). Depuis le 19 octobre 2026 (décision PO), tous les lots vivent dans ce canvas ; il s'ouvre sur la planche Pilotage.
+Archive : l'ancien canvas [KOTIZ — Lot A accès et accueil](https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK) reste en ligne comme version de référence, marqué « Archivé le 19 octobre 2026 ». Les planches du lot A y sont identiques ; on ne le modifie plus.
+Design system : [DESIGN.md](../../../DESIGN.md) (racine) et [KOTIZ Design System](https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134) publié dans Claude Design, installé une seule fois dans le canvas (v9 `1792410187-4206` : tokens, composants `Kotiz.*`, assets copiés).
 Sources : [ux-spec-lot-a.md](ux-spec-lot-a.md) (fait foi pour parcours, écrans, états), [test-lot-a.md](test-lot-a.md), [brief.md](brief.md).
+
+## Convention du canvas unique (décision PO du 19 octobre 2026)
+
+[KOTIZ — App cliente](https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF) est le canvas unique et définitif de **tous** les parcours de l'app cliente. Les lots C, D, E et F s'y ajouteront ; on ne crée plus de canvas par lot. Pour que chaque lot reste distinct :
+
+- **Sections** : une page par lot, « Lot A — Accès et accueil », « Lot B — Épargne et retour au solde », puis la même forme pour les suivants (« Lot C — Dépôt et affectation »…), ajoutée seulement quand le lot a des écrans.
+- **Statut visible** sur chaque section (titre de page du canvas, menu du prototype, planche Pilotage) : « Validé le 19 octobre 2026 » pour le lot A, « En cours — maquettes » pour le lot B.
+- **Planches** préfixées par la lettre du lot : « A · E03 Code SMS — 5 états », « A · H01 Accueil… », « B · B07 Détail d'une épargne… ». **Fichiers** aussi : `A-E03.dc.html`, `B-B07.dc.html`, composant d'écrans `A-Proto.dc.html` / `B-Proto.dc.html` (racine `.la-root.lot-a` / `.lot-b`).
+- **Parcours** préfixés comme dans les Gherkin : A-P1 … A-P10, B-P1 … B-P8 (variantes B-P1′, B-P5′, B-P5″, B-P7′) ; scénarios A-P1-S1… Le menu du prototype, la bande du prototype et le tableau de pilotage utilisent ces identifiants.
+- **Ajouter un lot** : une page « Lot X — Titre », ses planches `X-…`, son composant `X-Proto.dc.html`, ses parcours dans le menu de `Main.dc.html` (raccords par `onLot`) et dans `pilotage-data.js`. Un seul Design System, une seule `kotiz-app.css` (règles propres au lot sous `.la-root.lot-x`), une seule clé de masquage `kotiz-masque`. La même note figure sur la planche Pilotage (« Comment ajouter un lot »).
+- **Lot validé** : seuls ses noms de planches peuvent changer, jamais son rendu.
+- Une seule session à la fois modifie le canvas.
 
 ## Comment c'est construit
 
-- **Un seul composant prototype** (`Main.dc.html`) contient tous les écrans du lot A. Chaque planche du canvas l'affiche dans un état donné : un écran a donc la même apparence partout, prototype compris.
-- **Prototype cliquable** : le lien ouvre directement le prototype. Un menu propose P1 à P10, chacun avec son point de départ. Une bande sombre en haut (hors produit) rappelle le parcours et ramène au menu.
-- **Tout écran est composé avec les composants du Design System** (version 9 du 19 octobre, avec les corrections de la [critique](critique.md), copiée dans le canvas) : `PageHeader`, `TextField`, `Message`, `PinSlots` + `PinPad`, `CheckOption`, `IconPastille`, `NumberChip`, `StepTracker`, `StatusPill`, `GoalRow`, `InfoLine`, `Shortcuts` (état désactivé), `Button`, `BalanceCard`, `HomeHeader`, `TransactionRow` (horloge), `BottomNav`, `BottomSheet`, `IllustratedResult`. `lot-a.css` ne garde que la mise en page propre au canvas : cadre d'écran et centrage optique, hero de E01 (exception PO), placement de la feuille S01, récap A03 et lignes A04, cadre du QR de Q01, menu et bande du prototype, planches. `kotiz-tokens.css` recopie les variables de `tokens.json` (le Design System ne sert pas de `tokens.css`).
+- **Un seul composant d'écrans pour le lot** (`A-Proto.dc.html`, ex-`Main.dc.html` de l'ancien canvas) contient tous les écrans du lot A. Chaque planche du canvas l'affiche dans un état donné : un écran a donc la même apparence partout, prototype compris.
+- **Prototype cliquable unique** : `Main.dc.html`, sur la page Pilotage du canvas. Son menu propose les parcours des lots A (A-P1 à A-P10) et B (B-P1 à B-P8) ; il monte `A-Proto` ou `B-Proto` au point de départ choisi. Une bande sombre en haut (hors produit) rappelle le parcours (« A-P1 Inscription autonome ») et ramène au menu.
+- **Raccords vers le lot B, réels** : sur E08 (et E08′), « Créer mon épargne » ouvre B02 du lot B, et la flèche retour ramène à E08 ; sur l'accueil vide, « Créer une épargne › » fait de même. Sur l'accueil rempli, « Tout voir », chaque ligne d'épargne (vers B07), le raccourci et l'onglet Épargnes ouvrent le lot B (scénario 3 épargnes actives). Le prénom saisi suit dans le lot B. Les entrées des lots C, D et F restent l'écran « Bientôt ici ».
+- **Tout écran est composé avec les composants du Design System** (version 9 du 19 octobre, avec les corrections de la [critique](critique.md), copiée dans le canvas) : `PageHeader`, `TextField`, `Message`, `PinSlots` + `PinPad`, `CheckOption`, `IconPastille`, `NumberChip`, `StepTracker`, `StatusPill`, `GoalRow`, `InfoLine`, `Shortcuts` (état désactivé), `Button`, `BalanceCard`, `HomeHeader`, `TransactionRow` (horloge), `BottomNav`, `BottomSheet`, `IllustratedResult`. `kotiz-app.css` (commune à tous les lots ; une règle propre à un lot est limitée à `.la-root.lot-a`, `.lot-b`…) ne garde que la mise en page propre au canvas : cadre d'écran et centrage optique, hero de E01 (exception PO), placement de la feuille S01, récap A03 et lignes A04, cadre du QR de Q01, menu et bande du prototype, planches. `kotiz-tokens.css` recopie les variables de `tokens.json` (le Design System ne sert pas de `tokens.css`).
 - **Données fictives**, annoncées dans le menu du prototype : numéro 07 08 12 34 56, PIN 2468, code SMS = tout code d'au moins 4 chiffres (0000 = code faux, 9999 = code expiré). Le numéro décide de la suite après le code, comme le ferait le système : fiche agente en P4, compte actif en P5-P7, aucun compte pour tout autre numéro.
-- Formats : 360 × 800 ; planche de contrôle à 320 de large (E03, C01, H01, E08, A02).
+- Formats : 360 × 800 ; planche de contrôle à 320 de large (E03, C01, H01, E08, A02), planche « A · Contrôle 320 de large » (`A-Largeur-320.dc.html`).
+- **Planches du lot A** (page « Lot A — Accès et accueil ») : `A-E01`, `A-E02`, `A-E03`, `A-S01`, `A-E04`, `A-E05`, `A-E06-E07`, `A-E08`, `A-E09-E10`, `A-C01`, `A-H01`, `A-Q01`, `A-A02-A04`, `A-Largeur-320`, plus `A-Proto` (le composant) ; titres « A · E01 Bienvenue », etc. Mêmes positions et même rendu que dans l'ancien canvas : seuls les noms changent. Les identifiants d'écran (E01…) et de parcours restent ceux de la spec, avec le préfixe A- pour les parcours.
 - Les paramètres non tranchés sont listés dans des notes orange sur le canvas, sous chaque planche.
 
 ## Validation
@@ -50,16 +65,16 @@ Sources : [ux-spec-lot-a.md](ux-spec-lot-a.md) (fait foi pour parcours, écrans,
 
 | Parcours | Départ dans le menu | Chemin attendu |
 |---|---|---|
-| P1 Inscription autonome | P1 → E01 | E01 → E02 → E03 → E04 → E05 → E06 → E07 → création → E08 → Plus tard → H01 vide |
-| P2 Accompagnée | P2 → E01 | identique à P1 |
-| P3 Agente | P3 → A02 | A02 → A03 → A04 → Terminé → A02 ; le même numéro une seconde fois → doublon |
-| P4 Activation | P4 → E01 | Créer mon compte → E02 → E03 → E05′ → E06 → E07 → E08′ |
-| P5 Téléphone habituel | P5 → C01 | C01 (2468) → H01 rempli |
-| P6 Nouveau téléphone | P6 → E01 | Me connecter → E02 → E03 → C01 → H01 ; autre numéro → E10 |
-| P7 Numéro déjà inscrit | P7 → E01 | Créer mon compte → E02 → E03 → E09 → C01 |
-| P8 Compte créé | P8 → E08 | Plus tard → H01 vide |
-| P9 Accueil | P9 → H01 rempli | œil → masqué ; conservé quand on rouvre le lien (stockage du navigateur, à vérifier sur le téléphone de test) |
-| P10 Mon QR | P10 → H01 rempli | carte solde → Q01 → ← |
+| A-P1 Inscription autonome | A-P1 → E01 | E01 → E02 → E03 → E04 → E05 → E06 → E07 → création → E08 → Plus tard → H01 vide |
+| A-P2 Accompagnée | A-P2 → E01 | identique à P1 |
+| A-P3 Agente | A-P3 → A02 | A02 → A03 → A04 → Terminé → A02 ; le même numéro une seconde fois → doublon |
+| A-P4 Activation | A-P4 → E01 | Créer mon compte → E02 → E03 → E05′ → E06 → E07 → E08′ |
+| A-P5 Téléphone habituel | A-P5 → C01 | C01 (2468) → H01 rempli |
+| A-P6 Nouveau téléphone | A-P6 → E01 | Me connecter → E02 → E03 → C01 → H01 ; autre numéro → E10 |
+| A-P7 Numéro déjà inscrit | A-P7 → E01 | Créer mon compte → E02 → E03 → E09 → C01 |
+| A-P8 Compte créé | A-P8 → E08 | Plus tard → H01 vide ; Créer mon épargne → lot B (B02) |
+| A-P9 Accueil | A-P9 → H01 rempli | œil → masqué ; conservé quand on rouvre le lien et partagé avec le lot B (stockage du navigateur, clé unique `kotiz-masque`, à vérifier sur le téléphone de test) |
+| A-P10 Mon QR | A-P10 → H01 rempli | carte solde → Q01 → ← |
 
 ## Contrôle avant rendu
 
@@ -75,6 +90,7 @@ Vérifié sur un rendu local du runtime Design (même code que le canvas), à 36
 - Barre basse uniquement sur H01. ✓
 - Correctif fait pendant le contrôle : la carte solde était écrasée quand l'accueil défile.
 - Non vérifié : rendu dans le canvas claude.ai lui-même (navigateur intégré non connecté) et sur un vrai téléphone Android.
+- **Passage au canvas unique (19 octobre)** : chaque planche du lot A a été rendue en local dans l'ancien et dans le nouveau canvas, et comparée élément par élément (position, taille, texte, styles calculés) : identique sur les 14 planches, à la phase de l'animation du spinner près. Les 10 parcours ont été rejoués depuis le menu unique, avec les raccords vers le lot B.
 
 ## Ajouts proposés au DESIGN.md
 
@@ -102,4 +118,4 @@ Restent ouverts :
 
 ## Reporté
 
-Accès bloqué après trop d'essais (code et PIN, G02) ; chargement de H01 (squelette) ; chargement, erreur et hors ligne de Q01 ; dialogue de sortie d'A02 ; résultat inconnu d'A03 ; écrans KYC (sous-lot A2) ; lots B à F (écran « Bientôt ici » dans le prototype).
+Accès bloqué après trop d'essais (code et PIN, G02) ; chargement de H01 (squelette) ; chargement, erreur et hors ligne de Q01 ; dialogue de sortie d'A02 ; résultat inconnu d'A03 ; écrans KYC (sous-lot A2) ; lots C à F (écran « Bientôt ici » dans le prototype ; le lot B est raccordé depuis le 19 octobre).

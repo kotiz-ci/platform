@@ -2,7 +2,7 @@
 
 Date : 19 octobre 2026. Statut : lot A validé par le PO le 19 octobre 2026 (test des 10 parcours par la conjointe du PO, case ① « Design validé » cochée pour P1 à P10).
 
-- Maquettes et prototype : [screens.md](screens.md) · [prototype cliquable lot A](https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK) (fait foi pour la composition et les textes).
+- Maquettes et prototype : [screens.md](screens.md) · [prototype cliquable lot A](https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF) (fait foi pour la composition et les textes).
 - Design system : [DESIGN.md](../../../DESIGN.md) (racine) · [KOTIZ Design System v9](https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134) (composants `Kotiz.*`, version `1792410187-4206`).
 - Parcours, écrans, états : [ux-spec-lot-a.md](ux-spec-lot-a.md) (fait foi pour le comportement). Arbitrages finaux : [screens.md § Validation](screens.md#validation). Corrections : [critique.md](critique.md).
 - Scénarios d'acceptation : [gherkin-lot-a.md](gherkin-lot-a.md) (IDs `A-Pn-Sm`). Rattachement aux issues : [issues-lot-a.md](issues-lot-a.md).

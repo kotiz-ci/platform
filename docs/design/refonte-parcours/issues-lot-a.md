@@ -70,7 +70,7 @@ Raccords vers des lots non livrés, sans issue de lot A à créer : aide et cont
 
 Le lot A (accès et accueil de l'app cliente) a été validé par le PO le 19 octobre 2026, après test des 10 parcours par une testeuse sur le prototype. Cette issue reçoit le socle dont tous les écrans du lot ont besoin.
 
-- Prototype : https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK
+- Prototype : https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF
 - Design System KOTIZ v9 (composants `Kotiz.*`) : https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134
 - Handoff (tokens, composants, états) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/handoff-lot-a.md
 - Gherkin : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-a.md
@@ -111,7 +111,7 @@ Tous les écrans du lot A : E01 à E10, S01, C01, H01, Q01 (app cliente) et A02 
 
 Le lot A (accès et accueil de l'app cliente) a été validé par le PO le 19 octobre 2026, après test des 10 parcours par une testeuse sur le prototype.
 
-- Prototype (menu P1 à P10) : https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK
+- Prototype (menu P1 à P10) : https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF
 - Design System KOTIZ v9 : https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134
 - Handoff : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/handoff-lot-a.md
 - Gherkin (scénarios A-P1, A-P2, A-P4, A-P5 à A-P8, A-P9-S1) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-a.md
@@ -162,7 +162,7 @@ Parcours : P1 inscription autonome, P2 accompagnée, P4 activation (côté clien
 
 Le lot A a été validé par le PO le 19 octobre 2026. Pour le KYC, il ne couvre **que l'invitation et les statuts** sur l'accueil (décision PO : les écrans de capture des pièces forment le sous-lot A2, qui attend le partenaire).
 
-- Prototype (parcours P9) : https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK
+- Prototype (parcours P9) : https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF
 - Design System KOTIZ v9 (composant `InfoLine`) : https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134
 - Handoff (H01, ligne d'identité) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/handoff-lot-a.md
 - Gherkin (A-P9-S9 à A-P9-S11) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-a.md
@@ -195,7 +195,7 @@ H01 Accueil — ligne d'identité discrète (une ligne, pas une carte). Côté a
 
 Le lot A a été validé par le PO le 19 octobre 2026. Il utilise deux SMS : le **code SMS** (inscription, activation, connexion sur un nouveau téléphone) et l'**invitation** envoyée quand une agente crée une fiche.
 
-- Prototype : https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK
+- Prototype : https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF
 - Handoff (E02, E03, S01, A03, A04) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/handoff-lot-a.md
 - Gherkin (A-P1-S6, A-P1-S10, A-P1-S11, A-P3-S9) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-a.md
 

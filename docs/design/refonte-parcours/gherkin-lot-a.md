@@ -1,7 +1,7 @@
 # Gherkin — Refonte des parcours, lot A : accès et accueil
 
 Date : 19 octobre 2026. Statut : dérivé du lot A validé par le PO le 19 octobre 2026.
-Sources : [handoff-lot-a.md](handoff-lot-a.md) (critères d'acceptation, textes exacts), [ux-spec-lot-a.md](ux-spec-lot-a.md), [screens.md § Validation](screens.md#validation), [prototype](https://claude.ai/artifact/BrxhpBYZ9u4ejXV4bmUWWK). Rattachement aux issues : [issues-lot-a.md](issues-lot-a.md).
+Sources : [handoff-lot-a.md](handoff-lot-a.md) (critères d'acceptation, textes exacts), [ux-spec-lot-a.md](ux-spec-lot-a.md), [screens.md § Validation](screens.md#validation), [prototype](https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF). Rattachement aux issues : [issues-lot-a.md](issues-lot-a.md).
 
 ## Mode d'emploi
 
