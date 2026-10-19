@@ -50,5 +50,10 @@
     "*.{ts,tsx,js,jsx,json,md,yml,yaml}": [
       "prettier --write"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "shell-quote@<1.11.0": "^1.11.0"
+    }
   }
 }
