@@ -27,7 +27,7 @@ Sources : [handoff-lot-b.md](handoff-lot-b.md), [gherkin-lot-b.md](gherkin-lot-b
 | P2 Voir mes épargnes | B01 | [#73](https://github.com/kotiz-ci/platform/issues/73) | B-P2-S1 à S10 | Racine Épargnes, barre basse |
 | P3 Suivre une épargne | B01, B07 | [#73](https://github.com/kotiz-ci/platform/issues/73) | B-P3-S1 à S12 | « Mettre de l'argent » et « Tout voir » mènent au lot C |
 | P4 Modifier | B08, B16 | [#73](https://github.com/kotiz-ci/platform/issues/73) | B-P4-S1 à S14 | — |
-| P5 Remettre sur mon solde | B09, B10, B11, B12 | **D24, issue à créer** (décision PO du 19 octobre 2026, brouillon ci-dessous) | B-P5-S1 à S30 (S23 retiré) | Seul parcours avec PIN, écritures ledger et résultats en attente ; bloquée par #73 et #67 |
+| P5 Remettre sur mon solde | B09, B10, B11, B12 | [#97](https://github.com/kotiz-ci/platform/issues/97) D24 (décision PO du 19 octobre 2026, brouillon ci-dessous) | B-P5-S1 à S30 (S23 retiré) | Seul parcours avec PIN, écritures ledger et résultats en attente ; bloquée par #73 et #67 |
 | P5 — cycle de vie | B10 (refus par règle avant autorisation), B12 (attente, incertain, échec technique), idempotence | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | B-P5-S13, S14, S15, S26, S28 à S30 | Critères ajoutés à #67, vérifiés sur le retour |
 | P5 — accueil après un retour | H01 | [#94](https://github.com/kotiz-ci/platform/issues/94) D21 | B-P5-S20, B-P5-S21 | Solde, « Dernier dépôt », Dernières opérations |
 | P6 Fermer | B13, B14 (+ lien de B12) | [#73](https://github.com/kotiz-ci/platform/issues/73) | B-P6-S1 à S13 | B-P6-S4 et S7 traversent P5 (D24) : la fermeture reste dans #73 |
@@ -41,7 +41,7 @@ Sources : [handoff-lot-b.md](handoff-lot-b.md), [gherkin-lot-b.md](gherkin-lot-b
 
 | Capacité | Écrans | Scénarios | Contexte DDD | Piste |
 |---|---|---|---|---|
-| **Remettre l'argent d'une épargne sur le solde disponible** (montant, récapitulatif Depuis → Vers, PIN, résultat fait / en attente / incertain / échoué, sans frais) | B09, B10, B11, B12 | B-P5-S1 à S30 (S23 retiré) | Savings (+ IAM pour le PIN) | **Issue D24 à créer** (décision PO du 19 octobre 2026), bloquée par #73 et #67. Brouillon final ci-dessous. |
+| **Remettre l'argent d'une épargne sur le solde disponible** (montant, récapitulatif Depuis → Vers, PIN, résultat fait / en attente / incertain / échoué, sans frais) | B09, B10, B11, B12 | B-P5-S1 à S30 (S23 retiré) | Savings (+ IAM pour le PIN) | [#97](https://github.com/kotiz-ci/platform/issues/97) D24, créée (décision PO du 19 octobre 2026), bloquée par #73 et #67. Brouillon final ci-dessous. |
 | Alimenter une épargne (« Mettre de l'argent » : Mobile Money ou solde disponible) | B07 → lot C | — | Savings + Payments | **Lot C, non spécifié** : pas d'issue à proposer depuis le lot B. Sans elle, P3, P5 et P6 avec des fonds ne se démontrent de bout en bout qu'avec des données de test. |
 | Nommer le retour au solde, l'affectation et la fermeture dans le glossaire ; retirer ou marquer hors MVP le `GoalLock` | — | — | Savings | **`domain-modeling`**, avant le code de #73 et D24. Pas un ticket. |
 
@@ -262,7 +262,11 @@ Signalés, non corrigés ici. État vérifié le 19 octobre 2026 sur le canvas `
 | [ddd-context-map-glossaire.md](../../architecture/ddd-context-map-glossaire.md) § 5.1 | `GoalLock` (verrouillage jusqu'à la date, malus de score) ; ni retour au solde, ni affectation, ni fermeture | Épargne flexible (RM-SAV-03) ; à traiter avec `domain-modeling` |
 | [#73](https://github.com/kotiz-ci/platform/issues/73) | « retrait », « signatures numériques », bloquée par #69 | Retour au solde dans D24 ; carnet au lot E ; voir brouillon |
 
-## Publications à faire (après feu vert du PO)
+## Publications faites le 19 octobre 2026
+
+D24 créée : [#97](https://github.com/kotiz-ci/platform/issues/97). Commentaires « Design validé (lot B) » publiés sur #73, #94, #67 et #59. Corps et titre de #73 non modifiés (le commentaire porte les écarts).
+
+### Liste d'origine
 
 1. **Créer l'issue D24** « Remettre l'argent d'une épargne sur le solde » (brouillon ci-dessus), label `ready-for-agent`, Blocked by #73 et #67.
 2. **Commenter #73** (brouillon « Design validé ») ; mettre à jour son titre, son corps (« retrait » → renvoi à D24, retrait de « signatures numériques ») et son « Blocked by » (#69 → #59, #64) si le PO le valide.
