@@ -86,7 +86,7 @@ Retour au solde (parcours P5 du lot B) : la cliente remet tout ou partie d'une �
 
 - G01 : montant minimum de retour (aucun côté produit tant que le partenaire n'en impose pas) ; raisons communicables d'un refus par règle (niveau d'accès, KYC ; affichées sur le récapitulatif, sans limite chiffrée) ; le retour consomme-t-il la capacité du niveau d'accès limité (recommandation : non) ; montant épargné avec un mouvement en attente (confirmé seulement).
 - G02 : longueur du PIN (4 au prototype), nombre d'essais et durée du blocage (l'écran est dessiné, sans chiffre).
-- À dessiner : B10 refus par règle (ajout au canvas en cours ; le titre exact du message suivra le canvas, B-P5-S29) ; B11 hors connexion avant l'envoi du PIN (rien n'est envoyé, B-P5-S22).
+- À dessiner : B11 hors connexion avant l'envoi du PIN (rien n'est envoyé, B-P5-S22). Le refus par règle sur B10 est dessiné (canvas version 12, parcours B-P5‴).
 - G03 : contact derrière « Contacter l'aide » (refus par règle, incertain).
 - Technique : délai au-delà duquel le résultat devient incertain ; capture d'écran bloquée sur le PIN.
 - Hors périmètre : variante assistée sans smartphone (autorisation SMS propre au mouvement, lot E).
