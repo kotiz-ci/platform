@@ -1,12 +1,12 @@
 # Issues — Refonte des parcours, lot A : accès et accueil
 
-Date : 19 octobre 2026. Statut : **brouillons, rien n'est publié sur GitHub**. La publication des commentaires est faite par la session principale après relecture et feu vert explicite du PO (brief : « aucune modification d'issue sans feu vert explicite du PO »).
+Date : 19 octobre 2026. Statut : **publié le 19 octobre 2026** — commentaires sur #59, #64, #65, #75 ; issues #93 à #96 créées. La publication des commentaires est faite par la session principale après relecture et feu vert explicite du PO (brief : « aucune modification d'issue sans feu vert explicite du PO »).
 
 Sources : [handoff-lot-a.md](handoff-lot-a.md), [gherkin-lot-a.md](gherkin-lot-a.md), [screens.md](screens.md), issues lues le 19 octobre 2026 avec `gh issue view` (#58 à #85).
 
 **Constat sur les issues actuelles** : #59, #64, #65 et #75 n'ont que trois critères génériques (« démontrable de bout en bout », « échecs, autorisations et preuves d'audit couverts », « valeurs configurables »). Les brouillons ajoutent les critères vérifiables du design ; ils ne retirent rien.
 
-**Liens vers la branche** : les liens GitHub ci-dessous pointent vers `docs/restructure-documentation`. Les trois fichiers ne sont **ni commités ni poussés** : les liens ne répondront qu'après le push de la branche.
+**Liens vers la branche** : les liens GitHub ci-dessous pointent vers `docs/restructure-documentation`. Fichiers commités et branche poussée le 19 octobre 2026.
 
 ## Correspondance parcours / écrans → issues
 
@@ -22,16 +22,16 @@ Sources : [handoff-lot-a.md](handoff-lot-a.md), [gherkin-lot-a.md](gherkin-lot-a
 | P8 Compte créé | E08 → H01 vide | [#64](https://github.com/kotiz-ci/platform/issues/64) | A-P8-S1 à S6 | Sorties vers lots B et C |
 | P9 Accueil — ligne d'identité | H01 (ligne KYC, 5 statuts) | [#65](https://github.com/kotiz-ci/platform/issues/65) D04 KYC progressif | A-P9-S9 à S11 | Invitation et statuts seulement ; capture en sous-lot A2 |
 | P9 Accueil — état vide | H01 vide | [#64](https://github.com/kotiz-ci/platform/issues/64) | A-P9-S1, A-P8-S2 | Arrivée après inscription / activation |
-| P9 Accueil — rempli, masquage, statuts, hors ligne | H01 | **aucune issue** | A-P9-S2 à S8, S12 à S15 | Voir « Capacités sans issue » |
-| P10 Mon QR | Q01 | **aucune issue** | A-P10-S1 à S5 | Voir « Capacités sans issue » |
-| P3 Agente : Ajouter une cliente | A02, A03, A04 (app agente) | **aucune issue** | A-P3-S1 à S12 | #70 ne couvre pas la fiche cliente |
+| P9 Accueil — rempli, masquage, statuts, hors ligne | H01 | [#94](https://github.com/kotiz-ci/platform/issues/94) D21 Accueil cliente avec masquage | A-P9-S2 à S8, S12 à S15 | Voir « Capacités sans issue » |
+| P10 Mon QR | Q01 | [#95](https://github.com/kotiz-ci/platform/issues/95) D22 Mon QR d'identification | A-P10-S1 à S5 | Voir « Capacités sans issue » |
+| P3 Agente : Ajouter une cliente | A02, A03, A04 (app agente) | [#93](https://github.com/kotiz-ci/platform/issues/93) D20 Ajouter une cliente depuis l'app agente | A-P3-S1 à S12 | #70 ne couvre pas la fiche cliente |
 | Envoi des SMS (code, renvoi, invitation) | E02, E03, S01, A04 | [#75](https://github.com/kotiz-ci/platform/issues/75) D14 Notifications transactionnelles | A-P1-S6, A-P1-S10, A-P1-S11, A-P3-S9 | Dépendance à revoir (voir brouillon #75) |
 
 **Issues lues et non concernées** : #70 D09 « Activer une agente et gérer ses avoirs » (activation et float de l'agente, pas la fiche d'une cliente) ; #66 à #69, #71 à #74, #76 à #85 (dépôt, retrait, cash, épargne, admin, Santé, étoiles, décisions de canal) ; #58 D01 (frontières de modules, prérequis technique de #59 et #64).
 
 ## Capacités du lot A sans issue
 
-Aucun numéro n'est inventé. Chaque ligne est à arbitrer par le PO : nouvelle issue ou rattachement à une issue existante.
+**Créées le 19 octobre 2026 à la demande du PO**, label `ready-for-agent` : [#93](https://github.com/kotiz-ci/platform/issues/93) D20 fiche cliente par l'agente (P3, et côté agente de P4) · [#94](https://github.com/kotiz-ci/platform/issues/94) D21 accueil cliente + masquage persistant (P9) · [#95](https://github.com/kotiz-ci/platform/issues/95) D22 Mon QR (P10) · [#96](https://github.com/kotiz-ci/platform/issues/96) D23 réalignement des design tokens (bloque #59). Le tableau ci-dessous garde l'analyse d'origine.
 
 | Capacité | Écrans | Scénarios | Contexte DDD | Piste |
 |---|---|---|---|---|
