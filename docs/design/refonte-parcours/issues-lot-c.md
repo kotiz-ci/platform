@@ -12,11 +12,11 @@ Sources : [handoff-lot-c.md](handoff-lot-c.md), [gherkin-lot-c.md](gherkin-lot-c
 - **[kotiz-ci/platform#67](https://github.com/kotiz-ci/platform/issues/67) D06 « Sécuriser le cycle de vie des transactions »** : a reçu les critères du lot B (retour au solde). Il manque le **lien dépôt ↔ affectation**, le succès partiel, la **reprise idempotente** avec nouvelle confirmation (sans PIN), le second dépôt distinct pendant une attente, et le statut jamais déduit d'un message de l'opérateur.
 - **[kotiz-ci/platform#69](https://github.com/kotiz-ci/platform/issues/69) D08 « Réconcilier et contester une transaction »** : « Rapprochement, suspense, litige et contre-écriture immuable », bloquée par #67 et **#68** (retrait). Le volet client du lot C (signalement, dossier, contestation, correction confirmée) ne dépend pas du retrait : **proposition, lever le blocage par #68 pour le volet signalement** (voir le brouillon).
 - **[kotiz-ci/platform#94](https://github.com/kotiz-ci/platform/issues/94) D21 accueil** : porte « Dernier dépôt », les 3 dernières opérations et le masquage commun. Le lot C change l'entrée « Déposer » (feuille C-00), la ligne d'opération (nouvelle `TransactionRow`), l'ouverture du détail, et confirme que PNV-2 est refusée.
-- **[kotiz-ci/platform#73](https://github.com/kotiz-ci/platform/issues/73) D12 épargnes** : sa « cotisation flexible » est l'alimentation d'une épargne (« Mettre de l'argent ») : branche Mobile Money dans #66, branche solde et reprise dans **D25** (à créer). Le détail B07 reçoit le nouvel état **« Dépôt pas entré »** reporté du lot C (20 octobre 2026).
+- **[kotiz-ci/platform#73](https://github.com/kotiz-ci/platform/issues/73) D12 épargnes** : sa « cotisation flexible » est l'alimentation d'une épargne (« Mettre de l'argent ») : branche Mobile Money dans #66, branche solde et reprise dans **D25 (#98)** (à créer). Le détail B07 reçoit le nouvel état **« Dépôt pas entré »** reporté du lot C (20 octobre 2026).
 - **[kotiz-ci/platform#97](https://github.com/kotiz-ci/platform/issues/97) D24 retour au solde** : son résultat B12 renvoie au reçu (C-13) et à Opérations (C-11), et ses lignes apparaissent dans Opérations.
 - **[kotiz-ci/platform#59](https://github.com/kotiz-ci/platform/issues/59) D02 socle UI** : reçoit les composants et évolutions du lot C (hors DS v12 pour la plupart).
 - **[kotiz-ci/platform#64](https://github.com/kotiz-ci/platform/issues/64) D03 compte** : E08 « Faire mon premier dépôt » ouvre désormais la feuille C-00 (avant : C-01).
-- **Aucune issue** pour la mise de côté depuis le solde (et sa reprise), ni pour Opérations / détail / reçu : deux issues à créer, **D25** et **D26** (brouillons ci-dessous).
+- **Aucune issue** pour la mise de côté depuis le solde (et sa reprise), ni pour Opérations / détail / reçu : deux issues à créer, **D25 (#98)** et **D26 (#99)** (brouillons ci-dessous).
 
 ## Correspondance parcours / écrans → issues
 
@@ -28,16 +28,16 @@ Sources : [handoff-lot-c.md](handoff-lot-c.md), [gherkin-lot-c.md](gherkin-lot-c
 | C-P1 — accueil | A · H01, A · E08 | [#94](https://github.com/kotiz-ci/platform/issues/94) D21, [#64](https://github.com/kotiz-ci/platform/issues/64) D03 | C-P1-S2, S3, S34, S42 (#94) ; C-P1-S4, S33 (#64) | Feuille C-00, « Dernier dépôt » en attente |
 | C-P2 Mettre de l'argent par Mobile Money | C-06 (branche Mobile Money), C-01 à C-05 pour une épargne | [#66](https://github.com/kotiz-ci/platform/issues/66) D05 | C-P2-S1, S7 à S14, S16 | Dépôt pour une épargne = dépôt puis affectation liés |
 | C-P2 — lien dépôt ↔ affectation | C-05 partiels, backend | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | C-P2-S12, S15, S19, S20 | Un dépôt fait n'est jamais « Échoué » |
-| C-P2 — feuille « D'où vient l'argent ? » | C-06 | **D25** (à créer) | C-P2-S2 à S6 | Entrée commune des trois origines ; Mobile Money continue dans #66 |
+| C-P2 — feuille « D'où vient l'argent ? » | C-06 | **D25 (#98)** (à créer) | C-P2-S2 à S6 | Entrée commune des trois origines ; Mobile Money continue dans #66 |
 | C-P2 — raccords épargne et accueil | B · B07, A · H01 | [#73](https://github.com/kotiz-ci/platform/issues/73) D12, [#94](https://github.com/kotiz-ci/platform/issues/94) | C-P2-S6, S18 (#73) ; C-P2-S17 (#94) | PNV-2 refusée |
-| C-P3 Mettre de l'argent depuis mon solde | C-07, C-08, C-09 | **D25** (à créer) | C-P3-S1 à S21 | Sans frais, sans PIN ; C-P3-S20 aussi dans D26 (ligne d'Opérations) |
-| C-P4 Reprise | C-05 (partiel), C-07, C-08, C-10, C-09, C-12 | **D25** (à créer) ; résultat partiel dans [#66](https://github.com/kotiz-ci/platform/issues/66) | C-P4-S2 à S15, S18, S19 (D25) ; C-P4-S1 (#66) | Reprise = affectation seule |
+| C-P3 Mettre de l'argent depuis mon solde | C-07, C-08, C-09 | **D25 (#98)** (à créer) | C-P3-S1 à S21 | Sans frais, sans PIN ; C-P3-S20 aussi dans D26 (#99) (ligne d'Opérations) |
+| C-P4 Reprise | C-05 (partiel), C-07, C-08, C-10, C-09, C-12 | **D25 (#98)** (à créer) ; résultat partiel dans [#66](https://github.com/kotiz-ci/platform/issues/66) | C-P4-S2 à S15, S18, S19 (D25 (#98)) ; C-P4-S1 (#66) | Reprise = affectation seule |
 | C-P4 — cycle de vie | backend | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | C-P4-S20, S21 | Une reprise à la fois, liée au dépôt d'origine |
 | C-P4 — état B07 « Dépôt pas entré » | B · B07 | [#73](https://github.com/kotiz-ci/platform/issues/73) D12 | C-P4-S16, S17 | Report du lot C au lot B (canvas version 22) |
-| C-P5 Limite de 3 | C-10 | **D25** (à créer) | C-P5-S1 à S5 | La limite est contrôlée par #73 |
-| C-P6 Opérations, détail, reçu | C-11, C-12, C-13 | **D26** (à créer) | C-P6-S1 à S28, S31, S32 ; C-P3-S20 | Liste unique, statut combiné, reçu |
+| C-P5 Limite de 3 | C-10 | **D25 (#98)** (à créer) | C-P5-S1 à S5 | La limite est contrôlée par #73 |
+| C-P6 Opérations, détail, reçu | C-11, C-12, C-13 | **D26 (#99)** (à créer) | C-P6-S1 à S28, S31, S32 ; C-P3-S20 | Liste unique, statut combiné, reçu |
 | C-P6 — raccords | A · H01, B · B07, B · B12 | [#94](https://github.com/kotiz-ci/platform/issues/94), [#73](https://github.com/kotiz-ci/platform/issues/73), [#97](https://github.com/kotiz-ci/platform/issues/97) D24 | C-P6-S29, S31 (#94) ; C-P6-S29 (#73) ; C-P6-S30 (#97) | Entrées vers C-11 / C-12 / C-13 |
-| C-P7 Signaler et suivre | C-14, C-15 | [#69](https://github.com/kotiz-ci/platform/issues/69) D08 | C-P7-S1 à S12 ; C-P1-S37 (entrée depuis l'échec) | Point d'entrée C-12 (D26) |
+| C-P7 Signaler et suivre | C-14, C-15 | [#69](https://github.com/kotiz-ci/platform/issues/69) D08 | C-P7-S1 à S12 ; C-P1-S37 (entrée depuis l'échec) | Point d'entrée C-12 (D26 (#99)) |
 | C-P8 Contester, correction | C-15, C-16, C-12 (correction) | [#69](https://github.com/kotiz-ci/platform/issues/69) D08 | C-P8-S1 à S10 | Correction confirmée = contre-écriture liée |
 
 **Issues lues et non concernées directement** : [#68](https://github.com/kotiz-ci/platform/issues/68) D07 et [#72](https://github.com/kotiz-ci/platform/issues/72) D11 retraits (lot D ; seules leurs lignes apparaissent dans Opérations) ; [#71](https://github.com/kotiz-ci/platform/issues/71) D10 cash-in (lot E ; C-17 n'en est que l'explication côté cliente) ; [#75](https://github.com/kotiz-ci/platform/issues/75) D14 notifications (SMS de confirmation d'un dépôt et évolutions d'un dossier : lot F) ; [#65](https://github.com/kotiz-ci/platform/issues/65) D04 KYC (C-02 renvoie seulement vers « Vérifier mon identité ») ; [#96](https://github.com/kotiz-ci/platform/issues/96) D23 tokens (prérequis via #59, aucun token nouveau au lot C) ; [#60](https://github.com/kotiz-ci/platform/issues/60) H01 et [#61](https://github.com/kotiz-ci/platform/issues/61) H02 (décisions humaines sur le partenaire et les tarifs : ce sont elles qui lèvent G01, frais compris).
@@ -46,17 +46,17 @@ Sources : [handoff-lot-c.md](handoff-lot-c.md), [gherkin-lot-c.md](gherkin-lot-c
 
 | Capacité | Écrans | Scénarios | Contexte DDD | Piste |
 |---|---|---|---|---|
-| **Mettre de l'argent du solde vers une épargne**, et reprendre une mise de côté qui n'a pas été faite (feuille d'origine des fonds, montant, récapitulatif sans frais ni PIN, résultat, épargne fermée, limite de 3) | C-06, C-07, C-08, C-09, C-10 (+ reprise depuis C-05, C-12, B07) | C-P2-S2 à S6, C-P3-S1 à S21, C-P4-S2 à S15, S18, S19, C-P5-S1 à S5 | Savings | **D25**, à créer (brouillon ci-dessous) |
-| **Consulter mes opérations, le détail et le reçu** (liste unique, filtres, pagination, statut combiné, détail, reçu, masquage, hors ligne) | C-11, C-12, C-13 | C-P6-S1 à S28, S31, S32, C-P3-S20 | Savings (historique, ledger), lecture des statuts Payments | **D26**, à créer (brouillon ci-dessous) |
-| Nommer l'affectation, le lien dépôt ↔ affectation, la reprise, le dossier de signalement, la contestation et la correction ; retirer ou marquer non produit le « Min. 100 FCFA » de `Deposit` et `Streak`, et le `GoalLock` | — | — | Savings, Payments | **`domain-modeling`**, avant le code de #66, #67, #69, D25, D26. Pas un ticket. |
+| **Mettre de l'argent du solde vers une épargne**, et reprendre une mise de côté qui n'a pas été faite (feuille d'origine des fonds, montant, récapitulatif sans frais ni PIN, résultat, épargne fermée, limite de 3) | C-06, C-07, C-08, C-09, C-10 (+ reprise depuis C-05, C-12, B07) | C-P2-S2 à S6, C-P3-S1 à S21, C-P4-S2 à S15, S18, S19, C-P5-S1 à S5 | Savings | **D25 (#98)**, à créer (brouillon ci-dessous) |
+| **Consulter mes opérations, le détail et le reçu** (liste unique, filtres, pagination, statut combiné, détail, reçu, masquage, hors ligne) | C-11, C-12, C-13 | C-P6-S1 à S28, S31, S32, C-P3-S20 | Savings (historique, ledger), lecture des statuts Payments | **D26 (#99)**, à créer (brouillon ci-dessous) |
+| Nommer l'affectation, le lien dépôt ↔ affectation, la reprise, le dossier de signalement, la contestation et la correction ; retirer ou marquer non produit le « Min. 100 FCFA » de `Deposit` et `Streak`, et le `GoalLock` | — | — | Savings, Payments | **`domain-modeling`**, avant le code de #66, #67, #69, D25 (#98), D26 (#99). Pas un ticket. |
 | Désigner le contexte du signalement, du dossier et de la correction (CONTEXT-MAP n'a ni « Support » ni « Ledger ») | — | C-P7, C-P8 | Admin & Conformité ? Savings (correction) ? nouveau contexte (ADR) ? | **Décision d'architecture (PO / tech)**, avant #69. Pas un ticket tant qu'elle n'est pas prise. |
 | Promouvoir dans le Design System les composants du lot C (`TransactionRow` évolué, `OperatorRow`, `LinkedStatusRows`, `StepTracker` `failed`, `FilterChips`, `Receipt`, `CaseTimeline`, étapes numérotées, pictogramme flèches internes) et étendre « ambre » à « À reprendre » | — | — | — | **Travail design** (pas de ticket, brief) ; le code les construit dans #59 en attendant |
 | « Contacter l'aide », contenu de « Le dépôt n'arrive pas ? » | C-03, C-04, C-05, C-08, C-09, C-15 | — | — | **Lot F** (G03) : « Bientôt ici » en attendant |
 
-### Issue à créer — D25 (proposition)
+### Issue à créer — D25 (#98) (proposition)
 
-Titre : **D25 — Mettre de l'argent du solde vers une épargne**
-Label : `ready-for-agent` · Blocked by : #73, #67 · Après création : citer D25 dans le commentaire de #73 (alimentation d'une épargne).
+Titre : **D25 (#98) — Mettre de l'argent du solde vers une épargne**
+Label : `ready-for-agent` · Blocked by : #73, #67 · Après création : citer D25 (#98) dans le commentaire de #73 (alimentation d'une épargne).
 
 ```markdown
 ## What to build
@@ -99,10 +99,10 @@ Alimenter une épargne depuis le solde disponible (parcours C-P3 du lot C), et r
 - #67 (cycle de vie des transactions : lien dépôt ↔ affectation, idempotence, attente, échec)
 ```
 
-### Issue à créer — D26 (proposition)
+### Issue à créer — D26 (#99) (proposition)
 
-Titre : **D26 — Consulter mes opérations, le détail et le reçu**
-Label : `ready-for-agent` · Blocked by : #59, #66 · Après création : citer D26 dans #94 (« Tout voir », lignes, « Dernier dépôt »), #69 (point d'entrée du signalement) et #97 (reçu du retour).
+Titre : **D26 (#99) — Consulter mes opérations, le détail et le reçu**
+Label : `ready-for-agent` · Blocked by : #59, #66 · Après création : citer D26 (#99) dans #94 (« Tout voir », lignes, « Dernier dépôt »), #69 (point d'entrée du signalement) et #97 (reçu du retour).
 
 ```markdown
 ## What to build
@@ -168,7 +168,7 @@ Racine Opérations de l'app cliente (parcours C-P6 du lot C) : une liste unique 
 ```markdown
 ## Design validé (lot C, 20 octobre 2026)
 
-Le lot C (dépôt, affectation, opérations et reçus de l'app cliente) a été validé le 20 octobre 2026 par le PO et sa conjointe, après critique et test sur le prototype. Cette issue reçoit le **dépôt Mobile Money**, vers le solde et **pour une épargne**, de l'entrée « Déposer » au résultat. La mise de côté depuis le solde et la reprise sont dans **D25** ; Opérations, détail et reçu dans **D26** ; le cycle de vie (idempotence, lien dépôt ↔ affectation) dans #67.
+Le lot C (dépôt, affectation, opérations et reçus de l'app cliente) a été validé le 20 octobre 2026 par le PO et sa conjointe, après critique et test sur le prototype. Cette issue reçoit le **dépôt Mobile Money**, vers le solde et **pour une épargne**, de l'entrée « Déposer » au résultat. La mise de côté depuis le solde et la reprise sont dans **D25 (#98)** ; Opérations, détail et reçu dans **D26 (#99)** ; le cycle de vie (idempotence, lien dépôt ↔ affectation) dans #67.
 
 - Prototype (page « Lot C — Dépôt et affectation », parcours C-P1, C-P1′, C-P1″, C-P1‴, C-P2) : https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF
 - Design System KOTIZ v12 (illustrations Mobile Money et agente, logos opérateurs) : https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134
@@ -258,7 +258,7 @@ C-14 Signaler un problème · C-15 Mon signalement · C-16 Je conteste cette ré
 - [ ] Une **correction** n'apparaît que confirmée : opération propre dans Opérations, liée à l'opération d'origine, en contre-écritures équilibrées sans modifier les écritures d'origine (C-P8-S3, S8, S9).
 
 ### Écarts
-- **Dépendance : proposition de lever le blocage par #68** (retrait) pour le volet signalement. Signaler, suivre, contester un **dépôt** et afficher une correction ne dépendent pas du retrait. Proposition : Blocked by #67 et **D26** (détail d'une opération, point d'entrée du signalement) ; le litige sur un retrait suivra #68 quand il sera livré.
+- **Dépendance : proposition de lever le blocage par #68** (retrait) pour le volet signalement. Signaler, suivre, contester un **dépôt** et afficher une correction ne dépendent pas du retrait. Proposition : Blocked by #67 et **D26 (#99)** (détail d'une opération, point d'entrée du signalement) ; le litige sur un retrait suivra #68 quand il sera livré.
 - Le rapprochement et le suspense (côté back-office) ne sont pas dessinés au lot C.
 - Le glossaire ne nomme ni le **dossier de signalement**, ni la **contestation**, ni la **correction** ; CONTEXT-MAP n'a pas de contexte « Support » : contexte à désigner (Admin & Conformité ? Savings pour la correction ? nouveau contexte avec ADR ?) avant le code.
 
@@ -287,7 +287,7 @@ Le lot C (dépôt, affectation, opérations et reçus) a été validé le 20 oct
 
 ### Écarts
 - L'accueil du lot A utilisait l'ancienne ligne d'opération : à remplacer par la ligne du lot C (une seule `TransactionRow` dans l'app).
-- Dépendance : « Tout voir » et les lignes mènent aux écrans de **D26** (à créer).
+- Dépendance : « Tout voir » et les lignes mènent aux écrans de **D26 (#99)** (à créer).
 ```
 
 ## Brouillon — commentaire pour #73 (D12 Épargner dans un objectif signé-signé) — raccords et état B07 « Dépôt pas entré »
@@ -310,11 +310,11 @@ Quand un dépôt Mobile Money **fait** pour cette épargne n'a pas pu y passer (
 
 ### Critères d'acceptation ajoutés
 - [ ] État « Dépôt pas entré » conforme ci-dessus, avec la ligne d'information qui ouvre la reprise (C-P4-S16, C-P4-S17).
-- [ ] « Mettre de l'argent » ouvre la feuille « D'où vient l'argent ? » pour cette épargne ; la fermer ramène à B07 (C-P2-S6) ; la suite est dans #66 (Mobile Money) et **D25** (solde, reprise).
+- [ ] « Mettre de l'argent » ouvre la feuille « D'où vient l'argent ? » pour cette épargne ; la fermer ramène à B07 (C-P2-S6) ; la suite est dans #66 (Mobile Money) et **D25 (#98)** (solde, reprise).
 - [ ] « Tout voir › » de « Derniers mouvements » ouvre Opérations filtrées sur l'épargne ; une ligne ouvre le détail de l'opération (C-P2-S18, C-P6-S29).
 
 ### Écarts
-- La « cotisation flexible » du corps de l'issue est l'alimentation d'une épargne : branche Mobile Money dans #66, branche solde et reprise dans **D25** (issue à créer). Le corps de #73 peut y renvoyer (titre proposé au lot B inchangé : « D12 — Créer et gérer ses épargnes par projet »).
+- La « cotisation flexible » du corps de l'issue est l'alimentation d'une épargne : branche Mobile Money dans #66, branche solde et reprise dans **D25 (#98)** (issue à créer). Le corps de #73 peut y renvoyer (titre proposé au lot B inchangé : « D12 — Créer et gérer ses épargnes par projet »).
 - Cet état complète la planche B07 validée au lot B ; rien d'autre ne change dans le lot B.
 ```
 
@@ -334,7 +334,7 @@ Le lot C a été validé le 20 octobre 2026. Il donne la destination des liens d
 
 ### Écarts
 - Dans le prototype, « Voir le reçu » de B12 ouvre Opérations (données de prototype séparées) : à coder vers le reçu du retour.
-- Dépendance : le reçu et Opérations sont dans **D26** (à créer).
+- Dépendance : le reçu et Opérations sont dans **D26 (#99)** (à créer).
 ```
 
 ## Brouillon — commentaire pour #59 (D02 Fournir le socle UI accessible)
@@ -389,16 +389,20 @@ Signalés, non corrigés ici (les fichiers screens / critique / spec sont tenus 
 | DESIGN.md (modifié, non commité) | « Ambre » réservé à « En attente » | Décision PO : « À reprendre » aussi en ambre (à reporter) |
 | Prototype C-12 | Bouton « Voir le reçu » + lien « Voir le reçu du dépôt » sur un passage en attente | Lien seul recommandé (question PO) |
 
-## Publications à faire (après feu vert du PO)
+## Publications faites le 20 octobre 2026
+
+Issues créées : [#98](https://github.com/kotiz-ci/platform/issues/98) D25 et [#99](https://github.com/kotiz-ci/platform/issues/99) D26 (`ready-for-agent`). Commentaires « Design validé (lot C) » publiés sur #66, #67, #69, #94, #73, #97, #59 et #64. Corps de #69 : « Blocked by #68 » remplacé par #99 (décision PO du 20 octobre 2026).
+
+### Liste d'origine
 
 Préalable : commiter `handoff-lot-c.md`, `gherkin-lot-c.md` (et les fichiers du lot C non commités) et pousser `docs/restructure-documentation`, sinon les liens GitHub des commentaires ne fonctionnent pas.
 
-1. **Créer D25** « Mettre de l'argent du solde vers une épargne » (brouillon ci-dessus), label `ready-for-agent`, Blocked by #73 et #67.
-2. **Créer D26** « Consulter mes opérations, le détail et le reçu » (brouillon ci-dessus), label `ready-for-agent`, Blocked by #59 et #66.
-3. Remplacer « D25 » et « D26 » par leurs numéros dans les brouillons de commentaires.
+1. **Créer D25 (#98)** « Mettre de l'argent du solde vers une épargne » (brouillon ci-dessus), label `ready-for-agent`, Blocked by #73 et #67.
+2. **Créer D26 (#99)** « Consulter mes opérations, le détail et le reçu » (brouillon ci-dessus), label `ready-for-agent`, Blocked by #59 et #66.
+3. Remplacer « D25 (#98) » et « D26 (#99) » par leurs numéros dans les brouillons de commentaires.
 4. **Commenter #66** (dépôt, C-00 à C-05, C-17) ; proposer « Blocked by #59 ».
 5. **Commenter #67** (lien dépôt ↔ affectation, reprise, inconnu, second dépôt).
-6. **Commenter #69** (signalement, contestation, correction) et, si le PO le valide, **remplacer « Blocked by #68 » par D26** (garder #67).
+6. **Commenter #69** (signalement, contestation, correction) et, si le PO le valide, **remplacer « Blocked by #68 » par D26 (#99)** (garder #67).
 7. **Commenter #94** (Déposer → C-00, « Dernier dépôt », lignes d'opérations).
 8. **Commenter #73** (raccords B07 et **nouvel état « Dépôt pas entré »**).
 9. **Commenter #97** (reçu du retour, ligne dans Opérations).
