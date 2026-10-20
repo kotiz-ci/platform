@@ -1,5 +1,5 @@
 ---
-status: proposed (brouillon, non accepté — décision PO / tech attendue)
+status: accepted (décision PO du 20 octobre 2026, option C)
 date: 2026-10-20
 ---
 
