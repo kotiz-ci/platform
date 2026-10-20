@@ -643,6 +643,12 @@ Nés des maquettes du lot B (section « Lot B — Épargne et retour au solde »
 - **Illustrations** : Santé devient un cœur (sans croix), Imprévus un coffret de réserve (sans bouclier), drapeau « objectif atteint » ajouté (groupe Objectifs). L'ancienne Santé (trousse à croix) et l'ancienne Précaution (bouclier) sont archivées (groupe Archives), sans suppression.
 - **Laissés de côté** : `DateField` (le sélecteur natif Android reste à confirmer côté dev ; `TextField type="date"` suffit en attendant) et la variante « mouvement interne » de `TransactionRow` (« Vers mon solde », « Depuis mon solde »), à décider avec le lot C.
 
+### Illustrations d'action du lot C (décision PO du 19 octobre 2026)
+Dessinées pour le Design System dans le style des actions Déposer / Retirer / Épargnes (tracé `#253238` 2,4, aplats de la palette d'illustration existante, aucune couleur nouvelle), groupe **Actions** :
+- **`Actions/mobile-money.svg`** — « Mobile Money » : un téléphone, une pièce sur l'écran, une flèche `action-primary` qui entre. Aucun logo ni nom d'opérateur : l'opérateur apparaît ensuite avec son logo officiel (groupe Operateurs).
+- **`Actions/agente.svg`** — « Auprès d'une agente » : une agente KOTIZ de quartier, même peau et même style que Fatou dans les résultats, téléphone en main. Sans uniforme ni logo inventé.
+- Tailles 48 (par défaut), 56 et 64, même dessin mis à l'échelle. Usages : feuille C-00 « Comment tu veux déposer ? », C-06 « D'où vient l'argent ? », C-17 « Déposer auprès d'une agente ».
+
 ### Logos opérateurs — `225:959` Wave, `225:961` Orange Money, `225:963` MTN MoMo, `225:965` Moov Money
 Logos officiels, non recolorés, cadre 64 × 48. **Wave : symbole seul, sans inscription.**
 
