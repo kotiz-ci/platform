@@ -13,6 +13,13 @@ restent explicitement conservés pour une réactivation ultérieure.
 - **Notifications** — `apps/backend/notifications/CONTEXT.md` — confirmations et alertes transactionnelles.
 - **Admin & Conformité** — `apps/backend/admin/CONTEXT.md` — contrôle opérationnel, rôles sensibles et audit.
 
+## Contexte proposé, non actif
+
+- **Assistance** — `apps/backend/support/CONTEXT.md` — signalement d'une opération,
+  suivi et contestation ; la correction financière reste dans Savings. Proposé par
+  `docs/adr/0020-contexte-assistance-signalement.md` (brouillon, non accepté) : ni
+  migration ni implémentation avant l'acceptation de cet ADR.
+
 ## Contextes différés
 
 - **Health** — `apps/backend/health/CONTEXT.md` — différé jusqu'à la réactivation du produit Santé.
