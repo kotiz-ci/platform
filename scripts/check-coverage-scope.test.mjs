@@ -45,6 +45,8 @@ test("requires both git revisions for the coverage scope check", () => {
 test("accepts exact declarative exceptions and test sources", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
+      "apps/mobile/app.config.ts",
+      "apps/mobile/app/_layout.tsx",
       "apps/mobile/lib/theme.ts",
       "packages/api-types/src/index.ts",
       "packages/shared-utils/src/index.ts",
@@ -59,7 +61,6 @@ test("rejects new executable source outside a coverage gate", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
       "apps/mobile/app/health/index.tsx",
-      "apps/mobile/app.config.ts",
       "apps/mobile/babel.config.js",
       "apps/mobile/metro.config.js",
       "apps/mobile/lib/payment.ts",
@@ -68,7 +69,6 @@ test("rejects new executable source outside a coverage gate", () => {
     ]),
     [
       "apps/mobile/app/health/index.tsx",
-      "apps/mobile/app.config.ts",
       "apps/mobile/babel.config.js",
       "apps/mobile/metro.config.js",
       "apps/mobile/lib/payment.ts",

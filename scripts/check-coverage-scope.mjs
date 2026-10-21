@@ -6,6 +6,11 @@ const SOURCE_TREE =
   /^(?:(?:apps|packages)\/[^/]+\/(?:app|lib|scripts|src)\/|(?:apps|packages)\/[^/]+\/[^/]+\.(?:c?js|mjs|ts|tsx)$|scripts\/)/;
 
 const DECLARATIVE_EXCEPTIONS = new Set([
+  // Configuration Expo : déclarative, validée par expo-doctor et le type-check.
+  "apps/mobile/app.config.ts",
+  // Sans banc de test composants (jest-expo + RNTL), aucun écran ne peut être
+  // couvert. Exception à retirer quand D02 (#59) installe ce banc.
+  "apps/mobile/app/_layout.tsx",
   "apps/mobile/lib/theme.ts",
   "packages/api-types/src/index.ts",
   "packages/shared-utils/src/index.ts",
