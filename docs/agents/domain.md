@@ -14,7 +14,7 @@ contexte sont créés progressivement lorsque les termes et décisions sont stab
 
 ## Structure
 
-`CONTEXT-MAP.md` est la source de vérité : il liste les onze bounded contexts
+`CONTEXT-MAP.md` est la source de vérité : il liste les douze bounded contexts
 backend, leur statut (actif, différé, retiré) et le chemin de leur `CONTEXT.md`.
 
 ```
