@@ -1,6 +1,6 @@
 # KOTIZ Context Map
 
-KOTIZ est organisé en onze contextes métier ou d'intégration. Le MVP réduit
+KOTIZ est organisé en douze contextes métier ou d'intégration. Le MVP réduit
 n'active que les contextes nécessaires au vertical slice sandbox ; les autres
 restent explicitement conservés pour une réactivation ultérieure.
 
@@ -12,6 +12,7 @@ restent explicitement conservés pour une réactivation ultérieure.
 - **Payments** — `apps/backend/payments/CONTEXT.md` — ordres et confirmations de paiement sandbox.
 - **Notifications** — `apps/backend/notifications/CONTEXT.md` — confirmations et alertes transactionnelles.
 - **Admin & Conformité** — `apps/backend/admin/CONTEXT.md` — contrôle opérationnel, rôles sensibles et audit.
+- **Assistance** — `apps/backend/support/CONTEXT.md` — signalement d'une opération, suivi et contestation ; la correction financière reste dans Savings. Activé par `docs/adr/0020-contexte-assistance-signalement.md` (accepté le 20 octobre 2026).
 
 ## Contextes différés
 
