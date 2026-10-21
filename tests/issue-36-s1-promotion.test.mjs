@@ -25,6 +25,26 @@ test("the promotion PR records human acceptance and proves a fresh local startup
   assert.match(workflow, /needs: \[quality, security, backend-image, promotion-acceptance\]/);
 });
 
+test("the promotion permits only the unchanged pre-gate coverage baseline", () => {
+  const workflow = read(".github/workflows/ci.yml");
+  const rootPackage = JSON.parse(read("package.json"));
+
+  assert.match(
+    workflow,
+    /name: Reject executable changes outside a coverage gate\s+if: >-\s+github\.base_ref != 'main' \|\|\s+github\.head_ref != 'develop' \|\|\s+github\.event\.pull_request\.head\.repo\.full_name != github\.repository\s+run: pnpm coverage:scope:affected/
+  );
+  assert.match(
+    workflow,
+    /name: Verify the legacy coverage baseline for promotion\s+if: >-\s+github\.base_ref == 'main' &&\s+github\.head_ref == 'develop' &&\s+github\.event\.pull_request\.head\.repo\.full_name == github\.repository\s+run: pnpm coverage:scope:promotion/
+  );
+  assert.equal(
+    rootPackage.scripts["coverage:scope:promotion"],
+    "node scripts/check-coverage-scope.mjs --promotion"
+  );
+  assert.match(workflow, /pnpm test:repo/);
+  assert.match(workflow, /pnpm exec turbo run lint type-check test build --affected/);
+});
+
 test("promotion CI preserves the exact verified backend image as an immutable artifact", () => {
   const workflow = read(".github/workflows/ci.yml");
 
