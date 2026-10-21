@@ -20,38 +20,38 @@ Sources : [handoff-lot-c.md](handoff-lot-c.md), [gherkin-lot-c.md](gherkin-lot-c
 
 ## Correspondance parcours / écrans → issues
 
-| Parcours | Écrans | Issue | Scénarios | Remarque |
-|---|---|---|---|---|
-| Socle lot C | `TransactionRow` (sous-titre, `internal`, statut combiné, signe), ligne de choix / `OperatorRow`, `LinkedStatusRows`, `StepTracker` `failed`, `FilterChips`, `Receipt`, `CaseTimeline`, étapes numérotées, résultat plein écran, zone d'action fixe, illustrations `Actions/` | [#59](https://github.com/kotiz-ci/platform/issues/59) D02 | critères « Socle lot C » du handoff, C-P6-S4, C-P1-S27 | Seules les illustrations sont dans le DS v12 ; le reste est construit dans le canvas (`lc-`) |
-| C-P1 Déposer sur mon solde | C-00, C-17, C-01 à C-05 | [#66](https://github.com/kotiz-ci/platform/issues/66) D05 | C-P1-S1 à S30, C-P1-S32 à S39, C-P1-S41, C-P1-S43, C-P1-S44 | C-17 n'est qu'une explication : le dépôt en espèces reste dans [#71](https://github.com/kotiz-ci/platform/issues/71) (lot E) |
-| C-P1 — cycle de vie | C-03 (envoi), C-04 (retour depuis l'opérateur), C-05 (inconnu) | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | C-P1-S24, S25, S30, S31, S40, S41, S43 | Idempotence, inconnu sans Réessayer, second dépôt distinct |
-| C-P1 — accueil | A · H01, A · E08 | [#94](https://github.com/kotiz-ci/platform/issues/94) D21, [#64](https://github.com/kotiz-ci/platform/issues/64) D03 | C-P1-S2, S3, S34, S42 (#94) ; C-P1-S4, S33 (#64) | Feuille C-00, « Dernier dépôt » en attente |
-| C-P2 Mettre de l'argent par Mobile Money | C-06 (branche Mobile Money), C-01 à C-05 pour une épargne | [#66](https://github.com/kotiz-ci/platform/issues/66) D05 | C-P2-S1, S7 à S14, S16 | Dépôt pour une épargne = dépôt puis affectation liés |
-| C-P2 — lien dépôt ↔ affectation | C-05 partiels, backend | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | C-P2-S12, S15, S19, S20 | Un dépôt fait n'est jamais « Échoué » |
-| C-P2 — feuille « D'où vient l'argent ? » | C-06 | **D25 (#98)** (à créer) | C-P2-S2 à S6 | Entrée commune des trois origines ; Mobile Money continue dans #66 |
-| C-P2 — raccords épargne et accueil | B · B07, A · H01 | [#73](https://github.com/kotiz-ci/platform/issues/73) D12, [#94](https://github.com/kotiz-ci/platform/issues/94) | C-P2-S6, S18 (#73) ; C-P2-S17 (#94) | PNV-2 refusée |
-| C-P3 Mettre de l'argent depuis mon solde | C-07, C-08, C-09 | **D25 (#98)** (à créer) | C-P3-S1 à S21 | Sans frais, sans PIN ; C-P3-S20 aussi dans D26 (#99) (ligne d'Opérations) |
-| C-P4 Reprise | C-05 (partiel), C-07, C-08, C-10, C-09, C-12 | **D25 (#98)** (à créer) ; résultat partiel dans [#66](https://github.com/kotiz-ci/platform/issues/66) | C-P4-S2 à S15, S18, S19 (D25 (#98)) ; C-P4-S1 (#66) | Reprise = affectation seule |
-| C-P4 — cycle de vie | backend | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | C-P4-S20, S21 | Une reprise à la fois, liée au dépôt d'origine |
-| C-P4 — état B07 « Dépôt pas entré » | B · B07 | [#73](https://github.com/kotiz-ci/platform/issues/73) D12 | C-P4-S16, S17 | Report du lot C au lot B (canvas version 22) |
-| C-P5 Limite de 3 | C-10 | **D25 (#98)** (à créer) | C-P5-S1 à S5 | La limite est contrôlée par #73 |
-| C-P6 Opérations, détail, reçu | C-11, C-12, C-13 | **D26 (#99)** (à créer) | C-P6-S1 à S28, S31, S32 ; C-P3-S20 | Liste unique, statut combiné, reçu |
-| C-P6 — raccords | A · H01, B · B07, B · B12 | [#94](https://github.com/kotiz-ci/platform/issues/94), [#73](https://github.com/kotiz-ci/platform/issues/73), [#97](https://github.com/kotiz-ci/platform/issues/97) D24 | C-P6-S29, S31 (#94) ; C-P6-S29 (#73) ; C-P6-S30 (#97) | Entrées vers C-11 / C-12 / C-13 |
-| C-P7 Signaler et suivre | C-14, C-15 | [#69](https://github.com/kotiz-ci/platform/issues/69) D08 | C-P7-S1 à S12 ; C-P1-S37 (entrée depuis l'échec) | Point d'entrée C-12 (D26 (#99)) |
-| C-P8 Contester, correction | C-15, C-16, C-12 (correction) | [#69](https://github.com/kotiz-ci/platform/issues/69) D08 | C-P8-S1 à S10 | Correction confirmée = contre-écriture liée |
+| Parcours                                 | Écrans                                                                                                                                                                                                                                                                        | Issue                                                                                                                                                                   | Scénarios                                                   | Remarque                                                                                                                     |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Socle lot C                              | `TransactionRow` (sous-titre, `internal`, statut combiné, signe), ligne de choix / `OperatorRow`, `LinkedStatusRows`, `StepTracker` `failed`, `FilterChips`, `Receipt`, `CaseTimeline`, étapes numérotées, résultat plein écran, zone d'action fixe, illustrations `Actions/` | [#59](https://github.com/kotiz-ci/platform/issues/59) D02                                                                                                               | critères « Socle lot C » du handoff, C-P6-S4, C-P1-S27      | Seules les illustrations sont dans le DS v12 ; le reste est construit dans le canvas (`lc-`)                                 |
+| C-P1 Déposer sur mon solde               | C-00, C-17, C-01 à C-05                                                                                                                                                                                                                                                       | [#66](https://github.com/kotiz-ci/platform/issues/66) D05                                                                                                               | C-P1-S1 à S30, C-P1-S32 à S39, C-P1-S41, C-P1-S43, C-P1-S44 | C-17 n'est qu'une explication : le dépôt en espèces reste dans [#71](https://github.com/kotiz-ci/platform/issues/71) (lot E) |
+| C-P1 — cycle de vie                      | C-03 (envoi), C-04 (retour depuis l'opérateur), C-05 (inconnu)                                                                                                                                                                                                                | [#67](https://github.com/kotiz-ci/platform/issues/67) D06                                                                                                               | C-P1-S24, S25, S30, S31, S40, S41, S43                      | Idempotence, inconnu sans Réessayer, second dépôt distinct                                                                   |
+| C-P1 — accueil                           | A · H01, A · E08                                                                                                                                                                                                                                                              | [#94](https://github.com/kotiz-ci/platform/issues/94) D21, [#64](https://github.com/kotiz-ci/platform/issues/64) D03                                                    | C-P1-S2, S3, S34, S42 (#94) ; C-P1-S4, S33 (#64)            | Feuille C-00, « Dernier dépôt » en attente                                                                                   |
+| C-P2 Mettre de l'argent par Mobile Money | C-06 (branche Mobile Money), C-01 à C-05 pour une épargne                                                                                                                                                                                                                     | [#66](https://github.com/kotiz-ci/platform/issues/66) D05                                                                                                               | C-P2-S1, S7 à S14, S16                                      | Dépôt pour une épargne = dépôt puis affectation liés                                                                         |
+| C-P2 — lien dépôt ↔ affectation          | C-05 partiels, backend                                                                                                                                                                                                                                                        | [#67](https://github.com/kotiz-ci/platform/issues/67) D06                                                                                                               | C-P2-S12, S15, S19, S20                                     | Un dépôt fait n'est jamais « Échoué »                                                                                        |
+| C-P2 — feuille « D'où vient l'argent ? » | C-06                                                                                                                                                                                                                                                                          | **D25 (#98)** (à créer)                                                                                                                                                 | C-P2-S2 à S6                                                | Entrée commune des trois origines ; Mobile Money continue dans #66                                                           |
+| C-P2 — raccords épargne et accueil       | B · B07, A · H01                                                                                                                                                                                                                                                              | [#73](https://github.com/kotiz-ci/platform/issues/73) D12, [#94](https://github.com/kotiz-ci/platform/issues/94)                                                        | C-P2-S6, S18 (#73) ; C-P2-S17 (#94)                         | PNV-2 refusée                                                                                                                |
+| C-P3 Mettre de l'argent depuis mon solde | C-07, C-08, C-09                                                                                                                                                                                                                                                              | **D25 (#98)** (à créer)                                                                                                                                                 | C-P3-S1 à S21                                               | Sans frais, sans PIN ; C-P3-S20 aussi dans D26 (#99) (ligne d'Opérations)                                                    |
+| C-P4 Reprise                             | C-05 (partiel), C-07, C-08, C-10, C-09, C-12                                                                                                                                                                                                                                  | **D25 (#98)** (à créer) ; résultat partiel dans [#66](https://github.com/kotiz-ci/platform/issues/66)                                                                   | C-P4-S2 à S15, S18, S19 (D25 (#98)) ; C-P4-S1 (#66)         | Reprise = affectation seule                                                                                                  |
+| C-P4 — cycle de vie                      | backend                                                                                                                                                                                                                                                                       | [#67](https://github.com/kotiz-ci/platform/issues/67) D06                                                                                                               | C-P4-S20, S21                                               | Une reprise à la fois, liée au dépôt d'origine                                                                               |
+| C-P4 — état B07 « Dépôt pas entré »      | B · B07                                                                                                                                                                                                                                                                       | [#73](https://github.com/kotiz-ci/platform/issues/73) D12                                                                                                               | C-P4-S16, S17                                               | Report du lot C au lot B (canvas version 22)                                                                                 |
+| C-P5 Limite de 3                         | C-10                                                                                                                                                                                                                                                                          | **D25 (#98)** (à créer)                                                                                                                                                 | C-P5-S1 à S5                                                | La limite est contrôlée par #73                                                                                              |
+| C-P6 Opérations, détail, reçu            | C-11, C-12, C-13                                                                                                                                                                                                                                                              | **D26 (#99)** (à créer)                                                                                                                                                 | C-P6-S1 à S28, S31, S32 ; C-P3-S20                          | Liste unique, statut combiné, reçu                                                                                           |
+| C-P6 — raccords                          | A · H01, B · B07, B · B12                                                                                                                                                                                                                                                     | [#94](https://github.com/kotiz-ci/platform/issues/94), [#73](https://github.com/kotiz-ci/platform/issues/73), [#97](https://github.com/kotiz-ci/platform/issues/97) D24 | C-P6-S29, S31 (#94) ; C-P6-S29 (#73) ; C-P6-S30 (#97)       | Entrées vers C-11 / C-12 / C-13                                                                                              |
+| C-P7 Signaler et suivre                  | C-14, C-15                                                                                                                                                                                                                                                                    | [#69](https://github.com/kotiz-ci/platform/issues/69) D08                                                                                                               | C-P7-S1 à S12 ; C-P1-S37 (entrée depuis l'échec)            | Point d'entrée C-12 (D26 (#99))                                                                                              |
+| C-P8 Contester, correction               | C-15, C-16, C-12 (correction)                                                                                                                                                                                                                                                 | [#69](https://github.com/kotiz-ci/platform/issues/69) D08                                                                                                               | C-P8-S1 à S10                                               | Correction confirmée = contre-écriture liée                                                                                  |
 
 **Issues lues et non concernées directement** : [#68](https://github.com/kotiz-ci/platform/issues/68) D07 et [#72](https://github.com/kotiz-ci/platform/issues/72) D11 retraits (lot D ; seules leurs lignes apparaissent dans Opérations) ; [#71](https://github.com/kotiz-ci/platform/issues/71) D10 cash-in (lot E ; C-17 n'en est que l'explication côté cliente) ; [#75](https://github.com/kotiz-ci/platform/issues/75) D14 notifications (SMS de confirmation d'un dépôt et évolutions d'un dossier : lot F) ; [#65](https://github.com/kotiz-ci/platform/issues/65) D04 KYC (C-02 renvoie seulement vers « Vérifier mon identité ») ; [#96](https://github.com/kotiz-ci/platform/issues/96) D23 tokens (prérequis via #59, aucun token nouveau au lot C) ; [#60](https://github.com/kotiz-ci/platform/issues/60) H01 et [#61](https://github.com/kotiz-ci/platform/issues/61) H02 (décisions humaines sur le partenaire et les tarifs : ce sont elles qui lèvent G01, frais compris).
 
 ## Capacités du lot C sans issue
 
-| Capacité | Écrans | Scénarios | Contexte DDD | Piste |
-|---|---|---|---|---|
-| **Mettre de l'argent du solde vers une épargne**, et reprendre une mise de côté qui n'a pas été faite (feuille d'origine des fonds, montant, récapitulatif sans frais ni PIN, résultat, épargne fermée, limite de 3) | C-06, C-07, C-08, C-09, C-10 (+ reprise depuis C-05, C-12, B07) | C-P2-S2 à S6, C-P3-S1 à S21, C-P4-S2 à S15, S18, S19, C-P5-S1 à S5 | Savings | **D25 (#98)**, à créer (brouillon ci-dessous) |
-| **Consulter mes opérations, le détail et le reçu** (liste unique, filtres, pagination, statut combiné, détail, reçu, masquage, hors ligne) | C-11, C-12, C-13 | C-P6-S1 à S28, S31, S32, C-P3-S20 | Savings (historique, ledger), lecture des statuts Payments | **D26 (#99)**, à créer (brouillon ci-dessous) |
-| Nommer l'affectation, le lien dépôt ↔ affectation, la reprise, le dossier de signalement, la contestation et la correction ; retirer ou marquer non produit le « Min. 100 FCFA » de `Deposit` et `Streak`, et le `GoalLock` | — | — | Savings, Payments | **`domain-modeling`**, avant le code de #66, #67, #69, D25 (#98), D26 (#99). Pas un ticket. |
-| Désigner le contexte du signalement, du dossier et de la correction (CONTEXT-MAP n'a ni « Support » ni « Ledger ») | — | C-P7, C-P8 | Admin & Conformité ? Savings (correction) ? nouveau contexte (ADR) ? | **Décision d'architecture (PO / tech)**, avant #69. Pas un ticket tant qu'elle n'est pas prise. |
-| Promouvoir dans le Design System les composants du lot C (`TransactionRow` évolué, `OperatorRow`, `LinkedStatusRows`, `StepTracker` `failed`, `FilterChips`, `Receipt`, `CaseTimeline`, étapes numérotées, pictogramme flèches internes) et étendre « ambre » à « À reprendre » | — | — | — | **Travail design** (pas de ticket, brief) ; le code les construit dans #59 en attendant |
-| « Contacter l'aide », contenu de « Le dépôt n'arrive pas ? » | C-03, C-04, C-05, C-08, C-09, C-15 | — | — | **Lot F** (G03) : « Bientôt ici » en attendant |
+| Capacité                                                                                                                                                                                                                                                                        | Écrans                                                          | Scénarios                                                          | Contexte DDD                                                         | Piste                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Mettre de l'argent du solde vers une épargne**, et reprendre une mise de côté qui n'a pas été faite (feuille d'origine des fonds, montant, récapitulatif sans frais ni PIN, résultat, épargne fermée, limite de 3)                                                            | C-06, C-07, C-08, C-09, C-10 (+ reprise depuis C-05, C-12, B07) | C-P2-S2 à S6, C-P3-S1 à S21, C-P4-S2 à S15, S18, S19, C-P5-S1 à S5 | Savings                                                              | **D25 (#98)**, à créer (brouillon ci-dessous)                                                   |
+| **Consulter mes opérations, le détail et le reçu** (liste unique, filtres, pagination, statut combiné, détail, reçu, masquage, hors ligne)                                                                                                                                      | C-11, C-12, C-13                                                | C-P6-S1 à S28, S31, S32, C-P3-S20                                  | Savings (historique, ledger), lecture des statuts Payments           | **D26 (#99)**, à créer (brouillon ci-dessous)                                                   |
+| Nommer l'affectation, le lien dépôt ↔ affectation, la reprise, le dossier de signalement, la contestation et la correction ; retirer ou marquer non produit le « Min. 100 FCFA » de `Deposit` et `Streak`, et le `GoalLock`                                                     | —                                                               | —                                                                  | Savings, Payments                                                    | **`domain-modeling`**, avant le code de #66, #67, #69, D25 (#98), D26 (#99). Pas un ticket.     |
+| Désigner le contexte du signalement, du dossier et de la correction (CONTEXT-MAP n'a ni « Support » ni « Ledger »)                                                                                                                                                              | —                                                               | C-P7, C-P8                                                         | Admin & Conformité ? Savings (correction) ? nouveau contexte (ADR) ? | **Décision d'architecture (PO / tech)**, avant #69. Pas un ticket tant qu'elle n'est pas prise. |
+| Promouvoir dans le Design System les composants du lot C (`TransactionRow` évolué, `OperatorRow`, `LinkedStatusRows`, `StepTracker` `failed`, `FilterChips`, `Receipt`, `CaseTimeline`, étapes numérotées, pictogramme flèches internes) et étendre « ambre » à « À reprendre » | —                                                               | —                                                                  | —                                                                    | **Travail design** (pas de ticket, brief) ; le code les construit dans #59 en attendant         |
+| « Contacter l'aide », contenu de « Le dépôt n'arrive pas ? »                                                                                                                                                                                                                    | C-03, C-04, C-05, C-08, C-09, C-15                              | —                                                                  | —                                                                    | **Lot F** (G03) : « Bientôt ici » en attendant                                                  |
 
 ### Issue à créer — D25 (#98) (proposition)
 
@@ -146,18 +146,18 @@ Racine Opérations de l'app cliente (parcours C-P6 du lot C) : une liste unique 
 
 ## Paramètres « à confirmer » du lot C
 
-| Paramètre | Gate | Écrans |
-|---|---|---|
-| **Frais du dépôt Mobile Money**, montant débité, montant arrivé (frais inconnus = autorisation bloquée) | G01 | C-03, C-04, C-12, C-13 |
-| Liste et ordre des opérateurs ; protocole de validation (application, message, code) ; annulation avant validation ; lien de retour vers KOTIZ | G01, technique | C-00, C-01, C-04 |
-| Minimum et maximum par dépôt ; règles du niveau d'accès limité ; minimum d'une mise de côté | G01 | C-02, C-07 |
-| « Échec confirmé » = « rien n'a été pris » ? ; raison d'un refus de l'opérateur | G01 | C-05 |
-| Calcul du solde et des épargnes avec une opération en attente (confirmé seulement, recommandé) | G01 | H01, B07, C-07 |
-| Effet de la mise de côté et de la reprise sur le niveau d'accès limité (recommandation : non) | G01 | C-08 |
-| Référence de l'opérateur, mentions légales du reçu ; libellé et sens de la correction | G01 | C-12, C-13, C-15 |
-| Motifs de signalement ; pièces jointes ; contact d'aide ; contenu de « Le dépôt n'arrive pas ? » ; délais (jamais annoncés) ; limite de contestation ; commentaire de contestation obligatoire ou non ; un dossier par opération | G03 | C-04, C-14, C-15, C-16 |
-| `<délai de confirmation>` (passage à « On vérifie ») ; idempotence de la reprise ; cache hors ligne ; taille de page | technique | C-04, C-05, C-09, C-11, C-13 |
-| Détail d'un dépôt dont le passage est en attente : lien seul ou bouton + lien | PO | C-12 |
+| Paramètre                                                                                                                                                                                                                        | Gate           | Écrans                       |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------- |
+| **Frais du dépôt Mobile Money**, montant débité, montant arrivé (frais inconnus = autorisation bloquée)                                                                                                                          | G01            | C-03, C-04, C-12, C-13       |
+| Liste et ordre des opérateurs ; protocole de validation (application, message, code) ; annulation avant validation ; lien de retour vers KOTIZ                                                                                   | G01, technique | C-00, C-01, C-04             |
+| Minimum et maximum par dépôt ; règles du niveau d'accès limité ; minimum d'une mise de côté                                                                                                                                      | G01            | C-02, C-07                   |
+| « Échec confirmé » = « rien n'a été pris » ? ; raison d'un refus de l'opérateur                                                                                                                                                  | G01            | C-05                         |
+| Calcul du solde et des épargnes avec une opération en attente (confirmé seulement, recommandé)                                                                                                                                   | G01            | H01, B07, C-07               |
+| Effet de la mise de côté et de la reprise sur le niveau d'accès limité (recommandation : non)                                                                                                                                    | G01            | C-08                         |
+| Référence de l'opérateur, mentions légales du reçu ; libellé et sens de la correction                                                                                                                                            | G01            | C-12, C-13, C-15             |
+| Motifs de signalement ; pièces jointes ; contact d'aide ; contenu de « Le dépôt n'arrive pas ? » ; délais (jamais annoncés) ; limite de contestation ; commentaire de contestation obligatoire ou non ; un dossier par opération | G03            | C-04, C-14, C-15, C-16       |
+| `<délai de confirmation>` (passage à « On vérifie ») ; idempotence de la reprise ; cache hors ligne ; taille de page                                                                                                             | technique      | C-04, C-05, C-09, C-11, C-13 |
+| Détail d'un dépôt dont le passage est en attente : lien seul ou bouton + lien                                                                                                                                                    | PO             | C-12                         |
 
 **Valeurs de démonstration à ne jamais reprendre** : frais fictifs du prototype (bande hors produit), numéro 07 08 12 34 56, solde 12 400 FCFA, épargnes École Awa / Boutique / Tabaski / Loyer / Moto, références « (fictive) », dossiers « (fictif) », « Motif A / B (à confirmer) », réponse du conseiller, heure 14:32, date figée au 19 octobre 2026, écran « Simulation de l'application Wave ».
 
@@ -176,9 +176,11 @@ Le lot C (dépôt, affectation, opérations et reçus de l'app cliente) a été 
 - Gherkin (C-P1-S1 à S30, S32 à S39, S41, S43, S44 ; C-P2-S1, S7 à S14, S16 ; C-P4-S1) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Écrans concernés
+
 C-00 Comment tu veux déposer ? (feuille) · C-17 Montre Mon QR à une agente (explication) · C-01 Avec quoi tu déposes ? · C-02 Combien tu déposes ? · C-03 Vérifie ton dépôt · C-04 Valide sur ton téléphone · C-05 Résultat du dépôt.
 
 ### Critères d'acceptation ajoutés
+
 - [ ] « Déposer » ouvre la feuille « Comment tu veux déposer ? » (Par Mobile Money / Auprès d'une agente) ; « Auprès d'une agente » explique le dépôt en espèces et ouvre Mon QR, sans montant ni statut (C-P1-S2, S3, S5 à S7).
 - [ ] Le dépôt part **uniquement du numéro vérifié**, affiché et non modifiable ; aucun champ ni bouton pour un autre numéro (C-P1-S10).
 - [ ] Liste des opérateurs disponibles (logo, nom, chevron, sans radio) ; un seul opérateur reste une liste ; aucun opérateur → lien agente ; hors connexion → dernière liste datée, désactivée (C-P1-S9, S11 à S13).
@@ -192,6 +194,7 @@ C-00 Comment tu veux déposer ? (feuille) · C-17 Montre Mon QR à une agente (e
 - [ ] Le solde n'est crédité qu'à la confirmation du partenaire ; confirmations idempotentes (C-P1-S43).
 
 ### Écarts avec l'issue actuelle
+
 - L'issue ne parle que du dépôt vers le wallet : le design y ajoute le dépôt **pour une épargne** (dépôt puis affectation liés, FIN-03), dont l'échec partiel est spécifié avec #67.
 - La validation chez l'opérateur est hors de KOTIZ ; son protocole (application, message, code) est à confirmer par opérateur (G01) : le bouton « Ouvrir {opérateur} » n'existe que si l'opérateur passe par son application.
 - Les frais du prototype sont fictifs et annoncés comme tels : **aucune valeur n'est une règle**. En production, sans frais confirmés (G01, H02 #61), le dépôt reste bloqué au récapitulatif.
@@ -199,6 +202,7 @@ C-00 Comment tu veux déposer ? (feuille) · C-17 Montre Mon QR à une agente (e
 - Proposition : ajouter « Blocked by #59 » (socle UI : ligne de choix, résultat plein écran).
 
 ### Paramètres à confirmer
+
 - G01 : opérateurs et leur ordre ; protocole de validation et annulation ; frais, montant débité, montant arrivé ; minimum et maximum ; niveau d'accès limité ; « échec confirmé » = rien pris ? ; raison d'un refus.
 - Technique : lien de retour depuis l'appli de l'opérateur ; délai avant « On vérifie ».
 - Les données du prototype (numéro, solde, épargnes, références, frais) sont fictives.
@@ -216,6 +220,7 @@ Le lot C a été validé le 20 octobre 2026. Le **dépôt pour une épargne** (d
 - Gherkin (C-P1-S24, S25, S30, S31, S40, S41, S43 ; C-P2-S12, S15, S19, S20 ; C-P3-S13, S17, S21 ; C-P4-S20, S21) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Critères d'acceptation ajoutés
+
 - [ ] Un dépôt pour une épargne est un dépôt puis une affectation **liés**, sur la totalité du montant, vers une seule épargne ; l'opération expose deux statuts (C-P2-S19).
 - [ ] **Un dépôt fait n'est jamais « échoué »** parce que l'affectation a échoué : l'argent reste sur le solde, aucun nouvel ordre de paiement n'est créé (C-P2-S15, C-P2-S20).
 - [ ] Affectation en attente ou inconnue : suivi seulement, aucune reprise proposée (C-P2-S12, C-P4-S20).
@@ -227,10 +232,12 @@ Le lot C a été validé le 20 octobre 2026. Le **dépôt pour une épargne** (d
 - [ ] Après un échec ou une annulation **confirmés**, « Réessayer » crée une nouvelle demande et redemande la validation chez l'opérateur (C-P1-S35).
 
 ### Écarts
+
 - Le vocabulaire manque au glossaire DDD : **affectation**, **lien dépôt ↔ affectation**, **reprise** (à nommer avec `domain-modeling` avant le code).
 - La reprise est interne (Savings) : aucune écriture Payments ; le dépôt d'origine reste « fait ».
 
 ### Paramètres à confirmer
+
 - Technique : délai de confirmation avant « On vérifie » ; interrogation du statut au retour depuis l'appli de l'opérateur.
 ```
 
@@ -246,9 +253,11 @@ Le lot C a été validé le 20 octobre 2026. Il dessine le **volet cliente** de 
 - Gherkin (C-P7-S1 à S12, C-P8-S1 à S10, C-P1-S37) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Écrans concernés
+
 C-14 Signaler un problème · C-15 Mon signalement · C-16 Je conteste cette réponse (feuille) · C-12 Détail (ligne « Mon signalement », section « Lié à cette opération »).
 
 ### Critères d'acceptation ajoutés
+
 - [ ] Signaler depuis le détail d'une opération, quel que soit son statut : opération reprise sans ressaisie, motif requis (liste configurée, aucun inventé), mot et photo facultatifs, « L'envoi ne lance aucun remboursement. » (C-P7-S1 à S5).
 - [ ] Échec ou hors ligne : « Rien n'est envoyé. », saisie gardée ; « Quitter sans envoyer ? » seulement avec un mot ou une photo (C-P7-S6, S7).
 - [ ] Après l'envoi : message **information** (jamais un succès vert), « Ce n'est pas un remboursement. », dossier à référence propre, statut neutre Envoyé > En cours > Résolu, aucun délai annoncé (C-P7-S8, S10).
@@ -258,11 +267,13 @@ C-14 Signaler un problème · C-15 Mon signalement · C-16 Je conteste cette ré
 - [ ] Une **correction** n'apparaît que confirmée : opération propre dans Opérations, liée à l'opération d'origine, en contre-écritures équilibrées sans modifier les écritures d'origine (C-P8-S3, S8, S9).
 
 ### Écarts
+
 - **Dépendance : proposition de lever le blocage par #68** (retrait) pour le volet signalement. Signaler, suivre, contester un **dépôt** et afficher une correction ne dépendent pas du retrait. Proposition : Blocked by #67 et **D26 (#99)** (détail d'une opération, point d'entrée du signalement) ; le litige sur un retrait suivra #68 quand il sera livré.
 - Le rapprochement et le suspense (côté back-office) ne sont pas dessinés au lot C.
 - Le glossaire ne nomme ni le **dossier de signalement**, ni la **contestation**, ni la **correction** ; CONTEXT-MAP n'a pas de contexte « Support » : contexte à désigner (Admin & Conformité ? Savings pour la correction ? nouveau contexte avec ADR ?) avant le code.
 
 ### Paramètres à confirmer
+
 - G03 : motifs ; pièces jointes (formats, taille, nombre) ; contact d'aide ; délais ; limite de contestation (le prototype n'en permet qu'une) ; commentaire de contestation obligatoire ou non (facultatif par défaut).
 - G01 : libellé et sens de la correction.
 ```
@@ -279,6 +290,7 @@ Le lot C (dépôt, affectation, opérations et reçus) a été validé le 20 oct
 - Gherkin (C-P1-S2, S3, S34, S42 ; C-P2-S17 ; C-P3-S20 ; C-P6-S29, S31) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Critères d'acceptation ajoutés
+
 - [ ] Le raccourci « Déposer » ouvre la feuille « Comment tu veux déposer ? » ; la fermer ramène à l'accueil (C-P1-S2, S3).
 - [ ] Après un dépôt **fait** vers le solde, le solde augmente du montant arrivé ; **en attente**, il ne change pas et « Dernier dépôt » affiche « En attente » (C-P1-S34, S42).
 - [ ] « Dernier dépôt » affiche le montant et le statut, **sans nom d'épargne** (PNV-2 refusée après test le 20 octobre 2026), et ouvre le détail de ce dépôt (C-P2-S17, C-P6-S29).
@@ -286,6 +298,7 @@ Le lot C (dépôt, affectation, opérations et reçus) a été validé le 20 oct
 - [ ] Le réglage de masquage vaut aussi pour Opérations, le détail et le reçu (C-P6-S31).
 
 ### Écarts
+
 - L'accueil du lot A utilisait l'ancienne ligne d'opération : à remplacer par la ligne du lot C (une seule `TransactionRow` dans l'app).
 - Dépendance : « Tout voir » et les lignes mènent aux écrans de **D26 (#99)** (à créer).
 ```
@@ -302,18 +315,22 @@ Le lot C a été validé le 20 octobre 2026. Il branche le détail d'une épargn
 - Gherkin (C-P2-S6, S18 ; C-P4-S16, S17 ; C-P6-S29) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Nouvel état de B07 : « Dépôt pas entré »
+
 Quand un dépôt Mobile Money **fait** pour cette épargne n'a pas pu y passer (échec confirmé, pas encore repris) :
+
 - au-dessus des boutons, une `InfoLine` « {montant} sont restés sur ton solde. Les mettre ici › » ouvre la **reprise** (récapitulatif « Réessayer de mettre de côté », ou la saisie si le solde a baissé, ou « {épargne} est fermée » si l'épargne a été fermée) ;
 - dans « Derniers mouvements », la ligne du dépôt s'affiche « Depuis {opérateur} » · « Sur ton solde » · « {montant} » **sans « + »**, en texte secondaire · « Pas entré » avec une croix (pastille d'échec) ; toucher la ligne ouvre la reprise ;
 - ce dépôt n'est **jamais** affiché « Échoué » ni « + {montant} » dans l'épargne ; le montant et la barre de l'épargne restent sur le confirmé ;
 - une fois la reprise faite, la ligne d'information disparaît et le mouvement compte dans l'épargne.
 
 ### Critères d'acceptation ajoutés
+
 - [ ] État « Dépôt pas entré » conforme ci-dessus, avec la ligne d'information qui ouvre la reprise (C-P4-S16, C-P4-S17).
 - [ ] « Mettre de l'argent » ouvre la feuille « D'où vient l'argent ? » pour cette épargne ; la fermer ramène à B07 (C-P2-S6) ; la suite est dans #66 (Mobile Money) et **D25 (#98)** (solde, reprise).
 - [ ] « Tout voir › » de « Derniers mouvements » ouvre Opérations filtrées sur l'épargne ; une ligne ouvre le détail de l'opération (C-P2-S18, C-P6-S29).
 
 ### Écarts
+
 - La « cotisation flexible » du corps de l'issue est l'alimentation d'une épargne : branche Mobile Money dans #66, branche solde et reprise dans **D25 (#98)** (issue à créer). Le corps de #73 peut y renvoyer (titre proposé au lot B inchangé : « D12 — Créer et gérer ses épargnes par projet »).
 - Cet état complète la planche B07 validée au lot B ; rien d'autre ne change dans le lot B.
 ```
@@ -329,10 +346,12 @@ Le lot C a été validé le 20 octobre 2026. Il donne la destination des liens d
 - Gherkin (C-P6-S30) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Critères d'acceptation ajoutés
+
 - [ ] « Voir le reçu › » du résultat d'un retour **fait** ouvre le reçu « Retour au solde » (C-13) ; « Tu le retrouves dans Opérations » mène à Opérations (C-P6-S30).
 - [ ] Dans Opérations, un retour s'affiche « Depuis {épargne} » · « Vers ton solde » · « + {montant} » · statut en mots, variante interne (pastille neutre, sans logo d'opérateur) (C-P6-S30).
 
 ### Écarts
+
 - Dans le prototype, « Voir le reçu » de B12 ouvre Opérations (données de prototype séparées) : à coder vers le reçu du retour.
 - Dépendance : le reçu et Opérations sont dans **D26 (#99)** (à créer).
 ```
@@ -349,6 +368,7 @@ Le lot C a été validé le 20 octobre 2026. Il réutilise le socle des lots A e
 - Handoff (§ Composants, § Tokens) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/handoff-lot-c.md
 
 ### Critères d'acceptation ajoutés
+
 - [ ] `TransactionRow` : sous-titre, variante `internal` (pastille neutre, flèches internes, jamais de logo ni de pastille d'apport), statut combiné (« À reprendre » / « En attente » en ambre + phrase), « + » / « − » seulement si l'opération est faite.
 - [ ] Ligne de choix (opérateur, origine des fonds) : logo 64 × 48 ou illustration, libellé, chevron, état désactivé avec raison lue ; ligne ≥ 64.
 - [ ] `LinkedStatusRows`, `FilterChips` (une seule puce active, puce d'épargne amovible), `Receipt`, `CaseTimeline` (aucun vert), étapes numérotées.
@@ -357,6 +377,7 @@ Le lot C a été validé le 20 octobre 2026. Il réutilise le socle des lots A e
 - [ ] Logos officiels des opérateurs (Wave en symbole seul), jamais recolorés ; illustrations Mobile Money et agente embarquées.
 
 ### Écarts
+
 - Hors DS v12 : tous ces composants sauf les illustrations. « Ambre » couvre aussi « À reprendre » (décision PO du 19 octobre 2026), à reporter au Design System.
 - Aucun token nouveau ; valeurs en dur à rattacher listées dans le handoff (pastille numérotée 28, colonne 120, point 12…).
 ```
@@ -369,6 +390,7 @@ Le lot C a été validé le 20 octobre 2026. Il réutilise le socle des lots A e
 - Gherkin (C-P1-S4, C-P1-S33) : https://github.com/kotiz-ci/platform/blob/docs/restructure-documentation/docs/design/refonte-parcours/gherkin-lot-c.md
 
 ### Critères d'acceptation ajoutés
+
 - [ ] Sur « Compte créé », « Faire mon premier dépôt » ouvre la feuille « Comment tu veux déposer ? » (et non plus directement le choix de l'opérateur) ; la fermer ramène à « Compte créé » (C-P1-S4, C-P1-S3).
 - [ ] Le résultat du premier dépôt est simple, sans illustration ; sans épargne active, il propose « Créer une épargne », sans mise de côté automatique (C-P1-S33).
 ```
@@ -379,15 +401,15 @@ Le lot C a été validé le 20 octobre 2026. Il réutilise le socle des lots A e
 
 Signalés, non corrigés ici (les fichiers screens / critique / spec sont tenus par une autre session). État vérifié le 20 octobre 2026 sur le canvas `1792494666-2bc8` et le Design System v12.
 
-| Où | Écart | Ce qui fait foi |
-|---|---|---|
-| [ux-spec-lot-c.md](ux-spec-lot-c.md) | Textes de C-04, C-05, C-09, C-11 (deux segments), C-12 (« Signaler » primaire en attente), C-13 (« Pour » sur un partiel), C-15 (message succès), C-17 (« dans ton app ») ; PNV-2 encore « conditionnelle » ; C-10 à 3 actives avec « Créer une épargne » ; B07 « ne sont pas entrés · Réessayer » | Canvas version 22 et critique (voir la table « Écarts » du handoff) ; PNV-2 refusée le 20 octobre 2026 ; C-10 sans lien ; B07 « Dépôt pas entré » |
-| [screens-lot-c.md](screens-lot-c.md) | Ligne « A · H01, A · E08, B · B07 » : « L'état B07 … n'est **pas** dessiné » ; § Parcours C-P4 cite encore « Ton dépôt est fait. École Awa n'a pas reçu l'argent. » | Section Validation du même fichier (B07 reporté au lot B, version 22) ; titre « {montant} sont sur ton solde. » |
-| [test-lot-c.md](test-lot-c.md) | Numérotation « C-01 à C-16 » dans l'en-tête (C-00 et C-17 ajoutés depuis) ; C-P2-3 décrit PNV-2 comme à trancher | ux-spec § Numérotation ; PNV-2 refusée |
-| [ddd-context-map-glossaire.md](../../architecture/ddd-context-map-glossaire.md) § 5.1 | `Deposit` « Min. 100 FCFA », `Streak`, `GoalLock` ; ni affectation, ni reprise, ni dossier, ni contestation, ni correction | Aucun minimum produit (G01) ; à traiter avec `domain-modeling` |
-| [CONTEXT-MAP.md](../../../CONTEXT-MAP.md) | Pas de contexte « Ledger » ni « Support » | Ledger dans Savings ; contexte du signalement à décider |
-| DESIGN.md (modifié, non commité) | « Ambre » réservé à « En attente » | Décision PO : « À reprendre » aussi en ambre (à reporter) |
-| Prototype C-12 | Bouton « Voir le reçu » + lien « Voir le reçu du dépôt » sur un passage en attente | Lien seul recommandé (question PO) |
+| Où                                                                                    | Écart                                                                                                                                                                                                                                                                                              | Ce qui fait foi                                                                                                                                   |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ux-spec-lot-c.md](ux-spec-lot-c.md)                                                  | Textes de C-04, C-05, C-09, C-11 (deux segments), C-12 (« Signaler » primaire en attente), C-13 (« Pour » sur un partiel), C-15 (message succès), C-17 (« dans ton app ») ; PNV-2 encore « conditionnelle » ; C-10 à 3 actives avec « Créer une épargne » ; B07 « ne sont pas entrés · Réessayer » | Canvas version 22 et critique (voir la table « Écarts » du handoff) ; PNV-2 refusée le 20 octobre 2026 ; C-10 sans lien ; B07 « Dépôt pas entré » |
+| [screens-lot-c.md](screens-lot-c.md)                                                  | Ligne « A · H01, A · E08, B · B07 » : « L'état B07 … n'est **pas** dessiné » ; § Parcours C-P4 cite encore « Ton dépôt est fait. École Awa n'a pas reçu l'argent. »                                                                                                                                | Section Validation du même fichier (B07 reporté au lot B, version 22) ; titre « {montant} sont sur ton solde. »                                   |
+| [test-lot-c.md](test-lot-c.md)                                                        | Numérotation « C-01 à C-16 » dans l'en-tête (C-00 et C-17 ajoutés depuis) ; C-P2-3 décrit PNV-2 comme à trancher                                                                                                                                                                                   | ux-spec § Numérotation ; PNV-2 refusée                                                                                                            |
+| [ddd-context-map-glossaire.md](../../architecture/ddd-context-map-glossaire.md) § 5.1 | `Deposit` « Min. 100 FCFA », `Streak`, `GoalLock` ; ni affectation, ni reprise, ni dossier, ni contestation, ni correction                                                                                                                                                                         | Aucun minimum produit (G01) ; à traiter avec `domain-modeling`                                                                                    |
+| [CONTEXT-MAP.md](../../../CONTEXT-MAP.md)                                             | Pas de contexte « Ledger » ni « Support »                                                                                                                                                                                                                                                          | Ledger dans Savings ; contexte du signalement à décider                                                                                           |
+| DESIGN.md (modifié, non commité)                                                      | « Ambre » réservé à « En attente »                                                                                                                                                                                                                                                                 | Décision PO : « À reprendre » aussi en ambre (à reporter)                                                                                         |
+| Prototype C-12                                                                        | Bouton « Voir le reçu » + lien « Voir le reçu du dépôt » sur un passage en attente                                                                                                                                                                                                                 | Lien seul recommandé (question PO)                                                                                                                |
 
 ## Publications faites le 20 octobre 2026
 

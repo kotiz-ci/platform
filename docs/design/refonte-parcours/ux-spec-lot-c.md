@@ -24,17 +24,17 @@ Script de test associé : [test-lot-c.md](test-lot-c.md).
 
 ## Vocabulaire
 
-| Interface (Fatou) | Sens | PRD / glossaire |
-|---|---|---|
-| **Déposer** | Faire entrer de l'argent dans KOTIZ depuis le Mobile Money de la cliente (ou en espèces chez une agente, lot E) | dépôt externe, `Deposit`, `PaymentOrder` |
-| **Mettre de l'argent** (bouton), **mettre de côté** (titres) | Faire passer de l'argent dans une épargne. Libellé validé au lot B (Q6) | affectation interne, alimentation ; **absent du glossaire** (à nommer avec `domain-modeling`) |
-| **Remettre sur mon solde** | Mouvement d'une épargne vers le solde (lot B) | retour au solde |
-| **Solde disponible**, **mon solde** | Argent libre, distinct des épargnes | `SavingsAccount` |
-| **Opérations** | Racine : liste unique de tous les mouvements | historique |
-| **Reçu** | Preuve d'une opération **faite** | reçu |
-| **Signaler un problème**, **mon signalement** | Dossier ouvert depuis une opération | signalement, dossier ; **absent du glossaire** |
-| **Je conteste cette réponse** | Reprise du même dossier après « Résolu » | contestation |
-| **Correction** | Mouvement correctif confirmé, lié à une opération d'origine (libellé final à confirmer, G01) | correction financière, reversal, contre-écriture |
+| Interface (Fatou)                                            | Sens                                                                                                            | PRD / glossaire                                                                               |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Déposer**                                                  | Faire entrer de l'argent dans KOTIZ depuis le Mobile Money de la cliente (ou en espèces chez une agente, lot E) | dépôt externe, `Deposit`, `PaymentOrder`                                                      |
+| **Mettre de l'argent** (bouton), **mettre de côté** (titres) | Faire passer de l'argent dans une épargne. Libellé validé au lot B (Q6)                                         | affectation interne, alimentation ; **absent du glossaire** (à nommer avec `domain-modeling`) |
+| **Remettre sur mon solde**                                   | Mouvement d'une épargne vers le solde (lot B)                                                                   | retour au solde                                                                               |
+| **Solde disponible**, **mon solde**                          | Argent libre, distinct des épargnes                                                                             | `SavingsAccount`                                                                              |
+| **Opérations**                                               | Racine : liste unique de tous les mouvements                                                                    | historique                                                                                    |
+| **Reçu**                                                     | Preuve d'une opération **faite**                                                                                | reçu                                                                                          |
+| **Signaler un problème**, **mon signalement**                | Dossier ouvert depuis une opération                                                                             | signalement, dossier ; **absent du glossaire**                                                |
+| **Je conteste cette réponse**                                | Reprise du même dossier après « Résolu »                                                                        | contestation                                                                                  |
+| **Correction**                                               | Mouvement correctif confirmé, lié à une opération d'origine (libellé final à confirmer, G01)                    | correction financière, reversal, contre-écriture                                              |
 
 Jamais : « affecter », « allocation », « transfert » (sonne externe), « retrait » pour un mouvement interne, « remboursé » pour un dossier résolu, toute référence à la tontine.
 
@@ -165,6 +165,7 @@ flowchart TD
 Déclencheur : un dépôt **fait** dont la mise de côté a **échoué de façon confirmée** (PRD 16h). Entrées : C-05 état partiel « Réessayer de mettre dans École Awa », ou C-12 détail de la ligne « Dépôt vers École Awa · Dépôt fait · épargne pas faite », ou la ligne d'information de B · B07 (raccord, voir « Raccords »). Jamais de nouveau dépôt, jamais d'argent demandé au Mobile Money (RM-FUND-03). Toujours un **récapitulatif actualisé et une nouvelle confirmation** (bouton du récapitulatif, sans PIN, Décision PO du 19 octobre 2026, Q3) : l'autorisation du dépôt ne sert pas deux fois.
 
 Chemins principaux :
+
 - Fonds suffisants, épargne ouverte : **3 écrans** C-05 C-08 C-09.
 - Fonds diminués (PRD 16i) : **4 écrans** C-05 C-07 C-08 C-09.
 - Épargne fermée (PRD 16j) : **4 écrans** C-05 C-10 C-08 C-09.
@@ -261,19 +262,19 @@ flowchart TD
 
 ### Nombre d'écrans par parcours (chemin principal)
 
-| Parcours | Écrans | Séquence |
-|---|---|---|
-| C-P1 Déposer sur mon solde | 6 | C-00 C-01 C-02 C-03 C-04 C-05 (depuis A · H01 ou A · E08), puis A · H01 |
-| C-P1′ Déposer auprès d'une agente (raccord lot E) | 2 | C-00 C-17, puis A · Q01 |
-| C-P2 Mettre de l'argent par Mobile Money | 6 | C-06 C-01 C-02 C-03 C-04 C-05 (depuis B · B07), puis B · B07 |
-| C-P3 Mettre de l'argent depuis mon solde | 4 | C-06 C-07 C-08 C-09 (depuis B · B07), puis B · B07 |
-| C-P4 Reprise, fonds suffisants | 3 | C-05 C-08 C-09 |
-| C-P4 Reprise, fonds diminués | 4 | C-05 C-07 C-08 C-09 |
-| C-P4 Reprise, épargne fermée | 4 | C-05 C-10 C-08 C-09 |
-| C-P5 Limite de 3 au choix de destination | 2 | C-10 B · B15 |
-| C-P6 Opérations, détail, reçu | 3 | C-11 C-12 C-13 |
-| C-P7 Signaler et suivre | 3 | C-12 C-14 C-15 |
-| C-P8 Contester | 2 | C-15 C-16 (retour C-15) |
+| Parcours                                          | Écrans | Séquence                                                                |
+| ------------------------------------------------- | ------ | ----------------------------------------------------------------------- |
+| C-P1 Déposer sur mon solde                        | 6      | C-00 C-01 C-02 C-03 C-04 C-05 (depuis A · H01 ou A · E08), puis A · H01 |
+| C-P1′ Déposer auprès d'une agente (raccord lot E) | 2      | C-00 C-17, puis A · Q01                                                 |
+| C-P2 Mettre de l'argent par Mobile Money          | 6      | C-06 C-01 C-02 C-03 C-04 C-05 (depuis B · B07), puis B · B07            |
+| C-P3 Mettre de l'argent depuis mon solde          | 4      | C-06 C-07 C-08 C-09 (depuis B · B07), puis B · B07                      |
+| C-P4 Reprise, fonds suffisants                    | 3      | C-05 C-08 C-09                                                          |
+| C-P4 Reprise, fonds diminués                      | 4      | C-05 C-07 C-08 C-09                                                     |
+| C-P4 Reprise, épargne fermée                      | 4      | C-05 C-10 C-08 C-09                                                     |
+| C-P5 Limite de 3 au choix de destination          | 2      | C-10 B · B15                                                            |
+| C-P6 Opérations, détail, reçu                     | 3      | C-11 C-12 C-13                                                          |
+| C-P7 Signaler et suivre                           | 3      | C-12 C-14 C-15                                                          |
+| C-P8 Contester                                    | 2      | C-15 C-16 (retour C-15)                                                 |
 
 Cible : aucun chemin principal au-delà de 6 écrans (le lot B monte à 7 pour la création). Le dépôt le plus fréquent (C-P1) tient en 6 écrans, dont une feuille de choix (C-00) et un écran d’attente que Fatou ne manipule pas.
 
@@ -281,26 +282,26 @@ Cible : aucun chemin principal au-delà de 6 écrans (le lot B monte à 7 pour l
 
 Barre basse : uniquement sur C-11 (racine Opérations). Tous les autres écrans sont des pages poussées sans barre basse, avec `PageHeader`, ou des `BottomSheet`.
 
-| ID | Écran | Parcours | Objectif |
-|---|---|---|---|
-| C-00 | Comment tu veux déposer ? (bottom sheet) | C-P1 | Choisir Mobile Money ou une agente |
-| C-01 | Avec quoi tu déposes ? | C-P1 C-P2 | Choisir son opérateur |
-| C-02 | Combien tu déposes ? | C-P1 C-P2 | Saisir le montant du dépôt |
-| C-03 | Vérifie ton dépôt | C-P1 C-P2 | Voir montant, débit, frais, d'où et vers où, avant de valider |
-| C-04 | Valide sur ton téléphone | C-P1 C-P2 | Valider chez l'opérateur et suivre l'arrivée |
-| C-05 | Résultat du dépôt | C-P1 C-P2 C-P4 | Savoir si c'est fait, en attente, échoué, ou fait en partie |
-| C-06 | D'où vient l'argent ? (bottom sheet) | C-P2 C-P3 | Choisir Mobile Money, mon solde ou l'espèce |
-| C-07 | Combien tu mets de côté ? | C-P3 C-P4 | Saisir le montant qui passe du solde à l'épargne |
-| C-08 | Vérifie avant de mettre de côté | C-P3 C-P4 | Voir combien, d'où et vers où, puis confirmer |
-| C-09 | Résultat de la mise de côté | C-P3 C-P4 | Savoir si c'est fait, en attente ou échoué |
-| C-10 | Choisis une autre épargne (bottom sheet) | C-P4 C-P5 | Épargne fermée : autre épargne active, ou laisser sur le solde |
-| C-11 | Opérations (racine) | C-P6 | Voir tous ses mouvements au même endroit |
-| C-12 | Détail d'une opération | C-P4 C-P6 C-P7 C-P8 | Comprendre une opération et choisir la suite |
-| C-13 | Reçu | C-P6 | Garder la preuve d'une opération faite |
-| C-14 | Signaler un problème | C-P7 | Dire ce qui ne va pas, sans rien retaper |
-| C-15 | Mon signalement | C-P7 C-P8 | Suivre le dossier et lire la réponse |
-| C-16 | Je conteste cette réponse (bottom sheet) | C-P8 | Rouvrir le même dossier |
-| C-17 | Montre Mon QR à une agente | C-P1′ | Comprendre le dépôt en espèces et afficher son QR (raccord lot E) |
+| ID   | Écran                                    | Parcours            | Objectif                                                          |
+| ---- | ---------------------------------------- | ------------------- | ----------------------------------------------------------------- |
+| C-00 | Comment tu veux déposer ? (bottom sheet) | C-P1                | Choisir Mobile Money ou une agente                                |
+| C-01 | Avec quoi tu déposes ?                   | C-P1 C-P2           | Choisir son opérateur                                             |
+| C-02 | Combien tu déposes ?                     | C-P1 C-P2           | Saisir le montant du dépôt                                        |
+| C-03 | Vérifie ton dépôt                        | C-P1 C-P2           | Voir montant, débit, frais, d'où et vers où, avant de valider     |
+| C-04 | Valide sur ton téléphone                 | C-P1 C-P2           | Valider chez l'opérateur et suivre l'arrivée                      |
+| C-05 | Résultat du dépôt                        | C-P1 C-P2 C-P4      | Savoir si c'est fait, en attente, échoué, ou fait en partie       |
+| C-06 | D'où vient l'argent ? (bottom sheet)     | C-P2 C-P3           | Choisir Mobile Money, mon solde ou l'espèce                       |
+| C-07 | Combien tu mets de côté ?                | C-P3 C-P4           | Saisir le montant qui passe du solde à l'épargne                  |
+| C-08 | Vérifie avant de mettre de côté          | C-P3 C-P4           | Voir combien, d'où et vers où, puis confirmer                     |
+| C-09 | Résultat de la mise de côté              | C-P3 C-P4           | Savoir si c'est fait, en attente ou échoué                        |
+| C-10 | Choisis une autre épargne (bottom sheet) | C-P4 C-P5           | Épargne fermée : autre épargne active, ou laisser sur le solde    |
+| C-11 | Opérations (racine)                      | C-P6                | Voir tous ses mouvements au même endroit                          |
+| C-12 | Détail d'une opération                   | C-P4 C-P6 C-P7 C-P8 | Comprendre une opération et choisir la suite                      |
+| C-13 | Reçu                                     | C-P6                | Garder la preuve d'une opération faite                            |
+| C-14 | Signaler un problème                     | C-P7                | Dire ce qui ne va pas, sans rien retaper                          |
+| C-15 | Mon signalement                          | C-P7 C-P8           | Suivre le dossier et lire la réponse                              |
+| C-16 | Je conteste cette réponse (bottom sheet) | C-P8                | Rouvrir le même dossier                                           |
+| C-17 | Montre Mon QR à une agente               | C-P1′               | Comprendre le dépôt en espèces et afficher son QR (raccord lot E) |
 
 ## Règles communes aux écrans du lot C
 
@@ -326,7 +327,7 @@ Barre basse : uniquement sur C-11 (racine Opérations). Tous les autres écrans 
 - Contenu : poignée ; titre « Comment tu veux déposer ? » ; deux lignes avec illustration et chevron, cible ≥ 48 :
   1. « Par Mobile Money » (→ C-01) ;
   2. « Auprès d'une agente » (→ C-17).
-  Pas de montant, pas de sous-texte long ; la destination est le solde (H4).
+     Pas de montant, pas de sous-texte long ; la destination est le solde (H4).
 - États : nominal ; **aucun opérateur disponible** : ligne 1 désactivée avec sa raison « Mobile Money indisponible pour l'instant. », ligne 2 active ; hors ligne : la feuille s'ouvre, C-01 gère le réseau.
 - Cas limites : Fatou touche « Déposer » deux fois (une seule feuille) ; retour Android = fermer la feuille.
 
@@ -585,8 +586,8 @@ Fait en partie, mise de côté en attente :
   1. « Mon solde disponible » (→ C-07) **si le solde est supérieur à 0** ;
   2. « Mobile Money » (→ C-01 avec contexte « Pour : École Awa ») ;
   3. « En espèces chez une agente » (→ C-17).
-  Solde à 0 : **Mobile Money passe en premier**, « Mon solde disponible » descend en deuxième, désactivé avec sa raison (Décision PO du 19 octobre 2026, Q9).
-  Aucun montant dans la feuille : le solde disponible s'affiche sur C-07, qui est une saisie (H7).
+     Solde à 0 : **Mobile Money passe en premier**, « Mon solde disponible » descend en deuxième, désactivé avec sa raison (Décision PO du 19 octobre 2026, Q9).
+     Aucun montant dans la feuille : le solde disponible s'affiche sur C-07, qui est une saisie (H7).
 - États : **solde à 0 ou mise de côté en attente sur ce solde** : ligne 1 désactivée avec sa raison « Rien sur ton solde pour l'instant. » ; aucun opérateur disponible : ligne 2 désactivée, « Mobile Money indisponible pour l'instant. » ; hors ligne : la feuille s'ouvre, l'écran suivant gère le réseau.
 - Cas limites : épargne fermée pendant que la feuille est ouverte (l'écran suivant le signale) ; ordre des lignes : solde en premier s'il est supérieur à 0, sinon Mobile Money (Décision PO du 19 octobre 2026, Q9).
 
@@ -1050,37 +1051,37 @@ Raccord du lot E, ajouté le 19 octobre 2026 (Décision PO du 19 octobre 2026) :
 
 ### Nouveaux ou évolutions (à faire valider, puis à promouvoir dans le Design System)
 
-| Composant | Besoin | Écrans |
-|---|---|---|
+| Composant                                                           | Besoin                                                                                                                                                                                                                                                                                           | Écrans                       |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- |
 | **`TransactionRow` variante `internal`** (laissée de côté au lot B) | Mouvement entre solde et épargne : pastille neutre + pictogramme flèches internes, titre « Vers École Awa » / « Depuis École Awa », sous-titre « Depuis ton solde » / « Vers ton solde », signe selon le point de vue (H8). Jamais de logo d'opérateur, jamais la pastille vert doux d'un apport | C-11, C-12, A · H01, B · B07 |
-| **`TransactionRow` sous-titre** origine → destination | Toutes les lignes portent leur sous-titre (« Vers ton solde », « Pour École Awa ») | C-11 |
-| **`LinkedStatusRows`** | Deux lignes de statut sur un résultat ou un reçu (« Dépôt · Fait », « Dans École Awa · Échoué »), chacune avec son `StatusPill` ; pas de pill globale | C-05, C-13 |
-| **`TransactionRow` statut combiné** | Une seule ligne pour un dépôt vers une épargne : `StatusPill` du dépôt + segment « épargne en attente » / « épargne pas faite » avec pictogramme (Décision PO du 19 octobre 2026, Q4) | C-11, A · H01, B · B07 |
-| **`OperatorRow`** | Ligne d'opérateur : logo 64 × 48, nom, chevron, cible ≥ 48 (PRD §9 « ligne opérateur ») ; état désactivé avec raison | C-01 |
-| **`FilterChips`** | Puces de filtre sur une ligne défilante, une active, puce « École Awa ✕ » amovible | C-11 |
-| **`CaseTimeline`** | Fil d'un dossier : jalons datés neutres (Envoyé, En cours, Résolu, Contesté), aucun vert de succès | C-15 |
-| **`StatusPill` neutre** pour les dossiers | Le neutre existe ; à documenter pour Envoyé / En cours / Résolu | C-15 |
-| **`Receipt`** (promotion du reçu compact `198:988`) | Reçu d'opération faite : en-tête, statut, montant, lignes, références, mention fictive | C-13 |
-| **`StepTracker`** (évolution de contenu) | Jusqu'à 4 étapes (dépôt vers une épargne) ; étape « Validée » chez l'opérateur | C-04, C-05 |
-| **Pictogramme** flèches internes | Mouvement interne, dans le style des icônes fonctionnelles | C-11, C-12 |
-| **Illustration** agente (si absente du DS) | « Auprès d'une agente », « En espèces chez une agente » | C-00, C-06, C-17 |
+| **`TransactionRow` sous-titre** origine → destination               | Toutes les lignes portent leur sous-titre (« Vers ton solde », « Pour École Awa »)                                                                                                                                                                                                               | C-11                         |
+| **`LinkedStatusRows`**                                              | Deux lignes de statut sur un résultat ou un reçu (« Dépôt · Fait », « Dans École Awa · Échoué »), chacune avec son `StatusPill` ; pas de pill globale                                                                                                                                            | C-05, C-13                   |
+| **`TransactionRow` statut combiné**                                 | Une seule ligne pour un dépôt vers une épargne : `StatusPill` du dépôt + segment « épargne en attente » / « épargne pas faite » avec pictogramme (Décision PO du 19 octobre 2026, Q4)                                                                                                            | C-11, A · H01, B · B07       |
+| **`OperatorRow`**                                                   | Ligne d'opérateur : logo 64 × 48, nom, chevron, cible ≥ 48 (PRD §9 « ligne opérateur ») ; état désactivé avec raison                                                                                                                                                                             | C-01                         |
+| **`FilterChips`**                                                   | Puces de filtre sur une ligne défilante, une active, puce « École Awa ✕ » amovible                                                                                                                                                                                                               | C-11                         |
+| **`CaseTimeline`**                                                  | Fil d'un dossier : jalons datés neutres (Envoyé, En cours, Résolu, Contesté), aucun vert de succès                                                                                                                                                                                               | C-15                         |
+| **`StatusPill` neutre** pour les dossiers                           | Le neutre existe ; à documenter pour Envoyé / En cours / Résolu                                                                                                                                                                                                                                  | C-15                         |
+| **`Receipt`** (promotion du reçu compact `198:988`)                 | Reçu d'opération faite : en-tête, statut, montant, lignes, références, mention fictive                                                                                                                                                                                                           | C-13                         |
+| **`StepTracker`** (évolution de contenu)                            | Jusqu'à 4 étapes (dépôt vers une épargne) ; étape « Validée » chez l'opérateur                                                                                                                                                                                                                   | C-04, C-05                   |
+| **Pictogramme** flèches internes                                    | Mouvement interne, dans le style des icônes fonctionnelles                                                                                                                                                                                                                                       | C-11, C-12                   |
+| **Illustration** agente (si absente du DS)                          | « Auprès d'une agente », « En espèces chez une agente »                                                                                                                                                                                                                                          | C-00, C-06, C-17             |
 
 Laissé de côté : squelette de liste (déjà « à construire dans l'app » au lot B) ; partage du reçu (lot E, Q7). Plus utilisés au lot C : `PinSlots` + `PinPad` (aucun PIN, Q3).
 
 ## Raccords vers les autres lots et évolutions (non spécifiés ici)
 
-| Départ | Destination | Lot |
-|---|---|---|
-| A · H01 « Déposer », A · E08 « Faire mon premier dépôt » | C-01 | A → C |
-| A · H01 une opération, « Tout voir », carte solde « Dernier dépôt » | C-12, C-11 | A → C |
-| B · B07 « Mettre de l'argent », un mouvement, « Tout voir › » ; B · B12 « Voir le reçu › », « Tu le retrouves dans Opérations » | C-06, C-12, C-11 filtrée, C-13 | B → C |
-| **B · B07, nouvel état à ajouter au lot B** : mise de côté échouée liée à un dépôt fait → `InfoLine` « 5 000 F ne sont pas entrés. Réessayer › » (→ C-P4) | Écran du lot B, **non modifié ici** : à reporter dans la spec et le canvas du lot B après validation | C → B |
-| C-05 et C-10 « Créer une épargne » | B · B02, ou B · B15 à 3 actives | C → B |
-| C-17 « Afficher Mon QR » (→ A · Q01) ; parcours agente du dépôt cash (scan, montant, confirmation, remise) ; choix de destination solde ou épargne au dépôt cash (16a) ; reprise d'affectation avec l'aide d'une agente | Dépôt cash, reprise assistée, présentation privée du disponible sans smartphone (G05) | E |
-| Lignes « Retrait … » de C-11 | Parcours de retrait Mobile Money | D |
-| « Contacter l'aide › » ; notifications d'évolution d'un dépôt ou d'un dossier ; SMS de confirmation | Récupération, aide générale, notifications essentielles (FIN-04) | F |
-| C-02 « Vérifier mon identité › » | KYC | A2 |
-| **Évolution post-MVP** : déposer depuis un autre numéro Mobile Money que le numéro vérifié | Ajout d'un numéro (vérification à cadrer) ; **aucun bouton ni lien au MVP** (Décision PO du 19 octobre 2026) | Post-MVP |
+| Départ                                                                                                                                                                                                                  | Destination                                                                                                  | Lot      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | -------- |
+| A · H01 « Déposer », A · E08 « Faire mon premier dépôt »                                                                                                                                                                | C-01                                                                                                         | A → C    |
+| A · H01 une opération, « Tout voir », carte solde « Dernier dépôt »                                                                                                                                                     | C-12, C-11                                                                                                   | A → C    |
+| B · B07 « Mettre de l'argent », un mouvement, « Tout voir › » ; B · B12 « Voir le reçu › », « Tu le retrouves dans Opérations »                                                                                         | C-06, C-12, C-11 filtrée, C-13                                                                               | B → C    |
+| **B · B07, nouvel état à ajouter au lot B** : mise de côté échouée liée à un dépôt fait → `InfoLine` « 5 000 F ne sont pas entrés. Réessayer › » (→ C-P4)                                                               | Écran du lot B, **non modifié ici** : à reporter dans la spec et le canvas du lot B après validation         | C → B    |
+| C-05 et C-10 « Créer une épargne »                                                                                                                                                                                      | B · B02, ou B · B15 à 3 actives                                                                              | C → B    |
+| C-17 « Afficher Mon QR » (→ A · Q01) ; parcours agente du dépôt cash (scan, montant, confirmation, remise) ; choix de destination solde ou épargne au dépôt cash (16a) ; reprise d'affectation avec l'aide d'une agente | Dépôt cash, reprise assistée, présentation privée du disponible sans smartphone (G05)                        | E        |
+| Lignes « Retrait … » de C-11                                                                                                                                                                                            | Parcours de retrait Mobile Money                                                                             | D        |
+| « Contacter l'aide › » ; notifications d'évolution d'un dépôt ou d'un dossier ; SMS de confirmation                                                                                                                     | Récupération, aide générale, notifications essentielles (FIN-04)                                             | F        |
+| C-02 « Vérifier mon identité › »                                                                                                                                                                                        | KYC                                                                                                          | A2       |
+| **Évolution post-MVP** : déposer depuis un autre numéro Mobile Money que le numéro vérifié                                                                                                                              | Ajout d'un numéro (vérification à cadrer) ; **aucun bouton ni lien au MVP** (Décision PO du 19 octobre 2026) | Post-MVP |
 
 Tant qu'un lot n'est pas produit, le prototype montre l'écran neutre « Bientôt ici » du lot A.
 
@@ -1088,62 +1089,61 @@ Tant qu'un lot n'est pas produit, le prototype montre l'écran neutre « Bientô
 
 ### Décisions validées reprises (PO, PRD, DESIGN.md)
 
-| Décision | Source |
-|---|---|
-| L'entrée fixe le contexte : déposer sur le solde OU mettre de l'argent dans une épargne identifiée | PRD §7 règle 1 |
-| Mobile Money ou Mon solde disponible pour alimenter une épargne, branches distinctes jusqu'au récapitulatif ; choix de l'origine en bottom sheet | PRD §3, §6 AFT |
-| Dépôt Mobile Money autonome depuis le numéro vérifié de la cliente uniquement, numéro visible au récapitulatif | PRD §3 ; précisé par la Décision PO du 19 octobre 2026 (H1) |
-| Liste d'opérateurs avec logo, nom et chevron, sans radios ; opérateurs disponibles seulement ; Wave en symbole sans inscription | PRD §7 règle 2, §3, DESIGN.md |
-| Montant avec libellé, devise, focus, clavier numérique ; suggestions 500 / 1 000 / 2 000 de démonstration | PRD §7 règles 3-4 |
-| Récapitulatif avant toute autorisation ; frais et net quand connus ; autorisation bloquée si inconnus | PRD §7 règle 5 |
-| Jamais de PIN opérateur collecté ; mise de côté depuis le solde confirmée par KOTIZ (au lot C : bouton du récapitulatif, voir Q3) | PRD §7 règle 6, §6 AFT |
-| Dépôt Mobile Money vers une épargne = dépôt puis affectation liés, succès partiel explicite, reprise seulement de l'affectation échouée, nouvelle confirmation, jamais un nouveau dépôt | FIN-03, RM-FUND-02, 03, 11, PRD 16a, 16h |
-| Fonds diminués : montant inférieur compatible ou report, jamais le montant initial relancé ; épargne fermée : autre épargne active ou report, aucune réouverture ni création automatique | PRD 16i, 16j |
-| Attente ≠ succès ; résultat inconnu = suivi sans répétition | PRD §7 règles 7, 9, RM-FUND-09 |
-| Historique unique, type et origine/destination distingués, une affectation ne ressemble pas à un apport ; pas de reçu de succès en attente | PRD §8 |
-| Signalement : motif requis, commentaire et pièce facultatifs, opération reprise sans ressaisie ; suivi Envoyé > En cours > Résolu ; Résolu ≠ Rembourse ; contestation sur le même dossier | PRD §8, RM-HELP-01 |
-| Correction affichée seulement si confirmée, liée à l'opération d'origine | PRD §10 |
-| 3 épargnes actives au maximum, fermées non comptées, aucune fermeture automatique | RM-SAV-02, FIN-05 |
-| « Fait » seul mot du succès ; `StepTracker` « Envoyée » en attente ; « Objectif atteint » neutre sans coche ; « Dernier dépôt » pour les dépôts seulement ; masquage persistant | DESIGN.md, décisions PO du 19 octobre 2026 (lots A et B) |
-| « Mettre de l'argent » comme libellé de l'alimentation | Lot B, Q6 |
-| Retour au solde sans frais (seule décision de frais existante) | Décision PO du 19 octobre 2026 |
-
+| Décision                                                                                                                                                                                  | Source                                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| L'entrée fixe le contexte : déposer sur le solde OU mettre de l'argent dans une épargne identifiée                                                                                        | PRD §7 règle 1                                              |
+| Mobile Money ou Mon solde disponible pour alimenter une épargne, branches distinctes jusqu'au récapitulatif ; choix de l'origine en bottom sheet                                          | PRD §3, §6 AFT                                              |
+| Dépôt Mobile Money autonome depuis le numéro vérifié de la cliente uniquement, numéro visible au récapitulatif                                                                            | PRD §3 ; précisé par la Décision PO du 19 octobre 2026 (H1) |
+| Liste d'opérateurs avec logo, nom et chevron, sans radios ; opérateurs disponibles seulement ; Wave en symbole sans inscription                                                           | PRD §7 règle 2, §3, DESIGN.md                               |
+| Montant avec libellé, devise, focus, clavier numérique ; suggestions 500 / 1 000 / 2 000 de démonstration                                                                                 | PRD §7 règles 3-4                                           |
+| Récapitulatif avant toute autorisation ; frais et net quand connus ; autorisation bloquée si inconnus                                                                                     | PRD §7 règle 5                                              |
+| Jamais de PIN opérateur collecté ; mise de côté depuis le solde confirmée par KOTIZ (au lot C : bouton du récapitulatif, voir Q3)                                                         | PRD §7 règle 6, §6 AFT                                      |
+| Dépôt Mobile Money vers une épargne = dépôt puis affectation liés, succès partiel explicite, reprise seulement de l'affectation échouée, nouvelle confirmation, jamais un nouveau dépôt   | FIN-03, RM-FUND-02, 03, 11, PRD 16a, 16h                    |
+| Fonds diminués : montant inférieur compatible ou report, jamais le montant initial relancé ; épargne fermée : autre épargne active ou report, aucune réouverture ni création automatique  | PRD 16i, 16j                                                |
+| Attente ≠ succès ; résultat inconnu = suivi sans répétition                                                                                                                               | PRD §7 règles 7, 9, RM-FUND-09                              |
+| Historique unique, type et origine/destination distingués, une affectation ne ressemble pas à un apport ; pas de reçu de succès en attente                                                | PRD §8                                                      |
+| Signalement : motif requis, commentaire et pièce facultatifs, opération reprise sans ressaisie ; suivi Envoyé > En cours > Résolu ; Résolu ≠ Rembourse ; contestation sur le même dossier | PRD §8, RM-HELP-01                                          |
+| Correction affichée seulement si confirmée, liée à l'opération d'origine                                                                                                                  | PRD §10                                                     |
+| 3 épargnes actives au maximum, fermées non comptées, aucune fermeture automatique                                                                                                         | RM-SAV-02, FIN-05                                           |
+| « Fait » seul mot du succès ; `StepTracker` « Envoyée » en attente ; « Objectif atteint » neutre sans coche ; « Dernier dépôt » pour les dépôts seulement ; masquage persistant           | DESIGN.md, décisions PO du 19 octobre 2026 (lots A et B)    |
+| « Mettre de l'argent » comme libellé de l'alimentation                                                                                                                                    | Lot B, Q6                                                   |
+| Retour au solde sans frais (seule décision de frais existante)                                                                                                                            | Décision PO du 19 octobre 2026                              |
 
 ### Décisions PO du 19 octobre 2026 (lot C)
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Q1 — Frais du dépôt Mobile Money non confirmés : le prototype utilise un scénario « frais fictifs » annoncé dans la bande hors produit ; l'état « frais inconnus » (autorisation bloquée) est dessiné en variante ; aucune valeur dans la spec ni le handoff | Rendre le parcours testable sans inventer de tarif (G01) | Dessiner seulement l'état bloqué (parcours non testable) |
-| Q2 — Mettre de l'argent du solde vers une épargne est **sans frais**, comme le retour au solde : aucune ligne Frais sur C-08, aucun état « frais inconnus » | L'argent change seulement de poche chez KOTIZ | Frais « à confirmer » et confirmation bloquée |
-| Q3 — **Pas de PIN KOTIZ** pour le dépôt Mobile Money (validation chez l'opérateur), ni pour la mise de côté depuis le solde, ni pour la reprise : récapitulatif puis confirmation. Règle générale : le PIN protège ce qui fait sortir l'argent d'une épargne (retour au solde) ou de KOTIZ (retraits). L'écran PIN (ancien C-09) est supprimé, les suivants renumérotés | Moins de PIN = PIN mieux protégé ; un mouvement vers l'épargne ne met pas l'argent en danger | PIN sur la mise de côté et la reprise |
-| Q4 — Dans Opérations, un dépôt vers une épargne = **une seule ligne** « Dépôt vers {épargne} · +{montant} » avec statut combiné ; partiel « Dépôt fait · épargne en attente » ou « Dépôt fait · épargne pas faite » ; le détail montre les étapes avec `StepTracker` | Fatou a fait un seul geste ; deux lignes avec `+` et `−` font croire à un double paiement | Deux lignes liées (dépôt et mise de côté) |
-| Q5 — Reprise sans limite produit : « Réessayer » reste tant que la mise de côté n'est pas reprise | Rien n'est perdu en reportant | Reprise limitée dans le temps |
-| Q6 — Détail et reçu suivent le masquage, œil dans l'en-tête | Même réglage partout ; un reçu peut être montré à quelqu'un | Reçu toujours en clair |
-| Q7 — Pas de partage de reçu au lot C ; à traiter au lot E avec le carnet | Ne pas promettre une preuve d'envoi (G04) | Bouton Partager sur C-12 |
-| Q8 — Premier dépôt depuis A · E08 : résultat simple, sans illustration | La célébration reste pour « Compte créé » et « Épargne créée » | Résultat illustré |
-| Q9 — Dans « D'où vient l'argent ? », le solde en premier s'il est supérieur à 0, sinon Mobile Money en premier | Proposer d'abord ce qui est possible | Ordre fixe |
-| Q11 — Un second dépôt pendant qu'un premier est en attente est autorisé comme nouvelle demande distincte (montant et référence propres), jamais la répétition de la même | Ne pas bloquer Fatou ; RM-FUND-09 vise la même opération | Bloquer tout dépôt pendant une attente |
-| « Déposer » ouvre la bottom sheet C-00 « Comment tu veux déposer ? » : « Par Mobile Money » (parcours en pages C-01 à C-05) ou « Auprès d'une agente » (C-17 : « Montre Mon QR à une agente », lien vers A · Q01, sans parcours agente) | Un choix court et contextuel avant d'entrer dans le parcours ; l'espèce n'encombre plus la liste des opérateurs | Ligne « En espèces chez une agente » en bas de C-01 |
-| Numéro Mobile Money : toujours le numéro vérifié de la cliente, non modifiable, affiché sur C-01 et C-03 (« Depuis ton numéro … · {opérateur} ») ; un autre numéro = évolution post-MVP, aucun bouton au MVP | Aucun numéro de tiers au MVP (PRD §3) ; Fatou voit d'où part l'argent | Champ numéro, ou bouton « Autre numéro » désactivé |
-| PNV-1 (destination depuis « Déposer » de l'accueil) **refusée** pour le lot C ; à observer au test C-P2-1 | PRD §7 règle 1 maintenue | — |
-| PNV-2 (« Dernier dépôt » avec sa destination) **conditionnelle** : appliquée seulement si le test C-P2-3 montre la confusion | Ne toucher un composant validé que sur preuve | Appliquer d'office |
+| Décision                                                                                                                                                                                                                                                                                                                                                                | Raison                                                                                                          | Alternative rejetée                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Q1 — Frais du dépôt Mobile Money non confirmés : le prototype utilise un scénario « frais fictifs » annoncé dans la bande hors produit ; l'état « frais inconnus » (autorisation bloquée) est dessiné en variante ; aucune valeur dans la spec ni le handoff                                                                                                            | Rendre le parcours testable sans inventer de tarif (G01)                                                        | Dessiner seulement l'état bloqué (parcours non testable) |
+| Q2 — Mettre de l'argent du solde vers une épargne est **sans frais**, comme le retour au solde : aucune ligne Frais sur C-08, aucun état « frais inconnus »                                                                                                                                                                                                             | L'argent change seulement de poche chez KOTIZ                                                                   | Frais « à confirmer » et confirmation bloquée            |
+| Q3 — **Pas de PIN KOTIZ** pour le dépôt Mobile Money (validation chez l'opérateur), ni pour la mise de côté depuis le solde, ni pour la reprise : récapitulatif puis confirmation. Règle générale : le PIN protège ce qui fait sortir l'argent d'une épargne (retour au solde) ou de KOTIZ (retraits). L'écran PIN (ancien C-09) est supprimé, les suivants renumérotés | Moins de PIN = PIN mieux protégé ; un mouvement vers l'épargne ne met pas l'argent en danger                    | PIN sur la mise de côté et la reprise                    |
+| Q4 — Dans Opérations, un dépôt vers une épargne = **une seule ligne** « Dépôt vers {épargne} · +{montant} » avec statut combiné ; partiel « Dépôt fait · épargne en attente » ou « Dépôt fait · épargne pas faite » ; le détail montre les étapes avec `StepTracker`                                                                                                    | Fatou a fait un seul geste ; deux lignes avec `+` et `−` font croire à un double paiement                       | Deux lignes liées (dépôt et mise de côté)                |
+| Q5 — Reprise sans limite produit : « Réessayer » reste tant que la mise de côté n'est pas reprise                                                                                                                                                                                                                                                                       | Rien n'est perdu en reportant                                                                                   | Reprise limitée dans le temps                            |
+| Q6 — Détail et reçu suivent le masquage, œil dans l'en-tête                                                                                                                                                                                                                                                                                                             | Même réglage partout ; un reçu peut être montré à quelqu'un                                                     | Reçu toujours en clair                                   |
+| Q7 — Pas de partage de reçu au lot C ; à traiter au lot E avec le carnet                                                                                                                                                                                                                                                                                                | Ne pas promettre une preuve d'envoi (G04)                                                                       | Bouton Partager sur C-12                                 |
+| Q8 — Premier dépôt depuis A · E08 : résultat simple, sans illustration                                                                                                                                                                                                                                                                                                  | La célébration reste pour « Compte créé » et « Épargne créée »                                                  | Résultat illustré                                        |
+| Q9 — Dans « D'où vient l'argent ? », le solde en premier s'il est supérieur à 0, sinon Mobile Money en premier                                                                                                                                                                                                                                                          | Proposer d'abord ce qui est possible                                                                            | Ordre fixe                                               |
+| Q11 — Un second dépôt pendant qu'un premier est en attente est autorisé comme nouvelle demande distincte (montant et référence propres), jamais la répétition de la même                                                                                                                                                                                                | Ne pas bloquer Fatou ; RM-FUND-09 vise la même opération                                                        | Bloquer tout dépôt pendant une attente                   |
+| « Déposer » ouvre la bottom sheet C-00 « Comment tu veux déposer ? » : « Par Mobile Money » (parcours en pages C-01 à C-05) ou « Auprès d'une agente » (C-17 : « Montre Mon QR à une agente », lien vers A · Q01, sans parcours agente)                                                                                                                                 | Un choix court et contextuel avant d'entrer dans le parcours ; l'espèce n'encombre plus la liste des opérateurs | Ligne « En espèces chez une agente » en bas de C-01      |
+| Numéro Mobile Money : toujours le numéro vérifié de la cliente, non modifiable, affiché sur C-01 et C-03 (« Depuis ton numéro … · {opérateur} ») ; un autre numéro = évolution post-MVP, aucun bouton au MVP                                                                                                                                                            | Aucun numéro de tiers au MVP (PRD §3) ; Fatou voit d'où part l'argent                                           | Champ numéro, ou bouton « Autre numéro » désactivé       |
+| PNV-1 (destination depuis « Déposer » de l'accueil) **refusée** pour le lot C ; à observer au test C-P2-1                                                                                                                                                                                                                                                               | PRD §7 règle 1 maintenue                                                                                        | —                                                        |
+| PNV-2 (« Dernier dépôt » avec sa destination) **conditionnelle** : appliquée seulement si le test C-P2-3 montre la confusion                                                                                                                                                                                                                                            | Ne toucher un composant validé que sur preuve                                                                   | Appliquer d'office                                       |
 
 ### Décisions de conception de cette spec
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Écrans `C-01`… avec tiret, « A · C01 » pour le PIN du lot A | `C01` existe déjà ; `D` est le lot D | `D01`, renuméroter le lot A |
-| Choisir l'opérateur d'abord, puis le montant (C-01 → C-02) | Fatou sait d'abord « avec quoi » (son Wave) ; le montant s'affiche ensuite avec le bon logo, et les limites de l'opérateur s'appliquent à la saisie | Montant d'abord (comme Wave seul) : une étape de plus pour revenir changer d'opérateur |
-| Bouton du récapitulatif avec le montant (« Déposer 5 000 F ») | Dernière lecture du montant avant que l'argent parte | « Confirmer » seul |
-| C-04 sans bouton « J'ai validé » | Ce bouton ferait croire à un succès sans preuve ; l'écran se met à jour seul | Bouton de confirmation manuelle |
-| Résultat partiel (C-05) sans `StatusPill` globale, deux lignes de statut | « Fait » global mentirait sur l'épargne, « Échoué » global mentirait sur le dépôt | Un mot nouveau « Fait en partie » (hors du vocabulaire des trois statuts) |
-| « Laisser sur mon solde » comme sortie du partiel et de C-10 | Dit où est l'argent ; « Plus tard » seul ne le dit pas | « Annuler » (laisse croire que le dépôt est annulé) |
-| Reprise sans compteur d'étapes, titre « Réessayer de mettre de côté », lien vers le dépôt d'origine | Le parcours ne commence pas à l'étape 1 ; le lien d'origine est demandé par le PRD 16h | Rejouer « Étape 1 sur 2 » |
-| Plafond de la reprise = plus petit du montant d'origine et du solde | Ne pas prélever en silence d'autres fonds (16b) ni relancer un montant indisponible (16i) | Montant libre jusqu'au solde entier |
-| Filtres « Tout / Dépôts / Retraits / Épargnes » + filtre d'épargne depuis B · B07 | Questions réelles de Fatou ; « Tout voir › » de B · B07 doit montrer son épargne | Recherche texte, filtre par date |
-| « Voir plus » au lieu du défilement infini | Data chère, contrôle de la consommation | Défilement infini |
-| Dossier en `StatusPill` neutre et `CaseTimeline` sans vert | « Résolu » en vert se lirait comme « remboursé » | Réutiliser `StepTracker` (sa coche verte signifie « fait ») |
-| « Je conteste cette réponse » en bouton secondaire | Action légitime mais pas l'issue attendue ; évite d'inviter à contester par réflexe | Bouton principal vert |
+| Décision                                                                                            | Raison                                                                                                                                              | Alternative rejetée                                                                    |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Écrans `C-01`… avec tiret, « A · C01 » pour le PIN du lot A                                         | `C01` existe déjà ; `D` est le lot D                                                                                                                | `D01`, renuméroter le lot A                                                            |
+| Choisir l'opérateur d'abord, puis le montant (C-01 → C-02)                                          | Fatou sait d'abord « avec quoi » (son Wave) ; le montant s'affiche ensuite avec le bon logo, et les limites de l'opérateur s'appliquent à la saisie | Montant d'abord (comme Wave seul) : une étape de plus pour revenir changer d'opérateur |
+| Bouton du récapitulatif avec le montant (« Déposer 5 000 F »)                                       | Dernière lecture du montant avant que l'argent parte                                                                                                | « Confirmer » seul                                                                     |
+| C-04 sans bouton « J'ai validé »                                                                    | Ce bouton ferait croire à un succès sans preuve ; l'écran se met à jour seul                                                                        | Bouton de confirmation manuelle                                                        |
+| Résultat partiel (C-05) sans `StatusPill` globale, deux lignes de statut                            | « Fait » global mentirait sur l'épargne, « Échoué » global mentirait sur le dépôt                                                                   | Un mot nouveau « Fait en partie » (hors du vocabulaire des trois statuts)              |
+| « Laisser sur mon solde » comme sortie du partiel et de C-10                                        | Dit où est l'argent ; « Plus tard » seul ne le dit pas                                                                                              | « Annuler » (laisse croire que le dépôt est annulé)                                    |
+| Reprise sans compteur d'étapes, titre « Réessayer de mettre de côté », lien vers le dépôt d'origine | Le parcours ne commence pas à l'étape 1 ; le lien d'origine est demandé par le PRD 16h                                                              | Rejouer « Étape 1 sur 2 »                                                              |
+| Plafond de la reprise = plus petit du montant d'origine et du solde                                 | Ne pas prélever en silence d'autres fonds (16b) ni relancer un montant indisponible (16i)                                                           | Montant libre jusqu'au solde entier                                                    |
+| Filtres « Tout / Dépôts / Retraits / Épargnes » + filtre d'épargne depuis B · B07                   | Questions réelles de Fatou ; « Tout voir › » de B · B07 doit montrer son épargne                                                                    | Recherche texte, filtre par date                                                       |
+| « Voir plus » au lieu du défilement infini                                                          | Data chère, contrôle de la consommation                                                                                                             | Défilement infini                                                                      |
+| Dossier en `StatusPill` neutre et `CaseTimeline` sans vert                                          | « Résolu » en vert se lirait comme « remboursé »                                                                                                    | Réutiliser `StepTracker` (sa coche verte signifie « fait »)                            |
+| « Je conteste cette réponse » en bouton secondaire                                                  | Action légitime mais pas l'issue attendue ; évite d'inviter à contester par réflexe                                                                 | Bouton principal vert                                                                  |
 
 ## Propositions non validées
 
@@ -1157,6 +1157,7 @@ Groupées par décideur, avec ma recommandation.
 **Produit (PO)** : Q1 à Q9 et Q11 tranchées le 19 octobre 2026 (voir Décisions UX). Reste à observer au test : PNV-1 (C-P2-1), PNV-2 (C-P2-3), lecture de la ligne combinée (C-P6-2) et du résultat partiel (C-P4-1).
 
 **Partenaire et règles financières (G01)**
+
 - Liste et ordre des opérateurs disponibles.
 - Protocole de validation par opérateur (application, message, code, lien) et ce que C-04 doit afficher ; annulation possible avant validation.
 - Frais, montant débité et montant arrivé ; minimum et maximum par dépôt ; règles du niveau d'accès limité (C-02).
@@ -1168,21 +1169,27 @@ Groupées par décideur, avec ma recommandation.
 - Le glossaire (§5.1) écrit « Dépôt min. 100 FCFA » : ce n'est pas une décision produit ; aucune valeur affichée tant que G01 ne la confirme pas.
 
 **Sécurité et SMS (G02)**
+
 - SMS de confirmation d'un dépôt Mobile Money (trace sans smartphone) : lot F.
 
 **Assistance (G03)**
+
 - Liste des motifs de signalement ; pièces jointes (formats, taille, nombre) ; contact derrière « Contacter l'aide » ; délais de traitement ; limites de contestation ; commentaire obligatoire ou non à la contestation ; un seul dossier ouvert par opération (H9).
 
 **Exceptions (G05)**
+
 - Présentation privée du disponible pour une reprise assistée sans smartphone : lot E.
 
 **Technique**
+
 - Retour dans KOTIZ après la validation chez l'opérateur (lien de retour, reprise de C-04) ; délai au-delà duquel le résultat devient « On vérifie » ; idempotence de la reprise (C-05 et C-12 ouverts en même temps) ; cache d'Opérations hors ligne ; taille des pages de « Voir plus ».
 
 **Domaine (à traiter avec `domain-modeling`)**
+
 - Nommer l'**affectation** (mise de côté solde → épargne), le **lien** dépôt ↔ affectation, la **reprise**, le **signalement / dossier**, la **contestation** et la **correction** : absents du glossaire.
 
 **Tickets (G06), sans modification distante avant feu vert du PO**
+
 - [kotiz-ci/platform#66](https://github.com/kotiz-ci/platform/issues/66) ne parle que du dépôt vers le wallet : y ajouter le dépôt vers une épargne (lié), le récapitulatif, l'attente opérateur, les états de résultat.
 - [kotiz-ci/platform#67](https://github.com/kotiz-ci/platform/issues/67) : y ajouter le lien dépôt ↔ affectation, le résultat partiel, la reprise idempotente avec nouvelle confirmation (sans PIN), l'interdiction de répéter un résultat inconnu.
 - [kotiz-ci/platform#69](https://github.com/kotiz-ci/platform/issues/69) : signalement, dossier, contestation, correction confirmée ; ce ticket est bloqué par #68 (retrait, lot D) : le signalement d'un dépôt peut-il avancer sans lui ? Recommandation : retirer ce blocage pour le volet signalement.

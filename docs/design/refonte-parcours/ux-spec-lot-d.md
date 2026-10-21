@@ -25,18 +25,18 @@ Script de test associé : [test-lot-d.md](test-lot-d.md).
 
 ## Vocabulaire
 
-| Interface (Fatou) | Sens | Glossaire / PRD |
-|---|---|---|
-| **Retirer** (raccourci, bouton), **retrait** (titres, lignes) | Faire sortir de l'argent de KOTIZ, vers son Mobile Money ou en espèces chez une agente | `Withdrawal` (§5.1), retrait externe |
-| **Sur mon Mobile Money** | Retrait vers le numéro vérifié de la cliente | WDR, RM-FUND-06 |
-| **Auprès d'une agente** | Retrait en espèces (lot E) | cash-out, `CashOutOperation` (§5.3) |
-| **Solde disponible**, **mon solde** | Argent libre, seule source d'un retrait | `availableBalance` |
-| **Remettre sur mon solde** | Mouvement d'une épargne vers le solde (lot B), préalable à un retrait de cet argent | `ReturnToBalance` |
-| **Frais** | Coût du retrait, affiché seulement s'il est confirmé (G01) | — |
-| **Tu reçois** | Ce qui arrive sur le Mobile Money | montant net, « somme reçue » (PRD §3) |
-| **PIN KOTIZ**, « Entre ton PIN » | Autorisation de la cliente parce que l'argent sort de KOTIZ | règle 6 du glossaire |
-| **Reçu** | Preuve d'un retrait **fait** | reçu |
-| **Signaler un problème**, **mon signalement** | Dossier ouvert depuis une opération (contexte Assistance, ADR-0020) | `IssueReport` |
+| Interface (Fatou)                                             | Sens                                                                                   | Glossaire / PRD                       |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------- |
+| **Retirer** (raccourci, bouton), **retrait** (titres, lignes) | Faire sortir de l'argent de KOTIZ, vers son Mobile Money ou en espèces chez une agente | `Withdrawal` (§5.1), retrait externe  |
+| **Sur mon Mobile Money**                                      | Retrait vers le numéro vérifié de la cliente                                           | WDR, RM-FUND-06                       |
+| **Auprès d'une agente**                                       | Retrait en espèces (lot E)                                                             | cash-out, `CashOutOperation` (§5.3)   |
+| **Solde disponible**, **mon solde**                           | Argent libre, seule source d'un retrait                                                | `availableBalance`                    |
+| **Remettre sur mon solde**                                    | Mouvement d'une épargne vers le solde (lot B), préalable à un retrait de cet argent    | `ReturnToBalance`                     |
+| **Frais**                                                     | Coût du retrait, affiché seulement s'il est confirmé (G01)                             | —                                     |
+| **Tu reçois**                                                 | Ce qui arrive sur le Mobile Money                                                      | montant net, « somme reçue » (PRD §3) |
+| **PIN KOTIZ**, « Entre ton PIN »                              | Autorisation de la cliente parce que l'argent sort de KOTIZ                            | règle 6 du glossaire                  |
+| **Reçu**                                                      | Preuve d'un retrait **fait**                                                           | reçu                                  |
+| **Signaler un problème**, **mon signalement**                 | Dossier ouvert depuis une opération (contexte Assistance, ADR-0020)                    | `IssueReport`                         |
 
 Jamais : « transfert », « envoyer de l'argent » (sonne comme un envoi à quelqu'un d'autre), « retrait » pour un mouvement interne, « cash-out » dans l'interface, « code Wave » demandé par KOTIZ, « remboursé » pour un dossier résolu, toute référence à la tontine.
 
@@ -259,17 +259,17 @@ flowchart TD
 
 ### Nombre d'écrans par parcours (chemin principal)
 
-| Parcours | Écrans | Séquence |
-|---|---|---|
-| D-P1 Retirer sur mon Mobile Money | 6 | D-00 D-01 D-02 D-03 D-04 D-05 (depuis A · H01), puis A · H01 |
-| D-P2 Argent dans une épargne | 3 + 5 | D-00 D-01 D-02, puis B · B07 B09 B10 B11 B12 (lot B), puis D-P1 |
-| D-P3 Bloqué avant le PIN | 4 | D-00 D-01 D-02 D-03 (bloqué) |
-| D-P4 Après le PIN : attente, on vérifie, échoué | 6 | comme D-P1, puis C-12 du même retrait |
-| D-P5 Pas reçu sur le Mobile Money | 4 | D-05 D-07 C-14 C-15, ou C-11 C-12 C-14 C-15 |
-| D-P6 PIN bloqué | 5 | D-00 à D-04 (bloqué), puis lot F |
-| D-P7 Hors connexion et interruption | — | états des écrans D-01 à D-05 |
-| D-P8 Retrouver un retrait | 3 | C-11 C-12 C-13 |
-| D-P9 Auprès d'une agente (raccord E) | 2 | D-00 D-06, puis A · Q01 |
+| Parcours                                        | Écrans | Séquence                                                        |
+| ----------------------------------------------- | ------ | --------------------------------------------------------------- |
+| D-P1 Retirer sur mon Mobile Money               | 6      | D-00 D-01 D-02 D-03 D-04 D-05 (depuis A · H01), puis A · H01    |
+| D-P2 Argent dans une épargne                    | 3 + 5  | D-00 D-01 D-02, puis B · B07 B09 B10 B11 B12 (lot B), puis D-P1 |
+| D-P3 Bloqué avant le PIN                        | 4      | D-00 D-01 D-02 D-03 (bloqué)                                    |
+| D-P4 Après le PIN : attente, on vérifie, échoué | 6      | comme D-P1, puis C-12 du même retrait                           |
+| D-P5 Pas reçu sur le Mobile Money               | 4      | D-05 D-07 C-14 C-15, ou C-11 C-12 C-14 C-15                     |
+| D-P6 PIN bloqué                                 | 5      | D-00 à D-04 (bloqué), puis lot F                                |
+| D-P7 Hors connexion et interruption             | —      | états des écrans D-01 à D-05                                    |
+| D-P8 Retrouver un retrait                       | 3      | C-11 C-12 C-13                                                  |
+| D-P9 Auprès d'une agente (raccord E)            | 2      | D-00 D-06, puis A · Q01                                         |
 
 Cible : aucun chemin principal au-delà de 6 écrans, comme le dépôt (C-P1). Le retrait le plus fréquent tient en 6 écrans, dont une feuille de choix (D-00) et un PIN. Il n'a pas d'écran d'attente manipulé par Fatou : contrairement au dépôt, rien n'est à valider chez l'opérateur (H3).
 
@@ -277,18 +277,18 @@ Cible : aucun chemin principal au-delà de 6 écrans, comme le dépôt (C-P1). L
 
 Aucune barre basse dans le lot D : pages poussées avec `PageHeader`, ou `BottomSheet`.
 
-| ID | Écran | Parcours | Objectif |
-|---|---|---|---|
-| D-00 | Comment tu veux retirer ? (bottom sheet) | D-P1 D-P3 D-P9 | Choisir Mobile Money ou une agente |
-| D-01 | Sur quel Mobile Money ? | D-P1 D-P3 D-P7 | Choisir l'opérateur qui reçoit, vers le numéro vérifié |
-| D-02 | Combien tu retires ? | D-P1 D-P2 D-P3 | Saisir le montant à sortir du solde |
-| D-03 | Vérifie ton retrait | D-P1 D-P3 D-P4 | Voir montant, frais, somme reçue, vers où et solde après, avant le PIN |
-| D-04 | Entre ton PIN | D-P1 D-P6 | Autoriser le retrait |
-| D-05 | Résultat du retrait | D-P1 D-P4 D-P5 | Savoir si c'est fait, en attente ou échoué |
-| D-06 | Retirer auprès d'une agente | D-P9 | Comprendre le retrait en espèces et afficher son QR (raccord lot E) |
-| D-07 | L'argent n'est pas sur ton Wave ? (bottom sheet) | D-P5 | Vérifier, ne pas refaire, puis signaler |
-| C-11, C-12, C-13 | Opérations, détail et reçu (lot C), contenu retrait | D-P4 D-P5 D-P8 | Retrouver un retrait, son statut, son reçu |
-| C-14, C-15 | Signaler, mon signalement (lot C) | D-P5 | Signaler un retrait, suivre le dossier |
+| ID               | Écran                                               | Parcours       | Objectif                                                               |
+| ---------------- | --------------------------------------------------- | -------------- | ---------------------------------------------------------------------- |
+| D-00             | Comment tu veux retirer ? (bottom sheet)            | D-P1 D-P3 D-P9 | Choisir Mobile Money ou une agente                                     |
+| D-01             | Sur quel Mobile Money ?                             | D-P1 D-P3 D-P7 | Choisir l'opérateur qui reçoit, vers le numéro vérifié                 |
+| D-02             | Combien tu retires ?                                | D-P1 D-P2 D-P3 | Saisir le montant à sortir du solde                                    |
+| D-03             | Vérifie ton retrait                                 | D-P1 D-P3 D-P4 | Voir montant, frais, somme reçue, vers où et solde après, avant le PIN |
+| D-04             | Entre ton PIN                                       | D-P1 D-P6      | Autoriser le retrait                                                   |
+| D-05             | Résultat du retrait                                 | D-P1 D-P4 D-P5 | Savoir si c'est fait, en attente ou échoué                             |
+| D-06             | Retirer auprès d'une agente                         | D-P9           | Comprendre le retrait en espèces et afficher son QR (raccord lot E)    |
+| D-07             | L'argent n'est pas sur ton Wave ? (bottom sheet)    | D-P5           | Vérifier, ne pas refaire, puis signaler                                |
+| C-11, C-12, C-13 | Opérations, détail et reçu (lot C), contenu retrait | D-P4 D-P5 D-P8 | Retrouver un retrait, son statut, son reçu                             |
+| C-14, C-15       | Signaler, mon signalement (lot C)                   | D-P5           | Signaler un retrait, suivre le dossier                                 |
 
 ## Règles communes aux écrans du lot D
 
@@ -314,7 +314,7 @@ Aucune barre basse dans le lot D : pages poussées avec `PageHeader`, ou `Bottom
 - Contenu : poignée ; titre « Comment tu veux retirer ? » ; deux lignes de choix (illustration 48, libellé 16 Semi Bold, chevron, ≥ 64 de haut) :
   1. « Sur mon Mobile Money » (→ D-01) ;
   2. « Auprès d'une agente » (→ D-06).
-  Pas de montant, pas de solde, pas de sous-texte long.
+     Pas de montant, pas de solde, pas de sous-texte long.
 - États : nominal ; **aucun opérateur disponible** : ligne 1 désactivée, raison « Mobile Money indisponible pour l'instant. », ligne 2 active ; hors ligne : la feuille s'ouvre, D-01 gère le réseau.
 - Cas limites : double appui sur « Retirer » (une seule feuille) ; Retirer désactivé à 0 FCFA (A · H01, lot A) : la feuille ne s'ouvre pas.
 
@@ -761,27 +761,27 @@ Aucun nouvel écran : le lot C a prévu les retraits (« lignes seulement ») et
 
 ### Nouveaux ou évolutions (à faire valider, puis à promouvoir dans le Design System)
 
-| Composant | Besoin | Écrans |
-|---|---|---|
-| **`SummaryFlow`** nœud d'arrivée « Vers ton numéro » | Logo de l'opérateur + « Vers ton numéro » + « {numéro} · {opérateur} », miroir du nœud de départ de C-03 ; lignes « Pris sur ton solde », « Tu reçois sur ton {opérateur} » | D-03 |
-| **`TransactionRow`** variante `withdrawal` dessinée | Prop prévue au handoff C, jamais dessinée avec ses trois statuts ; pastille sortie (`surface-canvas` + Retirer), signe « − » seulement si fait | C-11, C-12, A · H01 |
-| **`StepTracker`** contenu retrait | Étapes « Demande envoyée » · « Envoi vers ton {opérateur} » · « Arrivée sur ton {opérateur} » | D-05, C-12 |
-| **`Message` en attente** pour le disponible réduit | Le `Message` ambre existe ; usage nouveau sous la ligne « Depuis : Mon solde » | D-02 |
+| Composant                                            | Besoin                                                                                                                                                                      | Écrans              |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| **`SummaryFlow`** nœud d'arrivée « Vers ton numéro » | Logo de l'opérateur + « Vers ton numéro » + « {numéro} · {opérateur} », miroir du nœud de départ de C-03 ; lignes « Pris sur ton solde », « Tu reçois sur ton {opérateur} » | D-03                |
+| **`TransactionRow`** variante `withdrawal` dessinée  | Prop prévue au handoff C, jamais dessinée avec ses trois statuts ; pastille sortie (`surface-canvas` + Retirer), signe « − » seulement si fait                              | C-11, C-12, A · H01 |
+| **`StepTracker`** contenu retrait                    | Étapes « Demande envoyée » · « Envoi vers ton {opérateur} » · « Arrivée sur ton {opérateur} »                                                                               | D-05, C-12          |
+| **`Message` en attente** pour le disponible réduit   | Le `Message` ambre existe ; usage nouveau sous la ligne « Depuis : Mon solde »                                                                                              | D-02                |
 
 Aucune couleur ni token nouveau. Laissés de côté : partage du reçu (lot E) ; écrans de saisie d'un autre numéro (post-MVP).
 
 ## Raccords vers les autres lots et évolutions (non spécifiés ici)
 
-| Départ | Destination | Lot |
-|---|---|---|
-| A · H01 « Retirer » | D-00 | A → D |
-| A · H01 ligne de retrait, « Tout voir » ; barre basse Opérations | C-11, C-12 (contenu retrait) | A → C |
-| B · B10 « Pour le sortir : Retirer. » ; B · B12 « Voir mon solde » puis Retirer | D-00, jamais enchaîné automatiquement | B → D |
-| D-02 « Remettre sur mon solde › » | B · B01, liste des épargnes (Décision PO du 20 octobre 2026) | D → B |
-| D-06 « Afficher Mon QR » (→ A · Q01) ; retrait en espèces avec ou sans smartphone (scan, montant, autorisation, remise, « Espèces reçues », deux codes SMS) ; **retrait Mobile Money assisté** préparé par une agente (PRD 30b) | Cash-out et assistance (#72, #68 branche agente) | E |
-| D-04 « PIN oublié ? », PIN bloqué ; « Contacter l'aide › » ; notifications et SMS de confirmation d'un retrait | Récupération, aide générale, notifications essentielles (FIN-04) | F |
-| D-02 « Vérifier mon identité › » | KYC | A2 |
-| **Évolution post-MVP** : retirer vers un autre numéro que le numéro vérifié | Aucun champ, bouton ni lien au MVP (décision PO) | Post-MVP |
+| Départ                                                                                                                                                                                                                          | Destination                                                      | Lot      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
+| A · H01 « Retirer »                                                                                                                                                                                                             | D-00                                                             | A → D    |
+| A · H01 ligne de retrait, « Tout voir » ; barre basse Opérations                                                                                                                                                                | C-11, C-12 (contenu retrait)                                     | A → C    |
+| B · B10 « Pour le sortir : Retirer. » ; B · B12 « Voir mon solde » puis Retirer                                                                                                                                                 | D-00, jamais enchaîné automatiquement                            | B → D    |
+| D-02 « Remettre sur mon solde › »                                                                                                                                                                                               | B · B01, liste des épargnes (Décision PO du 20 octobre 2026)     | D → B    |
+| D-06 « Afficher Mon QR » (→ A · Q01) ; retrait en espèces avec ou sans smartphone (scan, montant, autorisation, remise, « Espèces reçues », deux codes SMS) ; **retrait Mobile Money assisté** préparé par une agente (PRD 30b) | Cash-out et assistance (#72, #68 branche agente)                 | E        |
+| D-04 « PIN oublié ? », PIN bloqué ; « Contacter l'aide › » ; notifications et SMS de confirmation d'un retrait                                                                                                                  | Récupération, aide générale, notifications essentielles (FIN-04) | F        |
+| D-02 « Vérifier mon identité › »                                                                                                                                                                                                | KYC                                                              | A2       |
+| **Évolution post-MVP** : retirer vers un autre numéro que le numéro vérifié                                                                                                                                                     | Aucun champ, bouton ni lien au MVP (décision PO)                 | Post-MVP |
 
 Tant qu'un lot n'est pas produit, le prototype montre l'écran neutre « Bientôt ici » du lot A.
 
@@ -789,56 +789,56 @@ Tant qu'un lot n'est pas produit, le prototype montre l'écran neutre « Bientô
 
 ### Décisions validées reprises (PO, PRD, DESIGN.md, glossaire)
 
-| Décision | Source |
-|---|---|
-| PIN KOTIZ demandé parce que l'argent sort de KOTIZ ; aucun PIN opérateur jamais collecté | Décision PO ; glossaire §4 règle 6 ; PRD §7 règles 6 et 26 |
-| Retrait Mobile Money uniquement vers le numéro vérifié, visible, non modifiable ; autre numéro = post-MVP, aucun bouton | Décision PO ; PRD §3, §7 règle 25 ; RM-FUND-06 |
-| « Retirer » ouvre la feuille « Comment tu veux retirer ? » (Sur mon Mobile Money / Auprès d'une agente), puis des pages pleines | Décision PO (symétrie de C-00) |
-| Retrait en espèces auprès d'une agente au lot E : raccord seulement, écran d'explication comme C-17 | Décision PO |
-| Résultats en plein écran, jamais de pop-up ; statut réel, ambre + horloge pour l'attente, jamais de succès ni de reçu de succès en attente | Décision PO ; handoff C ; DESIGN.md |
-| Une ligne par retrait dans Opérations | Décision PO |
-| Frais du retrait non confirmés : scénario « frais fictifs » signalé au prototype, état « frais inconnus » dessiné, aucune valeur dans la spec | Décision PO ; G01 ; PRD §7 règle 5 |
-| Retrait depuis le solde disponible uniquement ; une épargne passe d'abord par le retour au solde (lot B), sans enchaînement automatique | Décision PO ; PRD §3, §7 règle 11 |
-| Récapitulatif avec numéro destinataire, montant, frais et somme reçue avant autorisation ; frais inconnus ou destination non vérifiée = pas de confirmation | PRD §7 règle 25 |
-| Annuler le PIN revient au récapitulatif sans envoyer ; le PIN accepté ne prouve pas la réception | PRD §7 règle 26 |
-| Succès seulement après confirmation du transfert par l'opérateur | RM-FUND-06 ; PRD 30b |
-| Résultat inconnu = suivi, jamais de répétition | RM-FUND-09 |
-| Refus connu d'avance avant le PIN ; échec technique après le PIN | Décision PO du lot B (B10 / B12), reprise |
-| PIN incorrect et bloqué : sans nombre d'essais ni durée tant que G02 n'est pas tranché | Lot B (B11) ; G02 |
-| Signalement depuis l'opération, sans ressaisie ; Résolu ≠ remboursé ; contestation sur le même dossier | PRD §8 ; RM-HELP-01 ; lot C |
-| « Fait » seul mot du succès ; `StepTracker` « Envoyée » en attente ; un retrait réussi n'a jamais la pastille d'échec | DESIGN.md |
-| Masquage persistant ; saisie, récapitulatif et résultat toujours visibles | Lots A à C |
+| Décision                                                                                                                                                    | Source                                                     |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| PIN KOTIZ demandé parce que l'argent sort de KOTIZ ; aucun PIN opérateur jamais collecté                                                                    | Décision PO ; glossaire §4 règle 6 ; PRD §7 règles 6 et 26 |
+| Retrait Mobile Money uniquement vers le numéro vérifié, visible, non modifiable ; autre numéro = post-MVP, aucun bouton                                     | Décision PO ; PRD §3, §7 règle 25 ; RM-FUND-06             |
+| « Retirer » ouvre la feuille « Comment tu veux retirer ? » (Sur mon Mobile Money / Auprès d'une agente), puis des pages pleines                             | Décision PO (symétrie de C-00)                             |
+| Retrait en espèces auprès d'une agente au lot E : raccord seulement, écran d'explication comme C-17                                                         | Décision PO                                                |
+| Résultats en plein écran, jamais de pop-up ; statut réel, ambre + horloge pour l'attente, jamais de succès ni de reçu de succès en attente                  | Décision PO ; handoff C ; DESIGN.md                        |
+| Une ligne par retrait dans Opérations                                                                                                                       | Décision PO                                                |
+| Frais du retrait non confirmés : scénario « frais fictifs » signalé au prototype, état « frais inconnus » dessiné, aucune valeur dans la spec               | Décision PO ; G01 ; PRD §7 règle 5                         |
+| Retrait depuis le solde disponible uniquement ; une épargne passe d'abord par le retour au solde (lot B), sans enchaînement automatique                     | Décision PO ; PRD §3, §7 règle 11                          |
+| Récapitulatif avec numéro destinataire, montant, frais et somme reçue avant autorisation ; frais inconnus ou destination non vérifiée = pas de confirmation | PRD §7 règle 25                                            |
+| Annuler le PIN revient au récapitulatif sans envoyer ; le PIN accepté ne prouve pas la réception                                                            | PRD §7 règle 26                                            |
+| Succès seulement après confirmation du transfert par l'opérateur                                                                                            | RM-FUND-06 ; PRD 30b                                       |
+| Résultat inconnu = suivi, jamais de répétition                                                                                                              | RM-FUND-09                                                 |
+| Refus connu d'avance avant le PIN ; échec technique après le PIN                                                                                            | Décision PO du lot B (B10 / B12), reprise                  |
+| PIN incorrect et bloqué : sans nombre d'essais ni durée tant que G02 n'est pas tranché                                                                      | Lot B (B11) ; G02                                          |
+| Signalement depuis l'opération, sans ressaisie ; Résolu ≠ remboursé ; contestation sur le même dossier                                                      | PRD §8 ; RM-HELP-01 ; lot C                                |
+| « Fait » seul mot du succès ; `StepTracker` « Envoyée » en attente ; un retrait réussi n'a jamais la pastille d'échec                                       | DESIGN.md                                                  |
+| Masquage persistant ; saisie, récapitulatif et résultat toujours visibles                                                                                   | Lots A à C                                                 |
 
 ### Décisions PO du 20 octobre 2026 (lot D)
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Q1 — Choisir l'opérateur d'abord, puis le montant (D-01 → D-02) | Même ordre que le dépôt (C-01 → C-02) : un parcours appris sert deux fois ; les limites de l'opérateur s'appliquent à la saisie | Montant d'abord |
-| Q2 — Un second retrait pendant qu'un premier est en attente est autorisé comme **nouvelle demande distincte**, dans la limite du disponible ; jamais la répétition de la même | Ne pas bloquer Fatou ; RM-FUND-09 vise la même opération (comme Q11 du lot C) | Bloquer tout retrait pendant une attente |
-| Q3 — Sur D-02, la puce **« Tout mon solde »** seule, sans montants rapides | Un retrait part du solde : la question réelle est « combien j'ai » et « tout » | Montants rapides 500 / 1 000 / 2 000 du dépôt |
-| Q4 — Le **solde disponible baisse dès l'envoi** du retrait, avec une ligne « Retrait · En attente » | Seule lecture qui empêche de dépenser deux fois le même argent ; la ligne dit où il est | Solde inchangé avec une mention |
-| Q5 — Sur D-05 Fait, bouton texte **« Tu ne vois pas l'argent sur ton Wave ? »** (→ D-07 → signalement) | « Parti mais pas reçu » est la crainte n° 1 ; le dire évite de refaire le retrait | Aide seulement dans Opérations |
-| Q6 — Le **retrait Mobile Money assisté** (agente qui prépare, cliente qui autorise, PRD 30b) va au **lot E** | Il part de l'app agente et d'un protocole SMS sans smartphone (G02) ; le lot D couvre la cliente autonome | Le spécifier au lot D |
-| Q8 — D-05 Fait **sans illustration** | Mouvement d'argent courant (comme Q8 du lot C) | Résultat illustré |
-| PNV-2 validée — Sur A · H01, solde à 0 mais une épargne contient de l'argent : la raison de « Retirer » désactivé devient **« Ton argent est dans tes épargnes. »** (texte seulement) | « Rien à retirer » est faux pour Fatou qui voit de l'argent dans une épargne | Garder « Rien à retirer pour l'instant. » |
-| PNV-3 refusée — Pas de « Refaire ce retrait » sur le détail d'un retrait échoué | Même règle qu'un dépôt échoué (lot C) : un nouveau retrait part de l'accueil | Bouton sur C-12 |
-| **Montants d'un retrait** : Opérations et le détail montrent ce qui a **quitté le solde** (« − 5 050 F » dans l'exemple fictif) ; le détail ajoute « Tu as reçu 5 000 F » ; D-05 et le reçu mettent en avant le **montant reçu** | Opérations parle du point de vue du solde (H8) ; le résultat et le reçu parlent de ce que Fatou a reçu | — |
-| **Carte solde de l'accueil** : « Retrait en attente · − {montant} » avec horloge et ambre tant qu'un retrait est en attente, à la place de « Dernier dépôt », puis retour à « Dernier dépôt » (évolution de la règle du lot B) | Fatou voit sur la carte pourquoi son solde a baissé | « Dernier dépôt » seul, retrait visible seulement dans Dernières opérations |
-| « Remettre sur mon solde › » de D-02 ouvre **B · B01**, la liste des épargnes | Fatou choisit elle-même l'épargne ; un seul chemin | B · B07 direct quand une seule épargne contient de l'argent |
-| D-00 « Sur mon Mobile Money » garde la **même illustration** que le dépôt (`Actions/mobile-money.svg`) | Une seule image pour Mobile Money ; pas de dessin nouveau | Variante à flèche sortante |
-| **Frais au prototype** : Fatou tape le montant qu'elle **reçoit** ; les frais fictifs **s'ajoutent** à ce qui est pris sur son solde ; le récapitulatif montre toujours « Tu reçois », « Frais », « Pris sur ton solde » ; « Tout mon solde » = maximum calculé par le serveur ; aucune valeur dans la spec | Fatou pense en « ce que je reçois » ; un modèle unique rend le prototype testable sans inventer de tarif (G01) | Frais retenus sur le montant saisi |
+| Décision                                                                                                                                                                                                                                                                                                    | Raison                                                                                                                          | Alternative rejetée                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Q1 — Choisir l'opérateur d'abord, puis le montant (D-01 → D-02)                                                                                                                                                                                                                                             | Même ordre que le dépôt (C-01 → C-02) : un parcours appris sert deux fois ; les limites de l'opérateur s'appliquent à la saisie | Montant d'abord                                                             |
+| Q2 — Un second retrait pendant qu'un premier est en attente est autorisé comme **nouvelle demande distincte**, dans la limite du disponible ; jamais la répétition de la même                                                                                                                               | Ne pas bloquer Fatou ; RM-FUND-09 vise la même opération (comme Q11 du lot C)                                                   | Bloquer tout retrait pendant une attente                                    |
+| Q3 — Sur D-02, la puce **« Tout mon solde »** seule, sans montants rapides                                                                                                                                                                                                                                  | Un retrait part du solde : la question réelle est « combien j'ai » et « tout »                                                  | Montants rapides 500 / 1 000 / 2 000 du dépôt                               |
+| Q4 — Le **solde disponible baisse dès l'envoi** du retrait, avec une ligne « Retrait · En attente »                                                                                                                                                                                                         | Seule lecture qui empêche de dépenser deux fois le même argent ; la ligne dit où il est                                         | Solde inchangé avec une mention                                             |
+| Q5 — Sur D-05 Fait, bouton texte **« Tu ne vois pas l'argent sur ton Wave ? »** (→ D-07 → signalement)                                                                                                                                                                                                      | « Parti mais pas reçu » est la crainte n° 1 ; le dire évite de refaire le retrait                                               | Aide seulement dans Opérations                                              |
+| Q6 — Le **retrait Mobile Money assisté** (agente qui prépare, cliente qui autorise, PRD 30b) va au **lot E**                                                                                                                                                                                                | Il part de l'app agente et d'un protocole SMS sans smartphone (G02) ; le lot D couvre la cliente autonome                       | Le spécifier au lot D                                                       |
+| Q8 — D-05 Fait **sans illustration**                                                                                                                                                                                                                                                                        | Mouvement d'argent courant (comme Q8 du lot C)                                                                                  | Résultat illustré                                                           |
+| PNV-2 validée — Sur A · H01, solde à 0 mais une épargne contient de l'argent : la raison de « Retirer » désactivé devient **« Ton argent est dans tes épargnes. »** (texte seulement)                                                                                                                       | « Rien à retirer » est faux pour Fatou qui voit de l'argent dans une épargne                                                    | Garder « Rien à retirer pour l'instant. »                                   |
+| PNV-3 refusée — Pas de « Refaire ce retrait » sur le détail d'un retrait échoué                                                                                                                                                                                                                             | Même règle qu'un dépôt échoué (lot C) : un nouveau retrait part de l'accueil                                                    | Bouton sur C-12                                                             |
+| **Montants d'un retrait** : Opérations et le détail montrent ce qui a **quitté le solde** (« − 5 050 F » dans l'exemple fictif) ; le détail ajoute « Tu as reçu 5 000 F » ; D-05 et le reçu mettent en avant le **montant reçu**                                                                            | Opérations parle du point de vue du solde (H8) ; le résultat et le reçu parlent de ce que Fatou a reçu                          | —                                                                           |
+| **Carte solde de l'accueil** : « Retrait en attente · − {montant} » avec horloge et ambre tant qu'un retrait est en attente, à la place de « Dernier dépôt », puis retour à « Dernier dépôt » (évolution de la règle du lot B)                                                                              | Fatou voit sur la carte pourquoi son solde a baissé                                                                             | « Dernier dépôt » seul, retrait visible seulement dans Dernières opérations |
+| « Remettre sur mon solde › » de D-02 ouvre **B · B01**, la liste des épargnes                                                                                                                                                                                                                               | Fatou choisit elle-même l'épargne ; un seul chemin                                                                              | B · B07 direct quand une seule épargne contient de l'argent                 |
+| D-00 « Sur mon Mobile Money » garde la **même illustration** que le dépôt (`Actions/mobile-money.svg`)                                                                                                                                                                                                      | Une seule image pour Mobile Money ; pas de dessin nouveau                                                                       | Variante à flèche sortante                                                  |
+| **Frais au prototype** : Fatou tape le montant qu'elle **reçoit** ; les frais fictifs **s'ajoutent** à ce qui est pris sur son solde ; le récapitulatif montre toujours « Tu reçois », « Frais », « Pris sur ton solde » ; « Tout mon solde » = maximum calculé par le serveur ; aucune valeur dans la spec | Fatou pense en « ce que je reçois » ; un modèle unique rend le prototype testable sans inventer de tarif (G01)                  | Frais retenus sur le montant saisi                                          |
 
 ### Décisions de conception de cette spec
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Écrans `D-00`… avec tiret, et rappel en tête que les issues D06 à D26 sont des tickets | Éviter de confondre « D-07 » (écran) et « D07 » (#68) | Renuméroter les écrans en `R-01` (lettre qui ne suit pas les lots) |
-| Liste d'opérateurs même avec un seul opérateur | Fatou voit où va l'argent ; même règle que C-01 | Saut automatique de D-01 |
-| Les obstacles se disent tôt : disponible, attente, épargne et niveau d'accès sur D-02 ; frais, règles et opérateur sur D-03, avant le PIN | Fatou ne tape pas son PIN pour apprendre un refus | Erreur après le PIN |
-| Le bouton de D-03 dit « Continuer », pas « Retirer 5 000 F » | Le geste qui engage est le PIN (comme B10 → B11) ; le montant est rappelé sur D-04 | « Retirer 5 000 F » qui mène encore à un PIN |
-| Pas d'écran d'attente manipulé entre le PIN et le résultat | Rien à valider chez l'opérateur (H3) : l'attente est un état de D-05 avec `StepTracker` | Un écran C-04 bis sans action |
-| Lien « Remettre sur mon solde › » sur D-02 seulement quand le montant dépasse ce que le solde permet | Montrer la route au moment où Fatou en a besoin, sans afficher les montants d'épargne | Lien permanent ; retrait direct depuis une épargne |
-| **Pas de retrait direct depuis une épargne**, même en proposition | Contredit PRD §3 et §7 règle 11, le glossaire (le retour au solde n'est jamais un retrait) et la décision PO ; mélangerait mouvement interne sans frais et sortie avec frais dans un même récapitulatif | Choix de la source « Mon solde / une épargne » sur D-02 |
+| Décision                                                                                                                                  | Raison                                                                                                                                                                                                  | Alternative rejetée                                                |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Écrans `D-00`… avec tiret, et rappel en tête que les issues D06 à D26 sont des tickets                                                    | Éviter de confondre « D-07 » (écran) et « D07 » (#68)                                                                                                                                                   | Renuméroter les écrans en `R-01` (lettre qui ne suit pas les lots) |
+| Liste d'opérateurs même avec un seul opérateur                                                                                            | Fatou voit où va l'argent ; même règle que C-01                                                                                                                                                         | Saut automatique de D-01                                           |
+| Les obstacles se disent tôt : disponible, attente, épargne et niveau d'accès sur D-02 ; frais, règles et opérateur sur D-03, avant le PIN | Fatou ne tape pas son PIN pour apprendre un refus                                                                                                                                                       | Erreur après le PIN                                                |
+| Le bouton de D-03 dit « Continuer », pas « Retirer 5 000 F »                                                                              | Le geste qui engage est le PIN (comme B10 → B11) ; le montant est rappelé sur D-04                                                                                                                      | « Retirer 5 000 F » qui mène encore à un PIN                       |
+| Pas d'écran d'attente manipulé entre le PIN et le résultat                                                                                | Rien à valider chez l'opérateur (H3) : l'attente est un état de D-05 avec `StepTracker`                                                                                                                 | Un écran C-04 bis sans action                                      |
+| Lien « Remettre sur mon solde › » sur D-02 seulement quand le montant dépasse ce que le solde permet                                      | Montrer la route au moment où Fatou en a besoin, sans afficher les montants d'épargne                                                                                                                   | Lien permanent ; retrait direct depuis une épargne                 |
+| **Pas de retrait direct depuis une épargne**, même en proposition                                                                         | Contredit PRD §3 et §7 règle 11, le glossaire (le retour au solde n'est jamais un retrait) et la décision PO ; mélangerait mouvement interne sans frais et sortie avec frais dans un même récapitulatif | Choix de la source « Mon solde / une épargne » sur D-02            |
 
 ## Propositions non validées
 
@@ -853,6 +853,7 @@ Groupées par décideur, avec ma recommandation pour chacune.
 **Produit (PO)** : Q1 à Q6 et Q8 tranchées le 20 octobre 2026 (voir Décisions UX). Reste à observer au test : PNV-1 (D-P2-1), lecture du disponible réduit et de « Retrait en attente » sur la carte solde (D-P2-3, D-P4-2).
 
 **Partenaire et règles financières (G01)**
+
 - Opérateurs disponibles **pour le numéro vérifié** (un numéro Orange ouvre-t-il seulement Orange Money ? Wave sur tout numéro ?) et leur ordre. Recommandation : la liste vient du partenaire, l'app n'en déduit rien.
 - **Modèle de frais réel** : le prototype ajoute les frais à ce qui est pris sur le solde (Décision PO du 20 octobre 2026). À confirmer avec le partenaire ; si les frais étaient retenus sur le montant reçu, D-02 (aide, « Tout mon solde ») et D-03 seraient à revoir. Aucune valeur avant G01.
 - Minimum et maximum par retrait ; plafonds du niveau d'accès limité ; compteur éventuel.
@@ -864,18 +865,22 @@ Groupées par décideur, avec ma recommandation pour chacune.
 - Une vérification du numéro peut-elle expirer ou être suspendue (changement de numéro, récupération) ? Le refus de D-03 doit-il le dire ?
 
 **Sécurité et SMS (G02)**
+
 - Longueur finale du PIN, nombre d'essais, blocage (durée, déblocage), affichage des essais restants.
 - SMS de confirmation d'un retrait fait (trace) : contenu et moment ; lot F.
 - Capture d'écran bloquée sur D-04.
 
 **Assistance (G03)**
+
 - Motif de signalement pour « argent pas arrivé sur mon Mobile Money » ; contact derrière « Contacter l'aide » ; délais (aucun affiché).
 
 **Domaine (à traiter avec `domain-modeling`)**
+
 - Le glossaire dit du solde disponible que « seul le confirmé y compte » : préciser le sort d'une **sortie en attente** (retrait envoyé, pas confirmé). Recommandation : nommer « montant engagé » (code), jamais affiché sous ce mot à Fatou.
 - `Withdrawal` : préciser « fait = transfert confirmé par l'opérateur », et le lien éventuel avec une `Correction`.
 
 **Tickets (G06), sans modification distante avant feu vert du PO**
+
 - [kotiz-ci/platform#68](https://github.com/kotiz-ci/platform/issues/68) (D07, retrait direct) n'a que des critères génériques : y ajouter après validation la feuille D-00, le numéro vérifié non modifiable, le récapitulatif (frais inconnus = bloqué), le PIN KOTIZ, les refus avant le PIN, les résultats fait / en attente / on vérifie / échoué, le disponible avec un retrait en attente, la ligne Opérations et le reçu. Il reste bloqué par #67.
 - [#67](https://github.com/kotiz-ci/platform/issues/67) : ajouter le retrait (clé par demande, réessai = nouvelle demande et nouveau PIN, résultat inconnu sans répétition, reprise de la même demande au retour dans l'app).
 - [#69](https://github.com/kotiz-ci/platform/issues/69) : le litige d'un retrait (« parti mais pas reçu ») suit #68, comme proposé au lot C.
@@ -883,6 +888,7 @@ Groupées par décideur, avec ma recommandation pour chacune.
 - [#72](https://github.com/kotiz-ci/platform/issues/72) (cash-out) : seulement le raccord D-06 ; le parcours est au lot E.
 
 **Technique**
+
 - Interrogation du statut au retour dans l'app (même demande, même clé) ; délai avant « On vérifie » ; cache hors ligne du disponible ; blocage de la capture d'écran du PIN.
 
 ## Points les plus incertains

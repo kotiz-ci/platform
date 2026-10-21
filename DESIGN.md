@@ -439,6 +439,7 @@ components:
 **Référence assumée** : l'accueil Direction 04 (« Accueil QR — Direction 04 », node `13:658`) — une carte verte qui porte le solde et le QR, des raccourcis illustrés, tout le reste en gris clair et blanc. Repères de qualité, sans les copier : Wave pour la saisie et le montant, Djamo pour la chaleur des vides et des résultats, Revolut pour la finition des listes.
 
 **Ce qu'on refuse** :
+
 - un écran dominé par le vert, des piles de cartes, des cartes dans les cartes ;
 - un succès célébré pendant une attente ;
 - toute imagerie de tontine, de banque ou de crédit ;
@@ -450,27 +451,28 @@ Le secteur est la finance pour un public à lecture partielle. La confiance pass
 
 Deux niveaux dans Figma : des **primitives** (`color/green`, `color/ink`…) et des **usages** qui les aliasent (`color/action/primary`…). Le YAML expose les usages ; c'est ce que les écrans consomment.
 
-| Rôle | Token | Valeur | Contraste mesuré |
-|---|---|---|---|
-| Action principale, carte solde | `action-primary`, `surface-brand` | `#00564D` | texte blanc 8,61:1 |
-| Fond de la carte solde | `surface-brand-deep` | `#00423B` | texte blanc 11,4:1 |
-| Filet clair sur la carte solde | `border-inverse-subtle` | blanc à 16 % | décor |
-| Action appuyée | `action-pressed` | `#00423B` | texte blanc 11,4:1 |
-| Fond d'écran | `surface-canvas` | `#F3F4F6` | — |
-| Carte, champ, barre basse | `surface` | `#FFFFFF` | — |
-| Fond vert doux (bouton secondaire, onglet actif, succès) | `surface-brand-subtle` | `#E2F3ED` | texte vert 7,5:1 |
-| Texte principal | `text-primary` | `#253238` | 13,19:1 sur blanc, 11,99:1 sur canvas |
-| Texte secondaire | `text-secondary` | `#626E76` | 5,24:1 sur blanc, 4,76:1 sur canvas |
-| Erreur lisible | `text-danger` | `#B83B35` | 5,65:1 sur blanc, 4,92:1 sur `surface-error` |
-| Attente lisible | `text-pending` | `#8A5300` | 6,33:1 sur blanc, 5,66:1 sur `surface-pending` |
-| Fond d'attente | `surface-pending` | `#FDF1DC` | texte principal 11,8:1 |
-| Texte violet (épargne, accent) | `text-purple` | `#6B50AF` | 6,19:1 sur blanc |
-| Bordure | `border-default` | `#E4E7EB` | 1,24:1 — décor seulement |
-| Voile d'overlay | `surface-scrim` | `#253238` à 48 % | — |
+| Rôle                                                     | Token                             | Valeur           | Contraste mesuré                               |
+| -------------------------------------------------------- | --------------------------------- | ---------------- | ---------------------------------------------- |
+| Action principale, carte solde                           | `action-primary`, `surface-brand` | `#00564D`        | texte blanc 8,61:1                             |
+| Fond de la carte solde                                   | `surface-brand-deep`              | `#00423B`        | texte blanc 11,4:1                             |
+| Filet clair sur la carte solde                           | `border-inverse-subtle`           | blanc à 16 %     | décor                                          |
+| Action appuyée                                           | `action-pressed`                  | `#00423B`        | texte blanc 11,4:1                             |
+| Fond d'écran                                             | `surface-canvas`                  | `#F3F4F6`        | —                                              |
+| Carte, champ, barre basse                                | `surface`                         | `#FFFFFF`        | —                                              |
+| Fond vert doux (bouton secondaire, onglet actif, succès) | `surface-brand-subtle`            | `#E2F3ED`        | texte vert 7,5:1                               |
+| Texte principal                                          | `text-primary`                    | `#253238`        | 13,19:1 sur blanc, 11,99:1 sur canvas          |
+| Texte secondaire                                         | `text-secondary`                  | `#626E76`        | 5,24:1 sur blanc, 4,76:1 sur canvas            |
+| Erreur lisible                                           | `text-danger`                     | `#B83B35`        | 5,65:1 sur blanc, 4,92:1 sur `surface-error`   |
+| Attente lisible                                          | `text-pending`                    | `#8A5300`        | 6,33:1 sur blanc, 5,66:1 sur `surface-pending` |
+| Fond d'attente                                           | `surface-pending`                 | `#FDF1DC`        | texte principal 11,8:1                         |
+| Texte violet (épargne, accent)                           | `text-purple`                     | `#6B50AF`        | 6,19:1 sur blanc                               |
+| Bordure                                                  | `border-default`                  | `#E4E7EB`        | 1,24:1 — décor seulement                       |
+| Voile d'overlay                                          | `surface-scrim`                   | `#253238` à 48 % | —                                              |
 
 **Accents décoratifs** (`accent-blue` `#69ADE8`, `accent-coral` `#D96860`, `accent-purple` `#8870CD`, `accent-silver` `#CAD3DC`) : réservés aux illustrations et pastilles de raccourcis. Ils ne portent jamais de texte ni de statut. **Le corail est réservé aux illustrations** (décision PO du 19 octobre 2026) : trop proche du rouge d'erreur (1,64:1 entre `#D96860` et `#B83B35`), il ne sert jamais de pastille de statut ni de signal : 2,4:1, 3,44:1, 4,0:1 et 1,51:1 sur blanc.
 
 **Sémantiques** :
+
 - **Succès** = le vert de marque (`#00564D` sur `#E2F3ED`), toujours accompagné d'une coche et d'un mot.
 - **Erreur** = `text-danger` sur `surface-error`, avec le pictogramme Échec et un mot.
 - **Information** = `surface-information` avec le pictogramme Information ; le texte reste `text-primary`.
@@ -483,17 +485,18 @@ Deux niveaux dans Figma : des **primitives** (`color/green`, `color/ink`…) et 
 
 Une seule famille : **Inter**, en 400, 500, 600 et 700. Sept styles Figma (`KOTIZ / Typographie / …`), repris tels quels :
 
-| Token | Style Figma | Taille / interligne | Graisse | Usage |
-|---|---|---|---|---|
-| `amount` | Montant / 34 | 34 / 42 | Bold | Solde, montant saisi, montant du résultat |
-| `title` | Titre / 24 | 24 / 32 | Bold | Titre d'écran, titre de résultat ou de dialogue |
-| `section` | Section / 16 | 16 / 23 | Semi Bold | Titre de section, salutation, montants de ligne |
-| `label` | Libellé / 14 | 14 / 21 | Semi Bold | Libellés de champ, boutons, titres de ligne |
-| `body` | Corps / 14 | 14 / 21 | Regular | Texte courant, valeurs saisies |
-| `caption` | Légende / 12 | 12 / 18 | Regular | Libellés de la barre basse et dates uniquement |
-| `note` | Note / 11 | 11 / 16 | Medium | Mention non essentielle uniquement |
+| Token     | Style Figma  | Taille / interligne | Graisse   | Usage                                           |
+| --------- | ------------ | ------------------- | --------- | ----------------------------------------------- |
+| `amount`  | Montant / 34 | 34 / 42             | Bold      | Solde, montant saisi, montant du résultat       |
+| `title`   | Titre / 24   | 24 / 32             | Bold      | Titre d'écran, titre de résultat ou de dialogue |
+| `section` | Section / 16 | 16 / 23             | Semi Bold | Titre de section, salutation, montants de ligne |
+| `label`   | Libellé / 14 | 14 / 21             | Semi Bold | Libellés de champ, boutons, titres de ligne     |
+| `body`    | Corps / 14   | 14 / 21             | Regular   | Texte courant, valeurs saisies                  |
+| `caption` | Légende / 12 | 12 / 18             | Regular   | Libellés de la barre basse et dates uniquement  |
+| `note`    | Note / 11    | 11 / 16             | Medium    | Mention non essentielle uniquement              |
 
 Règles :
+
 - **Montants** : chiffres tabulaires, séparateur de milliers par espace, devise explicite et séparée du nombre (`125 500` + `FCFA`, ou `12 500 F` en ligne). Le montant est toujours l'élément le plus gros de l'écran de saisie.
 - **14 pt minimum pour tout ce qui est essentiel** (engagement de `PRODUCT.md`). **Décision PO du 19 octobre 2026** : le 12 (`caption`) est accepté **uniquement** pour les libellés de la barre basse et les dates ; statuts, montants, consignes et aides de champ sont en 14 minimum. `note` (11) ne porte jamais une information. « Non débité » (11 dans `25:1058`) et « Échoué · … » (12) passent en 14 à la migration.
 - Au plus deux graisses visibles par bloc ; pas d'italique.
@@ -512,6 +515,7 @@ Règles :
 ### Écran de résultat plein écran (décision PO du 20 octobre 2026, tous les lots)
 
 Tout écran de résultat, d'attente après envoi ou d'échec est une **page pleine**, jamais une carte centrée ni une pop-up :
+
 - fond `surface` (blanc), pas de `surface-canvas` ;
 - en-tête de page avec seulement la croix « Fermer » 48 **en haut à gauche** (retour au point de départ du parcours, jamais aux écrans de saisie ni au PIN) ; quand un lien d'en-tête validé existe déjà (« Plus tard » de Compte créé), il est gardé à la place de la croix ;
 - bloc de statut dans le tiers haut, **aligné à gauche** : pastille de statut 64 (`surface-brand-subtle` + coche, `surface-pending` + horloge, `surface-error` + croix ; ou l'illustration validée de l'écran), `StatusPill` (mot + pictogramme), titre sans montant, sous-titre, puis le montant en `amount` 34 sur sa propre ligne ;
@@ -541,15 +545,15 @@ Langage **plat**. La profondeur est réservée à ce qui passe au-dessus du cont
 
 ## Shapes
 
-| Token | Valeur | Usage |
-|---|---|---|
-| `xs` | 6 | Case à cocher dessinée de 24 uniquement (`CheckOption`) |
-| `sm` | 12 | Petits éléments : pastille d'icône de ligne, fond blanc du QR |
-| `md` | 16 | Boutons, champs, options, messages, pastille de navigation |
-| `lg` | 20 | Cartes de projet |
-| `xl` | 24 | Carte solde, dialogues, résultats, bottom sheet (coins hauts), bouton icône d'en-tête |
-| `xxl` | 32 | Surfaces larges |
-| `full` | 999 | Barre de progression, formes entièrement arrondies |
+| Token  | Valeur | Usage                                                                                 |
+| ------ | ------ | ------------------------------------------------------------------------------------- |
+| `xs`   | 6      | Case à cocher dessinée de 24 uniquement (`CheckOption`)                               |
+| `sm`   | 12     | Petits éléments : pastille d'icône de ligne, fond blanc du QR                         |
+| `md`   | 16     | Boutons, champs, options, messages, pastille de navigation                            |
+| `lg`   | 20     | Cartes de projet                                                                      |
+| `xl`   | 24     | Carte solde, dialogues, résultats, bottom sheet (coins hauts), bouton icône d'en-tête |
+| `xxl`  | 32     | Surfaces larges                                                                       |
+| `full` | 999    | Barre de progression, formes entièrement arrondies                                    |
 
 Icônes fonctionnelles : trait, 24 dans une zone de 48 (20 pour les indicateurs). Illustrations : contours doux, aplats, mêmes proportions dans les raccourcis (48 / 56 / 96) et les choix d'objectif. Aucune illustration de type d'épargne n'évoque l'assurance ou les secours : ni croix, ni bouclier, ni parapluie, ni coche. Santé = cœur corail, Imprévus = coffret de réserve avec une pièce (**Décision PO du 19 octobre 2026**, critique du lot B) ; dessinées dans le canvas « KOTIZ — App cliente », à reporter dans le Design System avec le drapeau « objectif atteint ».
 
@@ -558,16 +562,21 @@ Icônes fonctionnelles : trait, 24 dans une zone de 48 (20 pour les indicateurs)
 Les sources Figma restent l'autorité de construction ; les node IDs sont donnés pour la migration vers Claude Design.
 
 ### Boutons — `37:1101` (base `37:1091`), bouton texte `135:883`
-Hauteur 52, largeur Fill, libellé `label`. Hiérarchie : **primaire** (un seul par écran), **secondaire** (fond vert doux, pour « Revenir » ou une alternative), **texte** (sortie discrète). États du primaire : repos, appuyé, chargement (indicateur blanc + libellé « Traitement… » conservé, double validation bloquée), désactivé (gris canvas, texte secondaire 4,76:1). Le set Figma mélange hiérarchie et état dans une seule propriété *Appearance* (F05, non corrigé ici) : en Claude Design, séparer `hiérarchie` et `état`.
+
+Hauteur 52, largeur Fill, libellé `label`. Hiérarchie : **primaire** (un seul par écran), **secondaire** (fond vert doux, pour « Revenir » ou une alternative), **texte** (sortie discrète). États du primaire : repos, appuyé, chargement (indicateur blanc + libellé « Traitement… » conservé, double validation bloquée), désactivé (gris canvas, texte secondaire 4,76:1). Le set Figma mélange hiérarchie et état dans une seule propriété _Appearance_ (F05, non corrigé ici) : en Claude Design, séparer `hiérarchie` et `état`.
 
 ### Champs — `65:496` (base `65:455`)
+
 Libellé permanent au-dessus (`label`), zone de saisie 56, aide en dessous en `body` 14 (le Figma l'a en 12 : à passer en 14 à la migration, décision PO du 19 octobre 2026). États : vide, rempli, actif (bordure verte), erreur (bordure et aide `text-danger` + message explicite), désactivé (fond canvas).
 
 ### Montant — `65:524` (base `65:497`), saisie active `211:982`, montants rapides `211:988/990/992`, clavier `211:994…1014`
+
 Le montant saisi est en `amount` (34 Bold), la devise à côté en 16, le libellé au-dessus en 14. Montants rapides : 108 × 48, fond `surface-information`, bordure `border-default`. Le clavier numérique (touches 108 × 52) n'est retenu que si le clavier système ne suffit pas (F09 ouvert). Montants rapides et touches utilisent un rayon brut de 8, hors de l'échelle des rayons : à rattacher à un token lors de la migration (pas de valeur choisie ici).
 
 ### Carte solde — `13:589` (Visible `13:562` / Masqué `13:588`, base `28:931`)
+
 **Décision PO du 19 octobre 2026** — proposition « P3 · contexte réel », qui remplace les versions précédentes (vignette QR, puis reprise fidèle de `28:931`) :
+
 - Fond `surface-brand-deep` (`#00423B`), rayon 24. Un arc `surface-brand` sort du coin bas gauche, avec un cercle au trait blanc à 7 % : ton sur ton, texte blanc lisible partout (11,4:1 et 8,61:1).
 - **Solde à gauche, QR toujours à droite.** Colonne solde : « Solde disponible » + œil, montant `amount`, « FCFA ». Colonne QR : QR sur fond blanc (rayon 12), logo K au centre (≤ 20 % de la surface, correction d'erreur H), puis « Mon QR » + Agrandir (vue 332, `17:951`).
 - Le QR rétrécit sans changer de place : 112, puis 92 et 64 sur carte étroite, pour qu'un montant à 7 chiffres garde ses 34 px.
@@ -576,6 +585,7 @@ Le montant saisi est en `amount` (34 Bold), la devise à côté en 16, le libell
 - Plus de ligne « Épargné ce mois-ci », plus de pousse au trait.
 
 **Correction F02 — vocabulaire et masquage :**
+
 - Le libellé est **« Solde disponible »** (et non « Épargne disponible ») : il désigne l'argent libre, distinct des épargnes par projet.
 - **Masqué** = le solde est remplacé par `••• •••` et le montant du dernier dépôt par `••• F`. Le libellé, la devise, le statut, le QR et l'icône œil restent visibles.
 - **Le masquage s'étend à tout l'accueil** : montants « X F sur Y F » de la carte projet et montants des derniers mouvements. La barre de progression reste visible, sans chiffre.
@@ -585,11 +595,13 @@ Le montant saisi est en `amount` (34 Bold), la devise à côté en 16, le libell
 - Le couple montant + QR et l'identité de la carte sont conservés.
 
 ### Carte projet (objectif) — `13:639`
+
 Fond `surface-canvas`, rayon 20, padding 16. Le titre doit passer à la ligne (largeur Fill + hauteur Hug ; F04 ouvert).
 
 **Décision PO du 19 octobre 2026** — carte allégée sur l'accueil : illustration 36, **nom du projet** (`label`), **« 32 500 F sur 50 000 F »** (`body`, montants en chiffres tabulaires), **barre 5 px**. La phrase de reste (« Encore 17 500 F pour atteindre ton objectif. ») et le pourcentage passent sur l'écran de détail de l'épargne. Le master `13:639` (montant, %, phrase de reste dans la carte) est la version d'origine.
 
 **Correction F03 — un seul contrat de progression :**
+
 - Deux **entrées** : `montantÉpargné` et `cible`. Tout le reste est **dérivé**, jamais saisi à la main :
   - `pourcentage = ⌊montantÉpargné / cible × 100⌋` — arrondi à l'entier inférieur, donc jamais 100 % avant que la cible soit atteinte (**Décision PO du 19 octobre 2026**) ;
   - `largeurBarre = min(pourcentage, 100) %` de la piste ;
@@ -600,30 +612,39 @@ Fond `surface-canvas`, rayon 20, padding 16. Le titre doit passer à la ligne (l
 - Le composant affiche des montants calculés par l'application ; il ne calcule rien.
 
 ### Raccourcis illustrés — `35:1102` (Déposer `13:605`, Retirer `13:619`, Épargnes `23:1419`)
+
 Pastille ronde colorée + illustration 48, libellé `label` toujours visible, cible 96 × 93. Trois actions au maximum sur l'accueil. Teintes : `surface-brand-subtle` (Déposer), `surface-information` (Retirer), `surface-purple` (Épargnes). **Jamais `surface-error`** : le rose signifie « échoué » (critique du lot A, 19 octobre 2026 ; la source Figma avait Retirer en rose).
 
 ### Ligne d'opération — `35:1103` (Dépôt réussi `13:657`, Dépôt échoué `25:1058`, Retrait réussi `25:1070`)
+
 Ligne de 40 de haut, espacées de 16 ; la zone tactile de la ligne entière fait au moins 48. Pastille d'icône 40 (rayon 12), titre `label`, date en `caption`, montant à droite en `label` (`+` pour un apport, `−` pour une sortie). **Décision PO du 19 octobre 2026** : **le statut s'écrit en mots, en 14, avec son pictogramme** (« Fait » + coche, « Échoué » + croix, « En attente » + horloge, « Non débité » + croix), avec sa couleur sémantique en renfort ; pas seulement en couleur. **Un seul mot pour le statut fait dans tout le produit : « Fait »** (remplace « Réussi », critique du lot A du 19 octobre 2026). Pastille d'icône : vert doux pour un apport, `surface-canvas` pour une sortie, `surface-error` réservé à l'échec : un retrait réussi ne ressemble jamais à un échec. Une affectation interne solde ↔ épargne ne doit pas ressembler à un apport. La ligne desktop `159:887` (940 px) n'est pas une source mobile.
 
 ### En-têtes — `28:1453` (Accueil), `28:1693` (Page)
+
 Hauteur 48. Accueil : logo 28 + « Akwaba, Fatou » (`section`) + notification en bouton 48 sur fond canvas. Page : retour 48 + titre.
 
 ### Navigation — voir Layout › Navigation MVP.
 
 ### Messages et attente — `66:574` (Information `66:540`, Succès `66:550`, Erreur `66:562`), chargement `66:575`, squelette `66:582`
+
 Pictogramme + titre `label` + détail `body`/`caption`, rayon 16. Le chargement garde un texte (« Un instant… ») ; le squelette ne sert qu'au premier chargement.
 
 ### Statut d'opération — `158:917`
+
 Pictogramme + titre `title` + détail. Préréglages à créer (F07 ouvert) : succès, en attente, échec connu, incertain. **Un délai dépassé ne produit jamais un succès** : il produit « en attente » ou « incertain » avec un suivi.
 
 ### Dialogue de confirmation — `66:591` ; résultats — `66:652`, illustrés `120:866` (épargne créée) et `129:871` (création indisponible)
+
 Dialogue : titre, description, primaire + secondaire, en overlay. Il ne confirme que ce qui est visible dans un récapitulatif (F08 ouvert). Résultat simple pour un retour local ; résultat illustré pour un moment majeur (épargne créée, compte créé), jamais pendant l'attente.
 
 ### Autres sources réutilisables
+
 Option `65:559` (repos / sélectionnée / désactivée : la sélection se voit par fond vert doux, bordure et libellé) ; choix d'objectif illustré `28:1838`, `37:1102`, `65:613` ; récapitulatif `158:885` ; reçu compact `198:988` ; bottom sheet « Origine des fonds » `198:949` ; code de sécurité `158:916` (4 ou 6 cases : longueurs non validées, gate G02) ; zone tactile `169:887` ; ligne de navigation `170:887` ; carte solde simple `28:1773` ; nouvelle épargne `28:1812`.
 
 ### Composants promus depuis le lot A (décision PO du 19 octobre 2026)
+
 Créés pendant les maquettes du lot A (canvas « KOTIZ — Lot A accès et accueil »), ajoutés au bundle `Kotiz.*` pour les lots B à F. Aucune couleur nouvelle ; les tailles hors échelle sont devenues des tokens : `rounded.xs` (6), `size-pin-slot` (56), `size-pastille` (64), `size-pastille-lg` (80), `size-step-dot` (32).
+
 - **`PageHeader`** — pages poussées : retour 48, titre (16 Semi Bold) ou « Étape n sur N » (14 Semi Bold `text-secondary`, à droite), lien discret à droite pour la sortie secondaire. Jamais trois boutons empilés en bas.
 - **`TextField`** (évolution) — vraie saisie, préfixe fixe en option (`+225` séparé par un filet), états vide / rempli / actif / erreur / désactivé, aide en 14.
 - **`DateChoice`** (nouveau, **Décision PO du 19 octobre 2026**, création d'épargne en 5 étapes) — réponse à « Pour quand ? » : options d'une ligne en liste, pleine largeur, 48 de haut, `label` 16 Semi Bold sur `surface`, bordure `border-default`, rayon 16 : « Dans 3 mois », « Dans 6 mois », « Dans 1 an », « Choisir une date » (ouvre `TextField` date, date à venir seulement). Sélection : `surface-brand-subtle` + bordure 2 `border-focus` + `aria-pressed` (même signature que le choix de type). Sous la sélection : « Pour le 19 avril 2027 » et « Ça fait environ 3 847 F par semaine. » (objectif ÷ semaines entières restantes, au moins 1, arrondi au franc supérieur : aide d'affichage, jamais un engagement ni un prélèvement). Le refus d'une date reste possible par un lien texte (« Pas de date pour l'instant ») : la question est posée, la réponse est facultative. Construit dans le canvas « KOTIZ — App cliente » (`.lb-dates`), à reporter dans le Design System.
@@ -641,7 +662,9 @@ Créés pendant les maquettes du lot A (canvas « KOTIZ — Lot A accès et accu
 - Non promu : le hero vert de E01, tant que le PO n'a pas retenu le même traitement pour E08.
 
 ### Composants promus depuis le lot B (décision PO du 19 octobre 2026)
+
 Nés des maquettes du lot B (section « Lot B — Épargne et retour au solde » du canvas « KOTIZ — App cliente »), ajoutés au bundle `Kotiz.*` pour les lots C à F. Aucune couleur nouvelle, aucun token nouveau : la barre de 8 et la puce de 32 réutilisent `space-8` et `size-step-dot`.
+
 - **`SummaryPreview`** (aussi `Kotiz.Summary.Preview`) — récapitulatif de création montré comme l'objet à créer (B06) : une carte `surface` + `border-default`, rayon 20 ; illustration 64, type en `text-secondary` (masqué s'il égale le nom), nom 24 Bold, objectif 34 Bold dominant, barre vide et « 0 F pour l'instant », date « d'ici le … » + puce « ≈ X F / semaine » ou « Pas de date · Ajouter » (toujours présente), « Modifier » 48 par ligne ; bloc « Détails » discret dessous. TalkBack lit la carte en une phrase. Pas de vert plein dans la carte.
 - **`SummaryFlow`** (aussi `Kotiz.Summary.Flow`) — récapitulatif d'un mouvement (B10) : montant dominant + « Modifier », « Depuis » ↓ « Vers » (illustrations 40, flèche `text-secondary`), lignes de conséquence (« Il restera », « Ton solde après »). **La ligne Frais est facultative** : absente pour un mouvement interne (retour au solde sans frais, décision PO), présente pour un dépôt ou un retrait seulement avec un frais confirmé.
 - **`RootHeader` + `MaskToggle`** — titre de racine 24 et œil 48 (barré quand c'est masqué, `aria-pressed`) ; l'œil se place aussi à côté d'un `PageHeader`.
@@ -657,17 +680,21 @@ Nés des maquettes du lot B (section « Lot B — Épargne et retour au solde »
 - **Laissés de côté** : `DateField` (le sélecteur natif Android reste à confirmer côté dev ; `TextField type="date"` suffit en attendant) et la variante « mouvement interne » de `TransactionRow` (« Vers mon solde », « Depuis mon solde »), à décider avec le lot C.
 
 ### Illustrations d'action du lot C (décision PO du 19 octobre 2026)
+
 Dessinées pour le Design System dans le style des actions Déposer / Retirer / Épargnes (tracé `#253238` 2,4, aplats de la palette d'illustration existante, aucune couleur nouvelle), groupe **Actions** :
+
 - **`Actions/mobile-money.svg`** — « Mobile Money » : un téléphone, une pièce sur l'écran, une flèche `action-primary` qui entre. Aucun logo ni nom d'opérateur : l'opérateur apparaît ensuite avec son logo officiel (groupe Operateurs).
 - **`Actions/agente.svg`** — « Auprès d'une agente » : une agente KOTIZ de quartier, même peau et même style que Fatou dans les résultats, téléphone en main. Sans uniforme ni logo inventé.
 - Tailles 48 (par défaut), 56 et 64, même dessin mis à l'échelle. Usages : feuille C-00 « Comment tu veux déposer ? », C-06 « D'où vient l'argent ? », C-17 « Déposer auprès d'une agente ».
 
 ### Logos opérateurs — `225:959` Wave, `225:961` Orange Money, `225:963` MTN MoMo, `225:965` Moov Money
+
 Logos officiels, non recolorés, cadre 64 × 48. **Wave : symbole seul, sans inscription.**
 
 ## Do's and Don'ts
 
 **À faire**
+
 - Composer chaque écran avec des instances des sources ; ne jamais détacher pour simuler une variante.
 - Garder les neutres majoritaires et le vert pour le geste principal.
 - Écrire chaque statut en mots, avec un pictogramme, et une couleur seulement en renfort.
@@ -676,6 +703,7 @@ Logos officiels, non recolorés, cadre 64 × 48. **Wave : symbole seul, sans ins
 - Phrases de moins de 10 mots, tutoiement.
 
 **À éviter**
+
 - Plus de deux couleurs de marque sur un écran ; un fond vert plein ailleurs que sur la carte solde ou le bouton principal.
 - Cartes dans des cartes, piles de cartes identiques, grilles de trois cartes.
 - Ombre sur une carte ordinaire ; ombres lourdes.

@@ -197,41 +197,41 @@ flowchart LR
 
 ### Nombre d'écrans par parcours (chemin principal)
 
-| Parcours | Écrans | Séquence |
-|---|---|---|
-| P1 Créer une épargne | 7 (5 étapes + résultat + détail) | B02 B03 B04 B05 B06 B17 B07 (depuis E08, H01 ou B01) |
-| P2 Voir mes épargnes | 1 | B01 (vide / 1 à 3 / limite / fermées / masqué) |
-| P3 Suivre une épargne | 2 | B01 B07 |
-| P4 Modifier | 2 | B07 B08 (retour B07) |
-| P5 Remettre sur mon solde | 5 | B07 B09 B10 B11 B12 |
-| P6 Fermer à zéro | 3 | B07 B14 B01 |
-| P6 Fermer avec des fonds | 7 | B07 B13 B09 B10 B11 B12 B14 (puis B01), par le lien « Fermer cette épargne ? » de B12 |
-| P7 Limite atteinte | 1 | B01 (état) ou B15 |
-| P8 Masquage | 2 | B01 B07 (états) |
+| Parcours                  | Écrans                           | Séquence                                                                              |
+| ------------------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
+| P1 Créer une épargne      | 7 (5 étapes + résultat + détail) | B02 B03 B04 B05 B06 B17 B07 (depuis E08, H01 ou B01)                                  |
+| P2 Voir mes épargnes      | 1                                | B01 (vide / 1 à 3 / limite / fermées / masqué)                                        |
+| P3 Suivre une épargne     | 2                                | B01 B07                                                                               |
+| P4 Modifier               | 2                                | B07 B08 (retour B07)                                                                  |
+| P5 Remettre sur mon solde | 5                                | B07 B09 B10 B11 B12                                                                   |
+| P6 Fermer à zéro          | 3                                | B07 B14 B01                                                                           |
+| P6 Fermer avec des fonds  | 7                                | B07 B13 B09 B10 B11 B12 B14 (puis B01), par le lien « Fermer cette épargne ? » de B12 |
+| P7 Limite atteinte        | 1                                | B01 (état) ou B15                                                                     |
+| P8 Masquage               | 2                                | B01 B07 (états)                                                                       |
 
 ## Carte des écrans
 
 Barre basse : uniquement sur B01 (racine Épargnes). Tous les autres écrans sont des pages poussées sans barre basse, avec `PageHeader`.
 
-| ID | Écran | Parcours | Objectif |
-|---|---|---|---|
-| B01 | Épargnes (racine) | P1 P2 P3 P6 P7 P8 | Voir ses épargnes et en ouvrir ou créer une |
-| B02 | Quel projet ? (étape 1 sur 5) | P1 | Dire pour quoi on épargne |
-| B03 | Combien ? (étape 2 sur 5) | P1 | Dire combien on veut atteindre |
-| B04 | Pour quand ? (étape 3 sur 5) | P1 | Se donner une date, ou dire qu'on n'en a pas |
-| B05 | Comment tu l'appelles ? (étape 4 sur 5) | P1 | Donner un nom (prérempli) et une note si on veut |
-| B06 | Vérifie ton épargne (étape 5 sur 5) | P1 | Relire toutes les lignes avant de créer, modifier une ligne |
-| B07 | Détail d'une épargne | P3 P4 P5 P6 P8 | Voir où on en est et choisir le geste suivant |
-| B08 | Modifier l'épargne | P4 | Changer nom, description, cible ou date |
-| B09 | Combien remettre ? | P5 P6 | Saisir le montant qui revient sur le solde |
-| B10 | Vérifie ton retour | P5 P6 | Voir d'où, vers où et combien avant le PIN |
-| B11 | PIN de confirmation | P5 P6 | Autoriser le mouvement |
-| B12 | Résultat du retour | P5 P6 | Savoir si c'est fait, en attente ou échoué |
-| B13 | Il reste de l'argent (bottom sheet) | P6 | Comprendre pourquoi on ne peut pas fermer |
-| B14 | Fermer l'épargne ? (dialogue) | P5 P6 | Confirmer une fermeture définitive (depuis B07 ou le lien de B12) |
-| B15 | Limite atteinte (bottom sheet) | P1 P7 | Comprendre la limite de 3 |
-| B16 | Quitter sans enregistrer ? (dialogue) | P4 | Ne pas perdre ses changements par erreur |
-| B17 | Ton épargne est créée (ex-B06) | P1 | Savoir que c'est fait |
+| ID  | Écran                                   | Parcours          | Objectif                                                          |
+| --- | --------------------------------------- | ----------------- | ----------------------------------------------------------------- |
+| B01 | Épargnes (racine)                       | P1 P2 P3 P6 P7 P8 | Voir ses épargnes et en ouvrir ou créer une                       |
+| B02 | Quel projet ? (étape 1 sur 5)           | P1                | Dire pour quoi on épargne                                         |
+| B03 | Combien ? (étape 2 sur 5)               | P1                | Dire combien on veut atteindre                                    |
+| B04 | Pour quand ? (étape 3 sur 5)            | P1                | Se donner une date, ou dire qu'on n'en a pas                      |
+| B05 | Comment tu l'appelles ? (étape 4 sur 5) | P1                | Donner un nom (prérempli) et une note si on veut                  |
+| B06 | Vérifie ton épargne (étape 5 sur 5)     | P1                | Relire toutes les lignes avant de créer, modifier une ligne       |
+| B07 | Détail d'une épargne                    | P3 P4 P5 P6 P8    | Voir où on en est et choisir le geste suivant                     |
+| B08 | Modifier l'épargne                      | P4                | Changer nom, description, cible ou date                           |
+| B09 | Combien remettre ?                      | P5 P6             | Saisir le montant qui revient sur le solde                        |
+| B10 | Vérifie ton retour                      | P5 P6             | Voir d'où, vers où et combien avant le PIN                        |
+| B11 | PIN de confirmation                     | P5 P6             | Autoriser le mouvement                                            |
+| B12 | Résultat du retour                      | P5 P6             | Savoir si c'est fait, en attente ou échoué                        |
+| B13 | Il reste de l'argent (bottom sheet)     | P6                | Comprendre pourquoi on ne peut pas fermer                         |
+| B14 | Fermer l'épargne ? (dialogue)           | P5 P6             | Confirmer une fermeture définitive (depuis B07 ou le lien de B12) |
+| B15 | Limite atteinte (bottom sheet)          | P1 P7             | Comprendre la limite de 3                                         |
+| B16 | Quitter sans enregistrer ? (dialogue)   | P4                | Ne pas perdre ses changements par erreur                          |
+| B17 | Ton épargne est créée (ex-B06)          | P1                | Savoir que c'est fait                                             |
 
 ## Règles communes aux écrans du lot B
 
@@ -833,36 +833,36 @@ En attente (extrait) :
 
 Noms exacts ; propriétés dans le DS et dans [handoff-lot-b.md](handoff-lot-b.md). Le canvas les dessine dans `kotiz-app.css` sur sa copie v9.
 
-| Composant | Besoin |
-|---|---|
-| **`GoalTypeOption`** dans **`GoalTypeGrid`** | Choix du type illustré, sélection vert doux + bordure 2 (B02) |
-| **`GoalProgress`** | Détail : montant 34, « sur X F », barre, %, reste, « Objectif atteint » (drapeau, texte neutre), « Pour le … · encore X semaines », masqué (B07) |
-| **`SummaryPreview`** (`Kotiz.Summary.Preview`) | Récapitulatif de création montré comme l'épargne à venir (B06) |
-| **`SummaryFlow`** (`Kotiz.Summary.Flow`) | Récapitulatif d'un mouvement : montant, Depuis ↓ Vers, Il restera, Ton solde après, sans frais (B10) |
-| **`AmountField`** | Montant 34 + devise, raison sous le champ, puce « Tout remettre » (B03, B08, B09) |
-| **`DateChoice`** | « Pour quand ? » : 3 mois, 6 mois, 1 an, choisir une date ; « environ X F par semaine » (B04, B08) |
-| **`TextField` multiligne** | Note facultative avec un exemple en aide (B05, B08) |
-| **`ConfirmDialog`** | Dialogue titre + description + primaire + secondaire (B14, B16) |
-| **`GoalRow`** (évolution) | `state` `reached` (« Objectif atteint », drapeau, sans coche) et `closed` (« Fermée le … ») (B01, H01) |
-| **`RootHeader`** + **`MaskToggle`** | Titre de racine + œil 48 (B01) ; œil à côté de `PageHeader` (B07) |
-| **`StepTracker`** (évolution) | Statut d'étape `sent` « Envoyée », jamais « Fait » pendant une attente (B12) |
-| **Assets** | Cœur Santé, coffret Imprévus, drapeau « objectif atteint » (groupe Objectifs) |
+| Composant                                      | Besoin                                                                                                                                           |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`GoalTypeOption`** dans **`GoalTypeGrid`**   | Choix du type illustré, sélection vert doux + bordure 2 (B02)                                                                                    |
+| **`GoalProgress`**                             | Détail : montant 34, « sur X F », barre, %, reste, « Objectif atteint » (drapeau, texte neutre), « Pour le … · encore X semaines », masqué (B07) |
+| **`SummaryPreview`** (`Kotiz.Summary.Preview`) | Récapitulatif de création montré comme l'épargne à venir (B06)                                                                                   |
+| **`SummaryFlow`** (`Kotiz.Summary.Flow`)       | Récapitulatif d'un mouvement : montant, Depuis ↓ Vers, Il restera, Ton solde après, sans frais (B10)                                             |
+| **`AmountField`**                              | Montant 34 + devise, raison sous le champ, puce « Tout remettre » (B03, B08, B09)                                                                |
+| **`DateChoice`**                               | « Pour quand ? » : 3 mois, 6 mois, 1 an, choisir une date ; « environ X F par semaine » (B04, B08)                                               |
+| **`TextField` multiligne**                     | Note facultative avec un exemple en aide (B05, B08)                                                                                              |
+| **`ConfirmDialog`**                            | Dialogue titre + description + primaire + secondaire (B14, B16)                                                                                  |
+| **`GoalRow`** (évolution)                      | `state` `reached` (« Objectif atteint », drapeau, sans coche) et `closed` (« Fermée le … ») (B01, H01)                                           |
+| **`RootHeader`** + **`MaskToggle`**            | Titre de racine + œil 48 (B01) ; œil à côté de `PageHeader` (B07)                                                                                |
+| **`StepTracker`** (évolution)                  | Statut d'étape `sent` « Envoyée », jamais « Fait » pendant une attente (B12)                                                                     |
+| **Assets**                                     | Cœur Santé, coffret Imprévus, drapeau « objectif atteint » (groupe Objectifs)                                                                    |
 
 Laissés de côté par le DS v10 : `DateField` (remplacé par `TextField type="date"`), variante mouvement interne de `TransactionRow` (à décider avec le lot C), squelette de chargement (B01, B07, à construire dans l'app).
 
 ## Raccords vers les autres lots (non spécifiés ici)
 
-| Départ (lot B) | Destination | Lot |
-|---|---|---|
-| Entrées E08 « Créer mon épargne », H01 « Créer une épargne › », raccourci Épargnes, une épargne, « Tout voir › » | B02, B01, B07 | A (déjà spécifié) |
-| B07 « Mettre de l'argent » ; B17 → B07 à zéro | Alimentation : Mobile Money ou Mon solde disponible, récapitulatif, autorisation, résultat, affectation liée (FIN-03) | C |
-| B07 un mouvement, « Tout voir › » ; B12 « Voir le reçu › », « Tu le retrouves dans Opérations » | Opérations, détail, reçu | C |
-| Lot C : « Créer une épargne » après un dépôt sans épargne (16c) | B02 ou B15 | C → B |
-| B12 « Voir mon solde » puis Retirer | Retrait Mobile Money (jamais enchaîné automatiquement) | D |
-| Retour au solde sans smartphone : autorisation SMS propre au mouvement (FIN-02) | Variante assistée de P5 | E |
-| Création assistée : rattachement accepté + confirmation SMS propre à la création (RM-PERM-09, 16d-16g), même limite de 3 | Variante assistée de P1 | E |
-| Permission carnet par épargne (nouvelle épargne non autorisée automatiquement, RM-PERM-04) | Carnet signé-signé, point d'épargne | E |
-| B11 « PIN oublié ? », blocage PIN ; B12 « Contacter l'aide » ; masquage depuis Profil | Récupération, aide, Profil | F |
+| Départ (lot B)                                                                                                           | Destination                                                                                                           | Lot               |
+| ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| Entrées E08 « Créer mon épargne », H01 « Créer une épargne › », raccourci Épargnes, une épargne, « Tout voir › »         | B02, B01, B07                                                                                                         | A (déjà spécifié) |
+| B07 « Mettre de l'argent » ; B17 → B07 à zéro                                                                            | Alimentation : Mobile Money ou Mon solde disponible, récapitulatif, autorisation, résultat, affectation liée (FIN-03) | C                 |
+| B07 un mouvement, « Tout voir › » ; B12 « Voir le reçu › », « Tu le retrouves dans Opérations »                          | Opérations, détail, reçu                                                                                              | C                 |
+| Lot C : « Créer une épargne » après un dépôt sans épargne (16c)                                                          | B02 ou B15                                                                                                            | C → B             |
+| B12 « Voir mon solde » puis Retirer                                                                                      | Retrait Mobile Money (jamais enchaîné automatiquement)                                                                | D                 |
+| Retour au solde sans smartphone : autorisation SMS propre au mouvement (FIN-02)                                          | Variante assistée de P5                                                                                               | E                 |
+| Création assistée : rattachement accepté + confirmation SMS propre à la création (RM-PERM-09, 16d-16g), même limite de 3 | Variante assistée de P1                                                                                               | E                 |
+| Permission carnet par épargne (nouvelle épargne non autorisée automatiquement, RM-PERM-04)                               | Carnet signé-signé, point d'épargne                                                                                   | E                 |
+| B11 « PIN oublié ? », blocage PIN ; B12 « Contacter l'aide » ; masquage depuis Profil                                    | Récupération, aide, Profil                                                                                            | F                 |
 
 Tant qu'un lot n'est pas produit, le prototype montre l'écran neutre « Bientôt ici » du lot A.
 
@@ -870,72 +870,73 @@ Tant qu'un lot n'est pas produit, le prototype montre l'écran neutre « Bientô
 
 ### Décisions validées reprises (PO, PRD, DESIGN.md)
 
-| Décision | Source |
-|---|---|
-| Type et cible requis ; nom, description, date facultatifs ; nom par défaut = libellé du type ; aucune ligne vide au récapitulatif | RM-SAV-01, PRD §3 et §11 |
-| Épargne flexible : aucun blocage jusqu'à la date | PRD §3, RM-SAV-03 |
-| 3 épargnes actives au maximum, fermées non comptées, limite expliquée sans fermeture automatique | RM-SAV-02, FIN-05 |
-| Retour au solde partiel ou total, « Tout remettre sur mon solde », récapitulatif puis PIN KOTIZ ; épargne ouverte même à zéro | PRD §7 règles 11-12, FIN-02 |
-| Cible atteinte : « Objectif atteint » (sans coche verte), barre pleine, montant réel, jamais > 100 %, aucun transfert ni fermeture | PRD §7 règle 13, DESIGN.md F03 |
-| Modification sans mouvement de fonds, type fixe, facultatifs effaçables, sans célébration | PRD §7 règle 14 |
-| Fermeture uniquement à zéro avec confirmation, sinon proposer Remettre sur mon solde ; historique conservé | PRD §7 règle 15, RM-SAV-04 |
-| Masquage persistant sur Accueil, Épargnes, Opérations ; saisie et récapitulatif toujours visibles | Décision PO du 19 octobre 2026 (lot A) |
-| Barre basse sur les racines seulement ; « Fait » comme seul mot du statut fait | DESIGN.md, critique lot A |
+| Décision                                                                                                                           | Source                                 |
+| ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Type et cible requis ; nom, description, date facultatifs ; nom par défaut = libellé du type ; aucune ligne vide au récapitulatif  | RM-SAV-01, PRD §3 et §11               |
+| Épargne flexible : aucun blocage jusqu'à la date                                                                                   | PRD §3, RM-SAV-03                      |
+| 3 épargnes actives au maximum, fermées non comptées, limite expliquée sans fermeture automatique                                   | RM-SAV-02, FIN-05                      |
+| Retour au solde partiel ou total, « Tout remettre sur mon solde », récapitulatif puis PIN KOTIZ ; épargne ouverte même à zéro      | PRD §7 règles 11-12, FIN-02            |
+| Cible atteinte : « Objectif atteint » (sans coche verte), barre pleine, montant réel, jamais > 100 %, aucun transfert ni fermeture | PRD §7 règle 13, DESIGN.md F03         |
+| Modification sans mouvement de fonds, type fixe, facultatifs effaçables, sans célébration                                          | PRD §7 règle 14                        |
+| Fermeture uniquement à zéro avec confirmation, sinon proposer Remettre sur mon solde ; historique conservé                         | PRD §7 règle 15, RM-SAV-04             |
+| Masquage persistant sur Accueil, Épargnes, Opérations ; saisie et récapitulatif toujours visibles                                  | Décision PO du 19 octobre 2026 (lot A) |
+| Barre basse sur les racines seulement ; « Fait » comme seul mot du statut fait                                                     | DESIGN.md, critique lot A              |
 
 ### Décisions PO du 19 octobre 2026 (lot B)
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Q1 — Types : École, Commerce, Santé, Maison, Voyage, Véhicule, Fête, Imprévus, Autre projet (illustrations du DS) ; « Mon projet » par défaut pour Autre projet. Santé reste un projet d'épargne : aucun écran, libellé ni illustration n'évoque une assurance | Illustrations déjà dessinées ; libellés courts pour une lecture partielle ; assurance Santé hors MVP | Liste libre ; types sans illustration |
-| ~~Q2 — Nom, note et date ouverts depuis le récapitulatif (B05), pas comme étape~~ **Remplacée le 19 octobre 2026** par la création en 5 étapes (ci-dessous) | Les champs facultatifs ne ressemblent pas à une obligation ; chemin plus court | Étape « Personnaliser » entre cible et récapitulatif |
-| Q3 — Montants visibles sur le résultat B12 et la feuille B13 en mode masqué | Ils prolongent une saisie et un récapitulatif que la cliente vient de voir | Masquer aussi le résultat |
-| Q4 — Épargne atteinte : « Mettre de l'argent » reste le bouton principal, même ordre partout | Même place pour les mêmes gestes ; aucune poussée vers la sortie ni vers le dépôt | Passer « Remettre sur mon solde » en principal |
-| Q5 — Œil sur B01 et B07, même réglage que H01 | Réafficher sans revenir à l'accueil | Œil sur l'accueil seulement |
-| Q6 — Libellé de l'alimentation : « Mettre de l'argent » (à reprendre tel quel au lot C) | Verbe simple, distinct de « Déposer » sur le solde | « Alimenter », « Affecter » |
-| Q7 — Sortie de B17 (ex-B06) : « Voir mon épargne » seule | Le dépôt est le bouton principal de B07 ; rien n'est imposé | Ajouter « Mettre de l'argent » sur B17 |
-| **Retour au solde sans frais** (Décision PO du 19 octobre 2026) : mouvement interne, aucune ligne Frais sur B10, « Ton solde après » exact, PIN non bloqué par G01 | L'argent change seulement de poche chez KOTIZ ; un frais affiché « à confirmer » inquiétait sans rien apprendre | Frais « à confirmer » (G01) et autorisation bloquée |
-| **Récapitulatifs B06 en aperçu (`Summary.Preview`) et B10 en flux (`Summary.Flow`)** (Décision PO du 19 octobre 2026, après le commentaire « trop plat ») | On voit son projet ou son mouvement, pas un formulaire | Liste de lignes au même niveau |
+| Décision                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Raison                                                                                                                                         | Alternative rejetée                                       |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Q1 — Types : École, Commerce, Santé, Maison, Voyage, Véhicule, Fête, Imprévus, Autre projet (illustrations du DS) ; « Mon projet » par défaut pour Autre projet. Santé reste un projet d'épargne : aucun écran, libellé ni illustration n'évoque une assurance                                                                                                                                                                                                                                                             | Illustrations déjà dessinées ; libellés courts pour une lecture partielle ; assurance Santé hors MVP                                           | Liste libre ; types sans illustration                     |
+| ~~Q2 — Nom, note et date ouverts depuis le récapitulatif (B05), pas comme étape~~ **Remplacée le 19 octobre 2026** par la création en 5 étapes (ci-dessous)                                                                                                                                                                                                                                                                                                                                                                | Les champs facultatifs ne ressemblent pas à une obligation ; chemin plus court                                                                 | Étape « Personnaliser » entre cible et récapitulatif      |
+| Q3 — Montants visibles sur le résultat B12 et la feuille B13 en mode masqué                                                                                                                                                                                                                                                                                                                                                                                                                                                | Ils prolongent une saisie et un récapitulatif que la cliente vient de voir                                                                     | Masquer aussi le résultat                                 |
+| Q4 — Épargne atteinte : « Mettre de l'argent » reste le bouton principal, même ordre partout                                                                                                                                                                                                                                                                                                                                                                                                                               | Même place pour les mêmes gestes ; aucune poussée vers la sortie ni vers le dépôt                                                              | Passer « Remettre sur mon solde » en principal            |
+| Q5 — Œil sur B01 et B07, même réglage que H01                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Réafficher sans revenir à l'accueil                                                                                                            | Œil sur l'accueil seulement                               |
+| Q6 — Libellé de l'alimentation : « Mettre de l'argent » (à reprendre tel quel au lot C)                                                                                                                                                                                                                                                                                                                                                                                                                                    | Verbe simple, distinct de « Déposer » sur le solde                                                                                             | « Alimenter », « Affecter »                               |
+| Q7 — Sortie de B17 (ex-B06) : « Voir mon épargne » seule                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Le dépôt est le bouton principal de B07 ; rien n'est imposé                                                                                    | Ajouter « Mettre de l'argent » sur B17                    |
+| **Retour au solde sans frais** (Décision PO du 19 octobre 2026) : mouvement interne, aucune ligne Frais sur B10, « Ton solde après » exact, PIN non bloqué par G01                                                                                                                                                                                                                                                                                                                                                         | L'argent change seulement de poche chez KOTIZ ; un frais affiché « à confirmer » inquiétait sans rien apprendre                                | Frais « à confirmer » (G01) et autorisation bloquée       |
+| **Récapitulatifs B06 en aperçu (`Summary.Preview`) et B10 en flux (`Summary.Flow`)** (Décision PO du 19 octobre 2026, après le commentaire « trop plat »)                                                                                                                                                                                                                                                                                                                                                                  | On voit son projet ou son mouvement, pas un formulaire                                                                                         | Liste de lignes au même niveau                            |
 | **Création en 5 étapes, nom, note et date toujours présentés** (Décision PO du 19 octobre 2026, après le test du lot B par la conjointe ; remplace Q2) : B02 Quel projet ?, B03 Combien ?, B04 Pour quand ? (3 mois, 6 mois, 1 an, une date, ou « Pas de date pour l'instant » ; « Ça fait environ X F par semaine. »), B05 Comment tu l'appelles ? (nom prérempli, note visible), B06 récapitulatif complet avec « Modifier » par ligne et Date toujours affichée ; B08 avec les mêmes champs ; B07 « encore X semaines » | Au test, la personnalisation cachée derrière le récapitulatif n'est pas trouvée ; une date et un rythme par semaine rendent l'objectif concret | Personnalisation facultative depuis le récapitulatif (Q2) |
-| Q8 — Retour et fermeture bloqués pendant un retour en attente, raison affichée (H4) | RM-FUND-09 ; disponible jamais faux | Second retour sur le reste |
-| Q9 — Date cible : date à venir seulement | Une date passée n'a pas de sens pour un objectif | Toute date acceptée |
-| Q10 — Cible modifiable sous le montant épargné, avec « Ton objectif sera atteint avec ce montant. » | Épargne flexible ; conséquence visible avant d'enregistrer | Refuser la modification |
-| Q11 — Deux épargnes au même nom autorisées, suggestion de renommer au récapitulatif | Ne pas bloquer ; aider à les distinguer | Nom unique obligatoire |
-| Q12 — Épargnes fermées consultables en lecture seule, section « Fermées » de B01 | Historique conservé sans encombrer les actives | Fermées invisibles |
-| Fermeture proposée après un retour total : lien secondaire « Fermer cette épargne ? » sur B12 quand l'épargne est à 0, qui ouvre B14 avec sa propre confirmation ; jamais de fermeture automatique | Évite de chercher la fermeture après avoir vidé l'épargne, sans fusionner deux décisions | « Tout remettre et fermer » en une seule action (refusé) |
-| Type fixe au MVP, même pour une épargne vide | Règle PRD §3 et §7 règle 14 maintenue | Changer le type d'une épargne vide (refusé) |
+| Q8 — Retour et fermeture bloqués pendant un retour en attente, raison affichée (H4)                                                                                                                                                                                                                                                                                                                                                                                                                                        | RM-FUND-09 ; disponible jamais faux                                                                                                            | Second retour sur le reste                                |
+| Q9 — Date cible : date à venir seulement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Une date passée n'a pas de sens pour un objectif                                                                                               | Toute date acceptée                                       |
+| Q10 — Cible modifiable sous le montant épargné, avec « Ton objectif sera atteint avec ce montant. »                                                                                                                                                                                                                                                                                                                                                                                                                        | Épargne flexible ; conséquence visible avant d'enregistrer                                                                                     | Refuser la modification                                   |
+| Q11 — Deux épargnes au même nom autorisées, suggestion de renommer au récapitulatif                                                                                                                                                                                                                                                                                                                                                                                                                                        | Ne pas bloquer ; aider à les distinguer                                                                                                        | Nom unique obligatoire                                    |
+| Q12 — Épargnes fermées consultables en lecture seule, section « Fermées » de B01                                                                                                                                                                                                                                                                                                                                                                                                                                           | Historique conservé sans encombrer les actives                                                                                                 | Fermées invisibles                                        |
+| Fermeture proposée après un retour total : lien secondaire « Fermer cette épargne ? » sur B12 quand l'épargne est à 0, qui ouvre B14 avec sa propre confirmation ; jamais de fermeture automatique                                                                                                                                                                                                                                                                                                                         | Évite de chercher la fermeture après avoir vidé l'épargne, sans fusionner deux décisions                                                       | « Tout remettre et fermer » en une seule action (refusé)  |
+| Type fixe au MVP, même pour une épargne vide                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Règle PRD §3 et §7 règle 14 maintenue                                                                                                          | Changer le type d'une épargne vide (refusé)               |
 
 ### Décisions de conception de cette spec
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Choix du type par simple toucher, sans bouton Continuer (B02) | Une décision, un geste ; lecture par l'illustration | Radios + Continuer (deux gestes) |
-| Pas de montants rapides sur la cible | Aucune valeur de cible validée ; les suggestions du PRD sont des dépôts de démonstration | 50 000 / 100 000 / 200 000 proposés |
-| Pas de PIN pour créer, modifier ou fermer (H1) | Aucun argent ne bouge ; FIN-02 ne vise que le retour au solde ; moins de PIN = PIN mieux protégé | PIN sur chaque action |
-| B17 (ex-B06) résultat illustré puis détail (B07) | Moment majeur (DESIGN.md) ; PRD §4 : création puis détail du projet | Arrivée directe sur B07 avec un toast |
-| Retour au solde en 3 étapes nommées (Montant, Vérifier, PIN) | Orientation ; même rythme que les autres opérations | PIN dans un dialogue sur le récapitulatif |
-| « Il restera dans École Awa » au récapitulatif | Montant et destination lisibles, conséquence visible avant le PIN | Afficher seulement le montant remis |
-| Résultat du retour sans illustration de célébration | Mouvement interne : l'argent ne fait que changer de poche | Résultat illustré comme la création |
-| Compteur « 2 sur 3 épargnes actives » sur B01 | La limite se voit avant de bloquer | Limite découverte au moment de créer |
-| Fermeture en bouton texte en bas du détail, jamais en rouge | Action rare et définitive ; le rouge signifie « échoué » | Bouton secondaire à côté des actions d'argent |
-| Pas de total des épargnes sur B01 | Solde disponible et épargnes jamais additionnés (PRD §11) ; risque de confusion avec ce qu'on peut retirer | Bandeau « Dans tes épargnes : 53 000 F » |
+| Décision                                                      | Raison                                                                                                     | Alternative rejetée                           |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Choix du type par simple toucher, sans bouton Continuer (B02) | Une décision, un geste ; lecture par l'illustration                                                        | Radios + Continuer (deux gestes)              |
+| Pas de montants rapides sur la cible                          | Aucune valeur de cible validée ; les suggestions du PRD sont des dépôts de démonstration                   | 50 000 / 100 000 / 200 000 proposés           |
+| Pas de PIN pour créer, modifier ou fermer (H1)                | Aucun argent ne bouge ; FIN-02 ne vise que le retour au solde ; moins de PIN = PIN mieux protégé           | PIN sur chaque action                         |
+| B17 (ex-B06) résultat illustré puis détail (B07)              | Moment majeur (DESIGN.md) ; PRD §4 : création puis détail du projet                                        | Arrivée directe sur B07 avec un toast         |
+| Retour au solde en 3 étapes nommées (Montant, Vérifier, PIN)  | Orientation ; même rythme que les autres opérations                                                        | PIN dans un dialogue sur le récapitulatif     |
+| « Il restera dans École Awa » au récapitulatif                | Montant et destination lisibles, conséquence visible avant le PIN                                          | Afficher seulement le montant remis           |
+| Résultat du retour sans illustration de célébration           | Mouvement interne : l'argent ne fait que changer de poche                                                  | Résultat illustré comme la création           |
+| Compteur « 2 sur 3 épargnes actives » sur B01                 | La limite se voit avant de bloquer                                                                         | Limite découverte au moment de créer          |
+| Fermeture en bouton texte en bas du détail, jamais en rouge   | Action rare et définitive ; le rouge signifie « échoué »                                                   | Bouton secondaire à côté des actions d'argent |
+| Pas de total des épargnes sur B01                             | Solde disponible et épargnes jamais additionnés (PRD §11) ; risque de confusion avec ce qu'on peut retirer | Bandeau « Dans tes épargnes : 53 000 F »      |
 
 ### Corrections de la critique du lot B (validées par le PO le 19 octobre 2026)
 
 Source : [critique-lot-b.md](critique-lot-b.md). Appliquées au canvas « KOTIZ — App cliente » le même jour.
 
-| Décision | Raison | Alternative rejetée |
-|---|---|---|
-| Carte solde (H01) : la ligne du bas reste « Dernier dépôt », pour les dépôts seulement ; un retour au solde n'apparaît que dans les Dernières opérations | Un « + 8 000 F En attente » à côté d'un solde inchangé se lit comme un solde plus haut ; un libellé fixe se reconnaît sans relire | Libellé dynamique « Depuis École Awa » |
-| Écran d'attente : l'étape terminée du `StepTracker` dit « Envoyée », jamais « Fait » | « Fait » est le mot unique du succès et la réponse attendue au test | « Demande envoyée : Fait » |
-| « Objectif atteint » sans coche verte, texte neutre, drapeau sur B07, même rendu sur B01, B07 et H01 | Un état de l'épargne ne doit pas porter la signature d'une transaction faite | « Objectif atteint ✓ » en vert |
-| Santé = cœur corail, Imprévus = coffret de réserve | Croix et bouclier évoquent les secours, la mutuelle, l'assurance | Trousse à croix, bouclier avec coche |
-| B04 (devenu B06) : « Modifier » à côté du nom ; note et date par un lien (*remplacé par la création en 5 étapes*) ; tout est figé pendant la création et quand le résultat est inconnu (gardé) | Trouver où nommer (P1-2) ; pas de doublon possible (RM-FUND-09) | `InfoLine` d'information ; récapitulatif modifiable pendant l'attente |
-| B05 « Valider » désactivé avec la raison si la date est passée (*règle reprise par B04 « Pour quand ? » : Continuer désactivé*) | Règle commune « bouton désactivé + raison » | Toujours actif |
-| ~~B10 : état « frais inconnus » dessiné ; nominal « à confirmer » non livrable avant G01~~ **Sans objet** : le retour au solde est sans frais (décision PO ci-dessus) | — | — |
+| Décision                                                                                                                                                                                       | Raison                                                                                                                            | Alternative rejetée                                                   |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Carte solde (H01) : la ligne du bas reste « Dernier dépôt », pour les dépôts seulement ; un retour au solde n'apparaît que dans les Dernières opérations                                       | Un « + 8 000 F En attente » à côté d'un solde inchangé se lit comme un solde plus haut ; un libellé fixe se reconnaît sans relire | Libellé dynamique « Depuis École Awa »                                |
+| Écran d'attente : l'étape terminée du `StepTracker` dit « Envoyée », jamais « Fait »                                                                                                           | « Fait » est le mot unique du succès et la réponse attendue au test                                                               | « Demande envoyée : Fait »                                            |
+| « Objectif atteint » sans coche verte, texte neutre, drapeau sur B07, même rendu sur B01, B07 et H01                                                                                           | Un état de l'épargne ne doit pas porter la signature d'une transaction faite                                                      | « Objectif atteint ✓ » en vert                                        |
+| Santé = cœur corail, Imprévus = coffret de réserve                                                                                                                                             | Croix et bouclier évoquent les secours, la mutuelle, l'assurance                                                                  | Trousse à croix, bouclier avec coche                                  |
+| B04 (devenu B06) : « Modifier » à côté du nom ; note et date par un lien (_remplacé par la création en 5 étapes_) ; tout est figé pendant la création et quand le résultat est inconnu (gardé) | Trouver où nommer (P1-2) ; pas de doublon possible (RM-FUND-09)                                                                   | `InfoLine` d'information ; récapitulatif modifiable pendant l'attente |
+| B05 « Valider » désactivé avec la raison si la date est passée (_règle reprise par B04 « Pour quand ? » : Continuer désactivé_)                                                                | Règle commune « bouton désactivé + raison »                                                                                       | Toujours actif                                                        |
+| ~~B10 : état « frais inconnus » dessiné ; nominal « à confirmer » non livrable avant G01~~ **Sans objet** : le retour au solde est sans frais (décision PO ci-dessus)                          | —                                                                                                                                 | —                                                                     |
 
 ## Propositions non validées
 
 Aucune en cours. Les deux propositions de la première version ont été tranchées par le PO le 19 octobre 2026 (voir Décisions UX) :
+
 1. « Tout remettre et fermer » en une seule action : **refusée**. Alternative validée : lien « Fermer cette épargne ? » sur B12 après un retour total à 0.
 2. Changer le type d'une épargne vide : **refusée** pour le MVP, le type reste fixe.
 
@@ -944,25 +945,31 @@ Aucune en cours. Les deux propositions de la première version ont été tranch�
 Groupées par décideur, avec ma recommandation. Les questions produit Q1 à Q12 sont tranchées (Décisions UX).
 
 **Partenaire et règles financières (G01)**
+
 - Montant épargné avec un mouvement en attente (H3). Recommandation : confirmé seulement, comme le solde.
 - Montant minimum de retour, cible minimum et maximum. Recommandation : aucun minimum côté produit tant que le partenaire n'en impose pas.
 - Le retour au solde consomme-t-il la capacité du niveau d'accès limité (PRD §12) ? Recommandation : non, mouvement interne distinct (à faire confirmer).
 
 **Sécurité et SMS (G02)**
+
 - Essais PIN restants et blocage sur B11 : mêmes règles que C01 (à confirmer avec le lot A).
 - Protocole SMS du retour assisté sans smartphone (lot E).
 
 **Exceptions (G05)**
+
 - Création assistée déjà confirmée au résultat incertain lors du retrait du rattachement (PRD §15.2) : à trancher avant la variante assistée du lot E.
 
 **Technique**
+
 - Création idempotente (« Vérifier à nouveau » ne crée jamais deux épargnes), conflit de modification sur deux téléphones, longueur maximale du nom et de la note, emoji dans le nom.
 
 **Domaine (à traiter avec `domain-modeling`)**
+
 - Le glossaire DDD §5.1 décrit un `GoalLock` (verrouillage jusqu'à la date cible, malus de score au déblocage anticipé) : il contredit l'épargne flexible validée (PRD §3, RM-SAV-03) et le report du score. À retirer ou à marquer hors MVP.
 - Le glossaire ne nomme pas les mouvements internes (affectation solde → épargne, retour épargne → solde) ni la fermeture d'épargne : concepts à ajouter au contexte `savings`.
 
 **Tickets (G06)**
+
 - L'issue [kotiz-ci/platform#73](https://github.com/kotiz-ci/platform/issues/73) ne contient que « Objectif nommé, cotisations flexibles, signatures numériques et retrait » et des critères génériques. « Retrait » doit devenir « retour au solde » (le retrait externe est au lot D, #68/#72) et « signatures numériques » relève du carnet (lot E). Recommandation : enrichir #73 après validation du lot B (création, liste, détail, modification, retour au solde, fermeture, limite), avec le feu vert du PO.
 
 ## Points les plus incertains

@@ -1095,7 +1095,7 @@ Fonctionnalité: Limite de 3 épargnes au choix d'une destination
 
 Couvre C-11, C-12, C-13, le masquage et les raccords A · H01 et B · B12.
 
-```gherkin
+````gherkin
 # language: fr
 @client @C-P6
 Fonctionnalité: Voir mes opérations, une opération et son reçu
@@ -1504,7 +1504,7 @@ Fonctionnalité: Signaler un problème et suivre mon signalement
     Alors le dossier porte sa propre référence, le motif, le mot et la photo facultatifs, et l'opération liée
     Et un second signalement sur la même opération renvoie le dossier existant
     Et aucune écriture ledger n'est créée
-```
+````
 
 ## C-P8 — Contester une réponse, et correction financière
 
@@ -1609,19 +1609,20 @@ Fonctionnalité: Contester une réponse et voir une correction
 
 ## Index des scénarios
 
-| Parcours | IDs | Nombre |
-|---|---|---|
-| C-P1 Déposer sur mon solde (avec C-00, C-17, attente, frais inconnus, accueil) | C-P1-S1 à C-P1-S44 | 44 |
-| C-P2 Mettre de l'argent par Mobile Money | C-P2-S1 à C-P2-S20 | 20 |
-| C-P3 Mettre de l'argent depuis mon solde | C-P3-S1 à C-P3-S21 | 21 |
-| C-P4 Reprise (avec solde baissé, épargne fermée, B07 « Dépôt pas entré ») | C-P4-S1 à C-P4-S21 | 21 |
-| C-P5 Limite de 3 épargnes | C-P5-S1 à C-P5-S5 | 5 |
-| C-P6 Opérations, détail, reçu | C-P6-S1 à C-P6-S32 | 32 |
-| C-P7 Signaler et suivre | C-P7-S1 à C-P7-S12 | 12 |
-| C-P8 Contester, correction | C-P8-S1 à C-P8-S10 | 10 |
-| **Total** | | **165** |
+| Parcours                                                                       | IDs                | Nombre  |
+| ------------------------------------------------------------------------------ | ------------------ | ------- |
+| C-P1 Déposer sur mon solde (avec C-00, C-17, attente, frais inconnus, accueil) | C-P1-S1 à C-P1-S44 | 44      |
+| C-P2 Mettre de l'argent par Mobile Money                                       | C-P2-S1 à C-P2-S20 | 20      |
+| C-P3 Mettre de l'argent depuis mon solde                                       | C-P3-S1 à C-P3-S21 | 21      |
+| C-P4 Reprise (avec solde baissé, épargne fermée, B07 « Dépôt pas entré »)      | C-P4-S1 à C-P4-S21 | 21      |
+| C-P5 Limite de 3 épargnes                                                      | C-P5-S1 à C-P5-S5  | 5       |
+| C-P6 Opérations, détail, reçu                                                  | C-P6-S1 à C-P6-S32 | 32      |
+| C-P7 Signaler et suivre                                                        | C-P7-S1 à C-P7-S12 | 12      |
+| C-P8 Contester, correction                                                     | C-P8-S1 à C-P8-S10 | 10      |
+| **Total**                                                                      |                    | **165** |
 
 **Interdits couverts**
+
 - Frais : jamais inventés, autorisation bloquée tant qu'ils sont inconnus, côté app et serveur : C-P1-S19, C-P1-S20, C-P1-S44, C-P6-S19. Mise de côté sans frais : C-P3-S7, C-P3-S21.
 - Aucun PIN KOTIZ pour le dépôt, la mise de côté et la reprise ; jamais le code Mobile Money : C-P1-S21, C-P3-S7, C-P4-S4.
 - Numéro vérifié seul, non modifiable : C-P1-S10.

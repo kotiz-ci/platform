@@ -1276,19 +1276,20 @@ Fonctionnalité: Montants masqués dans les épargnes
 
 ## Index des scénarios
 
-| Parcours | IDs | Nombre |
-|---|---|---|
-| P1 Créer une épargne | B-P1-S1 à B-P1-S29 | 29 |
-| P2 Voir mes épargnes | B-P2-S1 à B-P2-S10 | 10 |
-| P3 Suivre une épargne | B-P3-S1 à B-P3-S12 | 12 |
-| P4 Modifier une épargne | B-P4-S1 à B-P4-S14 | 14 |
-| P5 Remettre sur mon solde | B-P5-S1 à B-P5-S30 (S23 retiré) | 29 |
-| P6 Fermer une épargne | B-P6-S1 à B-P6-S13 | 13 |
-| P7 Limite de 3 épargnes | B-P7-S1 à B-P7-S7 | 7 |
-| P8 Montants masqués | B-P8-S1 à B-P8-S8 | 8 |
-| **Total** | | **122** |
+| Parcours                  | IDs                             | Nombre  |
+| ------------------------- | ------------------------------- | ------- |
+| P1 Créer une épargne      | B-P1-S1 à B-P1-S29              | 29      |
+| P2 Voir mes épargnes      | B-P2-S1 à B-P2-S10              | 10      |
+| P3 Suivre une épargne     | B-P3-S1 à B-P3-S12              | 12      |
+| P4 Modifier une épargne   | B-P4-S1 à B-P4-S14              | 14      |
+| P5 Remettre sur mon solde | B-P5-S1 à B-P5-S30 (S23 retiré) | 29      |
+| P6 Fermer une épargne     | B-P6-S1 à B-P6-S13              | 13      |
+| P7 Limite de 3 épargnes   | B-P7-S1 à B-P7-S7               | 7       |
+| P8 Montants masqués       | B-P8-S1 à B-P8-S8               | 8       |
+| **Total**                 |                                 | **122** |
 
 **Interdits couverts**
+
 - 3 épargnes actives au maximum : B-P7-S1, B-P7-S4, B-P7-S6.
 - Aucune fermeture ni transfert automatique : B-P3-S3, B-P6-S6, B-P7-S1, B-P7-S7.
 - Fermeture à zéro seulement : B-P6-S3, B-P6-S12, B-P6-S13.
@@ -1302,8 +1303,9 @@ Fonctionnalité: Montants masqués dans les épargnes
 - Aucun argent déplacé hors du retour : B-P1-S20, B-P4-S14 ; type fixe : B-P4-S3 ; PIN jamais affiché ni conservé : B-P5-S12 ; pas de retour arrière vers le PIN : B-P5-S18 ; aucun retrait enchaîné : B-P5-S19 ; fermer ≠ supprimer : B-P6-S10.
 
 **Exemples vérifiés** (aide « par semaine », date du jour 19 octobre 2026, formule du handoff : `⌈objectif / max(1, ⌊jours / 7⌋)⌉`) :
+
 - 100 000 F au 30 juin 2027 → 254 jours, 36 semaines → 2 778 F (B-P1-S9, B-P4-S2) ;
 - 100 000 F au 19 avril 2027 (« Dans 6 mois ») → 182 jours, 26 semaines → 3 847 F (B-P1-S8) ;
 - 50 000 F au 19 avril 2027 → 1 924 F (B-P1-S8, B-P1-S14) ; 50 000 F au 30 juin 2027 → 1 389 F (B-P1-S17) ;
 - 10 000 F au 23 octobre 2026 → 4 jours, compté 1 semaine → 10 000 F (B-P1-S11).
-Le calcul porte sur l'objectif entier, pas sur le reste à épargner (règle du prototype validé, B04 et B08).
+  Le calcul porte sur l'objectif entier, pas sur le reste à épargner (règle du prototype validé, B04 et B08).

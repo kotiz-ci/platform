@@ -10,6 +10,7 @@ Date : 19 octobre 2026. Statut : lot B validé par le PO et sa conjointe le 19 o
 - Cible : app mobile React Native + Expo SDK 54, **variant `client`** seulement (ADR-009, ADR-010, ADR-019). Backend Java 21 / Spring Boot 3, hexagonal (ADR-011), contexte **Savings** (épargnes, retour au solde, ledger), avec IAM pour la vérification du PIN.
 
 Conventions (reprises du lot A) :
+
 - **« à confirmer (Gxx) »** : paramètre non tranché, lu dans une configuration, jamais écrit en dur ni annoncé dans l'interface. G01 = partenaire et juridique, G02 = sécurité et SMS, G03 = assistance.
 - **« à dessiner »** : état reporté au design. Le comportement attendu est décrit ; le texte exact et la mise en page viendront des maquettes. Aucun texte n'est inventé ici pour ces états. Depuis la version 9 du canvas, il n'en reste qu'un (voir Points ouverts).
 - **Valeurs de démonstration du prototype, qui ne sont pas des règles** : PIN 2468 (4 chiffres), date du jour figée au 19 octobre 2026, solde 12 400 FCFA, épargnes École Awa / Boutique / Tabaski / Moto, références « KTZ-2610-0042 (fictive) », heure « 14:32 ». Aucune ne doit être reprise dans le code, les tests ou les textes.
@@ -19,29 +20,34 @@ Conventions (reprises du lot A) :
 **Critique** ([critique-lot-b.md](critique-lot-b.md)) : la seule correction **Bloquant** (n° 1, frais « à confirmer » sur B10) est **sans objet** depuis la décision PO du 19 octobre 2026 : le retour au solde est sans frais. La n° 15 (états reportés) est traitée : les états sont dessinés en version 9 du canvas et spécifiés dans les écrans ci-dessous.
 
 **Décisions PO du 19 octobre 2026 appliquées**
+
 1. **Retour au solde sans frais.** C'est un mouvement interne : aucune ligne « Frais », aucun état « frais inconnus », aucun blocage du PIN lié à G01, « Ton solde après » exact (solde disponible + montant). Le canvas version 9 est aligné (B10 et menu du prototype : « Retour au solde : sans frais »).
 2. **Création en 5 étapes** (B02 Quel projet, B03 Combien, B04 Pour quand, B05 Comment tu l'appelles, B06 Vérifie ton épargne) ; B06 est un **aperçu** (`SummaryPreview`), B10 un **flux Depuis → Vers** (`SummaryFlow`).
 
 **États reportés, dessinés en version 9 du canvas** (spécifiés dans § Écrans, scénarios dans le Gherkin) :
-| Écran | État | Planche |
-|---|---|---|
-| B01 | Chargement (squelette) ; plus de 5 épargnes fermées | `B-B01` |
-| B07 | Chargement (squelette) ; échec de fermeture (après B14) ; de l'argent est arrivé | `B-B07` |
-| B08 | Échec d'enregistrement ; épargne fermée entre-temps | `B-B08-B16` |
-| B11 | PIN bloqué (trop d'essais) | `B-B09-B11` |
-| B12 | Échoué au moment du mouvement (échec technique après le PIN) | `B-B12` |
+
+| Écran | État                                                                             | Planche     |
+| ----- | -------------------------------------------------------------------------------- | ----------- |
+| B01   | Chargement (squelette) ; plus de 5 épargnes fermées                              | `B-B01`     |
+| B07   | Chargement (squelette) ; échec de fermeture (après B14) ; de l'argent est arrivé | `B-B07`     |
+| B08   | Échec d'enregistrement ; épargne fermée entre-temps                              | `B-B08-B16` |
+| B11   | PIN bloqué (trop d'essais)                                                       | `B-B09-B11` |
+| B12   | Échoué au moment du mouvement (échec technique après le PIN)                     | `B-B12`     |
 
 **États encore à dessiner** :
+
 - B10 **refusé par une règle** (décision PO du 19 octobre 2026, ajout au canvas en cours) : comportement spécifié dans § B10, textes donnés par le PO ; le titre exact du message suivra le canvas.
 - B11 hors connexion avant l'envoi du PIN. Comportement attendu : rien n'est envoyé, le PIN est effacé, la cliente le sait et peut réessayer ; la spec propose « Pas de connexion. Rien n'a été envoyé. » (non dessiné).
 
 **Avant de coder**
+
 1. **Prérequis du lot A** : réalignement des tokens ([#96](https://github.com/kotiz-ci/platform/issues/96)) et socle UI ([#59](https://github.com/kotiz-ci/platform/issues/59)) ; accueil H01 ([#94](https://github.com/kotiz-ci/platform/issues/94)).
 2. **Assets** : cœur Santé (`Objectifs/sante-coeur.svg`), coffret Imprévus (`Objectifs/imprevus.svg`) et drapeau (`Objectifs/objectif-atteint.svg`) sont dans le DS v10 ; l'ancienne trousse à croix et l'ancien bouclier sont dans `Archives` : **ne pas les utiliser**. Le README et la fiche `GoalCard` du DS (version `1792433315-d20c`) écrivent désormais « Objectif atteint » sans coche, comme DESIGN.md.
 3. **Contrat d'API à écrire** : aucun champ n'existe. Les données sont nommées par leur sens métier et les termes du glossaire DDD (`SavingsGoal`, `SavingsAccount`, `Transaction`, `LedgerEntry`, `Money`). Le glossaire ne nomme ni le **retour au solde** (mouvement interne épargne → solde), ni l'**affectation** (solde → épargne, lot C), ni la **fermeture** d'une épargne : à faire nommer par `domain-modeling` avant le code. Le `GoalLock` du glossaire (verrouillage jusqu'à la date, malus de score) **contredit l'épargne flexible validée** et est hors MVP : ne pas l'implémenter.
 4. **Alimentation d'une épargne** (« Mettre de l'argent », lot C) : pas encore spécifiée. Sans elle, une épargne reste à 0 en production ; les parcours P3, P5 et P6 avec des fonds ne se vérifient de bout en bout qu'une fois le lot C livré (ou avec des données de test).
 
 **Questions encore ouvertes sur le comportement** (aucune ne change la composition validée)
+
 - Montant épargné avec un mouvement en attente : confirmé seulement (H3), règle à confirmer G01.
 - Montant minimum de retour, cible minimum et maximum : aucune valeur côté produit tant que le partenaire n'en impose pas (G01).
 - Le retour au solde consomme-t-il la capacité du niveau d'accès limité ? Recommandation : non, mouvement interne (G01).
@@ -54,18 +60,18 @@ Conventions (reprises du lot A) :
 
 Aucun token nouveau : le lot B utilise ceux du [handoff du lot A § Tokens](handoff-lot-a.md#tokens) (noms cibles `@kotiz/design-tokens`). Usages propres au lot B :
 
-| DESIGN.md | Code (cible) | Usage lot B |
-|---|---|---|
-| `typography.amount` (34 / 42 / 700, tabulaires) | `typography.amount` | Cible saisie (B03, B08), montant épargné (B07), montant à remettre (B09), « Tu remets » (B10), objectif de l'aperçu (B06) |
-| `typography.title` | `typography.title` | Titres d'écran, nom de l'épargne sur B06 (24 Bold) et B07, titre des dialogues |
-| `typography.section` | `typography.section` | « Fermées », « Derniers mouvements », « Détails », « Dedans : 0 F » (B17) |
-| `colors.surface-brand-subtle` + `border-focus` 2 px | `palette.surfaceBrandSubtle`, `palette.borderFocus` | Sélection : type (B02), date (B04, B08), puce « Tout remettre » active (B09) |
-| `colors.surface-canvas` | `palette.surfaceCanvas` | Bloc `goal-list`, puce « ≈ X F / semaine » (B06), boutons désactivés |
-| `colors.surface-pending` / `text-pending` | `palette.surfacePending` / `palette.textPending` | Retour en attente ou incertain (B07, B12), résultat inconnu de la création (B06) **uniquement** |
-| `colors.text-primary` Semi Bold | `palette.textPrimary` | « Objectif atteint » (jamais `text-brand`, jamais de coche) ; bouton texte « Fermer cette épargne » |
-| `colors.surface-scrim` + `shadow-overlay` + `rounded.xl` (24) | `palette.surfaceScrim`, `shadows.overlay`, `radii.xl` | Dialogues B14, B16 ; feuilles B13, B15 |
-| `rounded.lg` (20) | `radii.lg` | Carte d'aperçu B06, carte de flux B10, bloc `goal-list` |
-| `size-touch-min` (48) | `size.touchMin` | Options de date, œil, liens « Modifier », puce « Tout remettre » |
+| DESIGN.md                                                     | Code (cible)                                          | Usage lot B                                                                                                               |
+| ------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `typography.amount` (34 / 42 / 700, tabulaires)               | `typography.amount`                                   | Cible saisie (B03, B08), montant épargné (B07), montant à remettre (B09), « Tu remets » (B10), objectif de l'aperçu (B06) |
+| `typography.title`                                            | `typography.title`                                    | Titres d'écran, nom de l'épargne sur B06 (24 Bold) et B07, titre des dialogues                                            |
+| `typography.section`                                          | `typography.section`                                  | « Fermées », « Derniers mouvements », « Détails », « Dedans : 0 F » (B17)                                                 |
+| `colors.surface-brand-subtle` + `border-focus` 2 px           | `palette.surfaceBrandSubtle`, `palette.borderFocus`   | Sélection : type (B02), date (B04, B08), puce « Tout remettre » active (B09)                                              |
+| `colors.surface-canvas`                                       | `palette.surfaceCanvas`                               | Bloc `goal-list`, puce « ≈ X F / semaine » (B06), boutons désactivés                                                      |
+| `colors.surface-pending` / `text-pending`                     | `palette.surfacePending` / `palette.textPending`      | Retour en attente ou incertain (B07, B12), résultat inconnu de la création (B06) **uniquement**                           |
+| `colors.text-primary` Semi Bold                               | `palette.textPrimary`                                 | « Objectif atteint » (jamais `text-brand`, jamais de coche) ; bouton texte « Fermer cette épargne »                       |
+| `colors.surface-scrim` + `shadow-overlay` + `rounded.xl` (24) | `palette.surfaceScrim`, `shadows.overlay`, `radii.xl` | Dialogues B14, B16 ; feuilles B13, B15                                                                                    |
+| `rounded.lg` (20)                                             | `radii.lg`                                            | Carte d'aperçu B06, carte de flux B10, bloc `goal-list`                                                                   |
+| `size-touch-min` (48)                                         | `size.touchMin`                                       | Options de date, œil, liens « Modifier », puce « Tout remettre »                                                          |
 
 **Valeurs en dur relevées dans le prototype** (à ne pas reproduire, à porter par des tokens existants) : rayon 8 de la puce « Tout remettre » (hérité de `kz-pick`, à rattacher à un token : déjà signalé par DESIGN.md) ; illustration 64 de l'aperçu B06 et 40 des nœuds du flux B10 (hors `size.*` : proposer `size.pastille` 64 et une taille d'illustration 40 au DS) ; barre de progression 8 px sur B07 (5 px sur les lignes) ; largeur des planches. Aucune couleur nouvelle.
 
@@ -74,15 +80,18 @@ Aucun token nouveau : le lot B utilise ceux du [handoff du lot A § Tokens](hand
 Rien n'existe encore dans `apps/mobile/components/` (dossier vide). Les composants du lot A (handoff A § Composants) sont des prérequis. Le lot B les réutilise et utilise les composants **promus dans le Design System v10** (`1792428939-8e5b`, DESIGN.md § Composants promus depuis le lot B). Les noms et propriétés ci-dessous sont ceux de `components/index.d.ts` du DS v10, à reproduire en React Native. Règle commune : un composant affiche des valeurs fournies par l'app (montants, pourcentages, statuts, phrase de reste calculés par la logique de l'écran selon F03) ; il ne décide d'aucun résultat financier.
 
 ### Réutilisés tels quels (DS v9, inchangés en v10)
+
 `PageHeader` (avec `step` « Étape n sur 5 » ou « Étape n sur 3 », `link` « Modifier » sur B07), `Message` (info, succès, erreur, chargement, attente), `PinSlots` + `PinPad`, `IconPastille`, `StatusPill`, `Button`, `BottomNav`, `BottomSheet`, `IllustratedResult` (B17, illustration `120:866` « épargne créée »), `TransactionRow`, `OperationStatus`, `HomeHeader` / `BalanceCard` / `Shortcuts` (H01, lot A). `InfoLine` n'est pas utilisé dans le lot B.
 
 Précisions d'usage :
+
 - **`OperationStatus`** sur B12 : `done`, `pending`, `failed`. **L'état incertain de B12 utilise `status="pending"`** (signature ambre + horloge + « En attente »), pas le préréglage `uncertain` du DS (information + « À vérifier », proposition non validée) : décision de la spec (B12 incertain = « même signature En attente »). Le refus par le partenaire utilise `failed`.
 - **`StatusPill status="neutral"`** : bandeau « Fermée le {date} » sur B07 fermée.
 
 ### Promus dans le DS v10 (noms exacts)
 
 **`GoalRow`** (évolution) — `{ name, saved?, target?, state?: 'open' | 'reached' | 'closed', closedOn?, flagSrc?, illustrationSrc?, masked?, chevronIcon?, onClick? }`
+
 - `open` (défaut) : « 45 000 F sur 100 000 F », barre 5 px, sans pourcentage.
 - `reached` (épargné ≥ cible) : montant réel « 52 000 F sur 50 000 F », drapeau 20 (`flagSrc` = `Objectifs/objectif-atteint.svg`) + « Objectif atteint » en `text-primary`, **sans coche ni vert**, barre pleine. **Même rendu sur B01 et H01.**
 - `closed` (section « Fermées » de B01) : nom en `text-secondary` + « Fermée le 12 oct. » (`closedOn`), **sans montant ni barre**, chevron.
@@ -92,15 +101,18 @@ Précisions d'usage :
 **`MaskToggle`** — `{ masked?, onToggle?, eyeIcon? }` : bouton 48, œil barré quand masqué, `aria-pressed` (RN : `accessibilityState.selected`), nom « Masquer les montants » / « Afficher les montants ». Placé dans `RootHeader` (B01) et à droite du `PageHeader` (B07). Lit et écrit **le réglage unique de masquage** (le même que l'œil de `BalanceCard` sur H01).
 
 **`GoalTypeOption`** dans **`GoalTypeGrid`** — `GoalTypeOption { label, illustrationSrc?, selected?, onSelect? }`, `GoalTypeGrid { label?, children }` (B02).
+
 - Grille 2 colonnes (1 colonne en très grand texte), illustration 48 + libellé 14 Semi Bold, cible ≥ 96. Sélectionné : `surface-brand-subtle`, bordure 2 `border-focus`, `selected`. Groupe nommé « Type d'épargne ».
 - Types, dans cet ordre (identifiant → libellé → illustration du groupe Objectifs) : `ecole` École (Scolarité) · `commerce` Commerce · `sante` Santé (**`Objectifs/sante-coeur.svg`**, cœur) · `maison` Maison (Logement) · `voyage` Voyage · `vehicule` Véhicule · `fete` Fête (Événement) · `imprevus` Imprévus (**`Objectifs/imprevus.svg`**, coffret) · `autre` Autre projet (Projet). Nom par défaut = libellé, sauf `autre` → « Mon projet ». **Ne jamais utiliser le groupe `Archives`** (ancienne trousse à croix, ancien bouclier).
 
 **`AmountField`** — `{ id?, label?, hideLabel?, amount?: number | '', onChange?(value: number | ''), currency?, help?, error?, wideChip?: { label, selected?, onClick? } }` (B03, B08, B09).
+
 - Libellé visible sur B08 (« Objectif ») ; `hideLabel` sur B03 (« Montant de ton objectif ») et B09 (« Montant à remettre sur ton solde »), toujours lu.
 - Clavier numérique, espaces des milliers à la frappe, zéros en tête retirés, collage non numérique ignoré, 9 chiffres au plus (prototype ; plafond réel à confirmer G01, jamais affiché). Montant `amount` 34 + « FCFA » ; à 7 chiffres sur 320 il garde 34 et ne rétrécit que s'il déborde. Zone de saisie ≥ 48. `help` (`text-secondary`) ou `error` (`text-danger`, trait rouge) lié au champ. Toujours visible, même montants masqués.
 - `wideChip` « Tout remettre » (B09) : 48 de haut, sélectionnée vert doux + bordure 2 ; toute saisie différente la désélectionne. Rayon 8 hors échelle (à rattacher à un token, DESIGN.md).
 
 **`DateChoice`** — `{ options: { id, label }[], selected?, onSelect?(id), label? }` (B04, B08).
+
 - Options d'une ligne, pleine largeur, 48 de haut, `label` 16 Semi Bold, rayon 16 ; sélection vert doux + bordure 2 + `selected`. Groupe nommé « Date de ton objectif ». Ids : `3m`, `6m`, `1y`, `custom`.
 - « Choisir une date » ouvre un **`TextField type="date"`** (« Ta date », sélecteur Android natif) ; date passée ou du jour → erreur « Choisis une date à venir. ».
 - L'écran (pas le composant) affiche dessous, en zone `role=status` : « Pour le {date longue} » et « Ça fait environ {X F} par semaine. » (Règles transverses § Aide « par semaine »), le lien « Pas de date pour l'instant » (B04) ou « Retirer la date » / « Pas de date pour l'instant. » (B08).
@@ -108,42 +120,48 @@ Précisions d'usage :
 **`TextField`** (évolution) — `multiline: true` pour la note sur 3 lignes, sans redimensionnement (B05, B08), libellé « Note (facultatif) », aide « Par exemple : frais de rentrée de Awa. » (B05). Longueur maximale à confirmer (technique), aucun compteur.
 
 **`SummaryPreview`** (aussi `Kotiz.Summary.Preview`) — `{ id?, illustrationSrc?, typeLabel?, name, target, dateText?, weekly?, onEdit?: { name?, target?, date? }, reassurance?, details?: SummaryRowData[], srSentence? }`, `SummaryRowData { label, value, empty?, onEdit?, editLabel?, editAria? }` (B06).
+
 - Une seule carte `surface` bordée, rayon 20, sans vert plein : illustration 64 ; type en `text-secondary` (absent s'il est égal au nom) ; nom 24 Bold ; objectif 34 Bold + « FCFA » ; barre vide + « 0 F pour l'instant » ; « d'ici le {date} » + puce `surface-canvas` « ≈ {X F} / semaine », ou « Pas de date » + « Ajouter » ; « Modifier » (48) sur le nom, l'objectif et la date. `reassurance` hors carte : « Aucun argent ne bouge. ». `details` : **Projet** toujours, **Note** seulement si remplie, chacun avec « Modifier ».
 - TalkBack : la carte est lue en une phrase (`srSentence` ; défaut généré) : « Épargne École Awa, projet École, objectif 100 000 francs, d'ici le 30 juin 2027, environ 2 778 francs par semaine, 0 franc pour l'instant. » (sans date : « …, pas de date, … »). Noms des liens : « Modifier le nom », « Modifier l'objectif », « Modifier la date », « Ajouter une date », « Modifier le projet », « Modifier la note ».
 - Pendant la création et en résultat inconnu : `onEdit` absent et `details` sans `onEdit` (aucun « Modifier », aucun « Ajouter »).
 
 **`SummaryFlow`** (aussi `Kotiz.Summary.Flow`) — `{ label?, lead?, amount, onEditAmount?, from: { name, illustrationSrc? }, to: { name, illustrationSrc? }, rows?: SummaryRowData[] }` (B10 ; réutilisable aux lots C et D).
+
 - Carte `surface` bordée, rayon 20 : `lead` « Tu remets » + montant 34 + « FCFA » + « Modifier » ; liste Depuis {épargne} ↓ Vers « Mon solde » (illustrations 40 : celle du type, puis Déposer), nommée « De {épargne} vers Mon solde ».
 - `rows` du lot B : « Il restera » → « {X F} dans {épargne} » ; « Ton solde après » → solde disponible + montant, **exact**. **Aucune ligne « Frais »** (mouvement interne sans frais ; la ligne Frais du composant ne sert qu'aux lots C et D, avec un frais confirmé). « Ton solde après » est retirée quand les montants sont masqués.
 
 **`GoalProgress`** — `{ name, saved, target, masked?, flagSrc? }` (B07).
+
 - Montant épargné `amount` + « FCFA » ; « sur {cible} » ; barre 8 + « {n} % » ; « Encore {reste} pour ton objectif. ». Atteint : drapeau 32 + « Objectif atteint » (`section`, `text-primary`, sans coche), barre pleine, montant réel, pas de %. Masqué : « ••• ••• FCFA », « sur ••• F », ni % ni reste, barre visible non annoncée.
 - **Hors composant, sur l'écran B07** : à zéro « Mets ton premier montant quand tu veux. » (**retirée en masqué** : elle révèle le zéro) ; atteint « Ton épargne reste ouverte. Tu peux continuer ou remettre l'argent sur ton solde. » ; fermée : montant « 0 FCFA » seul, sans `GoalProgress`.
 - Barre : `accessibilityRole="progressbar"` avec la valeur en visible, aucune valeur en masqué.
 
 **`ConfirmDialog`** — `{ id?, title, children, primary, secondary?, onPrimary?, onSecondary?, primaryState?: 'default' | 'loading' | 'disabled' }` (B14, B16).
+
 - Voile `surface-scrim`, carte rayon 24 + `shadow-overlay`, titre 24, phrases courtes (la conséquence irréversible en gras), primaire puis secondaire empilés ; rôle `alertdialog`, focus sur le titre, retour Android = secondaire. Le primaire de B14 est **vert, jamais rouge** ; `primaryState="loading"` → « Fermeture… ».
 
 **`StepTracker`** (évolution) — `Step { label, status?: 'done' | 'sent' | 'pending' | 'todo', word? }`.
+
 - B12 en attente et incertain : `steps = [{ label: 'Demande', status: 'sent' }, { label: 'Arrivée sur ton solde', status: 'pending' }]`, `label = « Où en est ton retour »`. `sent` = pastille neutre + point + « Envoyée » en `text-primary`. **Jamais `done` ni le mot « Fait » sur un écran d'attente.**
 
 **Illustrations** (groupe Objectifs) : `sante-coeur.svg` (Santé), `imprevus.svg` (Imprévus), `objectif-atteint.svg` (drapeau, `GoalRow` `reached` et `GoalProgress`). Décoratives (`accessible={false}`). Aucune croix, aucun bouclier, aucun parapluie, aucune coche. À copier dans `apps/mobile/assets`.
 
 ### Hors Design System (à construire dans l'app ou à décider)
 
-| Élément | Où | Statut | À faire |
-|---|---|---|---|
-| `DateField` (champ date dédié, « Retirer la date ») | B04, B08 | **Laissé de côté** par le DS v10 | Utiliser `TextField type="date"` + le sélecteur natif Android (faisabilité à confirmer côté dev) ; « Retirer la date » est un bouton texte de l'écran |
-| `TransactionRow`, variante mouvement interne | B07, H01 | **Laissé de côté**, à décider avec le lot C | En attendant : titres propres et illustration Épargnes dans une pastille neutre — B07 « Vers mon solde » (`−`) / « Depuis mon solde » (`+`) ; H01 « Depuis {épargne} » (`+`) / « Vers {épargne} » (`−`). Jamais de logo opérateur |
-| Squelette de chargement (B01, B07) | B01, B07 | **Absent du bundle** (source Figma `66:582` citée par DESIGN.md, sans composant) | Composant d'écran : blocs `surface-canvas` sans texte, `role=status` + `aria-busy`, libellé lu « Chargement de tes épargnes » / « Chargement de ton épargne » ; jamais de montant ni de « 0 » |
-| Description d'une raison liée à un bouton désactivé | B07 | `Button` du DS ne transmet pas de description | Ajouter une prop d'accessibilité (`accessibilityHint` ou équivalent) au `Button` RN, pour relier « Un retour est en cours… » aux deux boutons |
-| Préréglage `uncertain` de `OperationStatus` | B12 | Présent dans le DS mais **non utilisé** | Ne pas l'utiliser au lot B (`pending` à la place) |
+| Élément                                             | Où       | Statut                                                                           | À faire                                                                                                                                                                                                                           |
+| --------------------------------------------------- | -------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DateField` (champ date dédié, « Retirer la date ») | B04, B08 | **Laissé de côté** par le DS v10                                                 | Utiliser `TextField type="date"` + le sélecteur natif Android (faisabilité à confirmer côté dev) ; « Retirer la date » est un bouton texte de l'écran                                                                             |
+| `TransactionRow`, variante mouvement interne        | B07, H01 | **Laissé de côté**, à décider avec le lot C                                      | En attendant : titres propres et illustration Épargnes dans une pastille neutre — B07 « Vers mon solde » (`−`) / « Depuis mon solde » (`+`) ; H01 « Depuis {épargne} » (`+`) / « Vers {épargne} » (`−`). Jamais de logo opérateur |
+| Squelette de chargement (B01, B07)                  | B01, B07 | **Absent du bundle** (source Figma `66:582` citée par DESIGN.md, sans composant) | Composant d'écran : blocs `surface-canvas` sans texte, `role=status` + `aria-busy`, libellé lu « Chargement de tes épargnes » / « Chargement de ton épargne » ; jamais de montant ni de « 0 »                                     |
+| Description d'une raison liée à un bouton désactivé | B07      | `Button` du DS ne transmet pas de description                                    | Ajouter une prop d'accessibilité (`accessibilityHint` ou équivalent) au `Button` RN, pour relier « Un retour est en cours… » aux deux boutons                                                                                     |
+| Préréglage `uncertain` de `OperationStatus`         | B12      | Présent dans le DS mais **non utilisé**                                          | Ne pas l'utiliser au lot B (`pending` à la place)                                                                                                                                                                                 |
 
 ## Écrans
 
 Plateforme : Android d'abord ; largeurs 320 à 430 (contrôle à 320, 360, 390, 430) ; portrait seul. **Barre basse uniquement sur B01** (et H01). Toutes les autres pages sont poussées, avec `PageHeader`. Clavier ouvert : champ actif et bouton principal visibles (bouton collé au-dessus du clavier).
 
 Règles communes (spec § Règles communes) :
+
 - **Étapes** : création « Étape n sur 5 » (B02 à B06 : Projet, Combien, Pour quand, Nom, Vérifier) ; retour au solde « Étape n sur 3 » (B09 Montant, B10 Vérifier, B11 PIN).
 - **Destination lisible** : B09 à B12 rappellent le nom de l'épargne, « Depuis » et « Vers ».
 - **Attente réseau** > 1 s : bouton en `loading` (« Création… », « Enregistrement… », « Envoi… », « Fermeture… »), écran figé, double appui ignoré, aucun écran suivant avant la réponse.
@@ -151,6 +169,7 @@ Règles communes (spec § Règles communes) :
 - **Retour Android** = `←`, sauf mentions contraires (B12, B17).
 
 ### B01 — Mes épargnes (racine)
+
 - Structure (défile, sauf la barre basse) : `RootHeader` « Mes épargnes » + œil ; `Message` succès « {nom} est fermée. » (une fois, au retour d'une fermeture) ; si hors ligne `Message` info « Mis à jour à {HH:MM} · hors connexion » ; épargnes actives dans un bloc `goal-list` de `GoalRow` (ordre : à confirmer à l'implémentation, recommandation : date de création) ; compteur « {n} sur 3 épargnes actives » (`body`, `text-secondary`) ; bouton principal « Créer une épargne » (absent à 3 actives) ; section « Fermées » (titre `section` + `GoalRow` `closed`, les 5 plus récentes, puis le lien « Voir les {n} épargnes fermées › » s'il y en a plus de 5) ; `BottomNav` (Épargnes actif).
 - Données : épargnes de la cliente (identifiant, type, nom, montant épargné confirmé, cible, statut active / fermée, date de fermeture), date de dernière mise à jour.
 - Interactions : une épargne active ou fermée → B07 ; œil → bascule le réglage de masquage ; Créer une épargne / Crée ta première épargne → B02 ; onglets → racines.
@@ -166,29 +185,34 @@ Règles communes (spec § Règles communes) :
 - Cas : nom long tronqué sur une ligne ; deux épargnes au même nom affichées toutes les deux ; montant à 7 chiffres qui passe à la ligne sous le nom ; retour au solde en attente sur une épargne : la ligne garde le montant confirmé.
 
 ### B02 — Quel projet ? (étape 1 sur 5)
+
 - Structure : `PageHeader` (← vers la provenance : E08, H01, B01 ou lot C ; « Étape 1 sur 5 ») ; titre « Quel projet ? » ; `GoalTypeOption` ; « Tu lui donneras un nom plus loin. ». Pas de bouton principal.
 - Interactions : toucher un type → B03 (ou → B06 si ouvert depuis le récapitulatif) ; ←.
 - États : nominal ; retour depuis B03 : type marqué sélectionné ; choisir un autre type garde la cible saisie ; si le nom n'a pas été modifié, il suit le nouveau type, sinon il est gardé.
 - Entrée : avant d'ouvrir B02, l'app vérifie le nombre d'épargnes actives connu ; à 3 → B15 (voir P7).
 
 ### B03 — Combien ? (étape 2 sur 5)
+
 - Structure : `PageHeader` (« Étape 2 sur 5 ») ; rappel du type (illustration 32 + libellé) ; titre « Combien tu veux mettre de côté ? » ; `AmountField` (libellé lu « Montant de ton objectif ») ; aide sous le trait ; bouton « Continuer ».
 - Aide / raison : vide → « Écris un montant. » ; 0 → « Le montant doit être plus grand que 0. » ; valide → « C'est ton objectif. Aucun argent ne bouge. ».
 - Interactions : Continuer → B04 (ou B06 depuis le récapitulatif) ; ← → B02 (type gardé) ou B06.
 - États : vide et 0 (Continuer désactivé + raison) ; saisi ; clavier ouvert. Pas de montants rapides. Cible minimum et maximum : à confirmer G01, aucune valeur affichée.
 
 ### B04 — Pour quand ? (étape 3 sur 5)
+
 - Structure : `PageHeader` (« Étape 3 sur 5 ») ; rappel « {type} · {cible} » ; titre « Pour quand ? » ; `DateChoice` ; `DateField` si « Choisir une date » ; zone « Pour le … » + « Ça fait environ … par semaine. » ; tant que rien n'est choisi : « Choisis une durée, ou continue sans date. » ; lien « Pas de date pour l'instant » ; bouton « Continuer ».
 - Interactions : un raccourci → date = aujourd'hui + 3, 6 ou 12 mois (même jour du mois) ; « Choisir une date » → sélecteur ; Continuer → B05 (ou B06 depuis le récapitulatif) ; « Pas de date pour l'instant » → B05 sans date ; ←.
 - États : rien choisi (Continuer désactivé + raison) ; raccourci sélectionné ; date choisie à venir ; date passée ou du jour (erreur « Choisis une date à venir. », Continuer désactivé).
 - La question est toujours posée ; la réponse est facultative.
 
 ### B05 — Comment tu l'appelles ? (étape 4 sur 5)
+
 - Structure : `PageHeader` (« Étape 4 sur 5 ») ; rappel du type ; titre « Comment tu l'appelles ? » ; `TextField` « Nom » **prérempli avec le nom par défaut** du type, aide « Si tu ne mets rien : {nom par défaut} » ; `TextField` multiligne « Note (facultatif) », aide « Par exemple : frais de rentrée de Awa. » ; bouton « Continuer » **toujours actif**.
 - Règle : nom effacé → le nom par défaut est utilisé à la création. Nom et note : longueur maximale à confirmer (technique).
 - Interactions : Continuer → B06 ; ← → B04 (ou B06 depuis le récapitulatif).
 
 ### B06 — Vérifie ton épargne (étape 5 sur 5)
+
 - Structure : `PageHeader` (« Étape 5 sur 5 ») ; titre « Vérifie ton épargne » ; messages éventuels ; `SummaryPreview` ; « Aucun argent ne bouge. » ; bloc « Détails » ; bouton principal.
 - Interactions : « Modifier » → étape concernée (nom et note → B05, objectif → B03, date → B04, projet → B02), dont Continuer (ou le toucher d'un type) ramène à B06 ; « Ajouter » (sans date) → B04 ; Créer mon épargne → création ; ← → B05.
 - Bouton principal : « Créer mon épargne » ; « Création… » pendant l'envoi ; « Vérifier à nouveau » en résultat inconnu ; « Réessayer » hors ligne.
@@ -203,12 +227,14 @@ Règles communes (spec § Règles communes) :
 - Données envoyées : type, nom (ou nom par défaut), cible, date (facultative), note (facultative), clé d'idempotence générée à l'entrée de B06.
 
 ### B17 — Ton épargne est créée
+
 - Affiché **seulement après confirmation serveur**.
 - Structure : `IllustratedResult` (illustration `120:866`, titre « C'est fait ! Ton épargne {nom} est créée. », détail « Aucun argent n'a bougé. ») ; « Dedans : 0 F » (`section`) ; « Objectif : {cible} » (`text-secondary`) ; « Pour le {date} » s'il y a une date ; bouton principal « Voir mon épargne ».
 - Interactions : Voir mon épargne → B07 de la nouvelle épargne ; **retour Android = Voir mon épargne** (jamais B06). Depuis B07, ← mène à H01 si la création venait de E08 ou H01, à B01 si elle venait de B01.
 - Animation : entrée du résultat 320 ms, sans célébration animée ; 0 ms en mouvement réduit.
 
 ### B07 — Détail d'une épargne
+
 - Structure (défile) : `PageHeader` (← provenance, lien « Modifier » absent si fermée) + `MaskToggle` ; messages ; bandeau `StatusPill` neutre « Fermée le {date} » si fermée ; illustration 56 + nom (`title`, retour à la ligne) ; `GoalProgress` ; « Pour le {date} · encore {n} semaines » (ou « · moins d'une semaine » sous 7 jours ; rien après la date si elle est passée) ; « Note : {note} » ; boutons « Mettre de l'argent » (principal) et « Remettre sur mon solde » (secondaire) + raison éventuelle ; section « Derniers mouvements » (3 `TransactionRow` + « Tout voir › ») ; bouton texte « Fermer cette épargne » (`text-primary`) + raison éventuelle.
 - Données : épargne (type, nom, note, cible, date, montant épargné confirmé, statut, date de fermeture), indicateurs « retour en attente » et « alimentation en attente », 3 derniers mouvements (titre, date, montant, sens, statut).
 - Interactions : Mettre de l'argent → lot C ; Remettre sur mon solde → B09 ; Modifier → B08 ; un mouvement / Tout voir → lot C (Opérations filtrées) ; Fermer cette épargne → B13 (fonds > 0) ou B14 (à 0) ; œil.
@@ -228,6 +254,7 @@ Règles communes (spec § Règles communes) :
 - Cas : cible dépassée de beaucoup (« 152 000 FCFA sur 50 000 F », jamais « 304 % ») ; épargne fermée ailleurs pendant la consultation → état fermée au rafraîchissement.
 
 ### B08 — Modifier l'épargne
+
 - Structure : `PageHeader` (titre « Modifier ») ; ligne « Projet : {type} — ne change pas » ; `TextField` « Nom » (aide « Si tu ne mets rien : {nom par défaut} ») ; `AmountField` « Objectif » ; « Pour quand ? » (`DateChoice`, date actuelle en « Choisir une date », « Retirer la date ») ; « Note (facultatif) » ; bouton « Enregistrer ».
 - Règles : aucun mouvement de fonds ; type non modifiable ; nom, note et date effaçables ; cible requise et > 0 ; cible ≤ montant épargné → aide « Ton objectif sera atteint avec ce montant. » ; la modification reste possible pendant un mouvement en attente.
 - Bouton : désactivé tant que rien n'a changé ou que la cible est vide ou à 0 (raisons « Écris un montant. », « Le montant doit être plus grand que 0. ») ; « Enregistrement… » pendant l'envoi.
@@ -237,9 +264,11 @@ Règles communes (spec § Règles communes) :
   - **épargne fermée entre-temps** (version 9) : `Message` info titre « Cette épargne est fermée. », texte « Elle a été fermée entre-temps. Tes changements ne sont pas enregistrés. » ; le bouton principal devient « Voir mon épargne » (→ B07 en état fermée) à la place d'« Enregistrer ».
 
 ### B16 — Quitter sans enregistrer ?
+
 - `ConfirmDialog` : titre « Quitter sans enregistrer ? », « Tes changements seront perdus. », primaire « Rester » (ferme le dialogue), secondaire « Quitter » (→ B07, anciennes valeurs). Affiché seulement si un champ a changé.
 
 ### B09 — Combien remettre ? (étape 1 sur 3)
+
 - Structure : `PageHeader` (← B07, « Étape 1 sur 3 ») ; titre « Combien remettre sur ton solde ? » ; `Message` éventuel ; « Depuis : {épargne} · {disponible} dedans » ; `AmountField` (libellé lu « Montant à remettre sur ton solde ») + puce « Tout remettre » ; « Vers : Solde disponible » ; bouton « Continuer ».
 - Raisons : vide « Écris un montant. » ; 0 « Le montant doit être plus grand que 0. » ; supérieur au disponible « Tu peux remettre {disponible} au plus. ».
 - Interactions : Tout remettre → montant = disponible ; Continuer → B10 ; ← → B07.
@@ -247,6 +276,7 @@ Règles communes (spec § Règles communes) :
 - Accès : impossible si l'épargne est à 0 ou si un retour est en attente (boutons désactivés sur B07). Minimum de retour : à confirmer G01, aucune valeur.
 
 ### B10 — Vérifie ton retour (étape 2 sur 3)
+
 - Structure : `PageHeader` (← B09, « Étape 2 sur 3 ») ; titre « Vérifie ton retour » ; `SummaryFlow` (« Tu remets » {montant} FCFA + « Modifier » ; Depuis {épargne} → Vers Mon solde ; « Il restera » ; « Ton solde après ») ; si retour total : `Message` info « {épargne} sera à 0 F. Elle reste ouverte. » ; « L'argent reste sur KOTIZ. Pour le sortir, utilise Retirer. » ; bouton « Continuer ».
 - **Sans frais** : pas de ligne Frais, pas d'état « frais inconnus », Continuer jamais bloqué par G01. « Ton solde après » = solde disponible + montant.
 - Interactions : Continuer → B11 ; Modifier / ← → B09 (montant gardé).
@@ -256,12 +286,14 @@ Règles communes (spec § Règles communes) :
 - Reprise après arrière-plan : solde et disponible relus avant B11, récapitulatif recalculé.
 
 ### B11 — Entre ton PIN (étape 3 sur 3)
+
 - Structure : `PageHeader` (← B10, « Étape 3 sur 3 ») ; titre « Entre ton PIN » (« Ton PIN est bloqué » en état bloqué) ; rappel « {montant} {d'épargne / de épargne} vers ton solde » (élision : « d'École Awa », « de Boutique ») ; `Message` erreur éventuel ; `Message` chargement « Envoi… » pendant l'envoi ; `Message` info « Ne le montre à personne, même à une agente. » ; `PinSlots` (longueur configurée, G02) ; lien « PIN oublié ? » ; `PinPad` en bas.
 - Interactions : dernier chiffre → envoi (pas de bouton) ; PIN oublié ? → lot F ; ← → B10, PIN effacé.
 - États : saisie ; envoi (pavé figé) ; « PIN incorrect. Réessaie. » (cases en erreur puis vidées ; essais restants seulement si la règle est configurée, G02) ; **bloqué** (version 9) : titre « Ton PIN est bloqué », `Message` erreur titre « Trop d'essais. », texte « Ton retour n'est pas envoyé : ton argent n'a pas bougé. Réessaie plus tard, ou utilise PIN oublié. » ; mention de secret, `PinSlots` et `PinPad` retirés ; bouton principal « Voir mon épargne » (→ B07), bouton texte « PIN oublié ? » (lot F) ; nombre d'essais et durée du blocage à confirmer (G02), **aucun chiffre affiché**, même règle que C01 ; hors ligne avant envoi (**à dessiner** : « Pas de connexion. Rien n'a été envoyé. » d'après la spec) ; connexion perdue après envoi → B12 incertain.
 - Sécurité : PIN jamais affiché, stocké ni journalisé ; capture d'écran bloquée à confirmer (technique, comme E06).
 
 ### B12 — Résultat du retour
+
 - Structure : plein écran sans `PageHeader`, fond canvas ; `OperationStatus` au centre ; boutons en bas.
 - **Fait** : titre « {montant} sont sur ton solde. » ; « Depuis : {épargne} » ; partiel : « Il reste {X F} dans {épargne}. » + petite barre ; total : « {épargne} est à 0 F. Elle reste ouverte. » ; référence ; lien « Voir le reçu › » (lot C). Boutons : « Voir mon épargne » (principal), « Voir mon solde » (texte) ; **si total, épargne à 0, aucune alimentation en attente** : lien « Fermer cette épargne ? » 16 plus bas → B14 par-dessus B12. Pas d'illustration de célébration.
 - **En attente** : `OperationStatus` `pending`, titre « Ton retour est en attente. », `StepTracker` (Demande · Envoyée ; Arrivée sur ton solde · En attente), « {montant} {d'épargne} vers ton solde. », « Ne refais pas l'opération. », « Tu le retrouves dans Opérations. », référence. Pas de reçu, pas de lien de fermeture.
@@ -272,19 +304,23 @@ Règles communes (spec § Règles communes) :
 - Montants toujours visibles, même masqués (Q3). Annonce du titre en `role=status` (fait, attente) ou `alert` (échec).
 
 ### B13 — Il reste de l'argent (feuille)
+
 - `BottomSheet` titre « Il reste {X F} dans {épargne} », « Pour la fermer, elle doit être vide. », « Remets d'abord l'argent sur ton solde. », primaire « Remettre sur mon solde » (→ B09 avec Tout remettre sélectionné), texte « Garder mon épargne » (ferme), ✕ « Fermer ». Montant visible même masqué.
 
 ### B14 — Fermer l'épargne ?
+
 - `ConfirmDialog` : titre « Fermer {épargne} ? », « Elle quittera tes épargnes actives. », « Ses mouvements restent dans Opérations. », « Tu ne pourras pas la rouvrir. » (Semi Bold) ; primaire « Fermer l'épargne » (« Fermeture… » pendant l'envoi), secondaire « Garder » (retour à B07 ou à B12).
 - Ouvert depuis B07 (épargne à 0, rien en attente) ou depuis le lien de B12.
 - Résultats : fait → B01 + « {épargne} est fermée. » ; de l'argent est arrivé → B07 + « De l'argent est arrivé. {épargne} reste ouverte. » ; échec → B07 + `Message` erreur « Échoué : {épargne} n'est pas fermée. » / « Ton argent et tes mouvements n'ont pas changé. Réessaie. » (version 9) ; hors ligne.
 - Jamais le mot « supprimer ».
 
 ### B15 — Limite atteinte (feuille)
+
 - `BottomSheet` titre « Tu as déjà 3 épargnes actives », `IconPastille` violette, « C'est le maximum. » (Semi Bold), « Pour en créer une autre, ferme une épargne vide. », « Les épargnes fermées ne comptent pas. », primaire « Voir mes épargnes » (→ B01), ✕ « Fermer ».
 - Ouvert depuis : toute entrée « Créer » quand 3 épargnes sont actives (lot C après un dépôt, E08, H01) et le refus serveur sur B06. Aucune action qui ferme ou vide une épargne.
 
 ### Raccords H01 (lot A, déjà livré par #94)
+
 - `GoalRow` `reached` pour une épargne atteinte (même rendu que B01).
 - État vide : « Pas encore d'épargne. » + « Créer une épargne › » → B02 (ou B15 à 3 actives).
 - Après un retour au solde : le solde n'augmente que si le retour est **fait** ; la ligne « Dernier dépôt » de la carte solde reste réservée aux **dépôts** ; le retour apparaît en tête des Dernières opérations (« Depuis {épargne} », `+`, statut Fait ou En attente).
@@ -293,19 +329,23 @@ Règles communes (spec § Règles communes) :
 ## Règles transverses
 
 ### Progression (DESIGN.md F03)
+
 - Entrées : montant épargné (mouvements **confirmés** seulement, H3, à confirmer G01) et cible. `pourcentage = ⌊épargné / cible × 100⌋` ; `barre = min(pourcentage, 100) %` ; `reste = cible − épargné`, affiché seulement s'il est positif. Atteint si `épargné ≥ cible` : « Objectif atteint », barre pleine, jamais de % > 100.
 - Calcul fait par l'app (ou fourni par l'API) dans une fonction unique partagée par H01, B01, B07 et B12 ; testée unitairement.
 
 ### Aide « par semaine » (B04, B06, B08)
+
 - `semaines = max(1, ⌊jours jusqu'à la date / 7⌋)` ; `par semaine = ⌈cible / semaines⌉`, format `X F`. Exemples : 100 000 F au 30 juin 2027 depuis le 19 octobre 2026 → 2 778 F ; 100 000 F dans 6 mois → 3 847 F ; 50 000 F dans 6 mois → 1 924 F.
 - Aide d'affichage seulement : jamais un engagement, un rappel ni un prélèvement. Date du jour = date locale de l'appareil (fuseau Abidjan, UTC+0) ; recalculée à chaque affichage.
 - B07 : « encore {n} semaines » avec `n = ⌊jours / 7⌋` ; « moins d'une semaine » si `n < 1` ; rien si la date est passée.
 
 ### Masquage des montants
+
 - Réglage unique du lot A, persistant (stockage local, portée appareil ou compte à confirmer), basculé par l'œil de H01, B01 ou B07. Masqué sur B01 et B07 : voir `GoalRow` et `GoalProgress`.
 - **Toujours visibles** : saisie (B03, B08, B09), récapitulatifs (B06, B10 sauf « Ton solde après »), rappel du PIN (B11), résultat (B12), feuille B13.
 
 ### Statuts et vocabulaire
+
 - « Fait », « En attente », « Échoué » : mot + pictogramme + couleur. « Fait » n'apparaît que pour un résultat confirmé. Un délai dépassé produit « En attente », jamais un succès.
 - « Objectif atteint » est un état de l'épargne, jamais un statut de transaction.
 - Le mouvement interne s'appelle **« Remettre sur mon solde »** ; jamais « retrait », « retirer » ni « transfert ». Fermer ≠ supprimer.
@@ -313,23 +353,27 @@ Règles communes (spec § Règles communes) :
 - Aucun frais, plafond, minimum, délai ni garantie non confirmé. Le retour au solde est sans frais.
 
 ### Formats (PRODUCT.md)
+
 - Montants entiers FCFA, espace insécable des milliers (`45 000 FCFA` ; dans une ligne `45 000 F`) ; `+` / `−` sur les mouvements ; `formatAmount` partagé. Backend : `Money` en centimes, jamais de `float`.
 - Dates : longues « 30 juin 2027 » (B04, B06, B07, B17) ; courtes « 12 oct. » (fermée) ; mouvements « 18 oct. · 09:24 ».
 - Espace insécable avant « ? », « ! » et « : ».
 
 ### Navigation et pile
+
 - B02 à B06 forment une pile ; « Modifier » depuis B06 ouvre l'étape en mode « retour au récapitulatif ».
 - Après B17, la pile de création est vidée : B07 revient à H01 ou B01.
 - Après B12, la pile du retour (B09 à B11) est vidée : le retour mène à B07.
 - B13, B15 : feuilles ; B14, B16 : dialogues ; retour Android = fermer / bouton secondaire.
 
 ### Réseau, idempotence, concurrence
+
 - Pas de file hors ligne (H5) : création, modification, retour et fermeture demandent le réseau.
 - **Création** et **retour au solde** : idempotents, clé générée par l'app à l'entrée de B06 / B10, réutilisée par « Vérifier à nouveau » et par l'interrogation du résultat. « Réessayer » après un **échec confirmé** du retour génère une nouvelle clé et redemande le PIN.
 - Délais d'expiration : à confirmer (technique) ; au-delà, B06 « En attente » ou B12 incertain.
 - Le serveur fait foi pour : la limite de 3 (refus → B15), le disponible (refus → B09 « Le montant disponible a changé. »), la fermeture à zéro et sans attente (refus → B07 « De l'argent est arrivé… »), un retour déjà en attente (refus), une épargne fermée (refus).
 
 ### Backend (contexte Savings)
+
 - **Épargne** (`SavingsGoal`) : type (fixe), nom, note, cible, date facultative, statut active / fermée, date de fermeture. Créer, modifier et fermer **ne déplacent aucun argent** et ne demandent pas de PIN (H1).
 - **Limite** : 3 épargnes actives par cliente, fermées exclues, contrôlée de façon atomique (deux créations simultanées ne donnent jamais 4 actives).
 - **Retour au solde** : mouvement interne de l'épargne vers le solde disponible de la même cliente, autorisé par le PIN KOTIZ (IAM), montant entier > 0 et ≤ épargné confirmé, **aucun frais** ; écritures ledger équilibrées (débit épargne, crédit solde, même montant) ; résultat fait / en attente / échoué ; un seul retour en attente par épargne (RM-FUND-09). Aucun retrait externe enchaîné.
@@ -339,6 +383,7 @@ Règles communes (spec § Règles communes) :
 - Événements (noms à fixer avec `domain-modeling`) : épargne créée, modifiée, fermée ; retour au solde demandé, fait, échoué ; objectif atteint (information seulement, aucun effet sur les fonds).
 
 ### Accessibilité
+
 - Cibles ≥ 48 ; texte essentiel ≥ 14 ; titre de chaque écran annoncé `header` ; erreurs `alert` ; attentes `status`.
 - Noms accessibles : œil, « Modifier le nom / l'objectif / la date / le projet / la note », « Ajouter une date », flux « De {épargne} vers Mon solde », phrase unique de l'aperçu B06, « Fermer » des feuilles.
 - Une raison de bouton désactivé est liée au bouton (B07 : une phrase pour deux boutons).
@@ -361,6 +406,7 @@ Règles communes (spec § Règles communes) :
 Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issues-lot-b.md](issues-lot-b.md), les scénarios dans [gherkin-lot-b.md](gherkin-lot-b.md).
 
 ### Socle lot B — composants et assets
+
 - [ ] `GoalRow` accepte `state` `reached` (drapeau + « Objectif atteint » en `text-primary`, sans coche, barre pleine) et `closed` (« Fermée le … », sans barre ni montant).
 - [ ] `RootHeader`, `MaskToggle`, `GoalTypeOption` + `GoalTypeGrid`, `AmountField`, `DateChoice`, `TextField` `multiline`, `SummaryPreview`, `SummaryFlow`, `GoalProgress` et `ConfirmDialog` existent avec les noms et propriétés du DS v10 (`components/index.d.ts`) ; le choix d'une date utilise `TextField type="date"` (pas de `DateField`).
 - [ ] Un squelette de chargement d'écran (hors DS) n'affiche aucun montant ni « 0 » et est annoncé comme chargement.
@@ -370,6 +416,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Une fonction unique calcule %, barre, reste et « atteint » selon F03 ; une fonction unique calcule l'aide « par semaine » ; les deux sont testées unitairement avec les exemples du handoff.
 
 ### B01 — Mes épargnes
+
 - [ ] B01 est une racine avec la barre basse, onglet Épargnes actif.
 - [ ] Les épargnes actives s'affichent en « X F sur Y F » sans pourcentage ; une épargne atteinte affiche « Objectif atteint » sans coche ; une fermée est dans « Fermées », sans barre ni montant.
 - [ ] Le compteur « n sur 3 épargnes actives » est affiché ; les fermées ne comptent pas.
@@ -381,6 +428,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Plus de 5 épargnes fermées : seules les 5 plus récentes s'affichent, suivies de « Voir les {n} épargnes fermées › », qui affiche toute la liste.
 
 ### B02 à B06 — Créer une épargne
+
 - [ ] L'en-tête affiche « Étape 1 sur 5 » à « Étape 5 sur 5 » de B02 à B06.
 - [ ] B02 propose les 9 types dans l'ordre du handoff ; toucher un type ouvre B03 sans bouton.
 - [ ] Santé s'affiche avec le libellé « Santé » seul et le cœur ; aucun texte de la création n'évoque une assurance.
@@ -395,10 +443,12 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Aucune étape ne demande de PIN ni ne déplace d'argent.
 
 ### B17 — Ton épargne est créée
+
 - [ ] B17 n'apparaît qu'après confirmation serveur, avec « Dedans : 0 F » plus visible que l'objectif, et « Aucun argent n'a bougé. ».
 - [ ] « Voir mon épargne » et le retour Android ouvrent B07 ; jamais B06.
 
 ### B07 — Détail d'une épargne
+
 - [ ] Montant épargné en 34, « sur {cible} », barre, « n % » (entier inférieur), « Encore X F pour ton objectif. ».
 - [ ] Cible atteinte : barre pleine, montant réel, aucun % > 100, drapeau + « Objectif atteint » sans coche ; mêmes boutons dans le même ordre ; l'épargne reste ouverte.
 - [ ] À zéro : « Remettre sur mon solde » désactivé avec « Rien à remettre pour l'instant. ».
@@ -412,6 +462,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Échec de fermeture : « Échoué : {nom} n'est pas fermée. » et « Ton argent et tes mouvements n'ont pas changé. Réessaie. » ; l'épargne reste active.
 
 ### B08 et B16 — Modifier
+
 - [ ] Le type est affiché « — ne change pas » et ne peut pas être modifié.
 - [ ] « Enregistrer » reste désactivé tant que rien n'a changé ou que la cible est vide ou à 0.
 - [ ] Une cible ≤ montant épargné affiche « Ton objectif sera atteint avec ce montant. » avant l'enregistrement.
@@ -421,6 +472,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Épargne fermée entre-temps : « Cette épargne est fermée. » + « Elle a été fermée entre-temps. Tes changements ne sont pas enregistrés. » ; « Voir mon épargne » remplace « Enregistrer » et rien n'est enregistré.
 
 ### B09 à B12 — Remettre sur mon solde
+
 - [ ] B09, B10, B11 affichent « Étape 1 sur 3 » à « Étape 3 sur 3 » ; le nom de l'épargne et « Vers : Solde disponible » / « Mon solde » sont visibles de B09 à B12.
 - [ ] B09 : « Continuer » désactivé si vide, 0 ou supérieur au disponible, avec la raison ; « Tout remettre » remplit le disponible.
 - [ ] B10 ne contient **aucune ligne de frais** ; « Ton solde après » = solde disponible + montant ; « Il restera » = disponible − montant.
@@ -437,6 +489,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Aucun retrait externe n'est enchaîné.
 
 ### B13 et B14 — Fermer
+
 - [ ] « Fermer cette épargne » avec des fonds ouvre B13 (montant visible même masqué) ; « Remettre sur mon solde » ouvre B09 avec Tout remettre sélectionné.
 - [ ] À 0 et sans mouvement en attente, B14 demande une confirmation ; « Garder » ne ferme rien.
 - [ ] Fermeture faite → B01 avec « {épargne} est fermée. » ; l'épargne est dans « Fermées » et ne compte plus dans la limite.
@@ -444,9 +497,11 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Aucune épargne n'est jamais fermée sans confirmation explicite.
 
 ### B15 — Limite
+
 - [ ] Toute entrée « Créer » avec 3 actives ouvre B15, dont le seul bouton est « Voir mes épargnes ».
 
 ### Backend Savings
+
 - [ ] Une 4e épargne active est refusée, y compris en cas de créations simultanées ; les fermées ne comptent pas.
 - [ ] Créer, modifier et fermer ne créent aucune écriture ledger.
 - [ ] Un retour au solde crée des écritures équilibrées du montant exact, sans frais, et n'est accepté que si le PIN est valide, le montant > 0 et ≤ épargné confirmé, et aucun retour n'est en attente sur cette épargne.

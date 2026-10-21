@@ -889,17 +889,17 @@ Fonctionnalité: Montrer mon QR à une agente
 
 ## Index des scénarios
 
-| Parcours | IDs | Nombre |
-|---|---|---|
-| P1 Inscription autonome | A-P1-S1 à A-P1-S28 | 28 |
-| P2 Accompagnée | A-P2-S1 à A-P2-S4 | 4 |
-| P3 Agente : Ajouter une cliente | A-P3-S1 à A-P3-S12 | 12 |
-| P4 Activation personnelle | A-P4-S1 à A-P4-S7 | 7 |
-| P5 Téléphone habituel | A-P5-S1 à A-P5-S6 | 6 |
-| P6 Nouveau téléphone | A-P6-S1 à A-P6-S7 | 7 |
-| P7 Numéro déjà inscrit | A-P7-S1 à A-P7-S6 | 6 |
-| P8 Compte créé | A-P8-S1 à A-P8-S6 | 6 |
-| P9 Accueil | A-P9-S1 à A-P9-S15 | 15 |
-| P10 Mon QR | A-P10-S1 à A-P10-S5 | 5 |
+| Parcours                        | IDs                 | Nombre |
+| ------------------------------- | ------------------- | ------ |
+| P1 Inscription autonome         | A-P1-S1 à A-P1-S28  | 28     |
+| P2 Accompagnée                  | A-P2-S1 à A-P2-S4   | 4      |
+| P3 Agente : Ajouter une cliente | A-P3-S1 à A-P3-S12  | 12     |
+| P4 Activation personnelle       | A-P4-S1 à A-P4-S7   | 7      |
+| P5 Téléphone habituel           | A-P5-S1 à A-P5-S6   | 6      |
+| P6 Nouveau téléphone            | A-P6-S1 à A-P6-S7   | 7      |
+| P7 Numéro déjà inscrit          | A-P7-S1 à A-P7-S6   | 6      |
+| P8 Compte créé                  | A-P8-S1 à A-P8-S6   | 6      |
+| P9 Accueil                      | A-P9-S1 à A-P9-S15  | 15     |
+| P10 Mon QR                      | A-P10-S1 à A-P10-S5 | 5      |
 
 **Interdits couverts** : aucun secret vu par l'agente (A-P2-S2, A-P2-S3, A-P3-S11) ; aucun succès pendant l'attente (A-P1-S21, A-P1-S22, A-P4-S2, A-P9-S4) ; aucune divulgation avant code SMS (A-P1-S25, A-P4-S6) ni après sur E09 et A02 (A-P7-S2, A-P3-S5) ; masquage persistant et non lu (A-P9-S6, A-P9-S7) ; aucun doublon (A-P1-S24, A-P3-S7, A-P7-S5) ; secrets jamais conservés (A-P1-S26) ; code SMS seul n'ouvre pas le compte (A-P6-S3).

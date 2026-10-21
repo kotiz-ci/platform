@@ -226,42 +226,42 @@ flowchart LR
 
 ### Nombre d'écrans par parcours (chemin principal)
 
-| Parcours                         | Écrans | Séquence                                 |
-| -------------------------------- | ------ | ---------------------------------------- |
-| P1 Inscription autonome          | 8      | E01 E02 E03 E04 E05 E06 E07 E08          |
-| P2 Accompagnée sur son téléphone | 8      | identique à P1                           |
-| P3 Agente : Ajouter une cliente  | 3      | A02 A03 A04 (depuis Mes clientes)        |
-| P4 Activation personnelle        | 7      | E01 E02 E03 E05′ E06 E07 E08′ (+ SMS)    |
-| P5 Connexion téléphone habituel  | 2      | C01 H01                                  |
-| P6 Connexion nouveau téléphone   | 5      | E01 E02 E03 C01 H01                      |
-| P7 Numéro déjà inscrit           | 4      | E01 E02 E03 E09 (puis C01 ou lot F)      |
-| P8 Compte créé                   | 2      | E08 H01 (Plus tard)                      |
-| P9 Accueil                       | 1      | H01 (vide / rempli / masqué)             |
-| P10 Mon QR                       | 2      | H01 Q01                                  |
+| Parcours                         | Écrans | Séquence                              |
+| -------------------------------- | ------ | ------------------------------------- |
+| P1 Inscription autonome          | 8      | E01 E02 E03 E04 E05 E06 E07 E08       |
+| P2 Accompagnée sur son téléphone | 8      | identique à P1                        |
+| P3 Agente : Ajouter une cliente  | 3      | A02 A03 A04 (depuis Mes clientes)     |
+| P4 Activation personnelle        | 7      | E01 E02 E03 E05′ E06 E07 E08′ (+ SMS) |
+| P5 Connexion téléphone habituel  | 2      | C01 H01                               |
+| P6 Connexion nouveau téléphone   | 5      | E01 E02 E03 C01 H01                   |
+| P7 Numéro déjà inscrit           | 4      | E01 E02 E03 E09 (puis C01 ou lot F)   |
+| P8 Compte créé                   | 2      | E08 H01 (Plus tard)                   |
+| P9 Accueil                       | 1      | H01 (vide / rempli / masqué)          |
+| P10 Mon QR                       | 2      | H01 Q01                               |
 
 ## Carte des écrans
 
 Barre basse : uniquement sur H01. Tous les autres écrans sont des pages poussées sans barre basse.
 
-| ID  | Écran                         | Parcours           | Objectif                                                        |
-| --- | ----------------------------- | ------------------ | --------------------------------------------------------------- |
-| E01 | Bienvenue                     | P1 P2 P4 P6 P7     | Choisir entre créer un compte et se connecter                   |
-| E02 | Mon numéro                    | P1 P2 P4 P6 P7     | Saisir le numéro qui recevra le code                            |
-| E03 | Code SMS                      | P1 P2 P4 P6 P7     | Prouver qu'on possède ce numéro                                 |
-| S01 | Je n'ai pas reçu le code (sheet) | P1 P2 P4 P6 P7  | Savoir quoi faire quand le SMS n'arrive pas                     |
-| E04 | Mon nom                       | P1 P2 (P6 via E10) | Dire comment on s'appelle                                       |
-| E05 | Mes accords                   | P1 P2 P4           | Accepter les conditions avant de créer l'accès                  |
-| E06 | Crée ton PIN                  | P1 P2 P4           | Choisir son code secret                                         |
-| E07 | Confirme ton PIN              | P1 P2 P4           | Vérifier qu'on se souvient du code                              |
-| E08 | Compte créé / Ton accès est activé | P1 P2 P4 P8   | Savoir que c'est fait et choisir la suite                       |
-| E09 | Ce numéro a déjà un compte    | P7                 | Rejoindre son compte existant sans en créer un second           |
-| E10 | Pas de compte à ce numéro     | P6                 | Corriger le numéro ou créer un compte                           |
-| C01 | Entrer mon PIN                | P5 P6 P7           | Ouvrir son compte                                               |
-| H01 | Accueil                       | P4 P5 P6 P8 P9 P10 | Voir ce qu'on a et lancer une action                            |
-| Q01 | Mon QR                        | P10                | Montrer son code à une agente pour être identifiée              |
-| A02 | Nouvelle fiche (agente)       | P3                 | Saisir nom et numéro de la cliente                              |
-| A03 | Vérifie la fiche (agente)     | P3                 | Relire avant de créer                                           |
-| A04 | Fiche créée (agente)          | P3                 | Savoir que la fiche existe et que l'accès n'est pas encore actif |
+| ID  | Écran                              | Parcours           | Objectif                                                         |
+| --- | ---------------------------------- | ------------------ | ---------------------------------------------------------------- |
+| E01 | Bienvenue                          | P1 P2 P4 P6 P7     | Choisir entre créer un compte et se connecter                    |
+| E02 | Mon numéro                         | P1 P2 P4 P6 P7     | Saisir le numéro qui recevra le code                             |
+| E03 | Code SMS                           | P1 P2 P4 P6 P7     | Prouver qu'on possède ce numéro                                  |
+| S01 | Je n'ai pas reçu le code (sheet)   | P1 P2 P4 P6 P7     | Savoir quoi faire quand le SMS n'arrive pas                      |
+| E04 | Mon nom                            | P1 P2 (P6 via E10) | Dire comment on s'appelle                                        |
+| E05 | Mes accords                        | P1 P2 P4           | Accepter les conditions avant de créer l'accès                   |
+| E06 | Crée ton PIN                       | P1 P2 P4           | Choisir son code secret                                          |
+| E07 | Confirme ton PIN                   | P1 P2 P4           | Vérifier qu'on se souvient du code                               |
+| E08 | Compte créé / Ton accès est activé | P1 P2 P4 P8        | Savoir que c'est fait et choisir la suite                        |
+| E09 | Ce numéro a déjà un compte         | P7                 | Rejoindre son compte existant sans en créer un second            |
+| E10 | Pas de compte à ce numéro          | P6                 | Corriger le numéro ou créer un compte                            |
+| C01 | Entrer mon PIN                     | P5 P6 P7           | Ouvrir son compte                                                |
+| H01 | Accueil                            | P4 P5 P6 P8 P9 P10 | Voir ce qu'on a et lancer une action                             |
+| Q01 | Mon QR                             | P10                | Montrer son code à une agente pour être identifiée               |
+| A02 | Nouvelle fiche (agente)            | P3                 | Saisir nom et numéro de la cliente                               |
+| A03 | Vérifie la fiche (agente)          | P3                 | Relire avant de créer                                            |
+| A04 | Fiche créée (agente)               | P3                 | Savoir que la fiche existe et que l'accès n'est pas encore actif |
 
 ## Règles communes aux écrans d'accès (E02 à E07, C01)
 
@@ -612,7 +612,7 @@ Libellé de promesse : à valider avec le ton « Akwaba Fatou » ; ne dit ni ban
      - Complément requis : « Il manque une information pour ton identité. › »
      - Refusé : « Ta vérification n'a pas abouti. Voir pourquoi › »
      - Validé : la ligne disparaît de l'accueil.
-     La flèche › ouvre le sous-lot A2 (capture des pièces en attente du partenaire, G01 ; non spécifiée ici).
+       La flèche › ouvre le sous-lot A2 (capture des pièces en attente du partenaire, G01 ; non spécifiée ici).
   5. Mes épargnes : jusqu'à 3 lignes (nom, montant, progression) ; montants des épargnes distincts du solde disponible, jamais additionnés au solde.
   6. Dernières opérations : 3 lignes (libellé, date, montant, statut textuel : Fait / En attente / Échoué) + Tout voir.
   7. Barre basse Accueil / Épargnes / Opérations / Profil.
@@ -787,15 +787,15 @@ Libellé de promesse : à valider avec le ton « Akwaba Fatou » ; ne dit ni ban
 
 ## Raccords vers les autres lots (non spécifiés ici)
 
-| Départ (lot A)                          | Destination                                    | Lot          |
-| --------------------------------------- | ---------------------------------------------- | ------------ |
-| H01 ligne d'identité ›                  | KYC : niveau, pièces, suivi, complément, refus | A2 (juste après A1) |
-| E08 Créer mon épargne ; H01 Mes épargnes, une épargne, lien Créer une épargne | Création, liste, détail d'épargne | B |
-| E08 Faire mon premier dépôt ; H01 Déposer | Dépôt Mobile Money, résultat, reçu           | C            |
-| H01 une opération, Tout voir ; onglet Opérations | Historique, détail, reçu               | C            |
-| H01 Retirer                             | Retrait Mobile Money                           | D            |
-| Q01 scanné ; A04 → Mes clientes ; rattachement | Cash in / cash out, accompagnement, permissions | E       |
-| C01 PIN oublié ; E09 Récupérer mon accès ; E10 J'ai changé de numéro ; Besoin d'aide ; S01 Contacter l'aide ; A02 contacter l'aide ; E05′ Ce n'est pas moi ; 🔔 ; onglet Profil | Récupération, aide, notifications, profil, masquage depuis Profil | F |
+| Départ (lot A)                                                                                                                                                                  | Destination                                                       | Lot                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------- |
+| H01 ligne d'identité ›                                                                                                                                                          | KYC : niveau, pièces, suivi, complément, refus                    | A2 (juste après A1) |
+| E08 Créer mon épargne ; H01 Mes épargnes, une épargne, lien Créer une épargne                                                                                                   | Création, liste, détail d'épargne                                 | B                   |
+| E08 Faire mon premier dépôt ; H01 Déposer                                                                                                                                       | Dépôt Mobile Money, résultat, reçu                                | C                   |
+| H01 une opération, Tout voir ; onglet Opérations                                                                                                                                | Historique, détail, reçu                                          | C                   |
+| H01 Retirer                                                                                                                                                                     | Retrait Mobile Money                                              | D                   |
+| Q01 scanné ; A04 → Mes clientes ; rattachement                                                                                                                                  | Cash in / cash out, accompagnement, permissions                   | E                   |
+| C01 PIN oublié ; E09 Récupérer mon accès ; E10 J'ai changé de numéro ; Besoin d'aide ; S01 Contacter l'aide ; A02 contacter l'aide ; E05′ Ce n'est pas moi ; 🔔 ; onglet Profil | Récupération, aide, notifications, profil, masquage depuis Profil | F                   |
 
 Tant qu'un lot n'est pas produit, le prototype montre un écran « Bientôt ici » neutre, jamais un lien vers une archive Figma.
 
@@ -803,30 +803,30 @@ Tant qu'un lot n'est pas produit, le prototype montre un écran « Bientôt ici 
 
 ### Décisions PO du 19 octobre 2026
 
-| Décision | Raison | Alternative rejetée |
-| --- | --- | --- |
-| E08 : « Créer mon épargne » bouton principal, « Faire mon premier dépôt » secondaire, « Plus tard » lien | Scénario phare A ; l'épargne se crée sans coût ni agente ; différenciation face aux portefeuilles | « Faire mon premier dépôt » en principal (proposé initialement) ; trois boutons de même poids |
-| KYC en sous-lot A2, juste après A1. A1 garde seulement la ligne discrète de l'accueil et les statuts : non commencé, en vérification, validé, refusé, complément requis | Les écrans de capture des pièces dépendent du partenaire (G01) ; ils ne sont pas spécifiés | KYC complet dans A1 ; KYC sans lot désigné |
-| Masquage persistant entre deux ouvertures, sur Accueil, Épargnes et Opérations ; barre de progression visible sans chiffre, pourcentage masqué ; saisie de montant et récapitulatif toujours visibles | Cohérence avec DESIGN.md §Carte solde ; on ne confirme jamais un montant qu'on ne voit pas | Masquer le seul solde ; laisser le pourcentage visible ; réafficher à chaque ouverture |
-| PIN de 4 chiffres dans le prototype, composant capable de 6 ; valeur finale à confirmer avec le partenaire (G02) | Résout côté design le conflit glossaire DDD (4) / PRD (non tranché) sans figer le protocole | Longueur libre non dessinée |
-| Activation (P4) terminée sur E08 en variante « Ton accès est activé », avec les trois mêmes sorties | Résultat net et même suite que l'inscription autonome (ancienne proposition non validée n° 1) | Passage direct à l'accueil (PRD initial) |
-| A02 doublon : aucun accès à la fiche existante ; message « Ce numéro a déjà un compte » + demander à la cliente / contacter l'aide | Aucun doublon, aucune divulgation, aucun droit implicite de l'agente | « Voir la fiche » selon les droits de l'agente |
-| Q01 : luminosité maximale pendant l'affichage du QR, retour au réglage en sortie ; faisabilité Expo à confirmer côté dev | Scan en plein soleil (ancienne proposition non validée n° 2) | Luminosité inchangée |
+| Décision                                                                                                                                                                                              | Raison                                                                                            | Alternative rejetée                                                                           |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| E08 : « Créer mon épargne » bouton principal, « Faire mon premier dépôt » secondaire, « Plus tard » lien                                                                                              | Scénario phare A ; l'épargne se crée sans coût ni agente ; différenciation face aux portefeuilles | « Faire mon premier dépôt » en principal (proposé initialement) ; trois boutons de même poids |
+| KYC en sous-lot A2, juste après A1. A1 garde seulement la ligne discrète de l'accueil et les statuts : non commencé, en vérification, validé, refusé, complément requis                               | Les écrans de capture des pièces dépendent du partenaire (G01) ; ils ne sont pas spécifiés        | KYC complet dans A1 ; KYC sans lot désigné                                                    |
+| Masquage persistant entre deux ouvertures, sur Accueil, Épargnes et Opérations ; barre de progression visible sans chiffre, pourcentage masqué ; saisie de montant et récapitulatif toujours visibles | Cohérence avec DESIGN.md §Carte solde ; on ne confirme jamais un montant qu'on ne voit pas        | Masquer le seul solde ; laisser le pourcentage visible ; réafficher à chaque ouverture        |
+| PIN de 4 chiffres dans le prototype, composant capable de 6 ; valeur finale à confirmer avec le partenaire (G02)                                                                                      | Résout côté design le conflit glossaire DDD (4) / PRD (non tranché) sans figer le protocole       | Longueur libre non dessinée                                                                   |
+| Activation (P4) terminée sur E08 en variante « Ton accès est activé », avec les trois mêmes sorties                                                                                                   | Résultat net et même suite que l'inscription autonome (ancienne proposition non validée n° 1)     | Passage direct à l'accueil (PRD initial)                                                      |
+| A02 doublon : aucun accès à la fiche existante ; message « Ce numéro a déjà un compte » + demander à la cliente / contacter l'aide                                                                    | Aucun doublon, aucune divulgation, aucun droit implicite de l'agente                              | « Voir la fiche » selon les droits de l'agente                                                |
+| Q01 : luminosité maximale pendant l'affichage du QR, retour au réglage en sortie ; faisabilité Expo à confirmer côté dev                                                                              | Scan en plein soleil (ancienne proposition non validée n° 2)                                      | Luminosité inchangée                                                                          |
 
 ### Décisions de conception de cette spec
 
-| Décision | Raison | Alternative rejetée |
-| --- | --- | --- |
-| Une seule porte « Créer mon compte » pour inscription et activation (H1) | Fatou n'a pas à savoir qu'une agente lui a créé une fiche ; moins de choix, moins d'erreurs | Bouton « J'ai reçu une invitation » sur E01 (choix technique pour la cliente) |
-| Existence du compte révélée après le code SMS (H2) | Aucune information avant preuve de possession du numéro (PRD §4) | Message dès E02 (plus rapide, mais révèle qui est client) |
-| Indicateur texte « Étape n sur 5 » | Critère d'orientation : savoir où on en est | Barre de progression seule (moins lisible en lecture partielle) |
-| Numéro affiché en entier sur E03 avec Modifier | Décision validée PRD ; erreur de numéro = première cause d'échec SMS | Numéro masqué |
-| Mention « même à une agente » sur tous les écrans à secret | Protège la cliente accompagnée sans créer de parcours dupliqué | Mode accompagné dédié (interdit : pas de doublon) |
-| PIN créé puis confirmé sur deux écrans à composition identique | Une décision par écran ; erreur de confirmation claire | Deux champs PIN sur un même écran |
-| Création du compte affichée en attente neutre, résultat seulement après confirmation | Principe « statut réel avant tout » | Écran de succès optimiste |
-| Retirer désactivé à 0 FCFA avec explication | Évite un parcours qui échoue à la fin | Bouton actif menant à une erreur au lot D |
-| Ligne d'identité discrète dont le texte suit le statut KYC, sans chiffre ni délai ; disparaît une fois l'identité validée | Décision validée (invitation discrète) ; aucun plafond inventé | Carte d'alerte colorée en haut de l'accueil |
-| Côté agente : statuts Fiche / Accès / Invitation séparés sur A04 | Fiche ≠ activation (RM-ACC-01, RM-PERM-01) | Simple « Cliente créée ✓ » |
+| Décision                                                                                                                  | Raison                                                                                      | Alternative rejetée                                                           |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Une seule porte « Créer mon compte » pour inscription et activation (H1)                                                  | Fatou n'a pas à savoir qu'une agente lui a créé une fiche ; moins de choix, moins d'erreurs | Bouton « J'ai reçu une invitation » sur E01 (choix technique pour la cliente) |
+| Existence du compte révélée après le code SMS (H2)                                                                        | Aucune information avant preuve de possession du numéro (PRD §4)                            | Message dès E02 (plus rapide, mais révèle qui est client)                     |
+| Indicateur texte « Étape n sur 5 »                                                                                        | Critère d'orientation : savoir où on en est                                                 | Barre de progression seule (moins lisible en lecture partielle)               |
+| Numéro affiché en entier sur E03 avec Modifier                                                                            | Décision validée PRD ; erreur de numéro = première cause d'échec SMS                        | Numéro masqué                                                                 |
+| Mention « même à une agente » sur tous les écrans à secret                                                                | Protège la cliente accompagnée sans créer de parcours dupliqué                              | Mode accompagné dédié (interdit : pas de doublon)                             |
+| PIN créé puis confirmé sur deux écrans à composition identique                                                            | Une décision par écran ; erreur de confirmation claire                                      | Deux champs PIN sur un même écran                                             |
+| Création du compte affichée en attente neutre, résultat seulement après confirmation                                      | Principe « statut réel avant tout »                                                         | Écran de succès optimiste                                                     |
+| Retirer désactivé à 0 FCFA avec explication                                                                               | Évite un parcours qui échoue à la fin                                                       | Bouton actif menant à une erreur au lot D                                     |
+| Ligne d'identité discrète dont le texte suit le statut KYC, sans chiffre ni délai ; disparaît une fois l'identité validée | Décision validée (invitation discrète) ; aucun plafond inventé                              | Carte d'alerte colorée en haut de l'accueil                                   |
+| Côté agente : statuts Fiche / Accès / Invitation séparés sur A04                                                          | Fiche ≠ activation (RM-ACC-01, RM-PERM-01)                                                  | Simple « Cliente créée ✓ »                                                    |
 
 ## Propositions non validées
 
@@ -835,6 +835,7 @@ Aucune à ce jour : les deux propositions initiales (fin d'activation sur E08, l
 ## Questions ouvertes
 
 **Paramètres sécurité et SMS (G02)**
+
 - Longueur du code SMS, durée de validité, délai avant Renvoyer, nombre de renvois et de tentatives, comportement en cas de blocage.
 - Longueur finale du PIN (4 au prototype, jusqu'à 6 possible) et règles de PIN refusés.
 - Reconnaissance du téléphone habituel, délai de verrouillage, sort des sessions sur l'ancien téléphone.
@@ -844,18 +845,22 @@ Aucune à ce jour : les deux propositions initiales (fin d'activation sur E08, l
 - Mon QR : disponible hors ligne, capture autorisée, QR fixe ou renouvelé.
 
 **Partenaire et juridique (G01)**
+
 - Liste et textes des accords (E05) ; consigne « nom comme sur ta pièce » ; règles de nom.
 - Calcul du solde disponible avec une opération en attente.
 - Compte fermé ou suspendu sur un numéro (E09).
 - Pièces et contrôles KYC du sous-lot A2.
 
 **Assistance (G03)**
+
 - Contact et canal derrière « Besoin d'aide », « Contacter l'aide », « Ce n'est pas moi » et le message de doublon de A02.
 
 **Technique**
+
 - Luminosité maximale de Q01 : faisabilité Expo.
 
 **Produit, à trancher par le PO**
+
 - Place des notifications (🔔) sur l'accueil, à confirmer avec le lot F.
 - Avis expert « garder / faire évoluer » sur l'accueil Direction 04 après inspection Figma (H7).
 
