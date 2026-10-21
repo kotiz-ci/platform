@@ -18,7 +18,10 @@ cleanup() {
 trap cleanup EXIT
 
 test "$(docker image inspect --format '{{.Config.User}}' "$image_ref")" = "kotiz"
-docker run --rm --entrypoint java "$image_ref" -version 2>&1 | grep --quiet 'version "21\.'
+# Capture the output before matching: under pipefail, `grep --quiet` exits on the
+# first match and the writer dies with SIGPIPE (exit 141), failing the step.
+java_version="$(docker run --rm --entrypoint java "$image_ref" -version 2>&1)"
+[[ "$java_version" == *'version "21.'* ]]
 docker run --rm --entrypoint sh "$image_ref" -c \
   '! command -v javac && ! command -v mvn && ! test -e /workspace && ! test -e /root/.m2'
 
@@ -77,9 +80,10 @@ docker run --detach \
   "$image_ref" >/dev/null
 
 for _ in $(seq 1 60); do
-  if docker exec "$backend" \
+  health="$(docker exec "$backend" \
     wget --quiet --tries=1 --output-document=- http://127.0.0.1:8080/actuator/health \
-    2>/dev/null | grep --quiet '"status":"UP"'; then
+    2>/dev/null || true)"
+  if [[ "$health" == *'"status":"UP"'* ]]; then
     echo "Backend image $image_ref is healthy"
     exit 0
   fi

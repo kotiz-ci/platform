@@ -110,3 +110,10 @@ test("ordinary pull requests never publish latest or release image tags", () => 
   assert.doesNotMatch(imageJob, /docker (?:image )?push|docker\/login-action|push:\s*true/);
   assert.doesNotMatch(imageJob, /(?:tag|IMAGE_REF):[^\n]*(?:latest|release)/i);
 });
+
+test("the image health check never pipes into an early-exit grep under pipefail", () => {
+  const verificationScript = read("scripts/verify-backend-image.sh");
+
+  assert.match(verificationScript, /set -euo pipefail/);
+  assert.doesNotMatch(verificationScript, /\|\s*grep\s+(?:--quiet|-q)\b/);
+});
