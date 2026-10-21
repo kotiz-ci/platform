@@ -1,7 +1,7 @@
 ---
 title: KOTIZ — Context Map & Langage Ubiquitaire (DDD stratégique)
-version: 1.0
-date: 2026-06-26
+version: 1.1
+date: 2026-10-20
 author: Henoch Lonzo Koffi (CEO/PO) + atelier guidé
 status: VALIDÉ (atelier)
 classification: Usage interne
@@ -127,6 +127,8 @@ flowchart TB
 | IAM → tous                                    | **Open Host Service**               | Identité / JWT via contrat stable                                                    |
 | Tous → Admin & Conformité                     | **Conformist** (aval)               | Audit trail + données pour reporting BCEAO / STR CENTIF                              |
 | Savings/Scoring/Health/Growth → Notifications | Published Language                  | Abonné aux événements ; sort _via_ le canal WhatsApp                                 |
+| Assistance → Savings _(ADR-0020)_             | **Customer/Supplier**               | Un signalement peut demander une correction ; seul Savings l'écrit et la confirme    |
+| Savings → Assistance _(ADR-0020)_             | Published Language                  | `CorrectionConfirmed` relie la correction au signalement                             |
 
 ---
 
@@ -142,6 +144,14 @@ flowchart TB
 4. **Ledger immuable et équilibré.** `Σ débits = Σ crédits` à tout instant ; aucune écriture
    n'est modifiée ou supprimée (append-only).
 5. **Data residency UEMOA.** Aucune donnée personnelle stockée hors UEMOA (cf. ADR-005).
+6. **PIN KOTIZ seulement quand l'argent sort.** Le PIN autorise le retour au solde (l'argent
+   sort d'une épargne) et les retraits (l'argent sort de KOTIZ). Ni le dépôt, ni l'affectation,
+   ni la reprise ne demandent le PIN KOTIZ ; le PIN Mobile Money n'est jamais demandé par KOTIZ.
+   (Décisions PO du 19 octobre 2026, lots B et C.)
+7. **Mouvements internes sans frais.** Affectation et retour au solde ne portent aucun frais.
+8. **Aucune valeur chiffrée sans décision.** Minimums, maximums, frais et seuils non décidés
+   par le PO ou confirmés par le partenaire ne figurent pas comme règles dans le code ni
+   les tests (G01).
 
 ---
 
@@ -149,21 +159,41 @@ flowchart TB
 
 ### 5.1 `Savings` (Épargne) — 🔴 core
 
-| Terme métier            | Nom code         | Type DDD                | Définition / invariant                                 |
-| ----------------------- | ---------------- | ----------------------- | ------------------------------------------------------ |
-| Compte / Wallet         | `SavingsAccount` | Agrégat racine          | Détient le solde. `solde = Σ écritures ledger`         |
-| Écriture                | `LedgerEntry`    | Value Object (immuable) | Ligne double-entrée. Global : `Σ débits = Σ crédits`   |
-| Montant                 | `Money`          | Value Object            | FCFA en `*_cents` (BIGINT), devise XOF, jamais `float` |
-| Transaction / Mouvement | `Transaction`    | Entité                  | Dépôt / retrait / intérêt → ≥ 2 `LedgerEntry`          |
-| Dépôt (cotisation)      | `Deposit`        | Concept + événement     | Min. 100 FCFA                                          |
-| Retrait                 | `Withdrawal`     | Concept + événement     | —                                                      |
-| Objectif nommé          | `SavingsGoal`    | Entité                  | Max **3 actifs**/user (trigger PG)                     |
-| Verrouillage            | `GoalLock`       | Value Object            | Jusqu'à date cible ; déblocage anticipé → malus Score  |
-| Série                   | `Streak`         | Value Object            | Jours consécutifs de dépôt ≥ 100 FCFA                  |
-| Badge                   | `StreakBadge`    | Entité                  | Paliers 7/30/90 j → bonus `+5/+15/+30` pts             |
+| Terme métier              | Nom code                   | Type DDD                 | Définition / invariant                                                                                                                                                                                                                                                                                                             |
+| ------------------------- | -------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Compte KOTIZ              | `SavingsAccount`           | Agrégat racine           | Compte de la cliente : porte son solde disponible et ses épargnes. Tout montant = Σ écritures ledger. _À éviter_ : wallet, portefeuille                                                                                                                                                                                            |
+| Solde disponible          | `availableBalance`         | Value Object (`Money`)   | Argent libre de la cliente, hors épargnes ; seul le confirmé y compte. _À éviter_ : solde total, wallet                                                                                                                                                                                                                            |
+| Écriture                  | `LedgerEntry`              | Value Object (immuable)  | Ligne double-entrée. Global : `Σ débits = Σ crédits`                                                                                                                                                                                                                                                                               |
+| Montant                   | `Money`                    | Value Object             | FCFA en `*_cents` (BIGINT), devise XOF, jamais `float`                                                                                                                                                                                                                                                                             |
+| Transaction / Mouvement   | `Transaction`              | Entité                   | Dépôt, retrait, affectation, retour au solde ou correction → ≥ 2 `LedgerEntry`                                                                                                                                                                                                                                                     |
+| Mouvement interne         | —                          | Concept                  | Affectation ou retour au solde : l'argent change de poche sans quitter KOTIZ. **Toujours sans frais** (décisions PO du 19 oct. 2026). _À éviter_ : transfert, retrait                                                                                                                                                              |
+| Dépôt                     | `Deposit`                  | Concept + événement      | Entrée d'argent dans KOTIZ (Mobile Money, espèces chez une agente), créditée sur le solde disponible. Minimum : **non décidé produit, à confirmer partenaire** (G01). _À éviter_ : cotisation, versement                                                                                                                           |
+| Retrait                   | `Withdrawal`               | Concept + événement      | Sortie d'argent hors de KOTIZ (lot D), autorisée par le PIN KOTIZ. Jamais employé pour un mouvement interne                                                                                                                                                                                                                        |
+| Épargne                   | `SavingsGoal`              | Entité                   | Argent mis de côté par la cliente pour un projet (type, cible, nom, date facultative). Épargne flexible (RM-SAV-03) : l'argent reste récupérable à tout moment. _À éviter_ : objectif nommé, projet, cagnotte, pot, tontine                                                                                                        |
+| Épargne active            | —                          | État                     | Épargne non fermée, même à zéro ou objectif atteint                                                                                                                                                                                                                                                                                |
+| Limite d'épargnes actives | —                          | Invariant                | **3 épargnes actives** au plus par cliente, fermées non comptées, en autonome comme en assisté ; jamais de fermeture automatique (RM-SAV-02, FIN-05)                                                                                                                                                                               |
+| Cible                     | `targetAmount`             | Value Object (`Money`)   | Montant que la cliente vise pour une épargne. Indicatif : n'interdit ni de dépasser ni de récupérer l'argent. _À éviter_ : objectif (pour le montant)                                                                                                                                                                              |
+| Montant épargné           | `savedAmount`              | Value Object (`Money`)   | Argent confirmé dans une épargne                                                                                                                                                                                                                                                                                                   |
+| Objectif atteint          | —                          | État dérivé              | Montant épargné ≥ cible. N'entraîne ni transfert ni fermeture (RM-SAV-04)                                                                                                                                                                                                                                                          |
+| Affectation               | `Allocation`               | Entité + événement       | Mouvement interne du solde disponible vers une épargne, **sans frais, sans PIN** (confirmé par le récapitulatif). Libellé d'interface : « Mettre de l'argent ». _À éviter_ : alimentation, « allocation » en français, transfert, cotisation                                                                                       |
+| Dépôt vers une épargne    | —                          | Concept                  | Un seul geste de la cliente fait de **deux mouvements liés** : un dépôt sur le solde disponible puis une affectation liée (FIN-03, RM-FUND-02, RM-FUND-11). L'échec de l'affectation ne rend pas le dépôt échoué. _À éviter_ : dépôt fléché, dépôt direct                                                                          |
+| Affectation liée          | `Allocation.originDeposit` | Relation                 | Affectation née d'un dépôt vers une épargne, qui porte la référence de ce dépôt                                                                                                                                                                                                                                                    |
+| Reprise                   | `Allocation.retryOf`       | Relation                 | **Nouvelle affectation**, avec sa propre référence, qui reprend une affectation **échouée confirmée** ; liée à l'affectation échouée et au dépôt d'origine. Nouvelle confirmation ; montant inférieur ou autre épargne active possibles. **Jamais un nouveau dépôt** (RM-FUND-03)                                                  |
+| Retour au solde           | `ReturnToBalance`          | Entité + événement       | Mouvement interne d'une épargne vers le solde disponible, partiel ou total, **sans frais, avec PIN KOTIZ**. L'épargne reste ouverte, même à zéro. _À éviter_ : retrait, déblocage, rachat                                                                                                                                          |
+| Fermeture d'épargne       | `GoalClosure`              | Concept + événement      | Fin d'une épargne voulue par la cliente, **seulement à zéro et après confirmation** ; jamais automatique. L'épargne fermée reste consultable et sort de la limite (RM-SAV-04)                                                                                                                                                      |
+| Correction                | `Correction`               | Entité + événement       | Mouvement **confirmé** qui rectifie une opération, toujours lié à son opération d'origine, sans la modifier. N'existe pas tant qu'il n'est pas confirmé ; un signalement résolu n'en crée pas forcément (PRD design §10). Libellé d'interface à confirmer (G01). _À éviter_ : remboursement, annulation, reversal, contre-écriture |
+| ~~Verrouillage~~          | ~~`GoalLock`~~             | **Retiré le 2026-10-20** | ~~Jusqu'à date cible ; déblocage anticipé → malus Score~~. Contredit l'épargne flexible (RM-SAV-03) ; le score financier est hors MVP. Ne pas réintroduire sans nouveau cadrage                                                                                                                                                    |
+| Série                     | `Streak`                   | Value Object             | **Hors MVP** (étoiles et séries différées, FIN-01 à FIN-05). ~~Jours consécutifs de dépôt ≥ 100 FCFA~~ : seuil **non décidé produit, à confirmer partenaire**                                                                                                                                                                      |
+| Badge                     | `StreakBadge`              | Entité                   | **Hors MVP**. ~~Paliers 7/30/90 j → bonus `+5/+15/+30` pts~~ : valeurs non décidées                                                                                                                                                                                                                                                |
 
-**Événements publiés** : `DepositMade`, `WithdrawalMade`, `GoalCreated`, `GoalReached`,
-`GoalUnlockedEarly`, `StreakBadgeEarned`, `StreakBroken`.
+**Événements publiés** : `DepositMade`, `WithdrawalMade`, `AllocationMade`, `AllocationFailed`,
+`ReturnedToBalance`, `GoalCreated`, `GoalReached`, `GoalClosed`, `CorrectionConfirmed`,
+~~`GoalUnlockedEarly`~~ (retiré le 2026-10-20 avec `GoalLock`), `StreakBadgeEarned` et
+`StreakBroken` (hors MVP).
+
+> **Idée post-MVP, à concevoir séparément : l'épargne bloquée volontaire.** Une épargne
+> que la cliente choisit elle-même de bloquer, sans malus de score. Ce n'est pas le
+> `GoalLock` retiré, ni une règle du MVP : aucun terme, ticket ni code avant son cadrage.
 
 ### 5.2 `Scoring` (Score 5⭐) — 🔴 core
 
@@ -264,7 +294,24 @@ Traduit les intents → `Savings` / `Scoring` / `IAM`.
 
 `UssdSession` · `UssdMenu` (menu 4 niveaux).
 Contraintes : réponse ≤ 3 s P95, saisie ≤ 10 caractères.
-**Exclusions** : pas de souscription santé ni d'objectif nommé (redirigés vers app / agent / WhatsApp).
+**Exclusions** : pas de souscription santé ni d'épargne (redirigés vers app / agent / WhatsApp).
+
+### 5.12 `Assistance` (signalement) — 🟡 supporting — **actif** (ADR-0020)
+
+> Contexte activé par l'[ADR-0020](../adr/0020-contexte-assistance-signalement.md),
+> accepté par le PO le 2026-10-20 (option C). Termes validés par le PO le même jour.
+
+| Terme métier          | Nom code               | Type DDD       | Définition / invariant                                                                                                                                                                                                                                                                                                   |
+| --------------------- | ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Signalement           | `IssueReport`          | Agrégat racine | Problème déclaré par la cliente sur **une** opération, reprise sans ressaisie, avec sa propre référence (« Dossier n° » à l'écran). Ne crée aucune transaction (RM-HELP-01). _À éviter_ : dossier (hors libellé de la référence), réclamation, ticket, plainte, litige, déclaration de soupçon (STR, Admin & Conformité) |
+| Motif                 | `IssueReason`          | Value Object   | Raison choisie par la cliente, obligatoire ; liste à confirmer (G03)                                                                                                                                                                                                                                                     |
+| Statut du signalement | `IssueReportStatus`    | Value Object   | **Envoyé > En cours > Résolu**. **Résolu ≠ remboursé** : le statut ne dit rien de l'argent                                                                                                                                                                                                                               |
+| Réponse               | `IssueResponse`        | Entité         | Réponse datée du conseiller qui résout le signalement                                                                                                                                                                                                                                                                    |
+| Contestation          | `IssueReportContested` | Événement      | Désaccord de la cliente avec une réponse : **rouvre le même signalement** (même référence, repasse En cours), sans effacer la résolution précédente ; jamais un nouveau signalement                                                                                                                                      |
+
+**Liens** : une correction (`Savings`) peut être liée à un signalement, mais elle n'est
+portée et confirmée que par `Savings`.
+**Événements** : `IssueReported`, `IssueReportResolved`, `IssueReportContested`.
 
 ---
 
@@ -279,3 +326,15 @@ Contraintes : réponse ≤ 3 s P95, saisie ≤ 10 caractères.
 ---
 
 _Document produit en atelier guidé — 26 juin 2026. Source de vérité DDD stratégique de KOTIZ MVP._
+
+---
+
+## Historique
+
+- **2026-10-20 (v1.1)** — Alignement sur les parcours validés des lots A, B et C de la refonte UX
+  (décisions PO du jour). `GoalLock` et `GoalUnlockedEarly` retirés (épargne flexible, RM-SAV-03) ;
+  « Objectif nommé » devient « Épargne », avec « Cible » pour le montant visé ; valeurs chiffrées
+  non décidées marquées comme telles (`Deposit`, `Streak`), séries et badges hors MVP ; ajout du
+  solde disponible, des mouvements internes (affectation, retour au solde), du dépôt vers une
+  épargne, de la reprise, de la fermeture, de la limite de 3 épargnes actives et de la correction ;
+  règles 6 à 8 ; contexte `Assistance` pour le signalement (ADR-0020, accepté le même jour).
