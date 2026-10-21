@@ -1,10 +1,17 @@
 package ci.kotiz;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.modulith.core.ApplicationModule;
@@ -14,8 +21,9 @@ import org.springframework.modulith.core.Violations;
 
 class ModularityTest {
 
-  private static final Set<String> INACTIVE_CONTEXTS =
-      Set.of("health", "scoring", "wa", "growth", "ussd");
+  private static final Path CONTEXT_MAP = Path.of("../../CONTEXT-MAP.md");
+  private static final Pattern CONTEXT_PATH = Pattern.compile("apps/backend/([a-z]+)/CONTEXT\\.md");
+  private static final String ACTIVE_SECTION = "## Contextes actifs";
 
   private final ApplicationModules modules = ApplicationModules.of(KotizApplication.class);
 
@@ -25,9 +33,7 @@ class ModularityTest {
   }
 
   @Test
-  void iamIsTheOnlyModuleAndExposesItsApiNamedInterface() {
-    assertEquals(Set.of("iam"), moduleNames(modules));
-
+  void iamIsTheReferenceModuleAndExposesItsApiNamedInterface() {
     ApplicationModule iam = modules.getModuleByName("iam").orElseThrow();
     Set<String> interfaces =
         iam.getNamedInterfaces().stream().map(NamedInterface::getName).collect(Collectors.toSet());
@@ -35,9 +41,16 @@ class ModularityTest {
   }
 
   @Test
-  void noDeferredOrRetiredContextIsInitialized() {
+  void everyModuleIsAnActiveContextOfTheContextMap() throws IOException {
+    Set<String> active = contexts(activeSection());
+    Set<String> inactive = contexts(Files.readString(CONTEXT_MAP));
+    inactive.removeAll(active);
+    assertFalse(active.isEmpty(), "No active context found in " + CONTEXT_MAP);
+    assertFalse(inactive.isEmpty(), "No deferred or retired context found in " + CONTEXT_MAP);
+
     Set<String> initialized = moduleNames(modules);
-    initialized.retainAll(INACTIVE_CONTEXTS);
+    assertTrue(active.containsAll(initialized), () -> "Modules: " + initialized);
+    initialized.retainAll(inactive);
     assertEquals(Set.of(), initialized);
   }
 
@@ -60,6 +73,22 @@ class ModularityTest {
   // ApplicationModules exclut par défaut les classes de test ; les fixtures en sont.
   private static ApplicationModules fixture(String name) {
     return ApplicationModules.of("kotiz.fixture.modulith." + name, location -> true);
+  }
+
+  private static String activeSection() throws IOException {
+    String map = Files.readString(CONTEXT_MAP);
+    int start = map.indexOf(ACTIVE_SECTION);
+    int end = map.indexOf("\n## ", start + ACTIVE_SECTION.length());
+    return map.substring(start, end);
+  }
+
+  private static Set<String> contexts(String markdown) {
+    Set<String> names = new HashSet<>();
+    Matcher matcher = CONTEXT_PATH.matcher(markdown);
+    while (matcher.find()) {
+      names.add(matcher.group(1));
+    }
+    return names;
   }
 
   private static Set<String> moduleNames(ApplicationModules modules) {

@@ -22,7 +22,7 @@ module.exports = defineConfig([
     ignores: ["dist/**"],
   },
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{js,jsx,ts,tsx}"],
     plugins: { boundaries },
     settings: {
       "boundaries/elements": [
@@ -74,5 +74,10 @@ module.exports = defineConfig([
         },
       ],
     },
+  },
+  {
+    // Tout fichier sous src/ appartient à une couche FSD.
+    files: ["src/**/*.{js,jsx,ts,tsx}", "test/fixtures/fsd/src/**/*.{js,jsx,ts,tsx}"],
+    rules: { "boundaries/no-unknown-files": "error" },
   },
 ]);

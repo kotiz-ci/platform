@@ -10,7 +10,7 @@ module.exports = {
   collectCoverageFrom: [
     "app/**/*.{ts,tsx}",
     "src/**/*.{ts,tsx}",
-    "!src/**/index.ts",
+    "!src/**/index.{ts,tsx}",
     "!src/shared/ui/theme.ts",
   ],
   coverageThreshold: {

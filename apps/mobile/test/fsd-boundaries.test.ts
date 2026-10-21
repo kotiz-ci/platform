@@ -29,7 +29,7 @@ function lintFixtures(): Map<string, string[]> {
 
 const errorsByFile = lintFixtures();
 
-async function boundaryErrors(file: string): Promise<string[]> {
+function boundaryErrors(file: string): string[] {
   const errors = errorsByFile.get(file);
   if (!errors) {
     throw new Error(`Fixture not linted: ${file}`);
@@ -46,8 +46,8 @@ describe("Feature-Sliced Design boundaries", () => {
     "src/entities/user/model/user.ts",
     "src/entities/user/index.ts",
     "src/shared/lib/format.ts",
-  ])("accepts downward imports through public APIs in %s", async (file) => {
-    expect(await boundaryErrors(file)).toEqual([]);
+  ])("accepts downward imports through public APIs in %s", (file) => {
+    expect(boundaryErrors(file)).toEqual([]);
   });
 
   it.each([
@@ -56,7 +56,9 @@ describe("Feature-Sliced Design boundaries", () => {
     ["two slices of the same layer", "src/entities/wallet/index.ts"],
     ["a deep import into another slice", "src/features/deep/index.ts"],
     ["a route bypassing a slice public API", "app/deep.ts"],
-  ])("rejects %s", async (_case, file) => {
-    expect(await boundaryErrors(file)).not.toEqual([]);
+    ["a file outside any FSD layer", "src/components/button.ts"],
+    ["a JavaScript file making a deep import", "src/pages/home/legacy.js"],
+  ])("rejects %s", (_case, file) => {
+    expect(boundaryErrors(file)).not.toEqual([]);
   });
 });
