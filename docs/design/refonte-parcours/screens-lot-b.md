@@ -147,3 +147,15 @@ Réponses du 19 octobre 2026 : recommandations de la [critique du lot B](critiqu
 Les états reportés de la critique (n° 15) sont dessinés depuis la version 9 du canvas (19 octobre 2026) : chargement de B01 et B07, B01 avec plus de 5 fermées, échec d'enregistrement et épargne fermée entre-temps sur B08, PIN bloqué sur B11, échec de fermeture sur B07 après B14. Ils ne sont pas joignables par le menu du prototype (états de planche).
 
 Restent hors maquettes : Variantes assistées des lots E (création et retour sans smartphone). Lots C, D et F : écran « Bientôt ici » dans le prototype.
+
+## B · B12 en écran plein (commentaire du PO du 20 octobre 2026, canvas version 28)
+
+À la demande du PO (commentaire sur la planche B · B12), les 5 états de B12 passent à la composition plein écran des résultats des lots C et D :
+- en haut, une croix « Fermer » de 48 à gauche, qui ramène à B · B07 ;
+- le bloc de statut dans le tiers haut : pictogramme 64, `StatusPill`, titre sans montant (« Ton argent est sur ton solde. », « Ton retour est en attente. », « On vérifie ton retour. », « Ton retour n'a pas marché. »), puis le montant sur sa ligne ;
+- les détails dans la page (Depuis, Vers, Il reste dans {épargne} + barre, Référence) ;
+- les boutons dans la zone d'action du bas : « Voir mon épargne » ou « Réessayer » en principal, puis des boutons texte (« Voir mon solde », « Voir le reçu », qui était un lien, « Contacter l'aide », « Fermer cette épargne ? »). Le fond n'est plus `surface-canvas`.
+
+Les règles de statut, les phrases (« Ne refais pas l'opération. », « Ton argent n'a pas bougé. Il est dans {épargne}. ») et les états sont inchangés. L'échec est annoncé en `assertive`. Seul B-Proto change : il faut le reporter au handoff du lot B.
+
+**Version 29 (règle étendue à tous les lots, PO du 20 octobre 2026)** : B · B17 « Ton épargne est créée » passe aussi en écran plein : croix « Fermer » en haut à gauche (→ B · B01), illustration validée en pastille 80 alignée à gauche, titre « C'est fait ! Ton épargne … est créée. », « Aucun argent n'a bougé. », lignes Dedans 0 F / Objectif / Pour le, « Voir mon épargne » dans la zone d'action. La règle est écrite dans DESIGN.md (Layout › Écran de résultat plein écran).

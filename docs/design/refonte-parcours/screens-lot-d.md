@@ -1,0 +1,147 @@
+# Écrans — Refonte des parcours, lot D : retraits
+
+Date : 20 octobre 2026. Statut : **En cours — maquettes**. À faire ensuite : test du PO et de sa conjointe ([test-lot-d.md](test-lot-d.md)), critique, handoff, issues (#68 surtout).
+
+Outil : Claude Design (type Design). Lien : canvas unique de l'app cliente [KOTIZ — App cliente](https://claude.ai/artifact/2bNTYJFqK5bnT5vaGYmTGF), page « Lot D — Retraits », statut « En cours — maquettes ». Canvas à jour : **version 27** (`1792536289-ee61`) : décisions PO du 20 octobre 2026 sur les questions 1 à 5 (version 25) et 15 corrections de [critique-lot-d.md](critique-lot-d.md) (version 26) appliquées.
+Design system : [DESIGN.md](../../../DESIGN.md) (racine) et [KOTIZ Design System](https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134) (non modifié). Le canvas garde sa copie du DS (`ds/kotiz`, bundle v9, tokens v12), partagée avec les lots A à C.
+Sources : [ux-spec-lot-d.md](ux-spec-lot-d.md) (fait foi : parcours D-P1 à D-P9, numérotation D-00 à D-07, décisions PO du 20 octobre 2026), [test-lot-d.md](test-lot-d.md), [brief.md](brief.md). Conventions : [screens.md](screens.md) (canvas unique), [screens-lot-c.md](screens-lot-c.md), [critique-lot-c.md](critique-lot-c.md).
+
+Rappel : « D · D-01 » est un **écran** ; « D07 » (#68) est une **issue**.
+
+## Comment c'est construit
+
+- **Même construction que les lots A à C.** Un composant d'écrans, `D-Proto.dc.html` (racine `.la-root.lot-d`), contient D-00 à D-07, plus A · H01 en raccord (mêmes composants que les lots A et C) et l'écran « Bientôt ici ». Chaque planche l'affiche dans un état.
+- **Opérations, détail, reçu et signalement d'un retrait sont les écrans du lot C** (`C-Proto`, C-11 à C-15), qui ont reçu leur contenu retrait. Aucune copie : le prototype passe au lot C avec les retraits du lot D (solde, épargnes, retraits faits, en attente, échoués).
+- **Prototype cliquable unique** : `Main.dc.html` (page Pilotage). Section de menu « Lot D — Retraits · En cours — maquettes · frais de retrait fictifs » : D-00 (feuille ouverte), D-P1 à D-P9 et les variantes D-P2′ (solde à 0, argent en épargne), D-P2″ (un retrait déjà en attente), D-P3′ (frais inconnus), D-P3″ (refus avant le PIN), D-P4′ (on vérifie), D-P4″ (échec technique puis Réessayer), D-P4‴ (refus de l'opérateur puis Réessayer), D-P7′ (interruption et reprise). La bande sombre (hors produit) dit « données et frais fictifs ».
+- **Frais du retrait** (Décision PO du 20 octobre 2026) : Fatou tape ce qu'elle **reçoit** ; frais fictifs = 1 % du montant reçu, **ajouté** à « Pris sur ton solde », annoncé dans la bande et le menu. La variante « frais inconnus » (Continuer bloqué avec sa raison) est dessinée (D-03) et jouable (D-P3′).
+- **Résultat de l'opérateur simulé** par le parcours choisi (fait, en attente, on vérifie, échec technique, refus). Rien n'est à valider chez l'opérateur.
+- **PIN de démo** 2468 (4 chiffres, G02). Bloqué au 3e essai faux **dans le prototype seulement** ; aucun nombre d'essais ni durée affiché.
+- **Données fictives** : Fatou Koné, 07 08 12 34 56 (numéro vérifié), solde 12 400 FCFA, École Awa 45 000 / 100 000 F, Boutique 8 000 / 50 000 F ; Wave et Orange Money ; références `KTZ-2610-0081`… « (fictive) ». Historique (D-P8) : retrait en attente du 19 oct. (5 000 F), retrait fait du 18 oct. (2 000 F), retrait échoué du 17 oct. (3 000 F).
+- **Formats** : 360 × 800 ; planche de contrôle à 320 de large.
+
+## Écrans
+
+| ID | Écran | Maquette | États couverts | Statut | Écarts |
+|---|---|---|---|---|---|
+| D-00 | Comment tu veux retirer ? (feuille) | Planche D-D-00 | sur l'accueil, aucun opérateur (Mobile Money désactivé + raison) | à valider | Composition de C-00. Illustrations DS v12 « Mobile Money » et « agente » en pastilles neutres 64 (même illustration Mobile Money que le dépôt, décision PO) |
+| D-01 | Sur quel Mobile Money ? | Planche D-D-01 | nominal, Wave indisponible (ligne désactivée + raison), aucun opérateur (lien « Retirer auprès d'une agente › »), chargement, hors connexion (liste datée, opérateurs désactivés + Réessayer) | à valider | `OperatorRow` du lot C. « Vers ton numéro 07 08 12 34 56 » sous la liste, sans lien ni bouton. Réessayer hors connexion ajouté (C-01 n'a que la raison) |
+| D-02 | Combien tu retires ? | Planche D-D-02 | vide, saisi clavier ouvert, Tout mon solde, 0, plus que le solde avec argent en épargne (InfoLine « Remettre sur mon solde »), plus que le solde sans épargne, plus que le solde frais inconnus, retrait déjà en attente (« 5 050 F sont en attente de retrait. »), solde changé, au-delà du compte, hors connexion | à valider | Au-delà du compte : « Ton identité est en vérification. » (règle du lot C, critique n° 15) au lieu du lien |
+| D-03 | Vérifie ton retrait | Planche D-D-03 | nominal (frais fictifs), vers Orange Money, frais inconnus, refus par une règle, opérateur devenu indisponible, calcul des frais, hors connexion, masqué | à valider | `SummaryFlow` : nœud d'arrivée « Vers ton numéro » + « 07 08 12 34 56 · Wave ». Trois lignes « Pris sur ton solde (gras) / Frais / Tu reçois sur ton Wave », puis « Ton solde après » |
+| D-04 | Entre ton PIN | Planche D-D-04 | saisie, PIN incorrect, envoi, PIN bloqué, hors connexion avant l'envoi | à valider | Composition de B · B11. Rappel : « 5 050 F pris sur ton solde » (gras) puis « Tu reçois 5 000 F sur ton Wave · 07 08 12 34 56 » |
+| D-05 | Résultat du retrait | Planche D-D-05 | fait, en attente, on vérifie, échoué (technique), échoué (refus de l'opérateur) | à valider | Plein écran du lot C, zone d'action fixe. Montant mis en avant = ce que Fatou reçoit (décision PO) ; lignes « Pris sur ton solde », « Frais ». Pas d'illustration (Q8) |
+| D-06 | Retirer auprès d'une agente | Planche D-D-06 | depuis D-00 | à valider | Composition de C-17 (pastille 80 + illustration agente, trois étapes numérotées) |
+| D-07 | L'argent n'est pas sur ton Wave ? (feuille) | Planche D-D-07 | depuis Fait, depuis En attente (« Le retrait n'arrive pas ? ») | à valider | Famille de « Le dépôt n'arrive pas ? ». Un bouton principal « Signaler un problème », « Revenir » en secondaire |
+| C-11 à C-15 | Opérations, détail, reçu, signalement (contenu retrait) | Planche D-C-11-C-15 | C-11 filtre Retraits, C-12 fait / en attente / échoué / masqué, C-13 reçu, C-14 signaler un retrait fait, C-15 signalement envoyé | à valider | Écrans du lot C, planches du lot C inchangées ; voir « Contenu retrait » |
+| A · H01 | Accueil (raccord) | Planche D-Raccords + A · H01 (lot A, 6e et 7e téléphones) | solde à 0 et argent en épargne (PNV-2), après un retrait fait, avec un retrait en attente (carte solde « Retrait en attente · − 5 050 F »), C · H01 après un retrait fait | — | Copies de raccord (données du lot D). Carte solde : variante construite dans le canvas (voir ci-dessous) |
+| — | Contrôle 320 | Planche D-Largeur-320 | D-00, D-01, D-02, D-03, D-04, D-05, D-07, C-12 | — | — |
+
+## Contenu retrait dans les écrans du lot C
+
+- **C-11** (décision PO du 20 octobre 2026) : « Retrait Wave » · « Vers 07 08 … 56 » · montant **qui a quitté le solde**, frais fictifs inclus : « − 5 050 F » seulement si fait ; en attente ou échoué, montant sans signe en `text-secondary` ; pastille Retirer (fait), horloge (en attente), croix (échoué).
+- **C-12** : titre « Retrait Wave » ; même montant (« − 5 050 FCFA ») ; flux « Depuis Mon solde » ↓ « Vers Wave 07 08 12 34 56 » ; lignes Date, « Frais (fictifs) », « Tu as reçu 5 000 F » (fait), Référence. En attente : « 5 000 F pas encore sur ton Wave. », étapes « Demande envoyée · Envoyée » / « Envoi vers ton Wave · En attente » / « Arrivée sur ton Wave · Pas encore », « Le reçu sera prêt quand ce sera fait. », « Ne refais pas le retrait. », aucun bouton principal. Échoué : « Ton retrait n'a pas marché. » + raison (« Un problème technique l'a arrêté. » / « Wave a refusé le retrait. »), pas de Réessayer (PNV-3 refusée). « Signaler un problème » en bouton texte partout.
+- **C-13** : seulement pour un retrait fait ; « Retrait Mobile Money », montant reçu mis en avant (5 000 FCFA), Depuis Mon solde, Vers Wave + numéro, Date, « Pris sur ton solde », Frais, Référence, Cliente ; pas de partage.
+- **C-14 / C-15** : retrait repris sans ressaisie, avec le montant d'Opérations (« Retrait Wave · 5 050 F · 19 oct. · KTZ-2610-0081 · Fait »), motifs « Motif A / B (à confirmer) » ; message d'information à l'envoi.
+- **C · H01** : « Retirer » ouvre D-00 ; raison PNV-2 quand le solde est à 0 et qu'une épargne a de l'argent ; carte solde « Retrait en attente » quand un retrait du lot D est en attente.
+- Les retraits du lot C sans frais (ligne du 14 oct. de l'historique C-P6) restent tels quels ; les planches validées du lot C ont été comparées avant / après (rendu identique, à l'animation près du bouton « Envoi… »).
+
+## Parcours du prototype
+
+| Parcours | Départ | Chemin attendu |
+|---|---|---|
+| D-00 | Accueil, feuille ouverte | Sur mon Mobile Money → D-01 ; Auprès d'une agente → D-06 ; ✕ ferme |
+| D-P1 Retirer sur mon Mobile Money | A · H01 (12 400 F) | Retirer → D-00 → Sur mon Mobile Money → D-01 Wave → D-02 5 000 → D-03 (Pris 5 050 F, Frais 50 F, Tu reçois 5 000 F, Ton solde après 7 350 F) → Continuer → D-04 PIN 2468 → « Envoi… » → D-05 Fait → Voir le reçu (C-13) ou Terminé → A · H01 7 350 F, carte « Dernier dépôt », ligne « Retrait Wave − 5 050 F Fait » |
+| D-P2 Argent dans une épargne | A · H01 | … D-02 20 000 → « Tu peux recevoir au plus 12 277 F. », « Le reste est dans tes épargnes. » → bouton texte Remettre sur mon solde → B · B01 (deux épargnes avec de l'argent) → École Awa → B07 → B09 … B12 → Voir mon solde → B · H01 22 400 F → Retirer → D-00 (lot D, solde 22 400 F) |
+| D-P2′ Solde à 0, argent en épargne | A · H01 à 0 F | Retirer désactivé, « Ton argent est dans tes épargnes. » → École Awa → B07 → retour 10 000 F avec PIN → Voir mon solde → Retirer → D-00 → … → D-05 Fait (solde 4 950 F) |
+| D-P2″ Un retrait déjà en attente | A · H01 (7 350 F, carte « Retrait en attente · − 5 050 F ») | D-02 : « 7 350 F disponibles », « 5 050 F sont en attente de retrait. » ; 10 000 → « Tu peux recevoir au plus 7 277 F. » |
+| D-P3 Wave indisponible | A · H01 | D-01 : Wave désactivé + raison ; Orange Money → D-02 → D-03 vers Orange Money |
+| D-P3′ Frais inconnus | A · H01 | D-03 : « On ne connaît pas les frais. Réessaie plus tard. », aucune ligne de montant → Revenir à l'accueil |
+| D-P3″ Refusé avant le PIN | A · H01 | D-03 : « Ce retrait n'est pas possible pour l'instant. Ton argent n'a pas bougé. », montant et trajet seulement → Revenir à l'accueil, ou Contacter l'aide (bouton texte) |
+| D-P4 Retrait en attente | A · H01 | … D-05 en attente (étapes, « Ne refais pas le retrait. ») → Le retrait n'arrive pas ? (D-07) ; Terminé → H01 7 350 F, carte « Retrait en attente · − 5 050 F » (toucher → C-12), ligne « Retrait Wave 5 050 F En attente » ; Voir dans Opérations → C-12 en attente |
+| D-P4′ On vérifie | A · H01 | … D-05 « On vérifie ton retrait. », Voir dans Opérations, Contacter l'aide, aucun Réessayer |
+| D-P4″ Échec technique | A · H01 | … D-05 Échoué → Réessayer → D-03 relu (sans « Étape n sur 4 ») → nouveau PIN → D-05 Fait (nouvelle référence) |
+| D-P4‴ Refusé par l'opérateur | A · H01 | … D-05 « Wave a refusé le retrait. », « Rien n'est arrivé sur ton Wave. », Ton solde 12 400 F → Réessayer (puis fait) ou Choisir un autre Mobile Money (D-01, montant gardé) |
+| D-P5 Fait mais pas reçu | A · H01 | … D-05 Fait → « Tu ne vois pas l'argent sur ton Wave ? » → D-07 → Signaler un problème → C-14 (retrait repris) → Motif A → Envoyer → C-15 « Ton signalement est envoyé. Ce n'est pas un remboursement. » → ← C-12 « Mon signalement · Envoyé » |
+| D-P6 PIN bloqué | A · H01 | … D-04 1111 → « PIN incorrect. Réessaie. » ; au 3e essai → « Ton PIN est bloqué », « Rien n'a été pris sur ton solde. », « Trop d'essais. Ton retrait n'est pas envoyé. » → Terminé ou PIN oublié ? (Bientôt ici, lot F) |
+| D-P7 Hors connexion avant l'envoi | A · H01 hors connexion | D-01 : liste datée, opérateurs désactivés, « Retirer demande la connexion. » → Réessayer reconnecte |
+| D-P7′ Interruption et reprise | A · H01 | Bande « Quitter et rouvrir » : sur D-02 à D-04 → D-03 recalculé (« Un instant… »), PIN effacé ; sur D-05 → A · H01 avec la ligne « Retrait Wave · En attente » ; une seule demande |
+| D-P8 Retrouver un retrait | A · H01 (historique) | Opérations → Retraits → retrait fait d'hier → Voir le reçu ; en attente → « Le reçu sera prêt quand ce sera fait. » ; échoué du 17 → raison, pas de Réessayer |
+| D-P9 Auprès d'une agente | A · H01 | Retirer → Auprès d'une agente → D-06 → Afficher Mon QR → A · Q01 ; ← de D-06 rouvre D-00 |
+
+## Raccords vérifiés (cliqués dans le rendu local du prototype)
+
+- **A → D** : A-P9 « Retirer » → D-00 ; ✕ → A · H01 du lot A. A · H01 à 0 F avec épargnes (planche, PNV-2) : Retirer désactivé, « Ton argent est dans tes épargnes. »
+- **B → D** : B · H01 « Retirer » (B-P2) → D-00 ; ✕ → B · H01. Après B · B12 « Voir mon solde », « Retirer » ouvre D-00 avec le nouveau solde et les épargnes à jour.
+- **C → D** : C · H01 « Retirer » (C-P1) → D-00 ; ✕ → C · H01 ; depuis C-11 (barre basse Accueil) après un retrait, « Retirer » garde le solde et les retraits.
+- **D → B** : D-02 « Remettre sur mon solde › » → B · B01 (deux épargnes avec de l'argent) ou B · B07 (une seule), avec le solde du lot D ; le retrait en cours est abandonné (rien n'a été envoyé). École Awa (accueil D) → B · B07.
+- **D → C** : Opérations, Tout voir, ligne de retrait, Voir le reçu, Voir dans Opérations, Signaler un problème (D-07) → C-11 / C-12 / C-13 / C-14 avec les retraits du lot D ; Déposer → C-00 sur C · H01, ✕ → accueil D.
+- **D → A** : D-06 « Afficher Mon QR » → A · Q01 ; Mon QR de la carte solde → A · Q01.
+- **D → F** : PIN oublié ?, Contacter l'aide, Notifications, Profil → « Bientôt ici ».
+
+## Contrôle avant rendu
+
+Contrôles faits sur un rendu local du runtime Design (fichiers publiés du canvas), comme aux lots A à C.
+
+- **Script sur les 59 téléphones des planches D** : un seul bouton principal par écran (sur D-07, le bouton de D-05 sous le voile n'est pas compté) ; aucun texte essentiel sous 14 ; aucun débordement à 360 ni à 320 (après correction de la référence de D-07) ; barre basse seulement sur A · H01 et C-11 (racines). Champ montant vide de D-02 : corrigé en version 26 (toute la ligne est le `label` du champ, 320 × 48) ; C-02 garde le défaut (lot C).
+- **Parcours** : D-00, D-P1 à D-P9 et les huit variantes rejoués au clic dans Main, avec les raccords A → D, B → D, C → D, D → B, D → C, D → A.
+- **Non-régression** : 33 planches des lots A, B et C rendues avant / après : texte et géométrie identiques (seule différence : rotation du pictogramme « Envoi… » de C-03, animé).
+- **Statut réel** : « Fait » seulement après confirmation de l'opérateur ; attente = ambre + horloge, sans reçu ni succès ; « Ne refais pas le retrait. » ; aucun Réessayer sur « On vérifie » ni sur le détail.
+- **Couleurs** : vert réservé au bouton principal et à la carte solde ; ambre = attente, rouge = échec ; logos opérateurs non recolorés, Wave en symbole seul.
+- **Aucune valeur inventée** : frais fictifs annoncés hors produit ; aucun minimum, plafond, délai, nombre d'essais, motif de signalement ni liste d'opérateurs réelle (notes orange « à confirmer »).
+- **Non vérifié** : le rendu dans le canvas claude.ai lui-même (navigateur intégré sans session claude.ai), un vrai Android, TalkBack, le texte système agrandi.
+
+## Corrections de la critique (version 26)
+
+Les 15 corrections de [critique-lot-d.md](critique-lot-d.md) sont appliquées (validées par le PO) ; statut détaillé dans la critique. Principaux changements d'écran :
+- D-04 : rappel en étiquette « Pris sur ton solde : 5 050 F » / « Tu reçois : 5 000 F sur ton Wave · 07 08 12 34 56 » ; PIN bloqué et hors connexion sans montants, « Rien n'a été pris sur ton solde. » ; PIN incorrect : l'erreur d'abord, un seul `Message` ; envoi : cases pleines, pavé grisé et `aria-disabled`.
+- D-03 : grand montant « Tu reçois sur ton Wave », « Pris sur ton solde : 5 050 F » dessous, Frais et Ton solde après ; deux phrases. Refusé et frais inconnus : montant et trajet seulement, « Revenir à l'accueil » en principal (+ « Contacter l'aide » en bouton texte pour le refus) ; plus de « Continuer » éteint.
+- D-05 : « Pris sur ton solde : 5 050 F » sous le montant ; On vérifie : « La connexion a coupé. On regarde où il en est. » ; Échoué : « Rien n'est arrivé sur ton Wave. » + « Ton solde », annonce assertive ; refus de l'opérateur : bouton texte « Choisir un autre Mobile Money ».
+- D-07 : depuis En attente, « Revenir » en principal et « Signaler un problème » en texte ; depuis Fait, « Signaler un problème » en principal, « Revenir » et « Contacter l'aide » en texte. Plus de lien dans le contenu.
+- D-01 aucun opérateur : bouton principal « Retirer auprès d'une agente ». D-02 : « Le reste est dans tes épargnes. » + bouton texte « Remettre sur mon solde » ; « Tout mon solde » expliqué (« 12 277 F + 123 F de frais (fictifs) : tout ton solde. ») ; au-delà du compte : l'aide dit la raison ; toute la ligne du montant ouvre le clavier ; « 12 400 F disponibles » sur sa ligne ; pictogramme portefeuille neutre pour « Mon solde » (D-02, D-03).
+- Écrans du lot C, **affichage des retraits seulement** : C-12 retrait échoué « Rien n'est arrivé sur ton Wave. » ; C-13 « Tu as reçu » au-dessus du montant. Planches validées du lot C comparées : rendu identique.
+- Reportés hors canvas : la même correction du champ montant pour **C-02** (lot C validé, à reporter au lot C) ; une illustration « Mon solde » neutre à demander au **Design System** (C-12 et C-13 gardent l'illustration actuelle).
+- Contrôles refaits : 59 téléphones à 360 et 320 (un seul bouton principal hors voile, texte ≥ 14, aucun débordement, barre basse sur les racines seulement) ; D-P1 à D-P9 et variantes rejoués au clic.
+
+## Composants candidats à promouvoir dans le Design System
+
+Construits dans le canvas (`kotiz-app.css`, préfixe `ld-`, tokens seulement). Le Design System n'a pas été modifié.
+
+1. ~~Illustration « Mobile Money » sortante~~ : non retenue (décision PO, même illustration que le dépôt).
+2. **`SummaryFlow` nœud d'arrivée « Vers ton numéro »** (logo + « Vers ton numéro » + « {numéro} · {opérateur} ») et lignes « Pris sur ton solde » (gras) / « Frais » / « Tu reçois sur ton {opérateur} ».
+3. **`TransactionRow` variante `withdrawal`** avec ses trois statuts (pastille Retirer, horloge, croix ; signe « − » seulement si fait).
+4. **`StepTracker` contenu retrait** : « Demande envoyée » · « Envoi vers ton {opérateur} » · « Arrivée sur ton {opérateur} ».
+5. **`Message` en attente sous la ligne « Depuis »** (D-02) : usage nouveau du `Message` ambre.
+6. **Ligne « Vers ton numéro »** en lecture seule sous une liste d'opérateurs (D-01), et **rappel du PIN** à deux lignes (montant pris, montant reçu).
+7. **Ligne clé / valeur avec logo d'opérateur** (D-05 « Vers »).
+8. **`BalanceCard` ligne « mouvement en attente »** (décision PO du 20 octobre 2026) : tant qu'un retrait est en attente, la ligne du bas de la carte affiche « Retrait en attente · − 5 050 F » avec une pastille ambre + horloge (`surface-pending`, `text-pending`), à la place de « Dernier dépôt » ; retour à « Dernier dépôt » dès que le retrait est fait ou échoué ; montant masqué avec le reste. Le `BalanceCard` du DS ne sait afficher qu'un « + » : la variante est recomposée dans le canvas avec ses classes (D-Proto et C-Proto), à promouvoir comme prop du composant.
+
+## Écarts à la spec
+
+- **Montants d'un retrait** (décision PO du 20 octobre 2026) : dans Opérations (ligne, détail, signalement) et sur la carte solde, ce qui a quitté le solde (« − 5 050 F », frais fictifs inclus), avec « Tu as reçu 5 000 F » sur le détail ; sur D-03 à D-05 et le reçu, le montant reçu (5 000 F) est mis en avant, à côté de « Pris sur ton solde : 5 050 F ». Sur D-04, le montant pris est en gras en premier (leçon du lot C : annoncer d'abord ce qui sera débité au moment de l'accord). D-02 : « 5 050 F sont en attente de retrait. » (montant pris, cohérent avec le disponible 7 350 F).
+- **D-02, au-delà du compte** : « Ton identité est en vérification. » au lieu du lien « Vérifier mon identité › » (même règle que C-02 après la critique n° 15 du lot C).
+- **D-01 hors connexion** : bouton texte « Réessayer » ajouté pour reconnecter.
+- **D-03 et D-04 après un échec** : pas de « Étape n sur 4 » (« Réessayer repart de D-03 sans compteur »).
+- **D-05 On vérifie** : pas de sous-titre (aucun dans la spec), pas d'étapes.
+- **D-P7′** : après l'envoi, « Quitter et rouvrir » rouvre l'accueil avec la ligne « Retrait Wave · En attente » (l'une des deux reprises prévues par la spec).
+- **Accueil du lot D** : copie de raccord (données du lot D). Après un passage par le lot B, ses « Dernières opérations » ne montrent pas le retour au solde fait dans le lot B (données de prototype séparées) ; le solde et les épargnes, eux, suivent.
+- **Prototype : PIN bloqué au 3e essai faux** (règle réelle G02, jamais affichée).
+- **test-lot-d.md** : D-P8-3 parle du « retrait du 18 » échoué ; dans le prototype, le retrait d'hier (18 oct.) est fait et l'échoué est du **17 oct.** (jour du prototype : 19 octobre, comme au lot C). D-P1-3 attend « 7 400 F » : avec les frais fictifs, c'est **7 350 F**. Libellés de scénarios du test → codes du menu : « Retrait fait » D-P1, « Retrait en attente » D-P4 / D-P2″, « On vérifie » D-P4′, « Échec technique » D-P4″, « Refusé avant le PIN » D-P3″, « Frais inconnus » D-P3′, « Wave indisponible » D-P3, « Solde à 0, argent en épargne » D-P2′, « Pas reçu » D-P5, « Historique » D-P8.
+
+## Changements hors section Lot D (autorisés par le PO)
+
+- **A · H01** (planche du lot A) : deux états ajoutés, « Solde à 0, argent en épargne (PNV-2, lot D) » (6e) et « Retrait en attente sur la carte (lot D) » (7e) ; planche élargie à 2 840 (A · Q01 et sa note décalés à x 2 920), note orange de renvoi au lot D. Les cinq états validés sont inchangés (comparés avant / après).
+- **Carte solde, évolution de la règle du lot B** (« Dernier dépôt » seulement sur la carte, Q7 du lot B) : validée par le PO le 20 octobre 2026 pour un retrait en attente (« Retrait en attente · − 5 050 F », ambre + horloge) ; la carte revient à « Dernier dépôt » dès que le retrait est fait ou échoué. À reporter au handoff des lots A et B (BalanceCard) et à DESIGN.md.
+- **A-Proto, B-Proto, C-Proto** : « Retirer » de l'accueil ouvre D-00 au lieu de « Bientôt ici » ; raison PNV-2 quand le solde est à 0 et qu'une épargne a de l'argent. B-Proto accepte le solde transmis par le lot D. C-Proto accepte les retraits du lot D et leur contenu (détail, reçu, signalement).
+- **Main** : section « Lot D — Retraits » du menu ; Pilotage : lien Lot D ; `pilotage-data.js` : 9 lignes D-P1 à D-P9, phase « maquettes », rien coché.
+
+## Réponses du PO (20 octobre 2026)
+
+1. **Montant dans Opérations** : ce qui a quitté le solde, « − 5 050 F » (frais fictifs inclus), sur la ligne et le détail ; le détail ajoute « Tu as reçu 5 000 F » ; D-05 et le reçu mettent en avant le montant reçu. Appliqué (version 25).
+2. **« Remettre sur mon solde › »** avec deux épargnes pleines : ouvre B · B01 (liste des épargnes). Gardé.
+3. **Carte solde pendant un retrait en attente** : ligne « Retrait en attente · − 5 050 F » (ambre + horloge) à la place de « Dernier dépôt », retour à « Dernier dépôt » quand le retrait est fait ou échoué, montant masqué avec le reste. Appliqué (version 25) : D-Proto, C-Proto, planche A · H01 (7e téléphone), D-Raccords.
+4. **Illustration Mobile Money** : la même que le dépôt. Gardée ; candidat « variante sortie » abandonné.
+5. **PNV-1** : à trancher après le test D-P2.
+
+## Reporté
+
+- Retrait en espèces et retrait Mobile Money assisté (lot E) ; récupération du PIN, aide, notifications (lot F) : « Bientôt ici ».
+- Autre numéro que le numéro vérifié : post-MVP, aucun bouton.

@@ -119,3 +119,12 @@ Restent ouverts :
 ## Reporté
 
 Accès bloqué après trop d'essais (code et PIN, G02) ; chargement de H01 (squelette) ; chargement, erreur et hors ligne de Q01 ; dialogue de sortie d'A02 ; résultat inconnu d'A03 ; écrans KYC (sous-lot A2) ; lots C à F (écran « Bientôt ici » dans le prototype ; le lot B est raccordé depuis le 19 octobre).
+
+## Résultats en plein écran (décision PO du 20 octobre 2026, canvas version 29)
+
+La règle « écran de résultat plein écran » (DESIGN.md, Layout) vaut pour tous les lots. Au lot A, les écrans qui étaient en carte centrée passent à la composition de C-05 ; seul A-Proto change, les textes et les décisions validés sont gardés :
+- **A · E07 Création en cours** : bloc de statut à gauche (pastille ambre avec l'indicateur de chargement), « Création de ton compte… », « Un instant… » ; pas d'en-tête (état bref).
+- **A · E07 Résultat inconnu** : croix « Fermer » en haut à gauche (→ E01), pastille ambre + horloge, `StatusPill` En attente, « On vérifie ton compte », phrase « Ne crée pas un second compte. », `StepTracker` dans le flux ; zone d'action « Vérifier à nouveau » + bouton texte « Besoin d'aide ? ».
+- **A · E07 Échec** : croix « Fermer » (→ E01), pastille rouge + croix, `StatusPill` Échoué, « Ton compte n'est pas créé », annonce assertive ; « Réessayer » + « Besoin d'aide ? » en bouton texte.
+- **A · E08 / E08′ Compte créé / accès activé** : « Plus tard » gardé en haut à droite (décision du lot A, à la place de la croix), pastille coche alignée à gauche, « C'est fait, Fatou ! », « Créer mon épargne » en principal et « Faire mon premier dépôt » en bouton texte.
+- Contrôles : planches A · E06-E07, A · E08 et A · Contrôle 320 (un bouton principal, cibles ≥ 44, texte ≥ 14, aucun débordement) ; les autres planches du lot A ont le même rendu qu'avant. À reporter au handoff du lot A.

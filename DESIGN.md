@@ -507,6 +507,19 @@ Règles :
 - **Auto-layout** partout : Hug pour le texte et les piles verticales, Fill pour la largeur disponible, Fixed seulement pour un pictogramme ou une zone tactile.
 - **Clavier ouvert** : le champ actif et le bouton principal restent visibles.
 - **Une décision par écran** : un seul `button-primary`, collé en bas de la zone de contenu.
+- **Zone d'action fixe en bas** : fond `surface`, padding 16 au-dessus de la zone sûre, filet `border-default` seulement quand le contenu défile dessous. Aucun bouton « dans le vide » au milieu de l'écran, aucun lien dans le contenu : les actions secondaires sont des boutons texte de la zone d'action.
+
+### Écran de résultat plein écran (décision PO du 20 octobre 2026, tous les lots)
+
+Tout écran de résultat, d'attente après envoi ou d'échec est une **page pleine**, jamais une carte centrée ni une pop-up :
+- fond `surface` (blanc), pas de `surface-canvas` ;
+- en-tête de page avec seulement la croix « Fermer » 48 **en haut à gauche** (retour au point de départ du parcours, jamais aux écrans de saisie ni au PIN) ; quand un lien d'en-tête validé existe déjà (« Plus tard » de Compte créé), il est gardé à la place de la croix ;
+- bloc de statut dans le tiers haut, **aligné à gauche** : pastille de statut 64 (`surface-brand-subtle` + coche, `surface-pending` + horloge, `surface-error` + croix ; ou l'illustration validée de l'écran), `StatusPill` (mot + pictogramme), titre sans montant, sous-titre, puis le montant en `amount` 34 sur sa propre ligne ;
+- détails dans le flux de la page : étapes (`StepTracker`) en attente, phrases de consigne (« Ne refais pas l'opération. »), lignes clé / valeur (Depuis, Vers, Frais, Référence…) ;
+- zone d'action fixe en bas (règle ci-dessus) ;
+- annonce lecteur d'écran `polite` pour fait et attente, `assertive` pour un échec.
+
+Écrans concernés : A · E07 (en cours, inconnu, échec), A · E08 / E08′, B · B12, B · B17, C-05, C-09, D-05. Composition de référence : C-05 (canvas « KOTIZ — App cliente »). Le Design System (`OperationStatus`, `IllustratedResult`, carte centrée) reste à aligner sur cette règle.
 
 ### Navigation MVP (correction F01)
 
