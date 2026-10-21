@@ -11,8 +11,8 @@ Spring Boot 4.1 + React Native (Expo SDK 54) + Next.js 15 + PostgreSQL 15 —
 monorepo Turborepo 2.3.
 
 > Les lignes de runtime sont fixées par
-> [ADR-0003](docs/adr/0003-use-supported-s1-runtime-lines.md), et les deux
-> variantes mobiles par [ADR-0004](docs/adr/0004-use-expo-mobile-variants.md).
+> [ADR-0018](docs/adr/0018-use-supported-s1-runtime-lines.md), et les deux
+> variantes mobiles par [ADR-0019](docs/adr/0019-use-expo-mobile-variants.md).
 
 ## Démarrage rapide (≤ 30 min)
 
@@ -73,10 +73,21 @@ pnpm turbo run test --filter=...[origin/main]  # tests des apps modifiées seule
 | Doc                                                                | Contenu                                             |
 | ------------------------------------------------------------------ | --------------------------------------------------- |
 | [Context Map](CONTEXT-MAP.md)                                      | Contextes actifs, différés et retirés du MVP réduit |
-| [ADR-0001](docs/adr/0001-limit-mvp-database-to-active-contexts.md) | Limite des contextes actifs en base                 |
-| [ADR-0002](docs/adr/0002-promote-develop-to-main.md)               | Promotion protégée `develop` vers `main`            |
-| [ADR-0003](docs/adr/0003-use-supported-s1-runtime-lines.md)        | Lignes de runtime supportées                        |
-| [ADR-0004](docs/adr/0004-use-expo-mobile-variants.md)              | Un codebase Expo, deux variantes mobiles            |
+| [ADR-0001](docs/adr/0001-choix-backend.md)                         | Backend Spring Boot (cadrage)                       |
+| [ADR-0002](docs/adr/0002-architecture-modulaire.md)                | Monolithe modulaire                                 |
+| [ADR-0003](docs/adr/0003-score-5-etoiles.md)                       | Score KOTIZ en 5 étoiles                            |
+| [ADR-0004](docs/adr/0004-ussd-mvp.md)                              | USSD léger dans le MVP                              |
+| [ADR-0005](docs/adr/0005-data-residency-uemoa.md)                  | Hébergement et data residency UEMOA                 |
+| [ADR-0006](docs/adr/0006-prime-sante-unite.md)                     | Prime Santé : unité de stockage                     |
+| [ADR-0007](docs/adr/0007-rbac-8-roles.md)                          | RBAC en 8 rôles                                     |
+| [ADR-0008](docs/adr/0008-monorepo-turborepo.md)                    | Monorepo Turborepo                                  |
+| [ADR-0009](docs/adr/0009-mobile-rn-expo.md)                        | Mobile React Native / Expo                          |
+| [ADR-0010](docs/adr/0010-mobile-variants.md)                       | Variantes mobiles Client / Agent                    |
+| [ADR-0011](docs/adr/0011-hexagonal-ddd.md)                         | Hexagonal + DDD tactique par module                 |
+| [ADR-0016](docs/adr/0016-limit-mvp-database-to-active-contexts.md) | Limite des contextes actifs en base                 |
+| [ADR-0017](docs/adr/0017-promote-develop-to-main.md)               | Promotion protégée `develop` vers `main`            |
+| [ADR-0018](docs/adr/0018-use-supported-s1-runtime-lines.md)        | Lignes de runtime supportées                        |
+| [ADR-0019](docs/adr/0019-use-expo-mobile-variants.md)              | Un codebase Expo, deux variantes mobiles            |
 
 ## Structure du monorepo
 
@@ -148,7 +159,7 @@ kotiz/
 - USSD MVP via Orange Business Abidjan
 - RBAC 8 rôles (à préciser dans une ADR dédiée avant implémentation)
 - **Mobile en RN/Expo**, deux variantes depuis un codebase
-  ([ADR-0004](docs/adr/0004-use-expo-mobile-variants.md))
+  ([ADR-0019](docs/adr/0019-use-expo-mobile-variants.md))
 
 ## Licence
 

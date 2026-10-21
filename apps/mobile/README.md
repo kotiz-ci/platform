@@ -3,7 +3,7 @@
 App mobile KOTIZ pour les personas **Fatou** (cliente) et **Moussa** (agent).
 **1 codebase, 2 binaires distincts** via variants Expo. Stack : React Native 0.81,
 Expo SDK 54 et NativeWind 4. Voir
-[ADR-0004](../../docs/adr/0004-use-expo-mobile-variants.md).
+[ADR-0019](../../docs/adr/0019-use-expo-mobile-variants.md).
 
 ## Variants
 
@@ -87,7 +87,7 @@ DoD : couverture ≥ 80% (cf. sprint-status.yaml `per_story`).
 
 ## Référence
 
-- [ADR-0004 — Expo et variantes Client/Agent](../../docs/adr/0004-use-expo-mobile-variants.md)
+- [ADR-0019 — Expo et variantes Client/Agent](../../docs/adr/0019-use-expo-mobile-variants.md)
 - Story 1.1 — init monorepo
 - Story 1.2 — CI/CD (jobs EAS Build duals Sprint 2+)
 - Story 1.6 — onboarding ≤ 1h chronométré

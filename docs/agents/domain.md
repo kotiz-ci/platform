@@ -33,6 +33,11 @@ Ne lire que les contextes concernés par le sujet. Un contexte différé ou reti
 ne reçoit ni implémentation ni ticket actif (voir la règle d’activation de
 `CONTEXT-MAP.md`).
 
+## Docs produit, design et architecture
+
+La carte des docs de cadrage (PRD, re-scope, règles métier, glossaire DDD,
+HLD, specs UX) et leurs règles de priorité sont dans `docs/README.md`.
+
 ## Vocabulaire
 
 Utiliser les termes définis dans les fichiers `CONTEXT.md`. Ne pas introduire de
