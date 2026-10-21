@@ -304,3 +304,7 @@ Le lot D a été validé le 21 octobre 2026. Il réutilise le socle des lots A �
 
 - Hors DS v12 : toutes ces variantes. Aucun token nouveau ; valeurs en dur à rattacher listées dans le handoff (pastille portefeuille 40 / 24, logo 32 × 24, opacité du pavé désactivé).
 ```
+
+## Publications faites le 21 octobre 2026
+
+Commentaires « Design validé (lot D) » publiés sur #68, #67, #69, #99, #94, #72 et #59. Aucune issue créée.
