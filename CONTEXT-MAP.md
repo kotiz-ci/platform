@@ -31,3 +31,12 @@ Un contexte différé ou retiré ne reçoit ni migration, ni implémentation, ni
 actif tant que sa condition de réactivation n'a pas été explicitement approuvée.
 Sa présence dans cette carte conserve son vocabulaire et sa frontière sans créer
 de portée de développement implicite.
+
+## Convention d'implémentation
+
+Chaque contexte actif devient, à son premier comportement, un module Spring
+Modulith `ci.kotiz.<contexte>`, nommé comme son dossier ci-dessus (`iam`,
+`savings`, `support`…). Les autres modules n'utilisent que son package `api` ;
+l'implémentation reste sous `internal`. Aucun module n'existe pour un contexte
+différé ou retiré : `ModularityTest` lit cette carte et le vérifie. Voir
+[ADR-011 §6](docs/adr/0011-hexagonal-ddd.md).

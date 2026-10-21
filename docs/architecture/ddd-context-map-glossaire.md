@@ -317,8 +317,10 @@ portée et confirmée que par `Savings`.
 
 ## 6. Prochaines étapes
 
-1. **ADR-011** — Structure hexagonale + DDD tactique par module, sur la base de cette context map
-   (squelette type : `domain / application / infrastructure / adapters` par contexte).
+1. **ADR-011** — Structure hexagonale + DDD tactique par module, sur la base de cette context map.
+   Amendée le 21 octobre 2026 (§6) : chaque contexte actif est un module Spring Modulith
+   `ci.kotiz.<contexte>`, dont seul le package `api` est visible des autres modules ;
+   l'implémentation vit sous `internal/{domain,application,persistence,web}`.
 2. **MAJ HLD v2** — remplacer « 9 modules fonctionnels isolés » par les 11 bounded contexts + la
    context map ci-dessus (avec renommage `core` → `iam`, ajout `growth` et `ussd`).
 3. Référencer ce document dans chaque story métier (Epic 3+) pour le nommage et les invariants.
