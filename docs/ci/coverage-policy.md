@@ -7,18 +7,16 @@ pas le contourner.
 
 ## Gates actifs
 
-| Workspace                | Périmètre mesuré                        | Gate                           |
-| ------------------------ | --------------------------------------- | ------------------------------ |
-| `apps/backend`           | classes Java applicatives               | JaCoCo `verify`, lignes ≥ 80 % |
-| `apps/mobile`            | politique et adaptateur de variant Expo | Node test coverage ≥ 80 %      |
-| `packages/shared-utils`  | utilitaires FCFA, téléphone et RBAC     | Node test coverage ≥ 80 %      |
-| `packages/design-tokens` | génération et validation des tokens     | Node test coverage ≥ 80 %      |
+| Workspace                | Périmètre mesuré                    | Gate                           |
+| ------------------------ | ----------------------------------- | ------------------------------ |
+| `apps/backend`           | classes Java applicatives           | JaCoCo `verify`, lignes ≥ 80 % |
+| `apps/mobile`            | routes `app/` et couches FSD `src/` | Jest `--coverage` ≥ 80 %       |
+| `packages/shared-utils`  | utilitaires FCFA, téléphone et RBAC | Node test coverage ≥ 80 %      |
+| `packages/design-tokens` | génération et validation des tokens | Node test coverage ≥ 80 %      |
 
 Le contrôle `coverage:scope:affected` refuse toute modification de source
-exécutable qui n'entre pas dans l'un de ces gates. Les routes React Native ne
-disposent pas encore d'un runner JSX instrumenté : leur modification est donc
-bloquée jusqu'à l'ajout de ce runner, ou jusqu'à l'extraction de leur logique dans
-un module `lib/*.ts` couvert.
+exécutable qui n'entre pas dans l'un de ces gates. Les routes et composants React
+Native sont mesurés par Jest (`jest-expo`) et React Native Testing Library.
 
 ## Exceptions déclaratives
 
@@ -28,8 +26,10 @@ un module `lib/*.ts` couvert.
   structure et ses valeurs sont vérifiées par le validateur couvert.
 - Les barrels `src/index.ts`, les fichiers de types et les artefacts générés de
   `packages/design-tokens/dist/` ne portent aucune décision exécutable propre.
-- `apps/mobile/lib/theme.ts` est un adaptateur déclaratif sans branche qui expose
-  les design tokens générés au runtime React Native.
+- `apps/mobile/src/shared/ui/theme.ts` est un adaptateur déclaratif sans branche
+  qui expose les design tokens générés au runtime React Native.
+- `apps/mobile/jest.config.js` et `apps/mobile/eslint.config.js` déclarent l'outillage.
+  Les règles FSD d'`eslint.config.js` sont prouvées par `test/fsd-boundaries.test.ts`.
 - `eslint.config.mjs` est une déclaration de règles sans logique métier. Une
   modification invalide toutefois tous les workspaces via Turborepo.
 - `apps/admin-web` est encore un placeholder documentaire sans code applicatif.

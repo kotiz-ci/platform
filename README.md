@@ -83,7 +83,8 @@ pnpm turbo run test --filter=...[origin/main]  # tests des apps modifiées seule
 | [ADR-0008](docs/adr/0008-monorepo-turborepo.md)                    | Monorepo Turborepo                                  |
 | [ADR-0009](docs/adr/0009-mobile-rn-expo.md)                        | Mobile React Native / Expo                          |
 | [ADR-0010](docs/adr/0010-mobile-variants.md)                       | Variantes mobiles Client / Agent                    |
-| [ADR-0011](docs/adr/0011-hexagonal-ddd.md)                         | Hexagonal + DDD tactique par module                 |
+| [ADR-0011](docs/adr/0011-hexagonal-ddd.md)                         | Modules Spring Modulith `api` / `internal` (§6)     |
+| [ADR-0015](docs/adr/0015-feature-sliced-design-frontends.md)       | Feature-Sliced Design pour mobile et admin          |
 | [ADR-0016](docs/adr/0016-limit-mvp-database-to-active-contexts.md) | Limite des contextes actifs en base                 |
 | [ADR-0017](docs/adr/0017-promote-develop-to-main.md)               | Promotion protégée `develop` vers `main`            |
 | [ADR-0018](docs/adr/0018-use-supported-s1-runtime-lines.md)        | Lignes de runtime supportées                        |
@@ -94,8 +95,8 @@ pnpm turbo run test --filter=...[origin/main]  # tests des apps modifiées seule
 ```
 kotiz/
 ├── apps/
-│   ├── mobile/          # RN/Expo SDK 54 — Cliente + Agent (un seul codebase)
-│   ├── backend/         # Spring Boot 4.1 — contextes définis dans CONTEXT-MAP.md
+│   ├── mobile/          # RN/Expo SDK 54 — Cliente + Agent (un seul codebase), FSD
+│   ├── backend/         # Spring Boot 4.1 + Spring Modulith — un module par contexte actif
 │   └── admin-web/       # Next.js 15 — Console OPS / RISK / FINANCE / PO / ADMIN / AUDITOR
 ├── packages/
 │   ├── design-tokens/   # @kotiz/design-tokens — 17 couleurs v2 + Inter + radii + spacing
@@ -125,6 +126,7 @@ kotiz/
 - [.github/CODEOWNERS](.github/CODEOWNERS) — review automatique par dossier
 - TypeScript strict mode partout (mobile + admin-web + packages)
 - Java : Google Java Style + Lombok + records (backend)
+- Architecture : modules Spring Modulith `ci.kotiz.<contexte>` côté backend, Feature-Sliced Design côté frontends ([CONTRIBUTING.md](CONTRIBUTING.md#architecture-du-code))
 - Commit signé GPG sinon CI rouge
 
 ## Qui contacter

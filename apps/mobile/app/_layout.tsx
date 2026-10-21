@@ -10,7 +10,7 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
 } from "@expo-google-fonts/inter";
-import { getAppVariant } from "../lib/variant";
+import { getAppVariant } from "@/shared/config";
 import "../global.css";
 
 export default function RootLayout() {

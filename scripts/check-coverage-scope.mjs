@@ -6,14 +6,16 @@ const SOURCE_TREE =
   /^(?:(?:apps|packages)\/[^/]+\/(?:app|lib|scripts|src)\/|(?:apps|packages)\/[^/]+\/[^/]+\.(?:c?js|mjs|ts|tsx)$|scripts\/)/;
 
 const DECLARATIVE_EXCEPTIONS = new Set([
-  "apps/mobile/lib/theme.ts",
+  "apps/mobile/eslint.config.js",
+  "apps/mobile/jest.config.js",
+  "apps/mobile/src/shared/ui/theme.ts",
   "packages/api-types/src/index.ts",
   "packages/shared-utils/src/index.ts",
 ]);
 
 const COVERED_SOURCE = [
   /^apps\/backend\/src\/main\/java\/.*\.java$/,
-  /^apps\/mobile\/lib\/variant(?:-policy)?\.ts$/,
+  /^apps\/mobile\/(?:app|src)\/.*\.tsx?$/,
   /^packages\/design-tokens\/scripts\/.*\.mjs$/,
   /^packages\/shared-utils\/src\/.*\.ts$/,
   /^scripts\/.*\.mjs$/,

@@ -4,8 +4,8 @@ version: 0.1
 date: 2026-09-11
 author: Henoch Lonzo Koffi avec Codex
 workflow: bmad-correct-course
-status: PROPOSE
-approval: EN_ATTENTE
+status: APPROUVE
+approval: APPROUVE_PO_2026-10-21
 scope_classification: MODERATE
 trigger: Validation technique explicite du 11 septembre 2026
 classification: Usage interne
@@ -372,36 +372,37 @@ termine par la suite complète, lance la revue Standards + Spec, puis commit sur
 
 ## 6. Checklist Correct Course
 
-| ID  | Statut        | Conclusion                                                           |
-| --- | ------------- | -------------------------------------------------------------------- |
-| 1.1 | N/A           | Aucun défaut d'une story métier ; clarification transversale post-S1 |
-| 1.2 | Done          | Limitation technique et divergence documentaire identifiées          |
-| 1.3 | Done          | ADR, HLD, code, POM, README et issues inspectés                      |
-| 2.1 | Done          | Epic 1 reste réalisable                                              |
-| 2.2 | Done          | Un ticket technique ajouté ; aucun nouvel epic                       |
-| 2.3 | Done          | Les futures stories reçoivent les nouvelles conventions              |
-| 2.4 | Done          | Aucun epic invalidé ou créé                                          |
-| 2.5 | Done          | Migration placée après S1 et avant le métier                         |
-| 3.1 | Done          | Aucun conflit avec les objectifs PRD                                 |
-| 3.2 | Done          | ADR-011, HLD, Context Map et code affectés                           |
-| 3.3 | Done          | Aucun parcours UX modifié ; référence ADR seulement                  |
-| 3.4 | Done          | Tests, CI, documentation et règles agents affectés                   |
-| 4.1 | Viable        | Ajustement direct, effort moyen, risque faible à moyen               |
-| 4.2 | Not viable    | Rollback sans bénéfice                                               |
-| 4.3 | Not viable    | Nouvelle revue MVP inutile                                           |
-| 4.4 | Done          | Option 1 retenue                                                     |
-| 5.1 | Done          | Résumé documenté                                                     |
-| 5.2 | Done          | Impacts epics et artefacts documentés                                |
-| 5.3 | Done          | Approche et alternatives documentées                                 |
-| 5.4 | Done          | MVP inchangé et actions séquencées                                   |
-| 5.5 | Done          | Handoff PO / Architecte / Developer / Reviewer défini                |
-| 6.1 | Done          | Toutes les sections applicables traitées                             |
-| 6.2 | Done          | Proposition relue pour cohérence                                     |
-| 6.3 | Action-needed | Approbation explicite du présent document requise                    |
-| 6.4 | N/A           | Aucun epic supprimé, renuméroté ou ajouté                            |
-| 6.5 | Action-needed | Handoff final après approbation                                      |
+| ID  | Statut     | Conclusion                                                           |
+| --- | ---------- | -------------------------------------------------------------------- |
+| 1.1 | N/A        | Aucun défaut d'une story métier ; clarification transversale post-S1 |
+| 1.2 | Done       | Limitation technique et divergence documentaire identifiées          |
+| 1.3 | Done       | ADR, HLD, code, POM, README et issues inspectés                      |
+| 2.1 | Done       | Epic 1 reste réalisable                                              |
+| 2.2 | Done       | Un ticket technique ajouté ; aucun nouvel epic                       |
+| 2.3 | Done       | Les futures stories reçoivent les nouvelles conventions              |
+| 2.4 | Done       | Aucun epic invalidé ou créé                                          |
+| 2.5 | Done       | Migration placée après S1 et avant le métier                         |
+| 3.1 | Done       | Aucun conflit avec les objectifs PRD                                 |
+| 3.2 | Done       | ADR-011, HLD, Context Map et code affectés                           |
+| 3.3 | Done       | Aucun parcours UX modifié ; référence ADR seulement                  |
+| 3.4 | Done       | Tests, CI, documentation et règles agents affectés                   |
+| 4.1 | Viable     | Ajustement direct, effort moyen, risque faible à moyen               |
+| 4.2 | Not viable | Rollback sans bénéfice                                               |
+| 4.3 | Not viable | Nouvelle revue MVP inutile                                           |
+| 4.4 | Done       | Option 1 retenue                                                     |
+| 5.1 | Done       | Résumé documenté                                                     |
+| 5.2 | Done       | Impacts epics et artefacts documentés                                |
+| 5.3 | Done       | Approche et alternatives documentées                                 |
+| 5.4 | Done       | MVP inchangé et actions séquencées                                   |
+| 5.5 | Done       | Handoff PO / Architecte / Developer / Reviewer défini                |
+| 6.1 | Done       | Toutes les sections applicables traitées                             |
+| 6.2 | Done       | Proposition relue pour cohérence                                     |
+| 6.3 | Done       | Approuvé par Henoch (PO) le 21 octobre 2026                          |
+| 6.4 | N/A        | Aucun epic supprimé, renuméroté ou ajouté                            |
+| 6.5 | Done       | Handoff : ticket #58 (D01) porte les critères du §4.3                |
 
-## 7. Décision demandée
+## 7. Décision
 
-Approuver, demander une révision ou refuser cette proposition. Aucune propagation documentaire,
-création de ticket ou migration de code n'est autorisée avant l'approbation explicite.
+**Approuvée** par Henoch (PO) le 21 octobre 2026. Les onze critères du §4.3 deviennent les critères
+d'acceptation du ticket [#58](https://github.com/kotiz-ci/platform/issues/58) (D01). Le ticket avance
+sans attendre la clôture de #36, conformément au §2.2.
