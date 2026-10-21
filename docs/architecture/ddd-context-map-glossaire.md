@@ -127,8 +127,8 @@ flowchart TB
 | IAM → tous                                    | **Open Host Service**               | Identité / JWT via contrat stable                                                    |
 | Tous → Admin & Conformité                     | **Conformist** (aval)               | Audit trail + données pour reporting BCEAO / STR CENTIF                              |
 | Savings/Scoring/Health/Growth → Notifications | Published Language                  | Abonné aux événements ; sort _via_ le canal WhatsApp                                 |
-| Assistance → Savings _(proposé, ADR-0020)_    | **Customer/Supplier**               | Un signalement peut demander une correction ; seul Savings l'écrit et la confirme    |
-| Savings → Assistance _(proposé, ADR-0020)_    | Published Language                  | `CorrectionConfirmed` relie la correction au signalement                             |
+| Assistance → Savings _(ADR-0020)_             | **Customer/Supplier**               | Un signalement peut demander une correction ; seul Savings l'écrit et la confirme    |
+| Savings → Assistance _(ADR-0020)_             | Published Language                  | `CorrectionConfirmed` relie la correction au signalement                             |
 
 ---
 
@@ -296,11 +296,10 @@ Traduit les intents → `Savings` / `Scoring` / `IAM`.
 Contraintes : réponse ≤ 3 s P95, saisie ≤ 10 caractères.
 **Exclusions** : pas de souscription santé ni d'épargne (redirigés vers app / agent / WhatsApp).
 
-### 5.12 `Assistance` (signalement) — 🟡 supporting — **proposé, non actif**
+### 5.12 `Assistance` (signalement) — 🟡 supporting — **actif** (ADR-0020)
 
-> Contexte proposé par l'[ADR-0020](../adr/0020-contexte-assistance-signalement.md),
-> **en brouillon, non accepté**. Les termes ci-dessous sont validés par le PO
-> (2026-10-20) ; seul leur contexte d'accueil reste à trancher.
+> Contexte activé par l'[ADR-0020](../adr/0020-contexte-assistance-signalement.md),
+> accepté par le PO le 2026-10-20 (option C). Termes validés par le PO le même jour.
 
 | Terme métier   | Nom code             | Type DDD         | Définition / invariant |
 | -------------- | -------------------- | ---------------- | ---------------------- |
@@ -338,4 +337,4 @@ _Document produit en atelier guidé — 26 juin 2026. Source de vérité DDD str
   non décidées marquées comme telles (`Deposit`, `Streak`), séries et badges hors MVP ; ajout du
   solde disponible, des mouvements internes (affectation, retour au solde), du dépôt vers une
   épargne, de la reprise, de la fermeture, de la limite de 3 épargnes actives et de la correction ;
-  règles 6 à 8 ; contexte `Assistance` proposé pour le signalement (ADR-0020 en brouillon).
+  règles 6 à 8 ; contexte `Assistance` pour le signalement (ADR-0020, accepté le même jour).
