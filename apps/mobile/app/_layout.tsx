@@ -1,5 +1,6 @@
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { cssInterop } from "nativewind";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
@@ -12,6 +13,10 @@ import {
 } from "@expo-google-fonts/inter";
 import { getAppVariant } from "../lib/variant";
 import "../global.css";
+
+// Depuis expo-router 58, Link est livré précompilé : le JSX de NativeWind ne
+// le transforme plus, donc son className doit être déclaré explicitement.
+cssInterop(Link, { className: "style" });
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -36,7 +41,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <StatusBar style={statusBarStyle} backgroundColor={backgroundColor} />
+        <StatusBar style={statusBarStyle} />
         <Stack
           screenOptions={{
             headerShown: false,
