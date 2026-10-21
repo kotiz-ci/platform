@@ -19,15 +19,14 @@ exécutable qui n'entre pas dans l'un de ces gates. Les routes et composants Rea
 Native sont mesurés par Jest (`jest-expo`) et React Native Testing Library.
 
 Ce contrôle de périmètre s'applique aux pull requests de tickets vers `develop`.
-La première promotion dédiée `develop` vers `main` contient aussi cinq fichiers
-mobiles intégrés avant l'activation de ce gate : `app.config.ts`,
-`app/_layout.tsx`, `app/health/index.tsx`, `app/index.tsx` et
-`eslint.config.js`. Le mode promotion les tolère uniquement lorsque leur blob
-Git correspond exactement aux empreintes legacy enregistrées dans
-`check-coverage-scope.mjs`. Toute modification de ces fichiers et tout nouvel
-exécutable non couvert restent bloqués. La promotion réexécute également les
-tests, le lint, le type-check et le build des workspaces affectés sur la
-différence complète avec `main`.
+Le mode promotion (`develop` vers `main`) tolère en plus un fichier exécutable
+non couvert intégré avant l'activation du gate, seulement si son blob Git
+correspond exactement à l'empreinte legacy enregistrée dans
+`check-coverage-scope.mjs`. Cette liste est vide depuis que Jest mesure `app/` et
+`src/` du mobile : les cinq fichiers qu'elle contenait sont désormais couverts ou
+déclarés ci-dessous. Tout nouvel exécutable non couvert reste bloqué. La promotion
+réexécute également les tests, le lint, le type-check et le build des workspaces
+affectés sur la différence complète avec `main`.
 
 ## Exceptions déclaratives
 
@@ -39,8 +38,10 @@ différence complète avec `main`.
   `packages/design-tokens/dist/` ne portent aucune décision exécutable propre.
 - `apps/mobile/src/shared/ui/theme.ts` est un adaptateur déclaratif sans branche
   qui expose les design tokens générés au runtime React Native.
+- `apps/mobile/app.config.ts` est la configuration Expo dynamique ; elle est validée
+  par `expo-doctor`, le type-check des deux variants et les tests de contrat Story 1.1.
 - `apps/mobile/jest.config.js` et `apps/mobile/eslint.config.js` déclarent l'outillage.
-  Les règles FSD d'`eslint.config.js` sont prouvées par `test/fsd-boundaries.test.ts`.
+  Les règles FSD d'`eslint.config.js` sont prouvées par `test/fsd-boundaries.test.mjs`.
 - `eslint.config.mjs` est une déclaration de règles sans logique métier. Une
   modification invalide toutefois tous les workspaces via Turborepo.
 - `apps/admin-web` est encore un placeholder documentaire sans code applicatif.

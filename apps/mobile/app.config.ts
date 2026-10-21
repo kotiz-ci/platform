@@ -52,12 +52,6 @@ const config: ExpoConfig = {
   version: VERSION,
   orientation: "portrait",
   userInterfaceStyle: "light",
-  newArchEnabled: true,
-
-  splash: {
-    resizeMode: "contain",
-    backgroundColor: selectedVariant.backgroundColor,
-  },
 
   assetBundlePatterns: ["**/*"],
 
@@ -78,7 +72,6 @@ const config: ExpoConfig = {
   android: {
     package: selectedVariant.bundleIdentifier,
     versionCode: BUILD_NUMBER,
-    edgeToEdgeEnabled: true,
     permissions: [...selectedVariant.permissions],
   },
 

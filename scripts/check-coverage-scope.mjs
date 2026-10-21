@@ -6,6 +6,8 @@ const SOURCE_TREE =
   /^(?:(?:apps|packages)\/[^/]+\/(?:app|lib|scripts|src)\/|(?:apps|packages)\/[^/]+\/[^/]+\.(?:c?js|mjs|ts|tsx)$|scripts\/)/;
 
 const DECLARATIVE_EXCEPTIONS = new Set([
+  // Configuration Expo : déclarative, validée par expo-doctor et le type-check.
+  "apps/mobile/app.config.ts",
   "apps/mobile/eslint.config.js",
   "apps/mobile/jest.config.js",
   "apps/mobile/src/shared/ui/theme.ts",
@@ -21,13 +23,9 @@ const COVERED_SOURCE = [
   /^scripts\/.*\.mjs$/,
 ];
 
-const LEGACY_PROMOTION_BASELINE = new Map([
-  ["apps/mobile/app.config.ts", "c337970b5b246d1b48c6af35b43c97d7cae88ecb"],
-  ["apps/mobile/app/_layout.tsx", "a85dc85d2f4e84a5d7ed9a5e4b7ef72c9c2c5311"],
-  ["apps/mobile/app/health/index.tsx", "3a3cfa9a736d822a709d6de1e347d6fe95db3d8f"],
-  ["apps/mobile/app/index.tsx", "bd45634374cf12252e178079e42ec4c2cd6a68d1"],
-  ["apps/mobile/eslint.config.js", "3fc4095d707c76a007739452bb6cc0dabf0f362f"],
-]);
+// Fichiers exécutables non couverts tolérés à la promotion s'ils sont inchangés.
+// Vide depuis que Jest couvre app/ et src/ du mobile (D01, #58).
+const LEGACY_PROMOTION_BASELINE = new Map();
 
 function isTestFile(file) {
   return /(?:^|\/)(?:test|tests)\//.test(file) || /\.(?:test|spec)\.[^.]+$/.test(file);
@@ -53,6 +51,7 @@ export function checkCoverageScope({
   base = process.env.TURBO_SCM_BASE,
   head = process.env.TURBO_SCM_HEAD,
   promotion = false,
+  legacyBaseline = LEGACY_PROMOTION_BASELINE,
   run = execFileSync,
 } = {}) {
   if (!base || !head) {
@@ -66,7 +65,7 @@ export function checkCoverageScope({
   const uncovered = findExecutableFilesOutsideCoverage(changedFiles);
   const blocked = promotion
     ? uncovered.filter((file) => {
-        const expectedBlob = LEGACY_PROMOTION_BASELINE.get(file);
+        const expectedBlob = legacyBaseline.get(file);
         if (!expectedBlob) return true;
 
         const actualBlob = run("git", ["rev-parse", `${head}:${file}`], {

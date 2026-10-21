@@ -1,8 +1,8 @@
 # `apps/mobile` — KOTIZ Mobile (RN/Expo)
 
 App mobile KOTIZ pour les personas **Fatou** (cliente) et **Moussa** (agent).
-**1 codebase, 2 binaires distincts** via variants Expo. Stack : React Native 0.81,
-Expo SDK 54 et NativeWind 4. Voir
+**1 codebase, 2 binaires distincts** via variants Expo. Stack : React Native 0.88,
+Expo SDK 58 et NativeWind 4. Voir
 [ADR-0019](../../docs/adr/0019-use-expo-mobile-variants.md).
 
 ## Variants
@@ -86,12 +86,12 @@ ou au-delà du `index.ts` d'une slice (`eslint-plugin-boundaries`).
 
 ## Tests
 
-| Niveau                  | Outil                                             | Fichiers                      |
-| ----------------------- | ------------------------------------------------- | ----------------------------- |
-| Unitaire et composant   | Jest (`jest-expo`) + React Native Testing Library | `test/*.test.ts(x)`           |
-| Routes Expo par variant | `expo-router/testing-library`                     | `test/routes.test.tsx`        |
-| Frontières FSD          | CLI ESLint sur `test/fixtures/fsd`                | `test/fsd-boundaries.test.ts` |
-| E2E                     | Maestro (YAML), quand un parcours existe          | —                             |
+| Niveau                  | Outil                                             | Fichiers                       |
+| ----------------------- | ------------------------------------------------- | ------------------------------ |
+| Unitaire et composant   | Jest (`jest-expo`) + React Native Testing Library | `test/*.test.ts(x)`            |
+| Routes Expo par variant | `expo-router/testing-library`                     | `test/routes.test.tsx`         |
+| Frontières FSD          | CLI ESLint sur `test/fixtures/fsd`                | `test/fsd-boundaries.test.mjs` |
+| E2E                     | Maestro (YAML), quand un parcours existe          | —                              |
 
 `pnpm --filter mobile test` échoue sous 80 % de couverture (lignes, fonctions,
 branches) sur `app/` et `src/`.

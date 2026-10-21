@@ -6,6 +6,12 @@ jest.mock("expo-constants", () => ({
   default: { expoConfig: { extra: {} as { variant?: string } } },
 }));
 
+// Les polices ne se chargent pas dans Jest : le layout racine attend leur chargement.
+jest.mock("@expo-google-fonts/inter", () => ({
+  ...jest.requireActual("@expo-google-fonts/inter"),
+  useFonts: () => [true, null],
+}));
+
 const extra = Constants.expoConfig!.extra as { variant?: string };
 
 beforeEach(() => {
@@ -21,19 +27,19 @@ describe.each([
   });
 
   it("renders the home page", async () => {
-    renderRouter("./app", { initialUrl: "/" });
+    await renderRouter("./app", { initialUrl: "/" });
 
     expect(await screen.findByText(homeTitle)).toBeOnTheScreen();
   });
 
   it("renders the variant space", async () => {
-    renderRouter("./app", { initialUrl: spaceRoute });
+    await renderRouter("./app", { initialUrl: spaceRoute });
 
     expect(await screen.findByText(spaceTitle)).toBeOnTheScreen();
   });
 
   it("renders the API health page", async () => {
-    renderRouter("./app", { initialUrl: "/health" });
+    await renderRouter("./app", { initialUrl: "/health" });
 
     expect(await screen.findByText("Backend : UP")).toBeOnTheScreen();
     expect(screen.getByText(new RegExp(`Variant : ${variant}`))).toBeOnTheScreen();
@@ -44,7 +50,7 @@ it("reports an unreachable backend on the health page", async () => {
   extra.variant = "client";
   global.fetch = jest.fn().mockRejectedValue(new Error("offline"));
 
-  renderRouter("./app", { initialUrl: "/health" });
+  await renderRouter("./app", { initialUrl: "/health" });
 
   expect(await screen.findByText("Erreur : Error: offline")).toBeOnTheScreen();
 });

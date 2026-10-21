@@ -40,8 +40,9 @@ test("fails an affected diff containing uncovered executable source", () => {
 });
 
 test("promotion accepts only unchanged legacy executable files", () => {
-  const legacyFile = "apps/mobile/app.config.ts";
-  const legacyBlob = "c337970b5b246d1b48c6af35b43c97d7cae88ecb";
+  const legacyFile = "apps/mobile/metro.config.js";
+  const legacyBlob = "bd45634374cf12252e178079e42ec4c2cd6a68d1";
+  const legacyBaseline = new Map([[legacyFile, legacyBlob]]);
   const run = (_command, args) => {
     if (args[0] === "diff") return `${legacyFile}\n`;
     if (args[0] === "rev-parse") return `${legacyBlob}\n`;
@@ -49,12 +50,13 @@ test("promotion accepts only unchanged legacy executable files", () => {
   };
 
   assert.doesNotThrow(() =>
-    checkCoverageScope({ base: "base", head: "head", promotion: true, run })
+    checkCoverageScope({ base: "base", head: "head", promotion: true, legacyBaseline, run })
   );
 });
 
 test("promotion rejects a modified legacy executable file", () => {
-  const legacyFile = "apps/mobile/app.config.ts";
+  const legacyFile = "apps/mobile/metro.config.js";
+  const legacyBaseline = new Map([[legacyFile, "bd45634374cf12252e178079e42ec4c2cd6a68d1"]]);
   const run = (_command, args) => {
     if (args[0] === "diff") return `${legacyFile}\n`;
     if (args[0] === "rev-parse") return "0000000000000000000000000000000000000000\n";
@@ -62,8 +64,8 @@ test("promotion rejects a modified legacy executable file", () => {
   };
 
   assert.throws(
-    () => checkCoverageScope({ base: "base", head: "head", promotion: true, run }),
-    /apps\/mobile\/app\.config\.ts/
+    () => checkCoverageScope({ base: "base", head: "head", promotion: true, legacyBaseline, run }),
+    /apps\/mobile\/metro\.config\.js/
   );
 });
 
@@ -74,6 +76,7 @@ test("requires both git revisions for the coverage scope check", () => {
 test("accepts exact declarative exceptions and test sources", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
+      "apps/mobile/app.config.ts",
       "apps/mobile/eslint.config.js",
       "apps/mobile/jest.config.js",
       "apps/mobile/src/shared/ui/theme.ts",
@@ -89,7 +92,6 @@ test("accepts exact declarative exceptions and test sources", () => {
 test("rejects new executable source outside a coverage gate", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
-      "apps/mobile/app.config.ts",
       "apps/mobile/babel.config.js",
       "apps/mobile/metro.config.js",
       "apps/mobile/scripts/payment.mjs",
@@ -97,7 +99,6 @@ test("rejects new executable source outside a coverage gate", () => {
       "packages/api-types/src/runtime.ts",
     ]),
     [
-      "apps/mobile/app.config.ts",
       "apps/mobile/babel.config.js",
       "apps/mobile/metro.config.js",
       "apps/mobile/scripts/payment.mjs",

@@ -1,22 +1,22 @@
-/**
- * @jest-environment node
- */
+// Lancé par node:test et non par Jest : la CLI ESLint charge sa configuration par
+// import dynamique et n'a pas besoin de l'environnement Expo.
+import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
+import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 
-const mobileRoot = path.resolve(__dirname, "..");
-const fixtureRoot = path.join(__dirname, "fixtures", "fsd");
+const testRoot = path.dirname(fileURLToPath(import.meta.url));
+const mobileRoot = path.resolve(testRoot, "..");
+const fixtureRoot = path.join(testRoot, "fixtures", "fsd");
 
-type LintResult = { filePath: string; messages: { ruleId: string | null; message: string }[] };
-
-// La CLI ESLint charge sa configuration par import dynamique, impossible dans la VM Jest.
-function lintFixtures(): Map<string, string[]> {
+function lintFixtures() {
   const eslint = path.join(mobileRoot, "node_modules", ".bin", "eslint");
   const run = spawnSync(eslint, ["--format", "json", fixtureRoot], {
     cwd: mobileRoot,
     encoding: "utf8",
   });
-  const results = JSON.parse(run.stdout) as LintResult[];
+  const results = JSON.parse(run.stdout);
   return new Map(
     results.map((result) => [
       path.relative(fixtureRoot, result.filePath),
@@ -29,16 +29,14 @@ function lintFixtures(): Map<string, string[]> {
 
 const errorsByFile = lintFixtures();
 
-function boundaryErrors(file: string): string[] {
+function boundaryErrors(file) {
   const errors = errorsByFile.get(file);
-  if (!errors) {
-    throw new Error(`Fixture not linted: ${file}`);
-  }
+  assert.ok(errors, `Fixture not linted: ${file}`);
   return errors;
 }
 
 describe("Feature-Sliced Design boundaries", () => {
-  it.each([
+  for (const file of [
     "app/index.ts",
     "src/pages/home/index.ts",
     "src/features/login/model/login.ts",
@@ -46,11 +44,13 @@ describe("Feature-Sliced Design boundaries", () => {
     "src/entities/user/model/user.ts",
     "src/entities/user/index.ts",
     "src/shared/lib/format.ts",
-  ])("accepts downward imports through public APIs in %s", (file) => {
-    expect(boundaryErrors(file)).toEqual([]);
-  });
+  ]) {
+    it(`accepts downward imports through public APIs in ${file}`, () => {
+      assert.deepEqual(boundaryErrors(file), []);
+    });
+  }
 
-  it.each([
+  for (const [label, file] of [
     ["a lower layer importing a higher one", "src/entities/session/index.ts"],
     ["shared importing a slice", "src/shared/config/upward.ts"],
     ["two slices of the same layer", "src/entities/wallet/index.ts"],
@@ -58,7 +58,9 @@ describe("Feature-Sliced Design boundaries", () => {
     ["a route bypassing a slice public API", "app/deep.ts"],
     ["a file outside any FSD layer", "src/components/button.ts"],
     ["a JavaScript file making a deep import", "src/pages/home/legacy.js"],
-  ])("rejects %s", (_case, file) => {
-    expect(boundaryErrors(file)).not.toEqual([]);
-  });
+  ]) {
+    it(`rejects ${label}`, () => {
+      assert.notDeepEqual(boundaryErrors(file), []);
+    });
+  }
 });

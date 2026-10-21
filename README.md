@@ -7,7 +7,7 @@
 
 ## Stack
 
-Spring Boot 4.1 + React Native (Expo SDK 54) + Next.js 15 + PostgreSQL 15 —
+Spring Boot 4.1 + React Native (Expo SDK 58) + Next.js 15 + PostgreSQL 15 —
 monorepo Turborepo 2.3.
 
 > Les lignes de runtime sont fixées par
@@ -95,7 +95,7 @@ pnpm turbo run test --filter=...[origin/main]  # tests des apps modifiées seule
 ```
 kotiz/
 ├── apps/
-│   ├── mobile/          # RN/Expo SDK 54 — Cliente + Agent (un seul codebase), FSD
+│   ├── mobile/          # RN/Expo SDK 58 — Cliente + Agent (un seul codebase), FSD
 │   ├── backend/         # Spring Boot 4.1 + Spring Modulith — un module par contexte actif
 │   └── admin-web/       # Next.js 15 — Console OPS / RISK / FINANCE / PO / ADMIN / AUDITOR
 ├── packages/

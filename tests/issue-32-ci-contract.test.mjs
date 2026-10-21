@@ -65,7 +65,7 @@ test("declarative coverage exceptions are explicit and narrowly scoped", () => {
   assert.match(policy, /packages\/design-tokens\/tokens\.json/);
   assert.doesNotMatch(policy, /apps\/backend.*exception/i);
   assert.doesNotMatch(policy, /baseline|grandfather/i);
-  assert.match(read("apps/mobile/package.json"), /"test": "jest --coverage"/);
+  assert.match(read("apps/mobile/package.json"), /"test": "jest --coverage && /);
   assert.match(read("apps/mobile/jest.config.js"), /lines: 80, functions: 80, branches: 80/);
   assert.match(
     read("packages/design-tokens/package.json"),

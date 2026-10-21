@@ -28,7 +28,7 @@ approuvé le 21 octobre 2026.
 globaux) ; les autres couches vivent sous `src/`. Les groupes `(client)` et
 `(agent)` de l'ADR-0019 sont conservés. Les règles sont vérifiées par
 `eslint-plugin-boundaries` dans `pnpm --filter mobile lint`, et le test
-`test/fsd-boundaries.test.ts` prouve qu'une violation est détectée.
+`test/fsd-boundaries.test.mjs` prouve qu'une violation est détectée.
 
 ## Admin Next.js
 

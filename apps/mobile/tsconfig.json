@@ -8,7 +8,7 @@
     "noImplicitReturns": true,
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
+    "types": ["node", "jest"],
     "paths": {
       "@/*": ["./src/*"],
       "@assets/*": ["./assets/*"]
