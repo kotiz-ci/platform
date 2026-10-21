@@ -154,3 +154,19 @@ Construits dans le canvas (`kotiz-app.css`, préfixe `ld-`, tokens seulement). L
 
 - Retrait en espèces et retrait Mobile Money assisté (lot E) ; récupération du PIN, aide, notifications (lot F) : « Bientôt ici ».
 - Autre numéro que le numéro vérifié : post-MVP, aucun bouton.
+
+## Design System v12 dans le canvas (21 octobre 2026, version 32)
+
+Le canvas utilise maintenant la copie v12 du DS. Le détail (remplacements, copies harmonisées, éléments gardés en version canvas) est dans [screens.md](screens.md) § « Design System v12 installé dans le canvas ». Au lot D, D-05 passe à `StepTracker` `sent`. D-02 et D-03 restent en version canvas, en attendant `AmountField` et `SummaryFlow` v2.
+
+## Design System v15 dans le canvas (21 octobre 2026, version 33)
+
+Le canvas est rebranché sur les composants de la v15. Le détail (composants, décisions appliquées, éléments gardés en version canvas, contrôles) est dans [screens.md](screens.md) § « Design System v15 rebranché dans le canvas ». Au lot D :
+
+- D-05 : `ResultScreen`, « Pris sur ton solde » en `amountNote` ;
+- D-03 : `SummaryFlow` v2 (portefeuille « Mon solde ») ;
+- D-00, D-07 : `BottomSheet` ; D-01 : `OptionRow` ;
+- D-04 : `PinPad.disabled` et récapitulatif en `DetailList` ; l'écran reste composé à la main ;
+- carte solde : `BalanceCard.pendingOut` ;
+- D-04 hors connexion : phrase standard, sans « Réessaie quand tu captes. » ;
+- D-02 reste en version canvas.

@@ -131,3 +131,143 @@ La règle « écran de résultat plein écran » (DESIGN.md, Layout) vaut pour t
 - **A · E07 Échec** : croix « Fermer » (→ E01), pastille rouge + croix, `StatusPill` Échoué, « Ton compte n'est pas créé », annonce assertive ; « Réessayer » + « Besoin d'aide ? » en bouton texte.
 - **A · E08 / E08′ Compte créé / accès activé** : « Plus tard » gardé en haut à droite (décision du lot A, à la place de la croix), pastille coche alignée à gauche, « C'est fait, Fatou ! », « Créer mon épargne » en principal et « Faire mon premier dépôt » en bouton texte.
 - Contrôles : planches A · E06-E07, A · E08 et A · Contrôle 320 (un bouton principal, cibles ≥ 44, texte ≥ 14, aucun débordement) ; les autres planches du lot A ont le même rendu qu'avant. À reporter au handoff du lot A.
+
+## Design System v12 installé dans le canvas (21 octobre 2026, canvas version 32)
+
+Cette étape applique la proposition n° 1 de l'[audit des composants](audit-composants.md), validé par le PO. La copie du DS dans le canvas (`project/ds/kotiz/`) passe de la v9 à la **v12** publiée (`1792593410-9a1e`, 33 composants) : `bundle.js`, `bundle.css` et `README.md` sont remplacés ; `tokens.json` était déjà identique. Avec le seul nouveau bundle, les planches s'affichent comme avant, à l'exception du pictogramme animé « Envoi… ».
+
+**Éléments remplacés par les composants `Kotiz.*`** (textes et décisions inchangés) :
+
+- `RootHeader` (+ `MaskToggle`) : B · B01, C-11 (à la place de `lb-root-head` + `lb-eye`).
+- `MaskToggle` à côté du `PageHeader` : B · B07, sa copie au lot C, C-12, C-13 (à la place de `lb-eye`).
+- `GoalTypeGrid` + `GoalTypeOption` : B · B02 (à la place de `lb-types`).
+- `AmountField` : B · B03, B · B08 (libellé visible), B · B09 (puce large « Tout remettre »), C-07 (puce « Tout mon solde »).
+- `DateChoice` : B · B04, B · B08 (à la place de `lb-dates`).
+- `TextField` multiligne : B · B05 et B · B08 (note), C-14 (« Ajoute un mot »), C-16 (« Dis pourquoi »).
+- `SummaryPreview` : B · B06 (à la place de `lb-hero`).
+- `SummaryFlow` : B · B10, C-08 (à la place de `lb-flowsum`). Sur C-08, la colonne des libellés prend la largeur du DS (88) au lieu de 50 %. Les nœuds Depuis / Vers passent par `dc-props`, car le runtime réserve l'attribut `from`.
+- `ConfirmDialog` : B · B14, B · B16, C-14 « Quitter sans envoyer ? » (à la place de `lb-dialog`). Seule une règle de placement reste dans `kotiz-app.css`.
+- `GoalRow` `state="reached"` / `"closed"` : B · B01, la copie d'A · H01 aux lots B et C, C-10 (lignes jusque-là recomposées à la main). Sur C-10, la ligne d'une épargne atteinte affiche maintenant son montant, comme les autres lignes.
+- `StepTracker` `sent` : A · E07 « On vérifie ton compte », B · B12, C-04 (« Envoyée », « Validée »), C-05, C-09, C-12 et D-05. Sur A · E07, « Demande envoyée » dit maintenant **« Envoyée »** au lieu de « Fait » (décision n° 3). Plus aucun écran d'attente n'a d'étape « Fait ».
+
+**Copies d'écrans harmonisées** :
+
+- A · E08 : les copies des lots B et C ont maintenant le même rendu plein écran que A · E08, avec « Plus tard » en haut à droite.
+- A · H01 : dans les quatre copies (A, B, C, D), la liste « Dernières opérations » utilise la même composition de ligne (`lc-tx`, future `TransactionRow` v2). Chaque ligne a un sous-titre origine → destination, et le signe n'apparaît que si l'opération est faite (critique C n° 8). Au lot A, cela ajoute « Vers ton solde » / « Depuis ton solde » sous les trois lignes, et la ligne en attente « Vers École Awa » perd son signe « − ». Ces textes sont ceux des raccords validés du lot C.
+- La `TransactionRow` v12 du DS affiche toujours un signe et n'a pas de sous-titre. Elle n'est donc plus utilisée sur l'accueil ; B · B07 la garde pour ses mouvements.
+
+**Gardés provisoirement en version canvas.** Pour ces éléments, le composant v12 ne couvre pas un ajout validé ; la session Design System prépare les nouvelles versions :
+
+- C-03 et D-03 gardent `lb-flowsum` (nœud avec logo et numéro, « Pris sur ton … », deux temps numérotés, pictogramme portefeuille), en attendant `SummaryFlow` v2.
+- C-02 (montants rapides sélectionnables) et D-02 (toute la ligne du montant ouvre le clavier, critique D n° 11) gardent leur champ, en attendant `AmountField` v2.
+- Sur B03, B09 et C-07, le champ montant vide garde la cible étroite du DS (23 × 48). La même correction est à faire dans le DS.
+- B · B07 et sa copie gardent la progression `lb-prog`. Le `GoalProgress` v12 écrit « pour atteindre ton objectif », alors que le texte validé est « pour ton objectif », et l'écran a des phrases en plus.
+- C-12 garde le trajet Depuis ↓ Vers sans carte et les étapes « Pas fait », en attendant `FlowPath` et `StepTracker` `failed`.
+- C-14 garde les motifs en `lb-dates`, en attendant un `ChoiceList` à concevoir.
+- Restent aussi en version canvas, comme composants nouveaux ou évolutions listés dans l'audit (n° 2 à 17) :
+  - lignes d'opération `lc-tx`, lignes de choix `lc-row` ;
+  - carte solde « Retrait en attente » (C, D) ;
+  - résultats plein écran `lc-res`, étapes numérotées ;
+  - reçu, fil du dossier, puces de filtre ;
+  - squelettes, refus + aide, pavé PIN gelé (D-04).
+
+**Contrôles.**
+
+- Les textes des 55 planches ont été comparés avant / après : seuls changent les points ci-dessus.
+- Le script de contrôle a tourné à 360 et 320 sur les planches modifiées : un bouton principal hors voile, texte ≥ 14, aucun débordement. Seule exception sur les cibles : le champ montant vide, signalé plus haut.
+- Parcours rejoués au clic dans Main : B-P1, B-P4, B-P5, B-P6, C-P3, C-P7, A-P5, D-P1.
+- Pas vérifié : le rendu dans claude.ai, un vrai Android.
+
+## Design System v15 rebranché dans le canvas (21 octobre 2026, canvas version 33)
+
+Étape 2 de l'[audit des composants](audit-composants.md), validée par le PO. La copie du DS dans le canvas (`project/ds/kotiz/`) passe à la **v15** publiée (`1792595297-f394`) :
+
+- `bundle.js`, `bundle.css`, `README.md` et `tokens.json` sont remplacés ;
+- les jetons `size-logo-*` et `opacity-disabled` sont ajoutés à `kotiz-tokens.css`.
+
+Aucun composant archivé (`AmountInput`, `GoalCard`, `OperationStatus`, `IllustratedResult`) n'est utilisé dans le canvas. Les textes validés ne changent pas, sauf les phrases hors connexion standard demandées (voir plus bas).
+
+**Rebranchements par composant** :
+
+- `ResultScreen` : A · E07 (en cours, inconnu, échec), A · E08 et ses copies aux lots B et C, B · B12, B · B17, C-05, C-09, D-05. La pastille 64 remplace partout l'ancien badge 80 ; seul B17 garde son illustration (« Épargne créée »). A · E08 n'a pas d'illustration de résultat dans le canvas : il prend la pastille.
+- `ActionZone` : toutes les zones d'action fixes des lots A à D. Le filet n'apparaît que si le contenu défile (`divider="auto"`, ce qui remplace `lc-foot-line`). Les raisons de bouton désactivé passent par `reason` (B10, C-03, C-08, C-14).
+- « Contacter l'aide » devient un bouton texte de la zone d'action, et n'est plus un lien dans le contenu : A02 (numéro déjà connu), B10, C-03 et C-08 (refus), C-15, feuille C-04 « Le dépôt n'arrive pas ? ».
+- `TransactionRow` v2 : les quatre copies d'A · H01, B · B07 et sa copie au lot C, C-11 Opérations. La ligne « Pas entré » de B07 et la ligne de retrait en attente sont incluses.
+- `BottomSheet` (`onClose`, `options`, `actions`) et `OptionRow` :
+  - feuilles S01, B13, B15 (et sa copie), C-00, C-06, C-10, C-04 aide, C-16, D-00 et D-07 ;
+  - listes d'opérateurs C-01 et D-01 ;
+  - le bouton de fermeture fait main disparaît.
+- `Amount` : montants des résultats, de B07 (et copie), C-12, C-13, des lignes de détail, de la carte solde et des lignes d'opération. Les montants pris dans une phrase restent du texte.
+- `SummaryFlow` v2 (`FlowPath` + `DetailList`) : B10, C-03, C-08, D-03. C-03 et D-03 quittent `lb-flowsum` : nœud logo avec le numéro, « Pris sur ton … » en `amountNote`.
+- `FlowPath` seul : C-12.
+- `DetailList` remplace les lignes `lb-sum-row` :
+  - B12, B17, C-05, C-09, D-05 ;
+  - C-12, reçu C-13, C-15 ;
+  - récapitulatif du PIN D-04.
+- `BalanceCard.pendingOut` remplace la carte « Retrait en attente » recomposée à la main (copies d'A · H01 aux lots C et D).
+- `SectionHeader` (« Tout voir ») : copies d'A · H01, B07 et sa copie.
+- `PageHeader.trailing` porte l'œil à la place de `lb-head-row` : B07, C-12, C-13.
+- `PinPad.disabled` remplace `ld-pad-off` sur D-04.
+- Conventions (décision 9) : `onPress` partout, icônes système intégrées (retour, fermer, effacer, chevron, œil et agrandir de la carte solde). L'œil de `MaskToggle` / `RootHeader`, la cloche de `HomeHeader` et le chevron d'`InfoLine` gardent leur URL : le DS v15 ne les intègre pas.
+
+**Décisions appliquées** :
+
+- Hors connexion (décision 5) : `Kotiz.OFFLINE` partout.
+  - `stale('14:32')` : accueil, B01, B07, C-01, C-11, D-01, D-02.
+  - `blocked` : A · E02 et B · B06 (au lieu de « Pas de connexion. » + « Ta saisie est gardée. »), C-03, C-08, D-03, D-04 (au lieu de « … Réessaie quand tu captes. »).
+  - `unavailable` : C-12 (au lieu de « Détail indisponible hors connexion. »).
+  - Les phrases du DS ont l'apostrophe typographique (« n’a »).
+- « Mon solde » (décision 6) : portefeuille neutre du DS (`kind: 'wallet'`) dans B10, B12, C-03, C-05, C-06, C-08, C-09, C-12, C-13 et D-03.
+- Statut unique (décision 9) : « À reprendre » est un `failed` avec son libellé. Écrans touchés :
+  - lignes C-11 et B07 ;
+  - pastilles C-12, C-14, C-15 ;
+  - résultat partiel de C-05 (rouge au lieu d'ambre).
+  - Une ligne en attente ou échouée n'a plus de signe : B07 en attente, C-11 « À reprendre ».
+
+**Effets visibles à connaître** :
+
+- La carte solde ajoute le mot « En attente » à côté de « Retrait en attente ».
+- D-03 affiche « Un instant… » (`rowsLoading`) pendant le calcul des frais, au lieu du squelette.
+- C-03 : les deux temps numérotés passent sous les lignes Frais / Arrive.
+- Masqué : « ••• » au lieu de « ••• ••• ».
+- Les actions des feuilles suivent l'ordre du DS : principal, puis boutons texte.
+
+**Gardés en version canvas, et pourquoi** (CSS du canvas : 377 → 250 règles, 47 → 31,5 Ko) :
+
+- Écrans PIN A · E06/E07, A · C01, B · B11, D-04 : `PinScreen` v15 n'a ni phrase libre sous le titre, ni libellé du bouton de blocage (il impose « Terminé »), ni variante connexion. Sans ces ajouts, il faudrait changer des textes validés :
+  - « Ce code protège ton argent… » ;
+  - « 2 000 F d'École Awa vers ton solde » ;
+  - « Voir mon épargne » ;
+  - « Rien n'a été pris sur ton solde. »
+    Ces écrans restent composés de `PinSlots`, `PinPad` et `Message`.
+- C-02 et D-02 : `AmountField` n'a pas changé en v15 (montants rapides, toute la ligne cliquable). La cible du champ vide reste à 23 × 48 (B03, B09, C-02, C-07, D-02).
+- B07 et sa copie : progression `lb-prog`. Le texte de `GoalProgress` reste différent du texte validé (question PO ouverte).
+- C-12 : étapes « Pas fait » (`lc-steps`), car `StepTracker` n'a pas d'état `failed`.
+- C-14 : motifs en `lb-dates`, en attendant `ChoiceList`.
+- D-02 : ligne « Depuis : Mon solde » avec un portefeuille dessiné, car le DS n'exporte pas son portefeuille hors des composants.
+- Lignes liées « Lié à cette opération » (C-12, C-15) : ce ne sont pas des lignes de choix.
+- A04 (application agente) : garde son badge, il n'est pas dans la liste des résultats plein écran.
+- Composants encore à concevoir (audit, n° 2 à 17) :
+  - squelettes ;
+  - puces de filtre C-11 ;
+  - reçu C-13, fil du dossier C-15, rappel d'opération C-14 ;
+  - étapes numérotées C-03, C-17, D-06 ;
+  - puce de type B03 à B08.
+- Cadre du prototype : rôles de texte `la-*`, menu, bandeau, planches, héros E01, Q01, simulation de l'opérateur.
+- Placement seulement : voile des feuilles (`la-scrim`) et du `ConfirmDialog`.
+
+**Contrôles.**
+
+- Textes des 55 planches comparés avec la v32. Seuls changent les points ci-dessus et l'ordre de lecture des composants du DS.
+- Script de contrôle à 360 et 320 sur les 55 planches : mêmes alertes qu'en v32, toutes antérieures à cette étape :
+  - case à cocher 24 × 24 d'E05 ;
+  - mention 11 px de Q01 ;
+  - bouton principal sous le voile des feuilles et dialogues ;
+  - champ montant vide 23 × 48.
+- Les 55 parcours de Main s'ouvrent sans erreur. Rejoués au clic jusqu'au bout :
+  - A-P1 (jusqu'à C-00), A-P5 → D-P1 → reçu → Opérations ;
+  - C-P1, B-P1 → C-06 → C-08 → C-09 ;
+  - B-P4 (B12), B-P5 (B13), C-P5 (C-10) ;
+  - D-P2″ (carte en attente → C-12), D-P4 (PIN faux puis bloqué).
+- Défaut trouvé, déjà présent en v32 : B-P1 → « Mettre de l'argent » (lot C) → « Remettre sur mon solde » → B11 reste sur « Envoi… ». L'épargne créée au lot B n'est pas retrouvée au retour du lot C. Non corrigé ici.
+- Pas vérifié : le rendu dans claude.ai, un vrai Android.

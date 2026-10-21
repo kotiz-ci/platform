@@ -167,3 +167,28 @@ Au MVP, le dépôt part toujours du numéro vérifié de la cliente (Décision P
 
 - `test-lot-c.md` nomme les scénarios « Dépôt en attente » et « Frais inconnus » : dans le menu du prototype, ce sont C-P1″ et C-P1‴.
 - Lots D, E, F : « Bientôt ici » dans le prototype.
+
+## Design System v12 dans le canvas (21 octobre 2026, version 32)
+
+Le canvas utilise maintenant la copie v12 du DS. Le détail (remplacements, copies harmonisées, éléments gardés en version canvas) est dans [screens.md](screens.md) § « Design System v12 installé dans le canvas ». Au lot C :
+
+- C-07 : `AmountField` ;
+- C-08 : `SummaryFlow` ;
+- C-10 : `GoalRow` atteinte ;
+- C-11 : `RootHeader` ;
+- C-12, C-13 : `MaskToggle` ;
+- C-14, C-16 : `TextField` multiligne ; C-14 : `ConfirmDialog` ;
+- C-04, C-05, C-09, C-12 : `StepTracker` `sent` ;
+- copies d'E08 et de H01 harmonisées ;
+- restent en version canvas : C-02, C-03, et le trajet et les étapes de C-12.
+
+## Design System v15 dans le canvas (21 octobre 2026, version 33)
+
+Le canvas est rebranché sur les composants de la v15. Le détail (composants, décisions appliquées, éléments gardés en version canvas, contrôles) est dans [screens.md](screens.md) § « Design System v15 rebranché dans le canvas ». Au lot C :
+
+- C-05, C-09 et la copie d'E08 : `ResultScreen` ; le résultat partiel « À reprendre » passe au rouge (décision 9) ;
+- C-03, C-08 : `SummaryFlow` v2 ; C-12 : `FlowPath`, `Amount`, `DetailList` ;
+- C-00, C-06, C-10, C-16, aide de C-04 : `BottomSheet` + `OptionRow` ; C-01 : `OptionRow` ;
+- C-11 : `TransactionRow` v2 ;
+- C-12 hors connexion dit maintenant « Cet écran a besoin d'internet. Réessaie plus tard. » ;
+- restent en version canvas : C-02, les étapes « Pas fait » de C-12, les motifs de C-14, le reçu et le fil du dossier.

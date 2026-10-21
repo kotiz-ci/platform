@@ -152,6 +152,7 @@ components:
     backgroundColor: "{colors.surface-information}"
     textColor: "{colors.text-primary}"
     typography: "{typography.label}"
+    rounded: "{rounded.sm}"
     height: "48px"
     width: "108px"
   option:
@@ -424,6 +425,58 @@ components:
     typography: "{typography.label}"
     rounded: "{rounded.full}"
     height: "32px"
+  amount-display:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.amount}"
+  amount-display-muted:
+    textColor: "{colors.text-secondary}"
+    typography: "{typography.label}"
+  section-header:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.section}"
+    height: "48px"
+  action-zone:
+    backgroundColor: "{colors.surface}"
+    padding: "16px 20px"
+  action-zone-reason:
+    textColor: "{colors.text-secondary}"
+    typography: "{typography.body}"
+  option-row:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.label}"
+    height: "64px"
+  option-row-selected:
+    backgroundColor: "{colors.surface-brand-subtle}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.sm}"
+  operator-logo:
+    width: "64px"
+    height: "48px"
+  operator-logo-sm:
+    width: "32px"
+    height: "24px"
+  flow-path:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.label}"
+  detail-list-row:
+    textColor: "{colors.text-primary}"
+    typography: "{typography.body}"
+    height: "48px"
+  result-screen:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.title}"
+    padding: "20px"
+  result-screen-pastille:
+    backgroundColor: "{colors.surface-brand-subtle}"
+    rounded: "{rounded.full}"
+    size: "64px"
+  pin-screen:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
+    typography: "{typography.title}"
+    padding: "20px"
 ---
 
 <!-- markdownlint-disable MD025 -->
@@ -525,7 +578,7 @@ Tout écran de résultat, d'attente après envoi ou d'échec est une **page plei
 - zone d'action fixe en bas (règle ci-dessus) ;
 - annonce lecteur d'écran `polite` pour fait et attente, `assertive` pour un échec.
 
-Écrans concernés : A · E07 (en cours, inconnu, échec), A · E08 / E08′, B · B12, B · B17, C-05, C-09, D-05. Composition de référence : C-05 (canvas « KOTIZ — App cliente »). Le Design System (`OperationStatus`, `IllustratedResult`, carte centrée) reste à aligner sur cette règle.
+Écrans concernés : A · E07 (en cours, inconnu, échec), A · E08 / E08′, B · B12, B · B17, C-05, C-09, D-05. Composition de référence : C-05 (canvas « KOTIZ — App cliente »). Le Design System applique cette règle avec `ResultScreen` (audit des composants, 21 octobre 2026) ; `OperationStatus` et `IllustratedResult` sont archivés.
 
 ### Navigation MVP (correction F01)
 
@@ -550,7 +603,7 @@ Langage **plat**. La profondeur est réservée à ce qui passe au-dessus du cont
 | Token  | Valeur | Usage                                                                                 |
 | ------ | ------ | ------------------------------------------------------------------------------------- |
 | `xs`   | 6      | Case à cocher dessinée de 24 uniquement (`CheckOption`)                               |
-| `sm`   | 12     | Petits éléments : pastille d'icône de ligne, fond blanc du QR                         |
+| `sm`   | 12     | Petits éléments : pastille d'icône de ligne, fond blanc du QR, montants rapides       |
 | `md`   | 16     | Boutons, champs, options, messages, pastille de navigation                            |
 | `lg`   | 20     | Cartes de projet                                                                      |
 | `xl`   | 24     | Carte solde, dialogues, résultats, bottom sheet (coins hauts), bouton icône d'en-tête |
@@ -573,7 +626,7 @@ Libellé permanent au-dessus (`label`), zone de saisie 56, aide en dessous en `b
 
 ### Montant — `65:524` (base `65:497`), saisie active `211:982`, montants rapides `211:988/990/992`, clavier `211:994…1014`
 
-Le montant saisi est en `amount` (34 Bold), la devise à côté en 16, le libellé au-dessus en 14. Montants rapides : 108 × 48, fond `surface-information`, bordure `border-default`. Le clavier numérique (touches 108 × 52) n'est retenu que si le clavier système ne suffit pas (F09 ouvert). Montants rapides et touches utilisent un rayon brut de 8, hors de l'échelle des rayons : à rattacher à un token lors de la migration (pas de valeur choisie ici).
+Le montant saisi est en `amount` (34 Bold), la devise à côté en 16, le libellé au-dessus en 14. Montants rapides : 108 × 48, fond `surface-information`, bordure `border-default`. Le clavier numérique (touches 108 × 52) n'est retenu que si le clavier système ne suffit pas (F09 ouvert). Montants rapides : rayon `rounded.sm` (12) (**Décision PO du 21 octobre 2026**, remplace le rayon brut de 8 de la source) ; touches du pavé PIN : `rounded.md` (16). `AmountInput` est archivé : la saisie passe par `AmountField`.
 
 ### Carte solde — `13:589` (Visible `13:562` / Masqué `13:588`, base `28:931`)
 
@@ -619,7 +672,7 @@ Pastille ronde colorée + illustration 48, libellé `label` toujours visible, ci
 
 ### Ligne d'opération — `35:1103` (Dépôt réussi `13:657`, Dépôt échoué `25:1058`, Retrait réussi `25:1070`)
 
-Ligne de 40 de haut, espacées de 16 ; la zone tactile de la ligne entière fait au moins 48. Pastille d'icône 40 (rayon 12), titre `label`, date en `caption`, montant à droite en `label` (`+` pour un apport, `−` pour une sortie). **Décision PO du 19 octobre 2026** : **le statut s'écrit en mots, en 14, avec son pictogramme** (« Fait » + coche, « Échoué » + croix, « En attente » + horloge, « Non débité » + croix), avec sa couleur sémantique en renfort ; pas seulement en couleur. **Un seul mot pour le statut fait dans tout le produit : « Fait »** (remplace « Réussi », critique du lot A du 19 octobre 2026). Pastille d'icône : vert doux pour un apport, `surface-canvas` pour une sortie, `surface-error` réservé à l'échec : un retrait réussi ne ressemble jamais à un échec. Une affectation interne solde ↔ épargne ne doit pas ressembler à un apport. La ligne desktop `159:887` (940 px) n'est pas une source mobile.
+Ligne de 40 de haut, espacées de 16 ; la zone tactile de la ligne entière fait au moins 48. Pastille d'icône 40 (rayon 12), titre `label`, date en `caption`, montant à droite en `label` (`+` pour un apport, `−` pour une sortie). **Décision PO du 19 octobre 2026** : **le statut s'écrit en mots, en 14, avec son pictogramme** (« Fait » + coche, « Échoué » + croix, « En attente » + horloge, « Non débité » + croix), avec sa couleur sémantique en renfort ; pas seulement en couleur. **Un seul mot pour le statut fait dans tout le produit : « Fait »** (remplace « Réussi », critique du lot A du 19 octobre 2026). Pastille d'icône : vert doux pour un apport, `surface-canvas` pour une sortie, `surface-error` réservé à l'échec : un retrait réussi ne ressemble jamais à un échec. Une affectation interne solde ↔ épargne ne doit pas ressembler à un apport. La ligne desktop `159:887` (940 px) n'est pas une source mobile. **v2 (21 octobre 2026)** : voir « Audit des composants » (sous-titre, note, variantes, signe seulement quand c'est fait, « À reprendre »).
 
 ### En-têtes — `28:1453` (Accueil), `28:1693` (Page)
 
@@ -633,11 +686,11 @@ Pictogramme + titre `label` + détail `body`/`caption`, rayon 16. Le chargement 
 
 ### Statut d'opération — `158:917`
 
-Pictogramme + titre `title` + détail. Préréglages à créer (F07 ouvert) : succès, en attente, échec connu, incertain. **Un délai dépassé ne produit jamais un succès** : il produit « en attente » ou « incertain » avec un suivi.
+Pictogramme + titre `title` + détail. **Un délai dépassé ne produit jamais un succès** : il produit « en attente » avec un suivi. Composant `OperationStatus` archivé le 21 octobre 2026 : remplacé par `ResultScreen`.
 
 ### Dialogue de confirmation — `66:591` ; résultats — `66:652`, illustrés `120:866` (épargne créée) et `129:871` (création indisponible)
 
-Dialogue : titre, description, primaire + secondaire, en overlay. Il ne confirme que ce qui est visible dans un récapitulatif (F08 ouvert). Résultat simple pour un retour local ; résultat illustré pour un moment majeur (épargne créée, compte créé), jamais pendant l'attente.
+Dialogue : titre, description, primaire + secondaire, en overlay. Il ne confirme que ce qui est visible dans un récapitulatif (F08 ouvert). Résultat simple pour un retour local ; résultat illustré pour un moment majeur (épargne créée, compte créé), jamais pendant l'attente. Les deux passent par `ResultScreen` (`IllustratedResult` archivé).
 
 ### Autres sources réutilisables
 
@@ -672,14 +725,14 @@ Nés des maquettes du lot B (section « Lot B — Épargne et retour au solde »
 - **`RootHeader` + `MaskToggle`** — titre de racine 24 et œil 48 (barré quand c'est masqué, `aria-pressed`) ; l'œil se place aussi à côté d'un `PageHeader`.
 - **`GoalTypeOption`** dans **`GoalTypeGrid`** — grille 2 colonnes, illustration 48 + libellé 14, cible ≥ 96 ; sélection vert doux + bordure 2.
 - **`GoalProgress`** — détail d'une épargne : montant `amount`, devise `section` secondaire, « sur X F », barre 8 + %, phrase de reste ; cible atteinte : drapeau + « Objectif atteint » en `text-primary` (jamais la coche verte d'un « Fait ») ; masqué sans chiffre.
-- **`AmountField`** — `AmountInput` avec vraie saisie numérique (espaces à la frappe), raison ou erreur sous le trait, puce large « Tout remettre » sélectionnable. Le rayon 8 des puces de montant reste à rattacher à un token.
+- **`AmountField`** — `AmountInput` avec vraie saisie numérique (espaces à la frappe), raison ou erreur sous le trait, puce large « Tout remettre » sélectionnable. Les puces de montant ont le rayon 12 (décision PO du 21 octobre 2026).
 - **`DateChoice`** — « Pour quand ? » : une option par ligne, 48, sélection vert doux + bordure 2 ; « Choisir une date » ouvre un `TextField type="date"`.
 - **`ConfirmDialog`** — voile `surface-scrim`, carte rayon 24 + `shadow-overlay`, titre 24, primaire + secondaire empilés ; seulement quand une perte réelle est possible.
 - **`GoalRow`** (évolution) — `state` `reached` (« Objectif atteint » neutre + drapeau, barre pleine, sans coche verte) et `closed` (« Fermée le … », sans montant ni barre) ; un filet entre les lignes quel que soit l'enveloppe.
 - **`StepTracker`** (évolution) — étape `sent` « Envoyée », distincte de « Fait » : aucun succès pendant une attente.
 - **`TextField`** (évolution) — `multiline` pour une note sur 3 lignes.
 - **Illustrations** : Santé devient un cœur (sans croix), Imprévus un coffret de réserve (sans bouclier), drapeau « objectif atteint » ajouté (groupe Objectifs). L'ancienne Santé (trousse à croix) et l'ancienne Précaution (bouclier) sont archivées (groupe Archives), sans suppression.
-- **Laissés de côté** : `DateField` (le sélecteur natif Android reste à confirmer côté dev ; `TextField type="date"` suffit en attendant) et la variante « mouvement interne » de `TransactionRow` (« Vers mon solde », « Depuis mon solde »), à décider avec le lot C.
+- **Laissés de côté** : `DateField` (le sélecteur natif Android reste à confirmer côté dev ; `TextField type="date"` suffit en attendant) La variante « mouvement interne » de `TransactionRow` est livrée par l'audit du 21 octobre 2026 (`variant: 'internal'`).
 
 ### Illustrations d'action du lot C (décision PO du 19 octobre 2026)
 
@@ -688,6 +741,50 @@ Dessinées pour le Design System dans le style des actions Déposer / Retirer / 
 - **`Actions/mobile-money.svg`** — « Mobile Money » : un téléphone, une pièce sur l'écran, une flèche `action-primary` qui entre. Aucun logo ni nom d'opérateur : l'opérateur apparaît ensuite avec son logo officiel (groupe Operateurs).
 - **`Actions/agente.svg`** — « Auprès d'une agente » : une agente KOTIZ de quartier, même peau et même style que Fatou dans les résultats, téléphone en main. Sans uniforme ni logo inventé.
 - Tailles 48 (par défaut), 56 et 64, même dessin mis à l'échelle. Usages : feuille C-00 « Comment tu veux déposer ? », C-06 « D'où vient l'argent ? », C-17 « Déposer auprès d'une agente ».
+
+### Audit des composants (décisions PO du 21 octobre 2026)
+
+Source : [audit des composants](docs/design/refonte-parcours/audit-composants.md), validé par le PO. Publié dans le Design System Claude Design (version 15). Aucune couleur nouvelle. Le canvas « KOTIZ — App cliente » reste à rebrancher sur ces composants par sa propre session.
+
+#### Conventions (décision 9)
+
+- `onPress` pour une action, `onChange` pour une valeur (`onClick` reste accepté le temps de la migration).
+- Icônes système intégrées aux composants (retour, fermer, chevron, effacer, œil, agrandir, cloche, mouvement interne) : plus d'URL d'icône en prop.
+- Un seul type de statut d'opération : `done | pending | failed` (+ `sent` pour une étape de `StepTracker`). « À reprendre », « Non débité » sont des libellés de `failed`.
+
+**Tokens ajoutés (décision 8)** : `size-logo-width` 64 × `size-logo-height` 48 (logo opérateur dans une option), `size-logo-sm-width` 32 × `size-logo-sm-height` 24 (logo dans un trajet ou une ligne de détail), `opacity-disabled` 0,4 (média ou pavé désactivé, toujours avec la raison écrite). `rounded.sm` (12) couvre les montants rapides.
+
+**Hors connexion (décision 5)** : trois phrases seulement, exposées dans `Kotiz.OFFLINE` :
+
+- « Mis à jour à {HH:MM} · hors connexion » (`stale(hhmm)`) ;
+- « Pas de connexion. Rien n'a été envoyé. » (`blocked`) ;
+- « Cet écran a besoin d'internet. Réessaie plus tard. » (`unavailable`).
+
+**Actions secondaires (décision 4)** : « Contacter l'aide » est un bouton texte de l'`ActionZone` ; « Tout voir » est le lien d'un `SectionHeader`.
+
+**« Mon solde » (décision 6)** : illustration neutre `Actions/mon-solde.svg` (porte-monnaie, tracé `#253238`, aplats gris de la palette, sans vert ni corail), intégrée aux composants par `kind: 'wallet'`.
+
+#### Nouveaux composants
+
+- **`Amount`** — `value`, `masked` (« ••• », lu « Montant masqué »), `size` `amount | label | body`, `sign` `+ | −`, `currency` `FCFA | F`, `muted`. Utilisé par `BalanceCard`, `GoalRow`, `TransactionRow`, `SummaryFlow`, `ResultScreen`.
+- **`ActionZone`** — `children`, `divider` `auto | always | none` (filet automatique seulement quand le contenu au-dessus défile), `reason` (raison du bouton désactivé, lue avec lui par TalkBack), `align` `stretch | center`, `background` `surface | canvas`.
+- **`SectionHeader`** — `title`, `action` (`label`, `onPress`).
+- **`OptionRow`** — `label`, `sub`, `media` (`kind` `logo | illustration | pastille | wallet`, `src`), `disabled` + `reason`, `trailing` `chevron | none | nœud`, `selected` (vert doux + coche), `onPress`.
+- **`FlowPath`** — `from`, `to` (nœuds `kind` `illustration | logo | wallet`, `src`, `name`, `sub`, `dirLabel` : « Depuis », « Vers », « Pris sur… »), `label`.
+- **`DetailList`** — `rows` (`label`, `value`, `sub`, `media`, `emphasis`, `masked`, `empty`, `onEdit`, `editLabel`, `editAria`), `layout` `column | spread` (deux mises en page, décision 8), `divided`.
+- **`ResultScreen`** — fusion de `OperationStatus`, `IllustratedResult` et C-05 : `status` `done | pending | failed | progress`, `illustrationSrc` (seulement « Compte créé » et « Épargne créée », et seulement en `done` ; partout ailleurs la pastille 64), `pill` (`status`, `word` ; un « Fait » est retiré hors `done`), `title`, `subtitle`, `amount`, `masked`, `amountNote`, `header` (`onClose` : « × » en haut à gauche, `link`), `children`, `actions` (`primary`, `text[]`, `reason`). Jamais un succès pendant une attente.
+- **`PinScreen`** — `title`, `recap` (lignes `DetailList`), `state` `idle | wrong | sending | blocked | offline`, `length` (paramètre, rien de fixé sur G02), `filled`, `onDigit`, `onErase`, `onForgot`, `onDone`, `label`, `messages`.
+
+#### Composants qui évoluent
+
+- **`TransactionRow` v2** — `title`, `subtitle`, `note`, `date`, `amount`, `variant` `deposit | internal | withdrawal | correction`, `direction`, `status`, `statusLabel`, `illustrationSrc`, `masked`, `onPress`. Signe seulement quand c'est fait ; montant `text-secondary` sinon ; un interne ou une correction reste `text-primary`. Statut combiné « À reprendre » = `failed` + `statusLabel` + `note`.
+- **`BottomSheet`** — `onClose` (« × »), `subtitle`, `options` rendues en `OptionRow`, `actions`. La feuille Déposer / Retirer est le modèle.
+- **`SummaryFlow` v2** — trajet `FlowPath` (illustration, logo ou portefeuille, « Pris sur… »), lignes `DetailList` en deux mises en page, `amountNote`, `rowsLoading`, `fee` (`amount`, `confirmed`, `label`) : la ligne Frais n'est jamais rendue si le frais n'est pas confirmé.
+- **`PinPad`** — `disabled` (pavé gelé à `opacity-disabled` pendant l'envoi ou hors connexion).
+- **`BalanceCard`** — `pendingOut` (retrait en attente à la place du dernier dépôt), montants via `Amount`, icônes intégrées.
+- **`GoalRow`**, **`PageHeader`** (`backLabel: 'Fermer'` affiche « × », `trailing`), **`Button`** (`onPress`, `fullWidth`, `describedBy`, `accessibilityHint`), **`Message`** (trois phrases hors connexion).
+
+**Archivés (décision 7)** : `AmountInput` (→ `AmountField` + `NumberChip`), `GoalCard` (→ `GoalRow`, `GoalProgress`), `OperationStatus` et `IllustratedResult` (→ `ResultScreen`). Ils restent sous `Kotiz.archived.*` et dans `archived/components/` du Design System le temps de rebrancher les maquettes.
 
 ### Logos opérateurs — `225:959` Wave, `225:961` Orange Money, `225:963` MTN MoMo, `225:965` Moov Money
 

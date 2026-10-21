@@ -163,3 +163,30 @@ Restent hors maquettes : Variantes assistées des lots E (création et retour sa
 Les règles de statut, les phrases (« Ne refais pas l'opération. », « Ton argent n'a pas bougé. Il est dans {épargne}. ») et les états sont inchangés. L'échec est annoncé en `assertive`. Seul B-Proto change : il faut le reporter au handoff du lot B.
 
 **Version 29 (règle étendue à tous les lots, PO du 20 octobre 2026)** : B · B17 « Ton épargne est créée » passe aussi en écran plein : croix « Fermer » en haut à gauche (→ B · B01), illustration validée en pastille 80 alignée à gauche, titre « C'est fait ! Ton épargne … est créée. », « Aucun argent n'a bougé. », lignes Dedans 0 F / Objectif / Pour le, « Voir mon épargne » dans la zone d'action. La règle est écrite dans DESIGN.md (Layout › Écran de résultat plein écran).
+
+## Design System v12 dans le canvas (21 octobre 2026, version 32)
+
+Le canvas utilise maintenant la copie v12 du DS. Le détail (remplacements, copies harmonisées, éléments gardés en version canvas) est dans [screens.md](screens.md) § « Design System v12 installé dans le canvas ». Au lot B :
+
+- B01 : `RootHeader`, `GoalRow` atteinte et fermée ;
+- B02 : `GoalTypeGrid` ;
+- B03, B08, B09 : `AmountField` ;
+- B04, B08 : `DateChoice` ;
+- B05, B08 : `TextField` multiligne ;
+- B06 : `SummaryPreview` ;
+- B07 : `MaskToggle` (la progression reste en version canvas) ;
+- B10 : `SummaryFlow` ;
+- B12 : `StepTracker` `sent` ;
+- B14, B16 : `ConfirmDialog` ;
+- copies d'E08 et de H01 harmonisées.
+
+## Design System v15 dans le canvas (21 octobre 2026, version 33)
+
+Le canvas est rebranché sur les composants de la v15. Le détail (composants, décisions appliquées, éléments gardés en version canvas, contrôles) est dans [screens.md](screens.md) § « Design System v15 rebranché dans le canvas ». Au lot B :
+
+- B12, B17 et la copie d'E08 : `ResultScreen` ;
+- B10 : `SummaryFlow` v2 avec le portefeuille « Mon solde » ; « Contacter l'aide » et la raison du refus vont dans la zone d'action ;
+- B07 : `TransactionRow` v2 (plus de signe sur un mouvement en attente), `Amount`, `SectionHeader`, œil dans `PageHeader.trailing` ;
+- B13, B15 : `BottomSheet` ;
+- B06 : phrase hors connexion standard ;
+- B11 reste composé à la main (voir les manques de `PinScreen`).
