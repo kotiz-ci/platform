@@ -25,8 +25,6 @@ const COVERED_SOURCE = [
 ];
 
 const LEGACY_PROMOTION_BASELINE = new Map([
-  ["apps/mobile/app.config.ts", "c337970b5b246d1b48c6af35b43c97d7cae88ecb"],
-  ["apps/mobile/app/_layout.tsx", "a85dc85d2f4e84a5d7ed9a5e4b7ef72c9c2c5311"],
   ["apps/mobile/app/health/index.tsx", "3a3cfa9a736d822a709d6de1e347d6fe95db3d8f"],
   ["apps/mobile/app/index.tsx", "bd45634374cf12252e178079e42ec4c2cd6a68d1"],
   ["apps/mobile/eslint.config.js", "3fc4095d707c76a007739452bb6cc0dabf0f362f"],
