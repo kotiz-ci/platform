@@ -1,8 +1,8 @@
 # `apps/mobile` — KOTIZ Mobile (RN/Expo)
 
 App mobile KOTIZ pour les personas **Fatou** (cliente) et **Moussa** (agent).
-**1 codebase, 2 binaires distincts** via variants Expo. Stack : React Native 0.81,
-Expo SDK 54 et NativeWind 4. Voir
+**1 codebase, 2 binaires distincts** via variants Expo. Stack : React Native 0.88,
+Expo SDK 58 et NativeWind 4. Voir
 [ADR-0019](../../docs/adr/0019-use-expo-mobile-variants.md).
 
 ## Variants

@@ -66,7 +66,7 @@ La plateforme KOTIZ est organisée en 4 couches distinctes : Présentation, API 
 
 | Composant                                     | Technologie                                                                                                               | Cible                        |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| App mobile utilisateur (Fatou)                | React Native 0.81.x / Expo SDK ~54 — Expo Router + React Context — **consomme `shared/design-tokens.json`** — cf. ADR-009 | Android (prioritaire), iOS   |
+| App mobile utilisateur (Fatou)                | React Native 0.88.x / Expo SDK ~58 — Expo Router + React Context — **consomme `shared/design-tokens.json`** — cf. ADR-009 | Android (prioritaire), iOS   |
 | App mobile agent (Moussa)                     | React Native / Expo — **même codebase, variant `EXPO_PUBLIC_APP_VARIANT=agent`, binaire EAS distinct** — cf. ADR-010      | Android                      |
 | WhatsApp Bot (Fatou)                          | Meta WhatsApp Business Platform — module `wa` Spring Boot — **support vocal in/out (TTS/STT)**                            | Tout téléphone avec WhatsApp |
 | **USSD gateway (Fatou feature phone)**        | **Partenaire télécom (Orange/MTN) — menu 4 niveaux, scope réduit MVP (cf. ADR-004)**                                      | Tout téléphone               |
