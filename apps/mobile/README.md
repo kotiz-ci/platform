@@ -12,7 +12,7 @@ Expo SDK 58 et NativeWind 4. Voir
 | `client` | `ci.kotiz.client` | "KOTIZ" — palette cream/teal      | Public Play Store + App Store           |
 | `agent`  | `ci.kotiz.agent`  | "KOTIZ Agent" — palette navy/gold | Restreinte (TestFlight + Play Internal) |
 
-Le variant est sélectionné via `EXPO_PUBLIC_APP_VARIANT=client|agent` (lu par `app.config.ts` + runtime `lib/variant.ts`).
+Le variant est sélectionné via `EXPO_PUBLIC_APP_VARIANT=client|agent` (lu par `app.config.ts` + runtime `src/shared/config/variant.ts`).
 
 ## Démarrage
 
@@ -44,29 +44,39 @@ Si réseau wifi capricieux : ajouter `--tunnel` à la commande.
 
 (Compte Expo gratuit requis pour EAS Build — créé Sprint 2 par Desiré.)
 
-## Structure
+## Structure — Feature-Sliced Design
+
+Le code suit Feature-Sliced Design ([ADR-015](../../docs/adr/0015-feature-sliced-design-frontends.md)) :
+les couches dépendent seulement vers le bas, `app → pages → widgets → features → entities → shared`,
+et chaque slice n'est importée que par son `index.ts`. L'alias `@/*` pointe vers `src/*`.
 
 ```
 app.config.ts           # Config Expo dynamique (lit EXPO_PUBLIC_APP_VARIANT)
 eas.json                # 6 profils EAS (dev/preview/prod × client/agent)
-lib/
-└── variant.ts          # getAppVariant() / isAgentApp() — runtime gating
-app/
+app/                    # Couche App : Expo Router, routes minces et providers globaux
 ├── _layout.tsx         # Root layout — gate variant ; rend (client) OU (agent)
-├── index.tsx           # Accueil — variant-aware (Akwaba Fatou / Connexion agent)
-├── health/index.tsx    # Smoke connexion API + types partagés
-├── (client)/           # Routes Cliente (Fatou) — visible UNIQUEMENT si variant=client
-│   ├── _layout.tsx
-│   └── index.tsx
-└── (agent)/            # Routes Agent (Moussa) — visible UNIQUEMENT si variant=agent
-    ├── _layout.tsx
-    └── index.tsx
-components/             # Composants partagés (Sprint 2 livrera Epic 2)
+├── index.tsx           # → @/pages/home
+├── health/index.tsx    # → @/pages/health
+├── (client)/           # Routes Cliente (Fatou) — visibles UNIQUEMENT si variant=client
+└── (agent)/            # Routes Agent (Moussa) — visibles UNIQUEMENT si variant=agent
+src/
+├── pages/              # home, client-space, agent-space, health — une slice par page
+├── widgets/            # blocs composés (créés au premier besoin)
+├── features/           # actions utilisateur (créées au premier besoin)
+├── entities/           # objets métier (créés au premier besoin)
+└── shared/
+    ├── config/         # variant de l'app (getAppVariant, rôles attendus)
+    └── ui/             # thème issu de @kotiz/design-tokens
 assets/
 ├── client/             # emplacement réservé aux assets cliente — Story 2.6
 ├── agent/              # emplacement réservé aux assets agent — Story 2.6
 └── locales/            # strings i18n iOS/Android (permissions etc.)
 ```
+
+Une slice n'utilise que les segments utiles parmi `ui`, `api`, `model`, `lib` et
+`config` ; aucun dossier vide n'est créé par principe. `pnpm --filter mobile lint`
+refuse un import vers une couche supérieure, entre deux slices d'une même couche,
+ou au-delà du `index.ts` d'une slice (`eslint-plugin-boundaries`).
 
 ## Packages workspace consommés
 
@@ -74,20 +84,22 @@ assets/
 - `@kotiz/api-types` — types TS générés depuis OpenAPI backend
 - `@kotiz/shared-utils` — `formatFcfa`, `normalizePhoneCI`, RBAC, etc.
 
-## Tests (à initialiser Sprint 2 — cf. test-design Epic 1 Annexe A)
+## Tests
 
-| Niveau        | Outil                         |
-| ------------- | ----------------------------- |
-| Unit / hooks  | Jest + ts-jest                |
-| Component     | @testing-library/react-native |
-| E2E           | Maestro (YAML)                |
-| Accessibilité | jest-axe + react-native-a11y  |
+| Niveau                  | Outil                                             | Fichiers                       |
+| ----------------------- | ------------------------------------------------- | ------------------------------ |
+| Unitaire et composant   | Jest (`jest-expo`) + React Native Testing Library | `test/*.test.ts(x)`            |
+| Routes Expo par variant | `expo-router/testing-library`                     | `test/routes.test.tsx`         |
+| Frontières FSD          | CLI ESLint sur `test/fixtures/fsd`                | `test/fsd-boundaries.test.mjs` |
+| E2E                     | Maestro (YAML), quand un parcours existe          | —                              |
 
-DoD : couverture ≥ 80% (cf. sprint-status.yaml `per_story`).
+`pnpm --filter mobile test` échoue sous 80 % de couverture (lignes, fonctions,
+branches) sur `app/` et `src/`.
 
 ## Référence
 
 - [ADR-0019 — Expo et variantes Client/Agent](../../docs/adr/0019-use-expo-mobile-variants.md)
+- [ADR-015 — Feature-Sliced Design](../../docs/adr/0015-feature-sliced-design-frontends.md)
 - Story 1.1 — init monorepo
 - Story 1.2 — CI/CD (jobs EAS Build duals Sprint 2+)
 - Story 1.6 — onboarding ≤ 1h chronométré

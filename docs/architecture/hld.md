@@ -64,13 +64,13 @@ La plateforme KOTIZ est organisée en 4 couches distinctes : Présentation, API 
 
 ### 2.1 Couche Présentation
 
-| Composant                                     | Technologie                                                                                                               | Cible                        |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| App mobile utilisateur (Fatou)                | React Native 0.88.x / Expo SDK ~58 — Expo Router + React Context — **consomme `shared/design-tokens.json`** — cf. ADR-009 | Android (prioritaire), iOS   |
-| App mobile agent (Moussa)                     | React Native / Expo — **même codebase, variant `EXPO_PUBLIC_APP_VARIANT=agent`, binaire EAS distinct** — cf. ADR-010      | Android                      |
-| WhatsApp Bot (Fatou)                          | Meta WhatsApp Business Platform — module `wa` Spring Boot — **support vocal in/out (TTS/STT)**                            | Tout téléphone avec WhatsApp |
-| **USSD gateway (Fatou feature phone)**        | **Partenaire télécom (Orange/MTN) — menu 4 niveaux, scope réduit MVP (cf. ADR-004)**                                      | Tout téléphone               |
-| Back-office web (Ibrahima, Risk, Finance, PO) | Next.js 15 (TypeScript) — décision ADR-008/009                                                                            | Navigateur desktop           |
+| Composant                                     | Technologie                                                                                                                                 | Cible                        |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| App mobile utilisateur (Fatou)                | React Native 0.88.x / Expo SDK ~58 — Expo Router + Feature-Sliced Design (ADR-015) — **consomme `shared/design-tokens.json`** — cf. ADR-009 | Android (prioritaire), iOS   |
+| App mobile agent (Moussa)                     | React Native / Expo — **même codebase, variant `EXPO_PUBLIC_APP_VARIANT=agent`, binaire EAS distinct** — cf. ADR-010                        | Android                      |
+| WhatsApp Bot (Fatou)                          | Meta WhatsApp Business Platform — module `wa` Spring Boot — **support vocal in/out (TTS/STT)**                                              | Tout téléphone avec WhatsApp |
+| **USSD gateway (Fatou feature phone)**        | **Partenaire télécom (Orange/MTN) — menu 4 niveaux, scope réduit MVP (cf. ADR-004)**                                                        | Tout téléphone               |
+| Back-office web (Ibrahima, Risk, Finance, PO) | Next.js 15 (TypeScript) — Feature-Sliced Design (ADR-015) — décision ADR-008/009                                                            | Navigateur desktop           |
 
 **Design system mobile :**
 
@@ -81,7 +81,7 @@ La plateforme KOTIZ est organisée en 4 couches distinctes : Présentation, API 
 
 **Règles :**
 
-- L'app mobile utilise Expo Router pour la navigation et React Context pour la gestion d'état
+- L'app mobile utilise Expo Router pour la navigation ; ses routes restent minces et composent des pages Feature-Sliced Design (`src/pages → widgets → features → entities → shared`, cf. ADR-015)
 - Le WhatsApp Bot est le canal conversationnel principal de Fatou : solde, cotiser, aide, souscrire Santé, parrainer, mode vocal — sans ouvrir l'app
 - Le back-office web communique exclusivement via l'API REST de la couche application
 - Aucune logique métier dans les couches de présentation — tout passe par l'API
@@ -98,7 +98,7 @@ La plateforme KOTIZ est organisée en 4 couches distinctes : Présentation, API 
 
 ### 2.3 Couche Application (monolithe modulaire — bounded contexts DDD)
 
-Le cœur de la plateforme est un monolithe modulaire Spring Boot 3.x (voir ADR-002). L'application est décomposée en **11 bounded contexts** (DDD stratégique — cf. `docs/architecture/ddd-context-map-glossaire.md`). Chaque contexte est structuré en **architecture hexagonale (Ports & Adapters) + DDD tactique** (cf. **ADR-011**) : packages `domain / application / infrastructure`, entités JPA cantonnées à la couche infrastructure, communication inter-contextes via ports + ACL + événements de domaine.
+Le cœur de la plateforme est un monolithe modulaire Spring Boot 4.1 / Java 21 (voir ADR-002 et ADR-018), dont les modules sont matérialisés et vérifiés par **Spring Modulith**. L'application est décomposée en **11 bounded contexts** (DDD stratégique — cf. `docs/architecture/ddd-context-map-glossaire.md`). Chaque contexte actif est un module `ci.kotiz.<contexte>` (cf. **ADR-011 §6**) : un package `api` nommé est le seul contrat visible des autres modules, l'implémentation vit sous `internal/{domain,application,persistence,web}`, les entités JPA restent dans `internal.persistence`, et les modules communiquent par l'`api` ou par des événements publics. L'hexagone complet est réservé aux règles et frontières qui le justifient.
 
 > **Évolution v2.1 (26 juin 2026)** : l'ancien module `core` est renommé **`iam`** (le core domain est `savings`+`scoring`, pas l'identité) ; ajout des contextes **`growth`** (viralité + anti-churn, extrait de `core`) et **`ussd`** (canal). Le langage ubiquitaire et les invariants de chaque contexte sont fixés dans `docs/architecture/ddd-context-map-glossaire.md`.
 
