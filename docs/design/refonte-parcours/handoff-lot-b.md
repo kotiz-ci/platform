@@ -442,12 +442,12 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Échec connu → « Échoué : ton épargne n'est pas créée. » ; même nom qu'une active → message d'information, sans blocage ; refus pour limite → B15.
 - [ ] Aucune étape ne demande de PIN ni ne déplace d'argent.
 
-### B17 — Ton épargne est créée
+### B17 — Ton épargne est créée — critères
 
 - [ ] B17 n'apparaît qu'après confirmation serveur, avec « Dedans : 0 F » plus visible que l'objectif, et « Aucun argent n'a bougé. ».
 - [ ] « Voir mon épargne » et le retour Android ouvrent B07 ; jamais B06.
 
-### B07 — Détail d'une épargne
+### B07 — Détail d'une épargne — critères
 
 - [ ] Montant épargné en 34, « sur {cible} », barre, « n % » (entier inférieur), « Encore X F pour ton objectif. ».
 - [ ] Cible atteinte : barre pleine, montant réel, aucun % > 100, drapeau + « Objectif atteint » sans coche ; mêmes boutons dans le même ordre ; l'épargne reste ouverte.

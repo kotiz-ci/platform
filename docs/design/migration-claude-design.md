@@ -54,7 +54,7 @@ Pas de bannière, de carrousel, de score, d'étoiles ni de promotion sur l'accue
 
 ## 3. Assets à migrer vers Claude Design
 
-**Migrés le 19 octobre 2026** dans le Design System Claude Design « KOTIZ Design System » (https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134), avec les tokens de `DESIGN.md` et 10 composants. Restent à faire : icônes Épargnes, Opérations et horloge (à dessiner) ; Wave, MTN MoMo et Moov Money en PNG 64 × 48 (à réexporter en meilleure définition) ; illustrations de résultat en PNG 350 × 292. L'ancien Design System « KOTIZ » du 2 octobre (palette v2) est conservé tel quel, il ne fait plus foi.
+**Migrés le 19 octobre 2026** dans le Design System Claude Design « KOTIZ Design System » (<https://claude.ai/artifact/F7WrzuAZTLaJ1MEGEEu134>), avec les tokens de `DESIGN.md` et 10 composants. Restent à faire : icônes Épargnes, Opérations et horloge (à dessiner) ; Wave, MTN MoMo et Moov Money en PNG 64 × 48 (à réexporter en meilleure définition) ; illustrations de résultat en PNG 350 × 292. L'ancien Design System « KOTIZ » du 2 octobre (palette v2) est conservé tel quel, il ne fait plus foi.
 
 Tous sont sur les pages `01 — Identité et illustrations` (`75:1119`) et `02 — Composants` (`34:1090`). Les exporter depuis Figma sans les modifier.
 

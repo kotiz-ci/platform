@@ -318,14 +318,17 @@ Règles communes aux écrans d'accès E02 à E07 et C01 (spec § Règles commune
 - Structure (défile, sauf la barre basse fixe) : `HomeHeader` « Akwaba, {prénom} » + cloche ; si hors ligne, `Message` info « Mis à jour à {HH:MM} · hors connexion » ; `BalanceCard` ; `Shortcuts` (Déposer, Retirer, Épargnes) ; `InfoLine` d'identité ; section « Mes épargnes » (titre + « Tout voir › ») avec jusqu'à 3 `GoalRow` dans un bloc gris ; section « Dernières opérations » (titre + « Tout voir › ») avec 3 `TransactionRow` ; `BottomNav` (Accueil actif).
 - Données (API à définir) : prénom ; solde disponible (entier FCFA, distinct des épargnes, jamais additionné) ; dernier dépôt (montant, statut, libellé) ; épargnes actives (nom, épargné, cible, illustration) ; 3 dernières opérations (titre, date, montant, sens, statut) ; statut KYC ; date de dernière mise à jour ; données du QR.
 - Ligne d'identité selon le statut KYC :
-  | Statut                                           | Texte                                                 | Suite                          |
-  | ------------------------------------------------ | ----------------------------------------------------- | ------------------------------ |
-  | Non commencé                                     | « Vérifie ton identité pour aller plus loin. » + ›    | sous-lot A2                    |
-  | En vérification                                  | « Ton identité est en vérification. »                 | aucune (ni chevron, ni bouton) |
-  | Complément requis                                | « Il manque une information pour ton identité. » + ›  | sous-lot A2                    |
-  | Refusé                                           | « Ta vérification n'a pas abouti. Voir pourquoi » + › | sous-lot A2                    |
-  | Validé                                           | ligne absente                                         | —                              |
-  | Aucun plafond, délai ni chiffre dans ces textes. |
+
+  | Statut            | Texte                                                 | Suite                          |
+  | ----------------- | ----------------------------------------------------- | ------------------------------ |
+  | Non commencé      | « Vérifie ton identité pour aller plus loin. » + ›    | sous-lot A2                    |
+  | En vérification   | « Ton identité est en vérification. »                 | aucune (ni chevron, ni bouton) |
+  | Complément requis | « Il manque une information pour ton identité. » + ›  | sous-lot A2                    |
+  | Refusé            | « Ta vérification n'a pas abouti. Voir pourquoi » + › | sous-lot A2                    |
+  | Validé            | ligne absente                                         | —                              |
+
+  Aucun plafond, délai ni chiffre dans ces textes.
+
 - Interactions : œil → bascule masqué / visible (persistant) ; carte QR / « Mon QR » → Q01 ; ligne « Dernier dépôt » → détail de l'opération (lot C) ; Déposer → lot C ; Retirer → lot D ; Épargnes → lot B ; une épargne → détail (lot B) ; Tout voir (épargnes) → lot B ; une opération / Tout voir → lot C ; cloche → lot F ; onglets → racines (Épargnes lot B, Opérations lot C, Profil lot F) ; retour Android → quitte l'app.
 - États : **vide** (« 0 FCFA », pas de ligne Dernier dépôt, Retirer désactivé + « Rien à retirer pour l'instant. », « Pas encore d'épargne. » + « Créer une épargne › », « Tes opérations s'afficheront ici. ») ; **rempli** ; **masqué** (tous les montants de l'écran, voir Règles transverses § Masquage) ; **hors ligne** (derniers montants connus + message daté) ; **opération en attente** (ligne « En attente », jamais « Fait » ; **inclusion dans le solde à confirmer G01**) ; **chargement** (squelette sans montant à 0, reporté au design : structure grise, aucun « 0 FCFA » trompeur) ; 3 épargnes actives (pas de lien Créer).
 - Responsive : à 320, la carte réduit le QR (64, sans logo) pour garder le montant en 34 ; `1 250 000 FCFA` tient sur une ligne en grand texte.

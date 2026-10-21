@@ -471,7 +471,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Au retour depuis l'application de l'opérateur ou au relancement, l'app affiche l'état réel de la même demande (C-04 ou C-05), sans nouvelle demande.
 - [ ] Un double appui sur « Déposer {montant} » ne crée qu'une demande ; hors connexion, rien n'est envoyé et « Réessayer » s'affiche.
 
-### C-05 — Résultat du dépôt
+### C-05 — Résultat du dépôt — critères
 
 - [ ] Plein écran, croix « Fermer » seule en haut, statut et montant dans le tiers haut, actions en bas.
 - [ ] « Fait » seulement après la confirmation du partenaire ; en attente et « On vérifie » : ambre + horloge, « Ne refais pas l'opération. », ni reçu ni Réessayer.
@@ -512,7 +512,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] Filtres Tout / Dépôts / Retraits / Épargnes et filtre d'épargne depuis B07, une seule puce active ; textes de filtre vide.
 - [ ] « Voir plus » pagine, jamais de défilement infini ; vide : « Tes opérations s'afficheront ici. » + « Faire un dépôt » ; masqué ; hors ligne daté avec « Voir plus » désactivé ; chargement sans montant ni « 0 ».
 
-### C-12 — Détail d'une opération
+### C-12 — Détail d'une opération — critères
 
 - [ ] Titre du type, statut réel, montant (signe seulement si fait, sinon phrase « Pas encore sur ton solde. » ou « Rien n'est arrivé sur ton solde. »), flux Depuis / Vers, date, frais si confirmés, référence.
 - [ ] Dépôt vers une épargne : étapes Dépôt / Passage (/ Reprise) avec leurs statuts réels.
@@ -520,7 +520,7 @@ Chaque groupe peut devenir un ticket ; le rattachement aux issues est dans [issu
 - [ ] À reprendre : « Réessayer de mettre dans {épargne} » principal, « Voir le reçu du dépôt » ; dossier existant : ligne « Mon signalement · … » à la place de « Signaler un problème » ; correction liée dans « Lié à cette opération ».
 - [ ] Masqué ; hors ligne non chargé : « Détail indisponible hors connexion. » + « Réessayer ».
 
-### C-13 — Reçu
+### C-13 — Reçu — critères
 
 - [ ] Reçu seulement pour une opération faite, avec type, montant, Depuis, Vers ou Pour, date, référence, nom de la cliente, et « Pris sur ton {opérateur} » + « Frais » seulement si confirmés.
 - [ ] Dépôt fait, passage pas fait : pas de « Fait » global, « Dépôt fait », « Demandé pour », « Arrivé sur : Mon solde », passage « Pas fait » en rouge avec croix.

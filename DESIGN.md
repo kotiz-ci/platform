@@ -426,6 +426,8 @@ components:
     height: "32px"
 ---
 
+<!-- markdownlint-disable-next-line MD025 -->
+
 # Design System: KOTIZ
 
 > Formalisation du système **existant** (Direction 04), pas un rebranding. Source de vérité visuelle : fichier Figma `Ejhn5axhlQERtHPKYQ39gp` (gelé en archive, lu le 19 octobre 2026), collections de variables `KOTIZ / Primitives` et `KOTIZ / Usages et dimensions`, 7 styles de texte, 1 style d'élévation. Les corrections d'audit F01, F02 et F03 sont appliquées ici ; les autres constats restent listés dans [l'audit](docs/design/audit-design-system-2026-10-11.md).
@@ -623,7 +625,7 @@ Ligne de 40 de haut, espacées de 16 ; la zone tactile de la ligne entière fait
 
 Hauteur 48. Accueil : logo 28 + « Akwaba, Fatou » (`section`) + notification en bouton 48 sur fond canvas. Page : retour 48 + titre.
 
-### Navigation — voir Layout › Navigation MVP.
+### Navigation — voir Layout › Navigation MVP
 
 ### Messages et attente — `66:574` (Information `66:540`, Succès `66:550`, Erreur `66:562`), chargement `66:575`, squelette `66:582`
 
@@ -693,7 +695,7 @@ Logos officiels, non recolorés, cadre 64 × 48. **Wave : symbole seul, sans ins
 
 ## Do's and Don'ts
 
-**À faire**
+### À faire
 
 - Composer chaque écran avec des instances des sources ; ne jamais détacher pour simuler une variante.
 - Garder les neutres majoritaires et le vert pour le geste principal.
@@ -702,7 +704,7 @@ Logos officiels, non recolorés, cadre 64 × 48. **Wave : symbole seul, sans ins
 - Tester 320 px, texte agrandi, noms de projet longs, montants à 7 chiffres, clavier ouvert.
 - Phrases de moins de 10 mots, tutoiement.
 
-**À éviter**
+### À éviter
 
 - Plus de deux couleurs de marque sur un écran ; un fond vert plein ailleurs que sur la carte solde ou le bouton principal.
 - Cartes dans des cartes, piles de cartes identiques, grilles de trois cartes.
