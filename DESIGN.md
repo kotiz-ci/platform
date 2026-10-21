@@ -426,7 +426,7 @@ components:
     height: "32px"
 ---
 
-<!-- markdownlint-disable-next-line MD025 -->
+<!-- markdownlint-disable MD025 -->
 
 # Design System: KOTIZ
 
