@@ -1,0 +1,42 @@
+# KOTIZ Context Map
+
+KOTIZ est organisé en douze contextes métier ou d'intégration. Le MVP réduit
+n'active que les contextes nécessaires au vertical slice sandbox ; les autres
+restent explicitement conservés pour une réactivation ultérieure.
+
+## Contextes actifs dans le MVP réduit
+
+- **IAM** — `apps/backend/iam/CONTEXT.md` — identité, accès et profils des acteurs.
+- **Savings** — `apps/backend/savings/CONTEXT.md` — portefeuille, solde et ledger.
+- **Agents** — `apps/backend/agents/CONTEXT.md` — activité et float des agents KOTIZ.
+- **Payments** — `apps/backend/payments/CONTEXT.md` — ordres et confirmations de paiement sandbox.
+- **Notifications** — `apps/backend/notifications/CONTEXT.md` — confirmations et alertes transactionnelles.
+- **Admin & Conformité** — `apps/backend/admin/CONTEXT.md` — contrôle opérationnel, rôles sensibles et audit.
+- **Assistance** — `apps/backend/support/CONTEXT.md` — signalement d'une opération, suivi et contestation ; la correction financière reste dans Savings. Activé par `docs/adr/0020-contexte-assistance-signalement.md` (accepté le 20 octobre 2026).
+
+## Contextes différés
+
+- **Health** — `apps/backend/health/CONTEXT.md` — différé jusqu'à la réactivation du produit Santé.
+- **Scoring** — `apps/backend/scoring/CONTEXT.md` — différé jusqu'à la gouvernance du Score 5 étoiles.
+- **WhatsApp** — `apps/backend/wa/CONTEXT.md` — différé jusqu'à la validation du canal WhatsApp.
+
+## Contextes retirés du MVP réduit
+
+- **Growth** — `apps/backend/growth/CONTEXT.md` — parrainage et anti-churn, hors périmètre actuel.
+- **USSD** — `apps/backend/ussd/CONTEXT.md` — canal USSD, hors périmètre actuel.
+
+## Règle d'activation
+
+Un contexte différé ou retiré ne reçoit ni migration, ni implémentation, ni ticket
+actif tant que sa condition de réactivation n'a pas été explicitement approuvée.
+Sa présence dans cette carte conserve son vocabulaire et sa frontière sans créer
+de portée de développement implicite.
+
+## Convention d'implémentation
+
+Chaque contexte actif devient, à son premier comportement, un module Spring
+Modulith `ci.kotiz.<contexte>`, nommé comme son dossier ci-dessus (`iam`,
+`savings`, `support`…). Les autres modules n'utilisent que son package `api` ;
+l'implémentation reste sous `internal`. Aucun module n'existe pour un contexte
+différé ou retiré : `ModularityTest` lit cette carte et le vérifie. Voir
+[ADR-011 §6](docs/adr/0011-hexagonal-ddd.md).

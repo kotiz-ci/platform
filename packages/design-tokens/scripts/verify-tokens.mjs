@@ -4,8 +4,10 @@
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertGeneratedTokens } from "./token-validation.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const SOURCE_JSON = resolve(__dirname, "..", "tokens.json");
 const DIST_JSON = resolve(__dirname, "..", "dist", "tokens.json");
 
 if (!existsSync(DIST_JSON)) {
@@ -14,12 +16,18 @@ if (!existsSync(DIST_JSON)) {
 }
 
 const tokens = JSON.parse(readFileSync(DIST_JSON, "utf8"));
+const sourceTokens = JSON.parse(readFileSync(SOURCE_JSON, "utf8"));
+try {
+  assertGeneratedTokens(tokens, sourceTokens);
+} catch (error) {
+  console.error(`[verify] ❌ ${error.message}`);
+  process.exit(1);
+}
+
 const colorCount = Object.keys(tokens.colors).length;
 
 if (colorCount < 17) {
-  console.error(
-    `[verify] ❌ ${colorCount} couleurs détectées, attendu ≥ 17 (Story 1.1 AC7)`
-  );
+  console.error(`[verify] ❌ ${colorCount} couleurs détectées, attendu ≥ 17 (Story 1.1 AC7)`);
   process.exit(1);
 }
 
