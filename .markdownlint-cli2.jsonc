@@ -1,4 +1,6 @@
 {
+  // Skills d'agents copiés depuis leur source : non lintés.
+  "ignores": [".claude/**"],
   "config": {
     "MD013": false,
     "MD032": false,
