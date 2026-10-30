@@ -8,27 +8,24 @@ const SOURCE_TREE =
 const DECLARATIVE_EXCEPTIONS = new Set([
   // Configuration Expo : déclarative, validée par expo-doctor et le type-check.
   "apps/mobile/app.config.ts",
-  // Sans banc de test composants (jest-expo + RNTL), aucun écran ne peut être
-  // couvert. Exception à retirer quand D02 (#59) installe ce banc.
-  "apps/mobile/app/_layout.tsx",
-  "apps/mobile/lib/theme.ts",
+  "apps/mobile/eslint.config.js",
+  "apps/mobile/jest.config.js",
+  "apps/mobile/src/shared/ui/theme.ts",
   "packages/api-types/src/index.ts",
   "packages/shared-utils/src/index.ts",
 ]);
 
 const COVERED_SOURCE = [
   /^apps\/backend\/src\/main\/java\/.*\.java$/,
-  /^apps\/mobile\/lib\/variant(?:-policy)?\.ts$/,
+  /^apps\/mobile\/(?:app|src)\/.*\.tsx?$/,
   /^packages\/design-tokens\/scripts\/.*\.mjs$/,
   /^packages\/shared-utils\/src\/.*\.ts$/,
   /^scripts\/.*\.mjs$/,
 ];
 
-const LEGACY_PROMOTION_BASELINE = new Map([
-  ["apps/mobile/app/health/index.tsx", "3a3cfa9a736d822a709d6de1e347d6fe95db3d8f"],
-  ["apps/mobile/app/index.tsx", "bd45634374cf12252e178079e42ec4c2cd6a68d1"],
-  ["apps/mobile/eslint.config.js", "3fc4095d707c76a007739452bb6cc0dabf0f362f"],
-]);
+// Fichiers exécutables non couverts tolérés à la promotion s'ils sont inchangés.
+// Vide depuis que Jest couvre app/ et src/ du mobile (D01, #58).
+const LEGACY_PROMOTION_BASELINE = new Map();
 
 function isTestFile(file) {
   return /(?:^|\/)(?:test|tests)\//.test(file) || /\.(?:test|spec)\.[^.]+$/.test(file);
@@ -54,6 +51,7 @@ export function checkCoverageScope({
   base = process.env.TURBO_SCM_BASE,
   head = process.env.TURBO_SCM_HEAD,
   promotion = false,
+  legacyBaseline = LEGACY_PROMOTION_BASELINE,
   run = execFileSync,
 } = {}) {
   if (!base || !head) {
@@ -67,7 +65,7 @@ export function checkCoverageScope({
   const uncovered = findExecutableFilesOutsideCoverage(changedFiles);
   const blocked = promotion
     ? uncovered.filter((file) => {
-        const expectedBlob = LEGACY_PROMOTION_BASELINE.get(file);
+        const expectedBlob = legacyBaseline.get(file);
         if (!expectedBlob) return true;
 
         const actualBlob = run("git", ["rev-parse", `${head}:${file}`], {

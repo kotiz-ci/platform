@@ -1,6 +1,6 @@
 ---
 title: ADR-011 — Architecture hexagonale + DDD tactique par module
-status: ACCEPTÉE
+status: ACCEPTÉE — AMENDÉE le 2026-10-21 (§6)
 date: 2026-06-26
 decision_makers:
   - Henoch Lonzo Koffi (Fondateur / CEO / PO)
@@ -17,6 +17,10 @@ classification: Confidentiel — Usage interne
 ---
 
 # ADR-011 — Architecture hexagonale + DDD tactique par module
+
+> **Amendée le 21 octobre 2026.** La structure de package des §3.1 à §3.3 et §4 est remplacée par
+> le §6 (Spring Modulith, `api` / `internal`, hexagone pragmatique). Le reste de l'ADR, dont la
+> règle « domaine sans framework » et l'effort calibré du §3.4, reste valable.
 
 ## 1. Contexte
 
@@ -180,3 +184,49 @@ donc testables par un test unitaire pur (sans Spring ni base) — base de l'ATDD
 ---
 
 _ADR produit en atelier guidé — 26 juin 2026. Découle de `docs/architecture/ddd-context-map-glossaire.md`._
+
+---
+
+## 6. Amendement du 21 octobre 2026 — Spring Modulith et hexagone pragmatique
+
+Source : [Sprint Change Proposal du 11 septembre 2026](../product/sprint-change-proposal-2026-09-11.md),
+approuvé par le PO le 21 octobre 2026.
+
+### 6.1 Racine et modules
+
+La racine Spring Boot est `ci.kotiz` (`ci.kotiz.KotizApplication`). Chaque contexte actif de
+`CONTEXT-MAP.md` est un sous-package direct, donc un module détecté et vérifié par Spring Modulith.
+Aucun package n'est créé pour un contexte différé ou retiré.
+
+```text
+ci.kotiz.savings
+├── package-info.java                 # @ApplicationModule
+├── api                               # contrat Java inter-modules (pas la couche HTTP)
+│   ├── package-info.java             # @NamedInterface("api")
+│   └── …                             # cas d'usage, résultats, événements publics
+└── internal                          # implémentation privée
+    ├── domain                        # invariants ; sans Spring ni JPA sur les contextes complexes
+    ├── application                   # orchestration et frontières transactionnelles
+    ├── persistence                   # entités et adapters JPA
+    └── web                           # contrôleurs, requêtes et réponses REST
+```
+
+### 6.2 Règles
+
+- Un module n'expose aux autres que son package `api` ; il ne référence jamais `autreModule.internal`.
+- Les dépendances synchrones passent par la named interface `api` ; les réactions multiples passent
+  de préférence par des événements publics.
+- DDD stratégique partout ; DDD tactique complet seulement quand la complexité le justifie (§3.4).
+- Aucun port, mapper ou service intermédiaire n'est créé sans frontière ou règle réelle. Un segment
+  de `internal` n'existe que lorsqu'un comportement l'exige.
+
+### 6.3 Vérification
+
+- `ModularityTest` exécute `ApplicationModules.of(KotizApplication.class).verify()` (cycles, accès
+  aux internals, dépendances non déclarées) et refuse tout contexte différé ou retiré.
+- Des applications factices hors de `ci.kotiz` prouvent que la vérification accepte un accès par
+  `api` et refuse un accès à `*.internal`.
+- Chaque module a un test `@ApplicationModuleTest` qui le démarre seul.
+- Spring Modulith est importé par son BOM, aligné sur la ligne Spring Boot (2.1.x pour Boot 4.1).
+
+Module de référence : `iam`, sans règle métier jusqu'à l'ouverture de compte (D03).
