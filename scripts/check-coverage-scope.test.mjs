@@ -7,7 +7,8 @@ test("accepts executable files measured by an 80 percent gate", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
       "apps/backend/src/main/java/ci/kotiz/Application.java",
-      "apps/mobile/lib/variant.ts",
+      "apps/mobile/src/shared/config/variant.ts",
+      "apps/mobile/app/(client)/index.tsx",
       "packages/design-tokens/scripts/build-tokens.mjs",
       "packages/shared-utils/src/phone.ts",
       "scripts/check-affected-format.mjs",
@@ -21,7 +22,7 @@ test("accepts an affected diff fully covered by configured gates", () => {
     checkCoverageScope({
       base: "base",
       head: "head",
-      run: () => "apps/mobile/lib/variant.ts\nREADME.md\n",
+      run: () => "apps/mobile/src/pages/home/ui/HomePage.tsx\nREADME.md\n",
     })
   );
 });
@@ -32,15 +33,16 @@ test("fails an affected diff containing uncovered executable source", () => {
       checkCoverageScope({
         base: "base",
         head: "head",
-        run: () => "apps/mobile/lib/payment.ts\n",
+        run: () => "apps/mobile/scripts/payment.mjs\n",
       }),
-    /apps\/mobile\/lib\/payment\.ts/
+    /apps\/mobile\/scripts\/payment\.mjs/
   );
 });
 
 test("promotion accepts only unchanged legacy executable files", () => {
-  const legacyFile = "apps/mobile/app/index.tsx";
+  const legacyFile = "apps/mobile/metro.config.js";
   const legacyBlob = "bd45634374cf12252e178079e42ec4c2cd6a68d1";
+  const legacyBaseline = new Map([[legacyFile, legacyBlob]]);
   const run = (_command, args) => {
     if (args[0] === "diff") return `${legacyFile}\n`;
     if (args[0] === "rev-parse") return `${legacyBlob}\n`;
@@ -48,12 +50,13 @@ test("promotion accepts only unchanged legacy executable files", () => {
   };
 
   assert.doesNotThrow(() =>
-    checkCoverageScope({ base: "base", head: "head", promotion: true, run })
+    checkCoverageScope({ base: "base", head: "head", promotion: true, legacyBaseline, run })
   );
 });
 
 test("promotion rejects a modified legacy executable file", () => {
-  const legacyFile = "apps/mobile/app/index.tsx";
+  const legacyFile = "apps/mobile/metro.config.js";
+  const legacyBaseline = new Map([[legacyFile, "bd45634374cf12252e178079e42ec4c2cd6a68d1"]]);
   const run = (_command, args) => {
     if (args[0] === "diff") return `${legacyFile}\n`;
     if (args[0] === "rev-parse") return "0000000000000000000000000000000000000000\n";
@@ -61,8 +64,8 @@ test("promotion rejects a modified legacy executable file", () => {
   };
 
   assert.throws(
-    () => checkCoverageScope({ base: "base", head: "head", promotion: true, run }),
-    /apps\/mobile\/app\/index\.tsx/
+    () => checkCoverageScope({ base: "base", head: "head", promotion: true, legacyBaseline, run }),
+    /apps\/mobile\/metro\.config\.js/
   );
 });
 
@@ -74,8 +77,9 @@ test("accepts exact declarative exceptions and test sources", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
       "apps/mobile/app.config.ts",
-      "apps/mobile/app/_layout.tsx",
-      "apps/mobile/lib/theme.ts",
+      "apps/mobile/eslint.config.js",
+      "apps/mobile/jest.config.js",
+      "apps/mobile/src/shared/ui/theme.ts",
       "packages/api-types/src/index.ts",
       "packages/shared-utils/src/index.ts",
       "apps/mobile/test/variant.test.ts",
@@ -88,18 +92,16 @@ test("accepts exact declarative exceptions and test sources", () => {
 test("rejects new executable source outside a coverage gate", () => {
   assert.deepEqual(
     findExecutableFilesOutsideCoverage([
-      "apps/mobile/app/health/index.tsx",
       "apps/mobile/babel.config.js",
       "apps/mobile/metro.config.js",
-      "apps/mobile/lib/payment.ts",
+      "apps/mobile/scripts/payment.mjs",
       "apps/admin-web/src/health.ts",
       "packages/api-types/src/runtime.ts",
     ]),
     [
-      "apps/mobile/app/health/index.tsx",
       "apps/mobile/babel.config.js",
       "apps/mobile/metro.config.js",
-      "apps/mobile/lib/payment.ts",
+      "apps/mobile/scripts/payment.mjs",
       "apps/admin-web/src/health.ts",
       "packages/api-types/src/runtime.ts",
     ]

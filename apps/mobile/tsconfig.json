@@ -8,10 +8,9 @@
     "noImplicitReturns": true,
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": ["node", "jest"],
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["./components/*"],
+      "@/*": ["./src/*"],
       "@assets/*": ["./assets/*"]
     }
   },

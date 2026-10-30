@@ -126,6 +126,34 @@ La couverture et ses seules exceptions déclaratives sont détaillées dans
 [`docs/ci/coverage-policy.md`](docs/ci/coverage-policy.md). Chaque workspace qui
 porte de la logique exécutable bloque sa commande `test` sous 80 %.
 
+## Architecture du code
+
+Ces règles sont vérifiées par les tests et le lint ; une PR qui les contourne est refusée.
+
+### Backend — Spring Modulith ([ADR-011 §6](docs/adr/0011-hexagonal-ddd.md))
+
+- Racine `ci.kotiz` ; un module `ci.kotiz.<contexte>` par contexte **actif** de
+  [CONTEXT-MAP.md](CONTEXT-MAP.md), jamais pour un contexte différé ou retiré.
+- `package-info.java` du module : `@ApplicationModule`. Package `api` :
+  `@NamedInterface("api")`, seul contrat Java visible des autres modules (cas
+  d'usage, résultats, événements publics). Les contrôleurs REST n'y vont jamais.
+- Implémentation sous `internal/{domain,application,persistence,web}`, segments
+  créés seulement quand un comportement les exige. Aucun import de
+  `autreModule.internal`.
+- Aucun port, mapper ou service intermédiaire sans frontière ou règle réelle.
+- Tests : `ModularityTest` (`ApplicationModules.verify()`) doit rester vert ;
+  chaque module a un `@ApplicationModuleTest`.
+
+### Frontends — Feature-Sliced Design ([ADR-015](docs/adr/0015-feature-sliced-design-frontends.md))
+
+- Couches `app → pages → widgets → features → entities → shared`, dépendances
+  vers le bas uniquement ; deux slices d'une même couche ne s'importent pas.
+- Chaque slice (et chaque segment de `shared`) expose un `index.ts` ; on
+  n'importe jamais plus profond depuis un autre élément. Alias `@/*` → `src/*`.
+- Les routes Expo (`app/`) et Next.js (`app/**/page.tsx`) restent minces et
+  réexportent une page.
+- `pnpm --filter mobile lint` vérifie ces règles (`eslint-plugin-boundaries`).
+
 ## Contrôles CI des pull requests
 
 Les PR vers `develop` et `main` exécutent le même workflow `.github/workflows/ci.yml` :

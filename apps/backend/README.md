@@ -4,19 +4,36 @@ Premier chemin exécutable du backend KOTIZ : application Spring Boot, connexion
 PostgreSQL locale, endpoint Actuator de santé et test d'intégration. Ce socle
 n'embarque encore aucun comportement métier.
 
-Service backend KOTIZ : monolithe modulaire Spring Boot 4.1 découpé en **11 bounded contexts** :
-`savings`, `scoring` (core), `agents`, `health`, `payments`, `growth`, `admin` (supporting), `iam` (ex-`core`), `notifications`, `wa`, `ussd` (generic/canal).
-
-La portée active, différée ou retirée de chaque contexte est définie dans le
-[Context Map](../../CONTEXT-MAP.md). Chaque contexte actif suivra une structure
-hexagonale `domain / application / infrastructure`. Module de référence : `savings`.
+Service backend KOTIZ : monolithe modulaire Spring Boot 4.1 dont les modules sont
+matérialisés et vérifiés par **Spring Modulith**
+([ADR-011 §6](../../docs/adr/0011-hexagonal-ddd.md)). Les contextes et leur statut
+(actif, différé, retiré) sont définis dans le [Context Map](../../CONTEXT-MAP.md) ;
+seul un contexte actif reçoit un module.
 
 ```
-ci.kotiz.backend.<context>
-├── domain/          (agrégats, VO, événements — zéro dépendance framework)
-├── application/     (port/in = cas d'usage, port/out = ports sortants, service = impl.)
-└── infrastructure/  (adapter/in rest+event, adapter/out persistence(JPA)+acl, config)
+ci.kotiz
+├── KotizApplication.java
+└── <contexte>/                   # module Spring Modulith (ex. iam)
+    ├── package-info.java         # @ApplicationModule
+    ├── api/                      # @NamedInterface("api") — seul contrat visible des autres modules
+    └── internal/                 # implémentation privée
+        ├── domain/               # invariants, sans Spring ni JPA sur les contextes complexes
+        ├── application/          # orchestration, transactions
+        ├── persistence/          # entités et adapters JPA
+        └── web/                  # contrôleurs REST (jamais dans api)
 ```
+
+Module de référence : `iam` (structure seule, sans règle métier avant D03). Un
+module ne référence jamais `autreModule.internal` ; un segment de `internal`
+n'est créé que lorsqu'un comportement l'exige.
+
+## Tests d'architecture
+
+| Test             | Preuve                                                                                              |
+| ---------------- | --------------------------------------------------------------------------------------------------- |
+| `ModularityTest` | `ApplicationModules.verify()` passe ; aucun contexte différé ou retiré                              |
+| `ModularityTest` | des applications factices (`kotiz.fixture.modulith`) : accès `api` accepté, accès `internal` refusé |
+| `IamModuleTest`  | `@ApplicationModuleTest` démarre le module `iam` seul                                               |
 
 ## Exécution locale
 
@@ -37,14 +54,15 @@ Spring. JDBC se connecte avec `kotiz_app`, sans droit de structure, et Flyway av
 
 ## Stack cible (Story 1.1 toolchain)
 
-| Composant      | Version                | Rôle                    |
-| -------------- | ---------------------- | ----------------------- |
-| Java           | 21.0.12 Temurin        | Langage                 |
-| Spring Boot    | 4.1.1                  | Framework               |
-| Maven          | 3.9.14 (`./mvnw`)      | Build                   |
-| PostgreSQL     | 15 (dernier correctif) | Persistance (Story 1.4) |
-| Flyway         | 12.4.0                 | Migrations techniques   |
-| Testcontainers | 2.0.5                  | Tests d'intégration     |
+| Composant       | Version                | Rôle                    |
+| --------------- | ---------------------- | ----------------------- |
+| Java            | 21.0.12 Temurin        | Langage                 |
+| Spring Boot     | 4.1.1                  | Framework               |
+| Maven           | 3.9.14 (`./mvnw`)      | Build                   |
+| PostgreSQL      | 15 (dernier correctif) | Persistance (Story 1.4) |
+| Flyway          | 12.4.0                 | Migrations techniques   |
+| Testcontainers  | 2.0.5                  | Tests d'intégration     |
+| Spring Modulith | 2.1.1 (BOM)            | Frontières de modules   |
 
 ## Dépendances du socle exécutable
 
@@ -54,6 +72,8 @@ Spring. JDBC se connecte avec `kotiz_app`, sans droit de structure, et Flyway av
 - `flyway` (migrations au démarrage avec identifiants séparés)
 - `testcontainers-postgresql` (preuve d'intégration sur une base propre)
 - `test` (test d'intégration du contexte et du health check)
+- `spring-modulith-api` (annotations de module) et `spring-modulith-starter-test`
+  (vérification des frontières, `@ApplicationModuleTest`)
 
 Les dépendances de sécurité, persistance applicative, OpenAPI et modules métier
 seront ajoutées uniquement par les vertical slices qui les utilisent.
