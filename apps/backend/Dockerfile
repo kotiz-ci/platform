@@ -18,6 +18,15 @@ RUN --mount=type=cache,target=/root/.m2 \
 FROM eclipse-temurin:21.0.12_8-jre-alpine-3.24@sha256:974b08960c5d96694c780e65b2d5705268ab1e1ca1a0dd0caf4ba6c3fe34d699
 ARG SOURCE_DATE_EPOCH
 
+# CVE-2026-111497: no Temurin 3.24 image ships brotli-libs >= 1.2.1-r0 yet. Upgrade
+# only that package and reset the mtimes apk touched so rebuilds stay identical.
+RUN touch /tmp/.apk-marker && \
+    apk upgrade --no-cache --no-logfile brotli-libs && \
+    find / -xdev -newer /tmp/.apk-marker ! -path /tmp/.apk-marker \
+    -exec touch -h -d "@$SOURCE_DATE_EPOCH" {} + && \
+    rm /tmp/.apk-marker && \
+    touch -d "@$SOURCE_DATE_EPOCH" /tmp /etc
+
 RUN addgroup -S kotiz && \
     adduser -S kotiz -G kotiz && \
     touch -d "@$SOURCE_DATE_EPOCH" \
