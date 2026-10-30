@@ -20,12 +20,10 @@ ARG SOURCE_DATE_EPOCH
 
 # CVE-2026-111497: no Temurin 3.24 image ships brotli-libs >= 1.2.1-r0 yet. Upgrade
 # only that package and reset the mtimes apk touched so rebuilds stay identical.
-RUN touch /tmp/.apk-marker && \
-    apk upgrade --no-cache --no-logfile brotli-libs && \
-    find / -xdev -newer /tmp/.apk-marker ! -path /tmp/.apk-marker \
-    -exec touch -h -d "@$SOURCE_DATE_EPOCH" {} + && \
-    rm /tmp/.apk-marker && \
-    touch -d "@$SOURCE_DATE_EPOCH" /tmp /etc
+RUN apk upgrade --no-cache --no-logfile brotli-libs && \
+    touch -h -d "@$SOURCE_DATE_EPOCH" \
+    $(apk info -qL brotli-libs 2>/dev/null | sed 's|^|/|') \
+    /usr/lib /lib/apk/db /lib/apk/db/* /etc/apk /etc/apk/world /etc
 
 RUN addgroup -S kotiz && \
     adduser -S kotiz -G kotiz && \
