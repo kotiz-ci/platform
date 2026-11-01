@@ -31,16 +31,18 @@ Le rôle unique `ADMIN` de v1.0 est **trop large** et viole SoD — il ne peut p
 
 ### 2.1 Les 8 rôles
 
-| Rôle                    | Description             | Acteur type                                      | MFA obligatoire                  |
-| ----------------------- | ----------------------- | ------------------------------------------------ | -------------------------------- |
-| **USER**                | Client final            | Fatou                                            | Non (PIN + OTP SMS)              |
-| **AGENT**               | Agent terrain           | Moussa                                           | ✅ TOTP                          |
-| **OPS** (ex ADMIN v1.0) | Admin Ops               | Ibrahima                                         | ✅ TOTP                          |
-| **RISK** 🆕             | Admin Risque            | À recruter (V1) ou Henoch en transition          | ✅ TOTP                          |
-| **FINANCE** 🆕          | Admin Finance           | À clarifier (Henoch en MVP ou comptable externe) | ✅ TOTP                          |
-| **PO** 🆕               | Product Owner / CEO     | Henoch                                           | ✅ TOTP                          |
-| **PARTNER**             | Système IMF ou assureur | Système tiers                                    | JWT + HMAC (pas MFA utilisateur) |
-| **SYSTEM**              | Services internes       | Jobs / inter-modules                             | JWT service-to-service           |
+| Rôle                    | Description             | Acteur type                                      | MFA obligatoire                                                                |
+| ----------------------- | ----------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
+| **USER**                | Client final            | Fatou                                            | Non (PIN + OTP SMS)                                                            |
+| **AGENT**               | Agent terrain           | Moussa                                           | ✅ Téléphone enregistré + PIN agente (amendé par ADR-0021, à la place du TOTP) |
+| **OPS** (ex ADMIN v1.0) | Admin Ops               | Ibrahima                                         | ✅ TOTP                                                                        |
+| **RISK** 🆕             | Admin Risque            | À recruter (V1) ou Henoch en transition          | ✅ TOTP                                                                        |
+| **FINANCE** 🆕          | Admin Finance           | À clarifier (Henoch en MVP ou comptable externe) | ✅ TOTP                                                                        |
+| **PO** 🆕               | Product Owner / CEO     | Henoch                                           | ✅ TOTP                                                                        |
+| **PARTNER**             | Système IMF ou assureur | Système tiers                                    | JWT + HMAC (pas MFA utilisateur)                                               |
+| **SYSTEM**              | Services internes       | Jobs / inter-modules                             | JWT service-to-service                                                         |
+
+> **Amendé par [ADR-0021](0021-second-facteur-agente-telephone-pin.md) (30 octobre 2026)** : pour le rôle AGENT seulement, le second facteur est le téléphone enregistré plus le PIN de l'agente, à la place du TOTP. Les autres rôles sont inchangés.
 
 ### 2.2 Matrice de permissions SoD
 

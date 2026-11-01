@@ -40,16 +40,16 @@ Ce plan doit être revu à chaque sprint majeur, avant tout audit externe, et ap
 
 ### 2.1 Gestion des identités
 
-| Cas                            | Mécanisme                                   | Détail                                           |
-| ------------------------------ | ------------------------------------------- | ------------------------------------------------ |
-| Connexion cliente (Fatou)      | Numéro téléphone + OTP SMS + PIN 4 chiffres | Code 6 chiffres, TTL 10 min, max 3 tentatives    |
-| Connexion agent (Moussa)       | Numéro téléphone + mot de passe + TOTP      | **2FA obligatoire**, secret TOTP chiffré en base |
-| Connexion admin OPS (Ibrahima) | Email + mot de passe + TOTP                 | **2FA obligatoire**, session 2 h max             |
-| Connexion admin RISK           | Email + mot de passe + TOTP                 | **2FA obligatoire**, session 2 h max             |
-| Connexion admin FINANCE        | Email + mot de passe + TOTP                 | **2FA obligatoire**, session 2 h max             |
-| Connexion admin PO (Henoch)    | Email + mot de passe + TOTP                 | **2FA obligatoire**, session 2 h max             |
-| API partenaires                | JWT avec claim `partner_id` + secret HMAC   | Clés tournantes tous les 90 jours                |
-| Inter-services (SYSTEM)        | JWT service-to-service + IP whitelist       | Tokens TTL 5 min                                 |
+| Cas                            | Mécanisme                                            | Détail                                                                                                                                                                         |
+| ------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Connexion cliente (Fatou)      | Numéro téléphone + OTP SMS + PIN 4 chiffres          | Code 6 chiffres, TTL 10 min, max 3 tentatives                                                                                                                                  |
+| Connexion agent (Moussa)       | Numéro téléphone + téléphone enregistré + PIN agente | **2FA obligatoire** (ADR-0021, remplace le TOTP) : code SMS à l'activation et sur un nouveau téléphone, accepté par KOTIZ ; PIN réinitialisé par KOTIZ seulement ; valeurs G02 |
+| Connexion admin OPS (Ibrahima) | Email + mot de passe + TOTP                          | **2FA obligatoire**, session 2 h max                                                                                                                                           |
+| Connexion admin RISK           | Email + mot de passe + TOTP                          | **2FA obligatoire**, session 2 h max                                                                                                                                           |
+| Connexion admin FINANCE        | Email + mot de passe + TOTP                          | **2FA obligatoire**, session 2 h max                                                                                                                                           |
+| Connexion admin PO (Henoch)    | Email + mot de passe + TOTP                          | **2FA obligatoire**, session 2 h max                                                                                                                                           |
+| API partenaires                | JWT avec claim `partner_id` + secret HMAC            | Clés tournantes tous les 90 jours                                                                                                                                              |
+| Inter-services (SYSTEM)        | JWT service-to-service + IP whitelist                | Tokens TTL 5 min                                                                                                                                                               |
 
 ### 2.2 Gestion des tokens JWT
 
@@ -88,25 +88,25 @@ Le workflow technique applique les règles suivantes via des permissions granula
 
 ### 3.1 Inventaire des risques OWASP et mitigations (inchangé v1.0)
 
-| Risque OWASP 2021               | Niveau | Mitigation KOTIZ                                                  |
-| ------------------------------- | ------ | ----------------------------------------------------------------- |
-| A01 — Broken Access Control     | Élevé  | Spring Security RBAC 8 rôles + tests automatiques                 |
-| A02 — Cryptographic Failures    | Élevé  | TLS 1.3 partout, pgcrypto AES-256, RS256 JWT                      |
-| A03 — Injection                 | Élevé  | Spring Data JPA (pas de SQL natif), Spring Validation, DTO strict |
-| A04 — Insecure Design           | Moyen  | Threat modeling à chaque sprint                                   |
-| A05 — Security Misconfiguration | Moyen  | Checklist Spring hardening, scan OWASP ZAP                        |
-| A06 — Vulnerable Components     | Moyen  | Dependabot + OWASP Dependency-Check                               |
-| A07 — Auth Failures             | Élevé  | Rate limiting Nginx + Redis, TOTP MFA, verrouillage 5 échecs      |
-| A08 — Integrity Failures        | Moyen  | Signature releases GitHub, images Docker registry privé           |
-| A09 — Logging Failures          | Moyen  | Audit trail PostgreSQL immuable, logs JSON structurés             |
-| A10 — SSRF                      | Faible | Whitelist URLs autorisées pour webhooks                           |
+| Risque OWASP 2021               | Niveau | Mitigation KOTIZ                                                                                                     |
+| ------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| A01 — Broken Access Control     | Élevé  | Spring Security RBAC 8 rôles + tests automatiques                                                                    |
+| A02 — Cryptographic Failures    | Élevé  | TLS 1.3 partout, pgcrypto AES-256, RS256 JWT                                                                         |
+| A03 — Injection                 | Élevé  | Spring Data JPA (pas de SQL natif), Spring Validation, DTO strict                                                    |
+| A04 — Insecure Design           | Moyen  | Threat modeling à chaque sprint                                                                                      |
+| A05 — Security Misconfiguration | Moyen  | Checklist Spring hardening, scan OWASP ZAP                                                                           |
+| A06 — Vulnerable Components     | Moyen  | Dependabot + OWASP Dependency-Check                                                                                  |
+| A07 — Auth Failures             | Élevé  | Rate limiting Nginx + Redis, TOTP MFA (admins), téléphone enregistré + PIN (agents, ADR-0021), verrouillage 5 échecs |
+| A08 — Integrity Failures        | Moyen  | Signature releases GitHub, images Docker registry privé                                                              |
+| A09 — Logging Failures          | Moyen  | Audit trail PostgreSQL immuable, logs JSON structurés                                                                |
+| A10 — SSRF                      | Faible | Whitelist URLs autorisées pour webhooks                                                                              |
 
 ### 3.2 Protection des données sensibles (enrichi G8)
 
 - **Données chiffrées en base** (pgcrypto AES-256-GCM) :
   - NIU / CNI
   - Numéro de compte mobile money
-  - Secret TOTP
+  - Secret TOTP (rôles admin ; aucun pour les agents, ADR-0021)
   - **Hash consentements** (cf. `core_consents.consent_hash`)
   - **Hash signatures CIMA** (cf. `health_subscriptions.consent_hash`)
 - **Hachage irréversible** (bcrypt cost 12) : mots de passe, codes PIN
