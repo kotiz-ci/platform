@@ -70,25 +70,27 @@ pnpm turbo run test --filter=...[origin/main]  # tests des apps modifiées seule
 
 ## Architecture
 
-| Doc                                                                | Contenu                                             |
-| ------------------------------------------------------------------ | --------------------------------------------------- |
-| [Context Map](CONTEXT-MAP.md)                                      | Contextes actifs, différés et retirés du MVP réduit |
-| [ADR-0001](docs/adr/0001-choix-backend.md)                         | Backend Spring Boot (cadrage)                       |
-| [ADR-0002](docs/adr/0002-architecture-modulaire.md)                | Monolithe modulaire                                 |
-| [ADR-0003](docs/adr/0003-score-5-etoiles.md)                       | Score KOTIZ en 5 étoiles                            |
-| [ADR-0004](docs/adr/0004-ussd-mvp.md)                              | USSD léger dans le MVP                              |
-| [ADR-0005](docs/adr/0005-data-residency-uemoa.md)                  | Hébergement et data residency UEMOA                 |
-| [ADR-0006](docs/adr/0006-prime-sante-unite.md)                     | Prime Santé : unité de stockage                     |
-| [ADR-0007](docs/adr/0007-rbac-8-roles.md)                          | RBAC en 8 rôles                                     |
-| [ADR-0008](docs/adr/0008-monorepo-turborepo.md)                    | Monorepo Turborepo                                  |
-| [ADR-0009](docs/adr/0009-mobile-rn-expo.md)                        | Mobile React Native / Expo                          |
-| [ADR-0010](docs/adr/0010-mobile-variants.md)                       | Variantes mobiles Client / Agent                    |
-| [ADR-0011](docs/adr/0011-hexagonal-ddd.md)                         | Modules Spring Modulith `api` / `internal` (§6)     |
-| [ADR-0015](docs/adr/0015-feature-sliced-design-frontends.md)       | Feature-Sliced Design pour mobile et admin          |
-| [ADR-0016](docs/adr/0016-limit-mvp-database-to-active-contexts.md) | Limite des contextes actifs en base                 |
-| [ADR-0017](docs/adr/0017-promote-develop-to-main.md)               | Promotion protégée `develop` vers `main`            |
-| [ADR-0018](docs/adr/0018-use-supported-s1-runtime-lines.md)        | Lignes de runtime supportées                        |
-| [ADR-0019](docs/adr/0019-use-expo-mobile-variants.md)              | Un codebase Expo, deux variantes mobiles            |
+| Doc                                                                | Contenu                                               |
+| ------------------------------------------------------------------ | ----------------------------------------------------- |
+| [Context Map](CONTEXT-MAP.md)                                      | Contextes actifs, différés et retirés du MVP réduit   |
+| [ADR-0001](docs/adr/0001-choix-backend.md)                         | Backend Spring Boot (cadrage)                         |
+| [ADR-0002](docs/adr/0002-architecture-modulaire.md)                | Monolithe modulaire                                   |
+| [ADR-0003](docs/adr/0003-score-5-etoiles.md)                       | Score KOTIZ en 5 étoiles                              |
+| [ADR-0004](docs/adr/0004-ussd-mvp.md)                              | USSD léger dans le MVP                                |
+| [ADR-0005](docs/adr/0005-data-residency-uemoa.md)                  | Hébergement et data residency UEMOA                   |
+| [ADR-0006](docs/adr/0006-prime-sante-unite.md)                     | Prime Santé : unité de stockage                       |
+| [ADR-0007](docs/adr/0007-rbac-8-roles.md)                          | RBAC en 8 rôles                                       |
+| [ADR-0008](docs/adr/0008-monorepo-turborepo.md)                    | Monorepo Turborepo                                    |
+| [ADR-0009](docs/adr/0009-mobile-rn-expo.md)                        | Mobile React Native / Expo                            |
+| [ADR-0010](docs/adr/0010-mobile-variants.md)                       | Variantes mobiles Client / Agent                      |
+| [ADR-0011](docs/adr/0011-hexagonal-ddd.md)                         | Modules Spring Modulith `api` / `internal` (§6)       |
+| [ADR-0015](docs/adr/0015-feature-sliced-design-frontends.md)       | Feature-Sliced Design pour mobile et admin            |
+| [ADR-0016](docs/adr/0016-limit-mvp-database-to-active-contexts.md) | Limite des contextes actifs en base                   |
+| [ADR-0017](docs/adr/0017-promote-develop-to-main.md)               | Promotion protégée `develop` vers `main`              |
+| [ADR-0018](docs/adr/0018-use-supported-s1-runtime-lines.md)        | Lignes de runtime supportées                          |
+| [ADR-0019](docs/adr/0019-use-expo-mobile-variants.md)              | Un codebase Expo, deux variantes mobiles              |
+| [ADR-0020](docs/adr/0020-contexte-assistance-signalement.md)       | Contexte Assistance pour le signalement               |
+| [ADR-0021](docs/adr/0021-second-facteur-agente-telephone-pin.md)   | Second facteur agente : téléphone + PIN (amende 0007) |
 
 ## Structure du monorepo
 

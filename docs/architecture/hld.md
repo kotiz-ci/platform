@@ -88,13 +88,13 @@ La plateforme KOTIZ est organisée en 4 couches distinctes : Présentation, API 
 
 ### 2.2 Couche API et sécurité
 
-| Composant        | Technologie                                                         | Rôle                                                                             |
-| ---------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Reverse proxy    | Nginx                                                               | Terminaison SSL, rate limiting, routage vers Spring Boot                         |
-| API REST         | Spring Web MVC + springdoc-openapi 3.1                              | Contrôleurs REST, validation, gestion erreurs RFC 7807                           |
-| Authentification | Spring Security + JWT (RS256, 15 min) + refresh token opaque (30 j) | Authentification stateless, refresh en cookie HttpOnly SameSite Strict           |
-| Autorisation     | RBAC Spring Security                                                | **8 rôles** : USER, AGENT, OPS, RISK, FINANCE, PO, PARTNER, SYSTEM (cf. ADR-007) |
-| MFA              | TOTP (QR code) via Spring Security TOTP                             | **2FA obligatoire** pour OPS, RISK, FINANCE, PO (ex ADMIN) et AGENT              |
+| Composant        | Technologie                                                         | Rôle                                                                                                              |
+| ---------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Reverse proxy    | Nginx                                                               | Terminaison SSL, rate limiting, routage vers Spring Boot                                                          |
+| API REST         | Spring Web MVC + springdoc-openapi 3.1                              | Contrôleurs REST, validation, gestion erreurs RFC 7807                                                            |
+| Authentification | Spring Security + JWT (RS256, 15 min) + refresh token opaque (30 j) | Authentification stateless, refresh en cookie HttpOnly SameSite Strict                                            |
+| Autorisation     | RBAC Spring Security                                                | **8 rôles** : USER, AGENT, OPS, RISK, FINANCE, PO, PARTNER, SYSTEM (cf. ADR-007)                                  |
+| MFA              | TOTP (QR code) via Spring Security TOTP                             | **2FA obligatoire** pour OPS, RISK, FINANCE, PO (ex ADMIN) ; AGENT : téléphone enregistré + PIN agente (ADR-0021) |
 
 ### 2.3 Couche Application (monolithe modulaire — bounded contexts DDD)
 
@@ -188,7 +188,7 @@ Cf. HLD v1.0 §3.1 — flux validé, aucun changement.
 ### 3.3 Flux authentification MFA (mise à jour rôles)
 
 - Étape 1 : l'utilisateur soumet login + mot de passe → Spring Security valide les credentials
-- Étape 2 : Spring Security retourne un challenge MFA si le rôle nécessite 2FA (**OPS, RISK, FINANCE, PO, AGENT — tous les rôles admin et agents — cf. ADR-007**)
+- Étape 2 : Spring Security retourne un challenge MFA si le rôle nécessite 2FA (**OPS, RISK, FINANCE, PO — cf. ADR-007**). Le rôle AGENT suit l'ADR-0021 : téléphone enregistré + PIN agente, sans TOTP
 - Étape 3 : l'utilisateur soumet le code TOTP (6 chiffres)
 - Étape 4 : Spring Security valide le code TOTP et émet le JWT access token + refresh token
 - Étape 5 : le refresh token est stocké en cookie HttpOnly SameSite Strict
