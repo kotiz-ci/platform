@@ -1,0 +1,10 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Valeur AES factice et documentée pour le développement local"
+regexTarget = "match"
+regexes = [
+  '''KOTIZ_AES_MASTER_KEY=a290aXotZGV2LW9u[b]HktY2hhbmdlLW1lLWFlcy0yNTY=''',
+  '''KOTIZ_AES_MASTER_KEY=ZGV2LW9u[b]HktY2hhbmdlLW1lLWFlc18yNTYta2V5IQ==''',
+]

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Ticket"
+  short_description: "Prepare and implement a ready ticket"
+  default_prompt: "Use $implement-ticket to prepare and implement this existing ticket with the right proof strategy."

@@ -8,14 +8,14 @@ Console web admin KOTIZ pour les rôles **OPS** (Ibrahima, KYC Tier 2), **RISK**
 
 ## Stack cible
 
-| Composant | Version | Rôle |
-|---|---|---|
-| Next.js | 15.x stable | Framework SSR/RSC |
-| React | 19.x | Lib UI |
-| TypeScript | 5.6.x strict | Langage |
-| Tailwind CSS | 3.4.x (preset `@kotiz/design-tokens/tailwind`) | Styling |
-| App Router | natif | Routing file-based |
-| TanStack Query | 5.x | Server state mgmt (Sprint 2+) |
+| Composant      | Version                                        | Rôle                          |
+| -------------- | ---------------------------------------------- | ----------------------------- |
+| Next.js        | 15.x stable                                    | Framework SSR/RSC             |
+| React          | 19.x                                           | Lib UI                        |
+| TypeScript     | 5.6.x strict                                   | Langage                       |
+| Tailwind CSS   | 3.4.x (preset `@kotiz/design-tokens/tailwind`) | Styling                       |
+| App Router     | natif                                          | Routing file-based            |
+| TanStack Query | 5.x                                            | Server state mgmt (Sprint 2+) |
 
 ## Init (commande Story 1.1)
 
@@ -25,20 +25,42 @@ pnpm dlx create-next-app@^15 . --typescript --tailwind --app --use-pnpm --eslint
 ```
 
 Puis :
+
 - Installer `@kotiz/design-tokens`, `@kotiz/api-types`, `@kotiz/shared-utils`, `lucide-react`
 - Configurer `tailwind.config.ts` avec `presets: [require("@kotiz/design-tokens/tailwind")]`
 - Importer `@kotiz/design-tokens/css` dans `app/globals.css`
 
+## Architecture — Feature-Sliced Design
+
+La console suivra Feature-Sliced Design ([ADR-015](../../docs/adr/0015-feature-sliced-design-frontends.md)),
+mis en place au moment où Next.js est réellement initialisé :
+
+```
+apps/admin-web
+├── app/              # Next.js App Router — app/**/page.tsx réexporte une page de src/_pages
+└── src/
+    ├── _app/         # couche App FSD (nom adapté : Next.js réserve pages/)
+    ├── _pages/       # couche Pages FSD
+    ├── widgets/
+    ├── features/
+    ├── entities/
+    └── shared/
+```
+
+Les dépendances vont seulement vers le bas et chaque slice est importée par son
+`index.ts` ; le lint `eslint-plugin-boundaries` du mobile sert de modèle. Les
+routes serveur Next.js ne remplacent pas le backend Spring métier.
+
 ## Routes prévues (Sprints 4-5 — Epic 10)
 
-| Route | Rôle | Story |
-|---|---|---|
-| `/login` | tous | 10.1 |
-| `/queue/kyc-tier2` | OPS (Ibrahima) | 10.3 |
-| `/aml/alerts` | RISK | 10.4 |
-| `/str-reports` | RISK | 10.5 |
-| `/audit` | AUDITOR | 10.7 |
-| `/reports/bceao` | FINANCE | 10.6 |
+| Route              | Rôle           | Story |
+| ------------------ | -------------- | ----- |
+| `/login`           | tous           | 10.1  |
+| `/queue/kyc-tier2` | OPS (Ibrahima) | 10.3  |
+| `/aml/alerts`      | RISK           | 10.4  |
+| `/str-reports`     | RISK           | 10.5  |
+| `/audit`           | AUDITOR        | 10.7  |
+| `/reports/bceao`   | FINANCE        | 10.6  |
 
 ## Référence
 

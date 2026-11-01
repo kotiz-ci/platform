@@ -7,6 +7,7 @@ updates:
   # ----- npm / pnpm (mobile RN/Expo, admin-web Next, packages, root) -----
   - package-ecosystem: "npm"
     directory: "/"
+    target-branch: "develop"
     schedule:
       interval: "daily"
       time: "06:00"
@@ -41,10 +42,50 @@ updates:
           - "@typescript-eslint/*"
           - "ts-*"
           - "tslib"
+    # Les versions de ces paquets sont imposées par le SDK Expo : on les monte
+    # d'un bloc avec `npx expo install --fix` lors d'une montée de SDK, jamais
+    # paquet par paquet. Seuls les correctifs (patch) passent par Dependabot.
+    ignore:
+      - dependency-name: "expo"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "expo-*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "@expo/*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "babel-preset-expo"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "eslint-config-expo"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "@types/react"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "react-native"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "react-native-*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "@react-native/*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # NativeWind 4 exige Tailwind 3 ; NativeWind 5 (Tailwind 4) n'est qu'en RC.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "nativewind"
+        update-types: ["version-update:semver-major"]
+      # babel-preset-expo dépend encore des plugins Babel 7.
+      - dependency-name: "@babel/core"
+        update-types: ["version-update:semver-major"]
+      # Suit la version majeure de Node fixée dans .nvmrc.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   # ----- Maven (backend Spring Boot) -----
   - package-ecosystem: "maven"
     directory: "/apps/backend"
+    target-branch: "develop"
     schedule:
       interval: "daily"
       time: "06:00"
@@ -60,6 +101,7 @@ updates:
   # ----- GitHub Actions -----
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "develop"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -76,6 +118,7 @@ updates:
   # ----- Docker (infra) -----
   - package-ecosystem: "docker"
     directory: "/infra/docker"
+    target-branch: "develop"
     schedule:
       interval: "weekly"
       day: "monday"

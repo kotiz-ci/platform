@@ -1,0 +1,14 @@
+// Docs produit, architecture et design migrés depuis l'atelier KOTIZ le 2026-10-19.
+// Leur structure d'origine (gras en guise de sous-titres, plusieurs H1) est conservée.
+{
+  "config": {
+    "MD013": false,
+    "MD032": false,
+    "MD040": false,
+    "MD041": false,
+    "MD001": false,
+    "MD025": false,
+    "MD026": false,
+    "MD036": false,
+  },
+}
