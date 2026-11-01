@@ -1,6 +1,6 @@
 # Issues — Refonte des parcours, lot E : espèces et accompagnement par une agente
 
-Date : 30 octobre 2026. Statut : **brouillon, rien n'est publié**. La publication (commentaires, nouvelles issues, changements de « Blocked by ») est faite par la session principale après relecture et feu vert explicite du PO (brief : « aucune modification d’issue sans feu vert explicite du PO »).
+Date : 30 octobre 2026. Statut : **publié le 1er novembre 2026** (issues #117 à #123, 13 commentaires « Design validé »). Les changements de « Blocked by » des issues existantes attendent encore le feu vert du PO. La publication (commentaires, nouvelles issues, changements de « Blocked by ») est faite par la session principale après relecture et feu vert explicite du PO (brief : « aucune modification d’issue sans feu vert explicite du PO »).
 
 Sources : [handoff-lot-e.md](handoff-lot-e.md), [gherkin-lot-e.md](gherkin-lot-e.md) (202 scénarios), [ux-spec-lot-e.md](ux-spec-lot-e.md), [screens-lot-e.md](screens-lot-e.md), [critique-lot-e.md](critique-lot-e.md), [test-lot-e.md](test-lot-e.md), [ux-spec-lot-g.md](ux-spec-lot-g.md) (D28, D29), issues lues le 30 octobre 2026 avec `gh issue view <n> -R kotiz-ci/platform --comments` (#67, #68, #69, #70, #71, #72, #73, #75, #93) et la liste complète des issues.
 
@@ -29,27 +29,27 @@ Rappel : « E-01 » (avec tiret) est un **écran** ; « D10 » est le code de l'
 
 ## Correspondance parcours / écrans → issues
 
-| Parcours                          | Écrans                                                                                                                        | Issue                                                     | Scénarios                                                                                                                            | Remarque                                                        |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| Socle lot E                       | `AgentIdentity`, `OneTimeCodeField`, `QrScanner`, `Statement`, `ResultScreen` neutre, `PinScreen` avertissement, `StatusRows` | [#59](https://github.com/kotiz-ci/platform/issues/59) D02 | critères « Socle lot E » du handoff ; E-P3-S11, E-P4-S3, E-P5-S10, E-P11-S7                                                          | Construits dans le canvas (`le-`), hors DS v15                  |
-| Identifier la cliente             | E-51, E-52, E-53                                                                                                              | **D30** (à créer)                                         | E-P1-S10 à S12, S21 ; E-P3-S1 à S3                                                                                                   | Commun à toutes les opérations agente                           |
-| Demande d'agente                  | E-56, E-60, reprise                                                                                                           | **D31** (à créer)                                         | E-P1-S16, S23, S24 ; E-P4-S11 à S13, S23, S25                                                                                        | Générique : dépôt, retrait, Mobile Money, accompagnement, point |
-| Codes ponctuels                   | E-57 (8 finalités)                                                                                                            | **D32** (à créer)                                         | E-P3-S8, S10 ; E-P4-S8 à S10, S22 ; E-P6-S6                                                                                          | G02 bloquant en production                                      |
-| E-P1 à E-P4 Dépôt en espèces      | E-01 à E-05, E-54, E-55, E-58, E-59 (dépôt)                                                                                   | [#71](https://github.com/kotiz-ci/platform/issues/71) D10 | E-P1-S1, S3 à S8, S13 à S15, S17 à S20, S22 ; E-P2-S1 à S6, S8 à S13 ; E-P3-S4 à S7, S9, S12 ; E-P4-S1 à S6, S14, S18, S20, S21, S24 | Cœur de l'issue                                                 |
-| E-P5 à E-P7 Retrait en espèces    | E-06 à E-10, E-61 à E-64, E-59 (retrait)                                                                                      | [#72](https://github.com/kotiz-ci/platform/issues/72) D11 | E-P5-S1 à S22 ; E-P6-S1 à S5, S7, S8 ; E-P7-S1 à S14, S16 à S18                                                                      | Cœur de l'issue                                                 |
-| E-P8 Retrait Mobile Money préparé | E-11, E-65 à E-67, E-59 (Mobile Money), D-04 et D-05 depuis E-11                                                              | [#68](https://github.com/kotiz-ci/platform/issues/68) D07 | E-P8-S1 à S12                                                                                                                        | Branche assistée du retrait du lot D                            |
-| E-P9 Accompagnement               | E-12, E-14, E-15, E-16 (accompagnement), E-68                                                                                 | **D33** (à créer)                                         | E-P9-S1 à S17, S19                                                                                                                   | Contexte à trancher (Agents ou IAM)                             |
-| E-P10 Permission de point         | E-13, E-15 (permissions), E-16 (point), E-69, E-70                                                                            | **D34** (à créer)                                         | E-P10-S1 à S13 ; E-P12-S1 à S5                                                                                                       | E-70 utilise le relevé de D35                                   |
-| E-P11 Carnet et relevé            | B · B07 « Mon carnet › », E-17, E-18, E-19                                                                                    | **D35** (à créer)                                         | E-P11-S1 à S13                                                                                                                       | Remplace « signatures numériques » de #73                       |
-| E-P12 Création assistée           | E-53 (ligne), E-71, E-72, E-57 (création), E-59 (création), E-15                                                              | **D36** (à créer)                                         | E-P12-S6 à S12                                                                                                                       | Cliente sans accès à l'app seulement                            |
-| E-P13 Opérations en espèces       | C-11, C-12, C-13                                                                                                              | [#99](https://github.com/kotiz-ci/platform/issues/99) D26 | E-P13-S1 à S9, S11                                                                                                                   | Montants réels, « Espèces en attente »                          |
-| Signalement espèces               | E-05, E-10, C-14, C-15                                                                                                        | [#69](https://github.com/kotiz-ci/platform/issues/69) D08 | E-P4-S15 à S17 ; E-P7-S15 ; E-P13-S10                                                                                                | Motifs G03 ; remise « Contestée »                               |
-| Cycle de vie                      | backend                                                                                                                       | [#67](https://github.com/kotiz-ci/platform/issues/67) D06 | E-P1-S6, S19, S23 ; E-P4-S7, S19 ; E-P5-S16 ; E-P7-S9, S11                                                                           | Idempotence par demande et par lancement                        |
-| Accueil                           | A · H01                                                                                                                       | [#94](https://github.com/kotiz-ci/platform/issues/94) D21 | E-P1-S9 ; E-P4-S25 ; E-P9-S18                                                                                                        | « Awa attend ta réponse › »                                     |
-| Mon QR                            | A · Q01                                                                                                                       | [#95](https://github.com/kotiz-ci/platform/issues/95) D22 | E-P1-S2                                                                                                                              | Ouverture automatique                                           |
-| SMS et demandes en direct         | SMS du lot E                                                                                                                  | [#75](https://github.com/kotiz-ci/platform/issues/75) D14 | E-P1-S22 ; E-P3-S12 ; E-P11-S9 ; E-P12-S2                                                                                            | Statut d'envoi distinct                                         |
-| Fonds de l'agente                 | E-54, E-58                                                                                                                    | [#70](https://github.com/kotiz-ci/platform/issues/70) D09 | E-P4-S1, S18 ; E-P8-S9                                                                                                               | Oui / non, jamais le montant                                    |
-| Reprise de la mise de côté        | E-04 → C-08                                                                                                                   | [#98](https://github.com/kotiz-ci/platform/issues/98) D25 | E-P2-S6, S7                                                                                                                          | Nouvelle entrée, aucun nouveau dépôt                            |
+| Parcours                          | Écrans                                                                                                                        | Issue                                                             | Scénarios                                                                                                                            | Remarque                                                        |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| Socle lot E                       | `AgentIdentity`, `OneTimeCodeField`, `QrScanner`, `Statement`, `ResultScreen` neutre, `PinScreen` avertissement, `StatusRows` | [#59](https://github.com/kotiz-ci/platform/issues/59) D02         | critères « Socle lot E » du handoff ; E-P3-S11, E-P4-S3, E-P5-S10, E-P11-S7                                                          | Construits dans le canvas (`le-`), hors DS v15                  |
+| Identifier la cliente             | E-51, E-52, E-53                                                                                                              | **D30** ([#117](https://github.com/kotiz-ci/platform/issues/117)) | E-P1-S10 à S12, S21 ; E-P3-S1 à S3                                                                                                   | Commun à toutes les opérations agente                           |
+| Demande d'agente                  | E-56, E-60, reprise                                                                                                           | **D31** ([#118](https://github.com/kotiz-ci/platform/issues/118)) | E-P1-S16, S23, S24 ; E-P4-S11 à S13, S23, S25                                                                                        | Générique : dépôt, retrait, Mobile Money, accompagnement, point |
+| Codes ponctuels                   | E-57 (8 finalités)                                                                                                            | **D32** ([#119](https://github.com/kotiz-ci/platform/issues/119)) | E-P3-S8, S10 ; E-P4-S8 à S10, S22 ; E-P6-S6                                                                                          | G02 bloquant en production                                      |
+| E-P1 à E-P4 Dépôt en espèces      | E-01 à E-05, E-54, E-55, E-58, E-59 (dépôt)                                                                                   | [#71](https://github.com/kotiz-ci/platform/issues/71) D10         | E-P1-S1, S3 à S8, S13 à S15, S17 à S20, S22 ; E-P2-S1 à S6, S8 à S13 ; E-P3-S4 à S7, S9, S12 ; E-P4-S1 à S6, S14, S18, S20, S21, S24 | Cœur de l'issue                                                 |
+| E-P5 à E-P7 Retrait en espèces    | E-06 à E-10, E-61 à E-64, E-59 (retrait)                                                                                      | [#72](https://github.com/kotiz-ci/platform/issues/72) D11         | E-P5-S1 à S22 ; E-P6-S1 à S5, S7, S8 ; E-P7-S1 à S14, S16 à S18                                                                      | Cœur de l'issue                                                 |
+| E-P8 Retrait Mobile Money préparé | E-11, E-65 à E-67, E-59 (Mobile Money), D-04 et D-05 depuis E-11                                                              | [#68](https://github.com/kotiz-ci/platform/issues/68) D07         | E-P8-S1 à S12                                                                                                                        | Branche assistée du retrait du lot D                            |
+| E-P9 Accompagnement               | E-12, E-14, E-15, E-16 (accompagnement), E-68                                                                                 | **D33** ([#121](https://github.com/kotiz-ci/platform/issues/121)) | E-P9-S1 à S17, S19                                                                                                                   | Contexte à trancher (Agents ou IAM)                             |
+| E-P10 Permission de point         | E-13, E-15 (permissions), E-16 (point), E-69, E-70                                                                            | **D34** ([#122](https://github.com/kotiz-ci/platform/issues/122)) | E-P10-S1 à S13 ; E-P12-S1 à S5                                                                                                       | E-70 utilise le relevé de D35                                   |
+| E-P11 Carnet et relevé            | B · B07 « Mon carnet › », E-17, E-18, E-19                                                                                    | **D35** ([#120](https://github.com/kotiz-ci/platform/issues/120)) | E-P11-S1 à S13                                                                                                                       | Remplace « signatures numériques » de #73                       |
+| E-P12 Création assistée           | E-53 (ligne), E-71, E-72, E-57 (création), E-59 (création), E-15                                                              | **D36** ([#123](https://github.com/kotiz-ci/platform/issues/123)) | E-P12-S6 à S12                                                                                                                       | Cliente sans accès à l'app seulement                            |
+| E-P13 Opérations en espèces       | C-11, C-12, C-13                                                                                                              | [#99](https://github.com/kotiz-ci/platform/issues/99) D26         | E-P13-S1 à S9, S11                                                                                                                   | Montants réels, « Espèces en attente »                          |
+| Signalement espèces               | E-05, E-10, C-14, C-15                                                                                                        | [#69](https://github.com/kotiz-ci/platform/issues/69) D08         | E-P4-S15 à S17 ; E-P7-S15 ; E-P13-S10                                                                                                | Motifs G03 ; remise « Contestée »                               |
+| Cycle de vie                      | backend                                                                                                                       | [#67](https://github.com/kotiz-ci/platform/issues/67) D06         | E-P1-S6, S19, S23 ; E-P4-S7, S19 ; E-P5-S16 ; E-P7-S9, S11                                                                           | Idempotence par demande et par lancement                        |
+| Accueil                           | A · H01                                                                                                                       | [#94](https://github.com/kotiz-ci/platform/issues/94) D21         | E-P1-S9 ; E-P4-S25 ; E-P9-S18                                                                                                        | « Awa attend ta réponse › »                                     |
+| Mon QR                            | A · Q01                                                                                                                       | [#95](https://github.com/kotiz-ci/platform/issues/95) D22         | E-P1-S2                                                                                                                              | Ouverture automatique                                           |
+| SMS et demandes en direct         | SMS du lot E                                                                                                                  | [#75](https://github.com/kotiz-ci/platform/issues/75) D14         | E-P1-S22 ; E-P3-S12 ; E-P11-S9 ; E-P12-S2                                                                                            | Statut d'envoi distinct                                         |
+| Fonds de l'agente                 | E-54, E-58                                                                                                                    | [#70](https://github.com/kotiz-ci/platform/issues/70) D09         | E-P4-S1, S18 ; E-P8-S9                                                                                                               | Oui / non, jamais le montant                                    |
+| Reprise de la mise de côté        | E-04 → C-08                                                                                                                   | [#98](https://github.com/kotiz-ci/platform/issues/98) D25         | E-P2-S6, S7                                                                                                                          | Nouvelle entrée, aucun nouveau dépôt                            |
 
 Des scénarios peuvent apparaître dans deux issues (une vue écran, une vue backend), comme au lot D : chaque issue les implémente à sa frontière.
 
@@ -82,7 +82,7 @@ Termes absents du [glossaire DDD](../../architecture/ddd-context-map-glossaire.m
 
 ## Nouvelles issues à créer (D30 à D36)
 
-### Issue à créer — D30 — Trouver et identifier la cliente dans l'app agente
+### D30 — [#117](https://github.com/kotiz-ci/platform/issues/117) — Trouver et identifier la cliente dans l'app agente
 
 Label : `ready-for-agent` · Blocked by : D28 (connexion de l'agente, lot G), #59 · Après création : citer D30 dans #71 et #72 (point d'entrée) et dans D29 (entrée « Trouver une cliente » de l'accueil agente).
 
@@ -124,7 +124,7 @@ Dans l'app agente (variant `agent`), l'agente trouve la cliente par son QR KOTIZ
 - #59 (socle UI)
 ```
 
-### Issue à créer — D31 — Envoyer une demande d'agente à la cliente et suivre sa réponse
+### D31 — [#118](https://github.com/kotiz-ci/platform/issues/118) — Envoyer une demande d'agente à la cliente et suivre sa réponse
 
 Label : `ready-for-agent` · Blocked by : D30, #75, #67 · Après création : citer D31 dans #71, #72, #68, #94, #95, D33, D34.
 
@@ -164,7 +164,7 @@ La **demande** est ce que l'agente prépare et que la cliente confirme ; elle ex
 - #67 (cycle de vie : idempotence, reprise)
 ```
 
-### Issue à créer — D32 — Confirmer une demande par code ponctuel SMS (cliente sans smartphone)
+### D32 — [#119](https://github.com/kotiz-ci/platform/issues/119) — Confirmer une demande par code ponctuel SMS (cliente sans smartphone)
 
 Label : `ready-for-agent` · Blocked by : D31, #75 · Après création : citer D32 dans #71, #72, #68, D33, D34, D36. **Pas livrable en production avant G02.**
 
@@ -203,7 +203,7 @@ Pour une cliente sans accès à l'app, chaque accord passe par un **code ponctue
 - #75 (envoi des SMS)
 ```
 
-### Issue à créer — D33 — Accepter, refuser et retirer l'accompagnement d'une agente
+### D33 — [#121](https://github.com/kotiz-ci/platform/issues/121) — Accepter, refuser et retirer l'accompagnement d'une agente
 
 Label : `ready-for-agent` · Blocked by : D30, D31 · Après création : citer D33 dans D34 et D36.
 
@@ -245,7 +245,7 @@ L'**accompagnement** est l'accord de la cliente pour qu'une agente l'aide (crée
 - D31 (demande d'agente)
 ```
 
-### Issue à créer — D34 — Autoriser une agente à voir le point d'une épargne
+### D34 — [#122](https://github.com/kotiz-ci/platform/issues/122) — Autoriser une agente à voir le point d'une épargne
 
 Label : `ready-for-agent` · Blocked by : D33, D35 · Après création : citer D34 dans D33.
 
@@ -285,7 +285,7 @@ Une agente qui accompagne la cliente peut demander à voir le **point** d'éparg
 - D35 (relevé daté d'une épargne)
 ```
 
-### Issue à créer — D35 — Consulter mon carnet et partager le point d'une épargne
+### D35 — [#120](https://github.com/kotiz-ci/platform/issues/120) — Consulter mon carnet et partager le point d'une épargne
 
 Label : `ready-for-agent` · Blocked by : #73, #99 · Après création : citer D35 dans #73 (« signatures numériques » = carnet) et dans D34.
 
@@ -324,7 +324,7 @@ Le carnet « signé-signé » numérique d'une épargne : depuis le détail d'un
 - #99 (opérations, détail : lien depuis une ligne du carnet)
 ```
 
-### Issue à créer — D36 — Créer une épargne pour une cliente sans smartphone
+### D36 — [#123](https://github.com/kotiz-ci/platform/issues/123) — Créer une épargne pour une cliente sans smartphone
 
 Label : `ready-for-agent` · Blocked by : D33, D32, #73 · Après création : citer D36 dans #73 (création assistée).
 
